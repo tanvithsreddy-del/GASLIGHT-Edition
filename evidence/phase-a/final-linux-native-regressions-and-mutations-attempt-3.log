@@ -1,0 +1,90 @@
+COMMAND: ["wsl", "-d", "Ubuntu", "--", "bash", "/mnt/c/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/phase_a_finish_linux_native.sh"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft
+UTC: 2026-10-12T17:26:59.212119+00:00
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PASSED 383217 standalone assertions in 298 ms
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE2_PREVIEW_PASS: 1835 assertions
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE12_WIRE_AND_OCCLUSION_PASS: 1273 assertions, 870 compressed bytes
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+Phase3 optics/routes passed 39629
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE3_HARDENING_PASS: 12115 assertions
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE3_FINAL_PASS: 97163 assertions
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE3_DESTINATION_PASS: 19803 assertions
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE4_PLANNING: 180 full epochs accepted=150 inspected_columns=6646
+PHASE4_LIFECYCLE: 200000 virtual ticks 10000 epochs elapsed_ms=29 proposals_blocked=10000
+PHASE4_VALIDATION_PASS: assertions=1410549 chunk_sample_oracle_cases=594000 structure_injections=1800 lifecycle_ticks=200000 seed=6617717088294
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE4_FINAL_SAFETY_PASS: assertions=17568 malformed_packets=2500 finite_geometry_checks=10000 hostile_hosts=4
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+PHASE4_HOST_ISOLATION_PASS: 22 assertions; 5 injected fatal host failures quarantined
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+NATIVE_DIRECTORY_DURABILITY,true,begin_acknowledged=true
+IO_FAULT,PREPARED,reached=true,reason=journal write/atomicity unconfirmed at preparation: IOException: injected interruption PREPARED
+IO_FAULT,CANDIDATE_FORCED,reached=true,reason=journal write/atomicity unconfirmed at preparation: IOException: injected interruption CANDIDATE_FORCED
+IO_FAULT,REPLACED,reached=true,reason=journal write/atomicity unconfirmed at replacement: IOException: injected interruption REPLACED
+IO_FAULT,DIRECTORIES_FORCED,reached=true,reason=journal write/atomicity unconfirmed at replacement: IOException: injected interruption DIRECTORIES_FORCED
+IO_FAULT,EVIDENCE_REMOVED,reached=true,reason=journal write/atomicity unconfirmed at evidence cleanup: IOException: injected interruption EVIDENCE_REMOVED
+IO_FAULT,COMMITTED,reached=true,reason=journal write/atomicity unconfirmed at evidence cleanup: IOException: injected interruption COMMITTED
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-PREPARED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,PREPARED|
+PROCESS_INTERRUPT,PREPARED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-CANDIDATE_FORCED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,CANDIDATE_FORCED|
+PROCESS_INTERRUPT,CANDIDATE_FORCED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-REPLACED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,REPLACED|
+PROCESS_INTERRUPT,REPLACED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-DIRECTORIES_FORCED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,DIRECTORIES_FORCED|
+PROCESS_INTERRUPT,DIRECTORIES_FORCED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-EVIDENCE_REMOVED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,EVIDENCE_REMOVED|
+PROCESS_INTERRUPT,EVIDENCE_REMOVED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-COMMITTED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|HALT_AT,COMMITTED|
+PROCESS_INTERRUPT,COMMITTED,exit=97,native_point_reachable=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/crash-after-ack/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|ACKNOWLEDGED_BEGIN,true,durable checkpoint committed|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-PREPARED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,PREPARED|
+RETIREMENT_PROCESS_INTERRUPT,PREPARED,restart_blocked=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-CANDIDATE_FORCED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,CANDIDATE_FORCED|
+RETIREMENT_PROCESS_INTERRUPT,CANDIDATE_FORCED,restart_blocked=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-REPLACED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,REPLACED|
+RETIREMENT_PROCESS_INTERRUPT,REPLACED,restart_blocked=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-DIRECTORIES_FORCED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,DIRECTORIES_FORCED|
+RETIREMENT_PROCESS_INTERRUPT,DIRECTORIES_FORCED,restart_blocked=true
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-EVIDENCE_REMOVED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,EVIDENCE_REMOVED|
+RETIREMENT_PROCESS_INTERRUPT,EVIDENCE_REMOVED,restart_blocked=false
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/settle-crash-COMMITTED/child.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RETIREMENT_HALT_AT,COMMITTED|
+RETIREMENT_PROCESS_INTERRUPT,COMMITTED,restart_blocked=false
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-0/one.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,false,journal write/atomicity unconfirmed at before preparation: IOException: journal held by another writer|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-0/two.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,true,durable checkpoint committed|
+OS_WRITER_RACE,0,exits=23/0,selected=102
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-1/one.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,false,journal write/atomicity unconfirmed at before preparation: IOException: journal held by another writer|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-1/two.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,true,durable checkpoint committed|
+OS_WRITER_RACE,1,exits=23/0,selected=102
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-2/one.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,true,durable checkpoint committed|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-2/two.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,false,journal write/atomicity unconfirmed at before preparation: IOException: journal held by another writer|
+OS_WRITER_RACE,2,exits=0/23,selected=101
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-3/one.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,true,durable checkpoint committed|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-3/two.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,false,journal write/atomicity unconfirmed at before preparation: IOException: journal held by another writer|
+OS_WRITER_RACE,3,exits=0/23,selected=101
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-4/one.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,false,journal write/atomicity unconfirmed at before preparation: IOException: journal held by another writer|
+CHILD_LOG,/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp/gaslight-phase2-recovery-5285070509280880767/race-4/two.log,Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"|RACE_RESULT,true,durable checkpoint committed|
+OS_WRITER_RACE,4,exits=23/0,selected=102
+VOLATILE_STORAGE_VETO,tmpfs,PASS
+RECOVERY_JOURNAL_PASS: assertions=890 real_process_halts=13 native_unreachable_points=0 OS=Linux
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+REMOTE_WORLD_DATA_PASS: assertions=891 fragments=6 peak_cache_bytes=510384 peak_staging_bytes=276588
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="/var/tmp/gaslight-final-native-01a12efa/build/journal-test-temp"
+REMOTE_CHUNK_LEASE_MODEL_PASS: checks=80 cycles=30
+MUTATION,chunk_boundary_omission,detected=True,exit=1,expected_message=touching an exact chunk face
+MUTATION,camera_pitch_basis_regression,detected=True,exit=1,expected_message=valid yaw/pitch witness
+MUTATION,lost_journal_cas,detected=True,exit=1,expected_message=stale concurrent journal writer
+MUTATION,nonfinite_chunk_geometry,detected=True,exit=1,expected_message=nonfinite segment X veto
+MUTATION,blocked_headroom_compatibility,detected=True,exit=1,expected_message=repeated headroom mismatch veto
+MUTATION,swallowed_camera_host_failure,detected=True,exit=1,expected_message=unexpected callback must quarantine
+MUTATION_GATE_PASS: 6 independent safety regressions detected
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 48.813

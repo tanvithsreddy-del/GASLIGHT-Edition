@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/iPortalTeam/ImmersivePortalsMod",
+  "branch": "1.21",
+  "version_id": "vOmUATGw",
+  "version": "6.0.6",
+  "url": "https://cdn.modrinth.com/data/zJpHMkdD/versions/vOmUATGw/immersive-portals-6.0.6-mc1.21.1-fabric.jar",
+  "sha256": "07c95e7422c311b53c082a598dd533169d72fb26ee8385e6982cc7078c9f7979",
+  "sha512": "4e4c62789746e34aa8b66eca2ee0b7ff34533f64ef82988d1845877fe366efef6ac956884fc9543c20b028f1a805a79df406d27eb1968f50c5f20d02a19f9ba3",
+  "nested_dependencies": [
+    {
+      "file": "DimLib-v1.1.0-mc1.21.1.jar",
+      "sha256": "c3d335b88bdbdf6ec70f931fbe8c5dd543d8f7fcce594f3badf8790856305253"
+    },
+    {
+      "file": "cloth-config-fabric-15.0.130-fabric.jar",
+      "sha256": "79d5a72d6fba3b3799ab69b87b4652d1a59eaffe555522cc2922552a965cb540"
+    },
+    {
+      "file": "midnightlib-1.5.7-fabric.jar",
+      "sha256": "bb02a5dc1e232678cb90b55abc25abbcac798f3c311343b82f039d42a0a76d07",
+      "parent": "DimLib-v1.1.0-mc1.21.1.jar"
+    }
+  ]
+}

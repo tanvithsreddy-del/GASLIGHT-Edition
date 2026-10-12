@@ -1,0 +1,1031 @@
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/build.gradle
+@@ -0,0 +1,63 @@
++plugins { id 'net.fabricmc.fabric-loom-remap' version '1.18.4' }
++group = 'dev.kondalabs.gaslight'
++base { archivesName = 'gaslight-provider-fabric-1.21.1' }
++repositories { mavenCentral() }
++dependencies {
++    minecraft 'com.mojang:minecraft:1.21.1'
++    mappings loom.officialMojangMappings()
++    modImplementation 'net.fabricmc:fabric-loader:0.19.5'
++    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.109.0+1.21.1'
++    modImplementation files('deps/immersive-portals-6.0.6-mc1.21.1-fabric.jar')
++    modImplementation files('deps/DimLib-v1.1.0-mc1.21.1.jar', 'deps/cloth-config-fabric-15.0.130-fabric.jar')
++    modImplementation files('deps/midnightlib-1.5.7-fabric.jar')
++    testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
++    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
++}
++java { toolchain { languageVersion = JavaLanguageVersion.of(25) }; withSourcesJar() }
++sourceSets.main.java {
++    srcDir '../../src/main/java'
++    include 'dev/kondalabs/gaslight/provider/**', 'dev/kondalabs/gaslight/Geometry.java',
++        'dev/kondalabs/gaslight/NativePortal.java', 'dev/kondalabs/gaslight/StructureEnvelope.java',
++        'dev/kondalabs/gaslight/Phase3RecoveryJournal.java', 'dev/kondalabs/gaslight/ProtectedChunkRegions.java'
++}
++tasks.withType(JavaCompile).configureEach { options.release = 25; options.encoding = 'UTF-8' }
++tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
++jar { from('LICENSE'); from('THIRD_PARTY_NOTICES.md'); manifest { attributes 'Fabric-Mapping-Namespace':'named' } }
++test {
++    useJUnitPlatform(); maxHeapSize = '512m'
++    def fixtures=layout.buildDirectory.dir('journal-unit-fixtures').get().asFile
++    systemProperty 'java.io.tmpdir',fixtures.absolutePath
++    doFirst { fixtures.mkdirs() }
++}
++processResources { inputs.property 'version', version; filesMatching('fabric.mod.json') { expand 'version': version } }
++tasks.register('writeTestClasspath') { doLast { layout.buildDirectory.file('runtime-classpath.txt').get().asFile.text = sourceSets.main.runtimeClasspath.asPath } }
++sourceSets {
++    integration {
++        compileClasspath += sourceSets.main.compileClasspath + sourceSets.main.output
++        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
++    }
++}
++loom {
++    mods {
++        gaslight_provider { sourceSet sourceSets.main }
++        gaslight_phase_a_probe { sourceSet sourceSets.integration }
++    }
++    runs {
++        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+System.getProperty('gaslight.probe.mode','live') }
++        clientProof { client(); source sourceSets.integration; runDir 'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true'; programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
++    }
++}
++tasks.named('check') { dependsOn tasks.named('integrationClasses') }
++
++// This option tests the actual named development JAR, without loose production classes.
++if(project.hasProperty('gaslightPackaged')) {
++    ['runServerProof','runClientProof'].each { name ->
++        tasks.named(name,JavaExec).configure {
++            dependsOn tasks.named('jar')
++            def loose=sourceSets.main.output.files
++            classpath=files(classpath.files.findAll { !loose.contains(it) },tasks.named('jar').get().archiveFile)
++            systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
++            systemProperty 'fabric.addMods',tasks.named('jar').get().archiveFile.get().asFile.absolutePath
++        }
++    }
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/gradle/wrapper/gradle-wrapper.properties
+@@ -0,0 +1,10 @@
++distributionBase=GRADLE_USER_HOME
++distributionPath=wrapper/dists
++distributionSha256Sum=84fbba45c7f4c64abc77460e1c00f541e9f960e3c7ed2538f1ede19eacd873ae
++distributionUrl=https\://services.gradle.org/distributions/gradle-9.7.0-bin.zip
++networkTimeout=10000
++retries=0
++retryBackOffMs=500
++validateDistributionUrl=true
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=wrapper/dists
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/gradle.properties
+@@ -0,0 +1,4 @@
++org.gradle.jvmargs=-Xmx1G
++org.gradle.parallel=false
++org.gradle.configuration-cache=false
++version=0.1.0-phase-a
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/gradlew
+@@ -0,0 +1,248 @@
++#!/bin/sh
++
++#
++# Copyright © 2015 the original authors.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++# SPDX-License-Identifier: Apache-2.0
++#
++
++##############################################################################
++#
++#   gradlew start up script for POSIX generated by Gradle.
++#
++#   Important for running:
++#
++#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
++#       noncompliant, but you have some other compliant shell such as ksh or
++#       bash, then to run this script, type that shell name before the whole
++#       command line, like:
++#
++#           ksh gradlew
++#
++#       Busybox and similar reduced shells will NOT work, because this script
++#       requires all of these POSIX shell features:
++#         * functions;
++#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
++#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
++#         * compound commands having a testable exit status, especially «case»;
++#         * various built-in commands including «command», «set», and «ulimit».
++#
++#   Important for patching:
++#
++#   (2) This script targets any POSIX shell, so it avoids extensions provided
++#       by Bash, Ksh, etc; in particular arrays are avoided.
++#
++#       The "traditional" practice of packing multiple parameters into a
++#       space-separated string is a well documented source of bugs and security
++#       problems, so this is (mostly) avoided, by progressively accumulating
++#       options in "$@", and eventually passing that to Java.
++#
++#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
++#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
++#       see the in-line comments for details.
++#
++#       There are tweaks for specific operating systems such as AIX, CygWin,
++#       Darwin, MinGW, and NonStop.
++#
++#   (3) This script is generated from the Groovy template
++#       https://github.com/gradle/gradle/blob/3d91ce3b8caaf77ad09f381f43615b715b53f72c/platforms/jvm/plugins-application/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
++#       within the Gradle project.
++#
++#       You can find Gradle at https://github.com/gradle/gradle/.
++#
++##############################################################################
++
++# Attempt to set APP_HOME
++
++# Resolve links: $0 may be a link
++app_path=$0
++
++# Need this for daisy-chained symlinks.
++while
++    APP_HOME=${app_path%"${app_path##*/}"}  # leaves a trailing /; empty if no leading path
++    [ -h "$app_path" ]
++do
++    ls=$( ls -ld "$app_path" )
++    link=${ls#*' -> '}
++    case $link in             #(
++      /*)   app_path=$link ;; #(
++      *)    app_path=$APP_HOME$link ;;
++    esac
++done
++
++# This is normally unused
++# shellcheck disable=SC2034
++APP_BASE_NAME=${0##*/}
++# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
++APP_HOME=$( cd -P "${APP_HOME:-./}" > /dev/null && printf '%s\n' "$PWD" ) || exit
++
++# Use the maximum available, or set MAX_FD != -1 to use that value.
++MAX_FD=maximum
++
++warn () {
++    echo "$*"
++} >&2
++
++die () {
++    echo
++    echo "$*"
++    echo
++    exit 1
++} >&2
++
++# OS specific support (must be 'true' or 'false').
++cygwin=false
++msys=false
++darwin=false
++nonstop=false
++case "$( uname )" in                #(
++  CYGWIN* )         cygwin=true  ;; #(
++  Darwin* )         darwin=true  ;; #(
++  MSYS* | MINGW* )  msys=true    ;; #(
++  NONSTOP* )        nonstop=true ;;
++esac
++
++
++
++# Determine the Java command to use to start the JVM.
++if [ -n "$JAVA_HOME" ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++        # IBM's JDK on AIX uses strange locations for the executables
++        JAVACMD=$JAVA_HOME/jre/sh/java
++    else
++        JAVACMD=$JAVA_HOME/bin/java
++    fi
++    if [ ! -x "$JAVACMD" ] ; then
++        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++else
++    JAVACMD=java
++    if ! command -v java >/dev/null 2>&1
++    then
++        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++fi
++
++# Increase the maximum file descriptors if we can.
++if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
++    case $MAX_FD in #(
++      max*)
++        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
++        MAX_FD=$( ulimit -H -n ) ||
++            warn "Could not query maximum file descriptor limit"
++    esac
++    case $MAX_FD in  #(
++      '' | soft) :;; #(
++      *)
++        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
++        ulimit -n "$MAX_FD" ||
++            warn "Could not set maximum file descriptor limit to $MAX_FD"
++    esac
++fi
++
++# Collect all arguments for the java command, stacking in reverse order:
++#   * args from the command line
++#   * the main class name
++#   * -classpath
++#   * -D...appname settings
++#   * --module-path (only if needed)
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and GRADLE_OPTS environment variables.
++
++# For Cygwin or MSYS, switch paths to Windows format before running java
++if "$cygwin" || "$msys" ; then
++    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
++
++    JAVACMD=$( cygpath --unix "$JAVACMD" )
++
++    # Now convert the arguments - kludge to limit ourselves to /bin/sh
++    for arg do
++        if
++            case $arg in                                #(
++              -*)   false ;;                            # don't mess with options #(
++              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
++                    [ -e "$t" ] ;;                      #(
++              *)    false ;;
++            esac
++        then
++            arg=$( cygpath --path --ignore --mixed "$arg" )
++        fi
++        # Roll the args list around exactly as many times as the number of
++        # args, so each arg winds up back in the position where it started, but
++        # possibly modified.
++        #
++        # NB: a `for` loop captures its iteration list before it begins, so
++        # changing the positional parameters here affects neither the number of
++        # iterations, nor the values presented in `arg`.
++        shift                   # remove old arg
++        set -- "$@" "$arg"      # push replacement arg
++    done
++fi
++
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++
++# Collect all arguments for the java command:
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
++#     and any embedded shellness will be escaped.
++#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
++#     treated as '${Hostname}' itself on the command line.
++
++set -- \
++        "-Dorg.gradle.appname=$APP_BASE_NAME" \
++        -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
++        "$@"
++
++# Stop when "xargs" is not available.
++if ! command -v xargs >/dev/null 2>&1
++then
++    die "xargs is not available"
++fi
++
++# Use "xargs" to parse quoted args.
++#
++# With -n1 it outputs one arg per line, with the quotes and backslashes removed.
++#
++# In Bash we could simply go:
++#
++#   readarray ARGS < <( xargs -n1 <<<"$var" ) &&
++#   set -- "${ARGS[@]}" "$@"
++#
++# but POSIX shell has neither arrays nor command substitution, so instead we
++# post-process each arg (as a line of input to sed) to backslash-escape any
++# character that might be a shell metacharacter, then use eval to reverse
++# that process (while maintaining the separation between arguments), and wrap
++# the whole thing up as a single "set" statement.
++#
++# This will of course break if any of these variables contains a newline or
++# an unmatched quote.
++#
++
++eval "set -- $(
++        printf '%s\n' "$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS" |
++        xargs -n1 |
++        sed ' s~[^-[:alnum:]+,./:=@_]~\\&~g; ' |
++        tr '\n' ' '
++    )" '"$@"'
++
++exec "$JAVACMD" "$@"
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/gradlew.bat
+@@ -0,0 +1,82 @@
++@rem
++@rem Copyright 2015 the original author or authors.
++@rem
++@rem Licensed under the Apache License, Version 2.0 (the "License");
++@rem you may not use this file except in compliance with the License.
++@rem You may obtain a copy of the License at
++@rem
++@rem      https://www.apache.org/licenses/LICENSE-2.0
++@rem
++@rem Unless required by applicable law or agreed to in writing, software
++@rem distributed under the License is distributed on an "AS IS" BASIS,
++@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++@rem See the License for the specific language governing permissions and
++@rem limitations under the License.
++@rem
++@rem SPDX-License-Identifier: Apache-2.0
++@rem
++
++@if "%DEBUG%"=="" @echo off
++@rem ##########################################################################
++@rem
++@rem  gradlew startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables, and ensure extensions are enabled
++setlocal EnableExtensions
++
++set DIRNAME=%~dp0
++if "%DIRNAME%"=="" set DIRNAME=.
++@rem This is normally unused
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Resolve any "." and ".." in APP_HOME to make it shorter.
++for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if %ERRORLEVEL% equ 0 goto execute
++
++echo. 1>&2
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
++echo. 1>&2
++echo Please set the JAVA_HOME variable in your environment to match the 1>&2
++echo location of your Java installation. 1>&2
++
++"%COMSPEC%" /c exit 1
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto execute
++
++echo. 1>&2
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
++echo. 1>&2
++echo Please set the JAVA_HOME variable in your environment to match the 1>&2
++echo location of your Java installation. 1>&2
++
++"%COMSPEC%" /c exit 1
++
++:execute
++@rem Setup the command line
++
++
++
++@rem Execute gradlew
++@rem endlocal doesn't take effect until after the line is parsed and variables are expanded
++@rem which allows us to clear the local environment before executing the java command
++endlocal & "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %* & call :exitWithErrorLevel
++
++:exitWithErrorLevel
++@rem Use "%COMSPEC%" /c exit to allow operators to work properly in scripts
++"%COMSPEC%" /c exit %ERRORLEVEL%
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/prepare_disposable_test.py
+@@ -0,0 +1,17 @@
++"""Create a new, isolated integration fixture. Never reuse a dirty world."""
++import json,pathlib,re,sys
++root=pathlib.Path(__file__).resolve().parent
++suffix=sys.argv[1] if len(sys.argv)>1 else '01'
++if not re.fullmatch(r'[0-9]{2}',suffix):raise SystemExit('Use a two-digit fixture suffix')
++server=root/'run-server';name='phase-a-disposable-'+suffix;world=server/name
++if world.exists():raise SystemExit('World already exists; unresolved journals must not be deleted or reused')
++world.mkdir(parents=True);(world/'.gaslight-phase-a-disposable').write_text('GASLIGHT_PHASE_A_DISPOSABLE_V1\n')
++settings=json.dumps(dict(layers=[dict(block='minecraft:bedrock',height=1),dict(block='minecraft:dirt',height=2),dict(block='minecraft:grass_block',height=1)],biome='minecraft:plains',features=False,lakes=False,structure_overrides=[]),separators=(',',':'))
++(server/'server.properties').write_text('server-ip=127.0.0.1\nserver-port=25588\nonline-mode=false\nenforce-secure-profile=false\nlevel-name='+name+'\nlevel-type=minecraft:flat\ngenerate-structures=false\nlevel-seed=44001\nview-distance=4\nsimulation-distance=4\nspawn-protection=0\nmax-players=1\nsync-chunk-writes=true\ngenerator-settings='+settings+'\n')
++if not (server/'eula.txt').exists():(server/'eula.txt').write_text('eula=false\n')
++(server/'probe-server.txt').write_text('')
++client=root/'run-client';client.mkdir(exist_ok=True)
++(client/'probe-client.txt').write_text('connect-fixture-'+suffix)
++if not (client/'options.txt').exists():(client/'options.txt').write_text('renderDistance:4\nsimulationDistance:4\nguiScale:2\nmipmapLevels:0\nmaxFps:60\nfullscreen:false\nskipMultiplayerWarning:true\npauseOnLostFocus:false\nsoundCategory_master:0.0\n')
++print('DISPOSABLE_FIXTURE_CREATED',world)
++print('EULA acceptance must already be present or be supplied by the user before starting.')
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/provider.lock.json
+@@ -0,0 +1,24 @@
++{
++  "repository": "https://github.com/iPortalTeam/ImmersivePortalsMod",
++  "branch": "1.21",
++  "version_id": "vOmUATGw",
++  "version": "6.0.6",
++  "url": "https://cdn.modrinth.com/data/zJpHMkdD/versions/vOmUATGw/immersive-portals-6.0.6-mc1.21.1-fabric.jar",
++  "sha256": "07c95e7422c311b53c082a598dd533169d72fb26ee8385e6982cc7078c9f7979",
++  "sha512": "4e4c62789746e34aa8b66eca2ee0b7ff34533f64ef82988d1845877fe366efef6ac956884fc9543c20b028f1a805a79df406d27eb1968f50c5f20d02a19f9ba3",
++  "nested_dependencies": [
++    {
++      "file": "DimLib-v1.1.0-mc1.21.1.jar",
++      "sha256": "c3d335b88bdbdf6ec70f931fbe8c5dd543d8f7fcce594f3badf8790856305253"
++    },
++    {
++      "file": "cloth-config-fabric-15.0.130-fabric.jar",
++      "sha256": "79d5a72d6fba3b3799ab69b87b4652d1a59eaffe555522cc2922552a965cb540"
++    },
++    {
++      "file": "midnightlib-1.5.7-fabric.jar",
++      "sha256": "bb02a5dc1e232678cb90b55abc25abbcac798f3c311343b82f039d42a0a76d07",
++      "parent": "DimLib-v1.1.0-mc1.21.1.jar"
++    }
++  ]
++}--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/README.md
+@@ -0,0 +1,78 @@
++# GASLIGHT fixed-portal development prototype
++
++**Minecraft 1.21.1, Fabric, Java 25. Full GASLIGHT remains NO-GO.** This module is
++separate from the preserved native 26.1.2 data/acquisition experiment. It does not
++make houses or terrain disappear when you look away. Those automatic changes remain
++disabled because their authenticated frame barrier and crash reconciliation are missing.
++
++The genuine named development JAR was loaded directly in a graphical Windows client
++and Linux/ext4 dedicated server. Fixed remote views, lighting, live block updates,
++placement/mining through the link, walking/return, creative flight, dimension changes,
++disconnect/reconnect and chunk unloading were exercised. See the evidence report for
++the exact scope, known provider errors and performance sampling limits.
++
++## Reproduce the isolated proof
++
++Keep this module inside `ACTIVE_PROJECT/provider-adapters/fabric-1.21.1` or the
++repository's corresponding `native-26.1.2/provider-adapters/fabric-1.21.1` directory.
++Five existing pure GASLIGHT classes are compiled from the parent native source tree.
++No HISTORY code or temporary Minecraft stubs are used.
++
++```
++python setup_deps.py
++./gradlew --no-daemon --max-workers=2 clean build
++python prepare_disposable_test.py 01
++# Accept Minecraft's EULA for this new test environment if needed.
++./gradlew --no-daemon --max-workers=2 runServerProof -PgaslightPackaged
++./gradlew --no-daemon --max-workers=2 runClientProof -PgaslightPackaged
++```
++
++Use `gradlew.bat` on Windows. The server must use tested durable local Linux/ext4
++storage. Windows's directory-force failure is a real publication veto, so this is
++not currently a working Windows integrated-server/singleplayer edition. The tested
++mixed Windows/WSL profile used a loopback-only byte relay; commands and code are in
++the evidence tools. No firewall or security settings were changed by the agent.
++
++`-PgaslightPackaged` removes loose production classes from the run classpath and loads
++the actual named development JAR. Both logs print `GASLIGHT_CODE_SOURCE` for verification.
++The integration driver is a separate test mod and is absent from the production JAR.
++It generates exactly two 5x5 fixture windows and edits fixture floors/blocks only in
++the new disposable world. Native generation has neighboring work beyond these 50
++target chunks; the target count is not a proof of total generation cost.
++
++After the client joins, the test driver's `probe-client.txt` accepts `resume`, `view-N`,
++`place-N 1`, `mine-N 1`, `walk-N 35`, `fly-N 18`, `look 0 0`, `disconnect-N`, `connect-N`
++and `quit-N`. Use unique command labels. The server's `probe-server.txt` accepts
++`snapshot-N`, `update-N`, `pose .5 81 1.5 180 0`, `dimension-N`, and `stop-N`.
++Fixture poses are explicit setup; only subsequent player-input crossings count as
++portal traversal evidence. Do not run the test driver in any valuable world.
++
++## Production adapter and safety limits
++
++Without the exact disposable marker, creation is disabled. In a marked world, the
++operator console has `gaslight-fixed status`, `gaslight-fixed retire`, and
++`gaslight-fixed create x y z tx ty tz` (fixed 4x4 same-dimension link).
++Creation/retirement require no connected observers. Unknown/unloaded chunk columns,
++structure starts/references, protected columns, malformed policies, occupancy and
++durability failures veto creation. The adapter does not generate or edit terrain.
++
++This is one fixed pair made of four provider entities, with two owned radius-2
++loaders (50 chunk references). Server indirect loading radius is capped at 2 while
++this marked service is active. These limits do not bound all vanilla/provider work,
++GPU allocations, bandwidth or client recursion. Do not treat the JVM heap ceiling
++as a bound on all process memory.
++
++The last player's disconnect retires the link and releases ownership. The journal
++retains its intent because a vanilla save return value is not a durable entity-removal
++receipt. A restarted dirty world is quarantined. **Never delete a journal to unlock it.**
++Repeated safely reconciled publication in one saved world is not implemented.
++
++Installable intermediary JARs and named development JARs are labeled separately.
++The named JAR belongs in this Gradle development environment; it is not a normal
++launcher mod JAR. Install Fabric API 0.109.0+1.21.1 and Immersive Portals 6.0.6 separately
++for a normal modpack. Never add the extracted nested development dependencies there.
++
++Fabric Loader 0.19.5, Fabric API 0.109.0+1.21.1, Loom 1.18.4, Gradle 9.7.0 and JDK 25
++are pinned. Provider and nested dependency hashes are in `provider.lock.json`.
++Forge, NeoForge, vanilla-client seamless rendering and Bedrock are not supported by
++this prototype. Provider reuse does not supply GASLIGHT's missing safety/controller gates.
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/settings.gradle
+@@ -0,0 +1,2 @@
++pluginManagement { repositories { maven { url = 'https://maven.fabricmc.net/' }; gradlePluginPortal(); mavenCentral() } }
++rootProject.name = 'gaslight-provider-fabric'
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/setup_deps.py
+@@ -0,0 +1,26 @@
++"""Fetch only the hash-pinned provider and extract its unchanged development dependencies."""
++import hashlib,json,pathlib,urllib.request,zipfile
++root=pathlib.Path(__file__).resolve().parent
++lock=json.loads((root/'provider.lock.json').read_text())
++deps=root/'deps';deps.mkdir(exist_ok=True)
++provider=deps/'immersive-portals-6.0.6-mc1.21.1-fabric.jar'
++if provider.is_symlink() or deps.is_symlink():raise RuntimeError('linked dependency path refused')
++if not provider.exists():
++    data=urllib.request.urlopen(lock['url'],timeout=60).read()
++    if hashlib.sha512(data).hexdigest()!=lock['sha512']:raise RuntimeError('provider download hash mismatch')
++    provider.write_bytes(data)
++if hashlib.sha512(provider.read_bytes()).hexdigest()!=lock['sha512']:raise RuntimeError('provider hash mismatch')
++for item in lock['nested_dependencies']:
++    name=item['file']
++    if pathlib.Path(name).name!=name:raise RuntimeError('invalid pinned filename')
++    parent=deps/item.get('parent',provider.name)
++    with zipfile.ZipFile(parent) as archive:
++        matches=[n for n in archive.namelist() if n.startswith('META-INF/jars/') and n.endswith('/'+name)]
++        if len(matches)!=1:raise RuntimeError('missing or ambiguous nested dependency: '+name)
++        data=archive.read(matches[0])
++    if hashlib.sha256(data).hexdigest()!=item['sha256']:raise RuntimeError('nested dependency hash mismatch: '+name)
++    target=deps/name
++    if target.is_symlink():raise RuntimeError('linked dependency file refused')
++    target.write_bytes(data)
++    print(name,item['sha256'])
++print('PINNED_PROVIDER_DEPENDENCIES_VERIFIED',hashlib.sha256(provider.read_bytes()).hexdigest())
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/integration/java/dev/kondalabs/gaslight/probe/ClientProbe.java
+@@ -0,0 +1,53 @@
++package dev.kondalabs.gaslight.probe;
++import net.fabricmc.api.ClientModInitializer;
++import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
++import net.minecraft.client.Minecraft;
++import net.minecraft.client.KeyMapping;
++import com.mojang.blaze3d.platform.InputConstants;
++import net.minecraft.client.Screenshot;
++import net.minecraft.client.gui.screens.TitleScreen;
++import net.minecraft.client.gui.screens.ConnectScreen;
++import net.minecraft.client.multiplayer.ServerData;
++import net.minecraft.client.multiplayer.resolver.ServerAddress;
++import net.minecraft.core.BlockPos;
++import net.minecraft.world.level.LightLayer;
++import net.minecraft.world.phys.BlockHitResult;
++import java.nio.file.*;
++import qouteall.imm_ptl.core.ClientWorldLoader;
++import qouteall.imm_ptl.core.block_manipulation.BlockManipulationClient;
++
++public final class ClientProbe implements ClientModInitializer {
++    private String last="";private int remaining;private String pending;
++    private static void output(String s){System.out.println("GASLIGHT_A_CLIENT "+s);}
++    private static String availableBlock(Minecraft mc,BlockPos p){
++        var chunk=mc.level.getChunkSource().getChunk(Math.floorDiv(p.getX(),16),Math.floorDiv(p.getZ(),16),net.minecraft.world.level.chunk.status.ChunkStatus.FULL,false);
++        return chunk==null?"UNAVAILABLE":chunk.getBlockState(p).toString();
++    }
++    private void release(Minecraft mc){mc.options.keyUp.setDown(false);mc.options.keyAttack.setDown(false);mc.options.keyUse.setDown(false);mc.options.keyJump.setDown(false);}
++    @Override public void onInitializeClient(){
++        if(!Boolean.getBoolean("gaslight.phaseA.probe"))throw new IllegalStateException("probe must be explicitly enabled");
++        ClientTickEvents.END_CLIENT_TICK.register(mc->{try{
++            if(remaining>0&&--remaining==0){release(mc);output(pending+" DONE position="+(mc.player==null?null:mc.player.position()));}
++            Path p=mc.gameDirectory.toPath().resolve("probe-client.txt");if(!Files.exists(p))return;
++            String cmd=Files.readString(p).trim();if(cmd.isEmpty()||cmd.equals(last))return;last=cmd;
++            if(cmd.startsWith("snapshot")||cmd.startsWith("view")){
++                if(mc.level==null||mc.player==null){output(cmd+" NO_WORLD");return;}
++                output(cmd+" position="+mc.player.position()+" dimension="+mc.level.dimension().location()+" remote="+availableBlock(mc,new BlockPos(1024,82,1021))+" placed="+availableBlock(mc,new BlockPos(1024,82,1022))+" light="+mc.level.getBrightness(LightLayer.BLOCK,new BlockPos(1024,81,1024))+" hit="+(mc.hitResult instanceof BlockHitResult b?b.getBlockPos():mc.hitResult)+" remoteHit="+(BlockManipulationClient.remoteHitResult instanceof BlockHitResult r?r.getBlockPos():BlockManipulationClient.remoteHitResult)+" worlds="+ClientWorldLoader.getClientWorlds().size()+" flying="+mc.player.getAbilities().flying+" fps="+mc.getFps()+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory()));
++                if(cmd.startsWith("view"))Screenshot.grab(mc.gameDirectory,mc.getMainRenderTarget(),c->output(cmd+" SCREENSHOT "+c.getString()));
++            }else if(cmd.startsWith("mine")||cmd.startsWith("place")||cmd.startsWith("walk")||cmd.startsWith("fly")){
++                if(mc.player==null)throw new IllegalStateException("no player");release(mc);
++                if(cmd.startsWith("mine")){KeyMapping.click(InputConstants.Type.MOUSE.getOrCreate(0));mc.options.keyAttack.setDown(true);}
++                if(cmd.startsWith("place"))mc.options.keyUse.setDown(true);
++                if(cmd.startsWith("walk"))mc.options.keyUp.setDown(true);
++                if(cmd.startsWith("fly")){mc.player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);mc.player.getAbilities().flying=true;mc.player.onUpdateAbilities();mc.options.keyUp.setDown(true);}
++                String[] parts=cmd.split(" ");remaining=parts.length>1?Integer.parseInt(parts[1]):cmd.startsWith("walk")?35:cmd.startsWith("fly")?28:5;
++                if(remaining<1||remaining>100){release(mc);throw new IllegalArgumentException("bounded input duration");}pending=cmd;
++            }else if(cmd.startsWith("look")){String[] parts=cmd.split(" ");mc.player.setYRot(Float.parseFloat(parts[1]));mc.player.setXRot(Float.parseFloat(parts[2]));output(cmd+" DONE");}
++            else if(cmd.startsWith("resume")){mc.options.pauseOnLostFocus=false;mc.setScreen(null);output(cmd+" DONE");}
++            else if(cmd.startsWith("disconnect")){release(mc);mc.level.disconnect();mc.disconnect();mc.setScreen(new TitleScreen());output(cmd+" DONE initialized="+ClientWorldLoader.getIsInitialized());}
++            else if(cmd.startsWith("connect")){var data=new ServerData("Phase A disposable","127.0.0.1:25588",ServerData.Type.OTHER);ConnectScreen.startConnecting(new TitleScreen(),mc,ServerAddress.parseString(data.ip),data,false,null);output(cmd+" REQUESTED");}
++            else if(cmd.startsWith("quit")){output("QUIT");mc.stop();}
++            else throw new IllegalArgumentException(cmd);
++        }catch(Throwable e){e.printStackTrace();output("FAIL "+e);}});
++    }
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/integration/java/dev/kondalabs/gaslight/probe/ServerProbe.java
+@@ -0,0 +1,93 @@
++package dev.kondalabs.gaslight.probe;
++import dev.kondalabs.gaslight.provider.*;
++import net.fabricmc.api.ModInitializer;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
++import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
++import net.minecraft.core.BlockPos;
++import net.minecraft.world.level.GameType;
++import net.minecraft.world.level.GameRules;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.level.chunk.status.ChunkStatus;
++import net.minecraft.world.phys.Vec3;
++import net.minecraft.world.item.*;
++import net.minecraft.world.level.storage.LevelResource;
++import java.nio.file.*;
++import java.util.*;
++import qouteall.imm_ptl.core.chunk_loading.ImmPtlChunkTracking;
++import qouteall.imm_ptl.core.chunk_loading.ImmPtlChunkTickets;
++
++/** Genuine disposable-world driver; never packaged into the production adapter. */
++public final class ServerProbe implements ModInitializer {
++    private static String last="";private static FixedPortalAdapter.Token previous;
++    private static void check(boolean c,String s){if(!c)throw new AssertionError(s);}
++    private static void output(String s){System.out.println("GASLIGHT_A_SERVER "+s);}
++    @Override public void onInitialize(){
++        if(!Boolean.getBoolean("gaslight.phaseA.probe"))throw new IllegalStateException("probe must be explicitly enabled");
++        ServerLifecycleEvents.SERVER_STARTED.register(server->{
++            var w=server.overworld();var a=GaslightProvider.service(server);
++            check(a!=null,"GASLIGHT initialized");
++            if(System.getProperty("gaslight.probe.mode","live").equals("recovery")){
++                check(a.status().state().equals("QUARANTINED")&&a.status().intents()==1,"restart retains outstanding intent");
++                check(a.status().portals()==0&&a.status().ownedLoaders()==0,"restart cannot republish or own leases");
++                output("RECOVERY_BLOCKED_AS_REQUIRED "+a.status());return;
++            }
++            w.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false,server);
++            w.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false,server);w.setDayTime(6000);
++            // Exactly two 5x5 pre-existing FULL fixture windows; generation is test setup, not adapter acquisition.
++            for(int c:new int[]{0,64})for(int x=c-2;x<=c+2;x++)for(int z=c-2;z<=c+2;z++)w.getChunk(x,z,ChunkStatus.FULL,true);
++            for(int c:new int[]{0,1024})for(int x=c-12;x<=c+12;x++)for(int z=c-12;z<=c+12;z++){
++                w.setBlockAndUpdate(new BlockPos(x,80,z),c==0?Blocks.STONE.defaultBlockState():Blocks.GLOWSTONE.defaultBlockState());
++                for(int y=81;y<86;y++)w.setBlockAndUpdate(new BlockPos(x,y,z),Blocks.AIR.defaultBlockState());
++            }
++            for(int x=1023;x<=1025;x++)for(int y=81;y<=84;y++)w.setBlockAndUpdate(new BlockPos(x,y,1021),Blocks.DIAMOND_BLOCK.defaultBlockState());
++            var valid=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(1024.5,82.5,1024.5),4,4);
++            var missing=new FixedPortalAdapter.Spec(w,valid.origin(),w,new Vec3(4000000.5,82.5,4000000.5),4,4);
++            check(!a.prepare(missing),"unknown target rejected without generation");
++            check(!a.prepare(new FixedPortalAdapter.Spec(w,new Vec3(Double.NaN,82,.5),w,valid.destination(),4,4)),"NaN rejected");
++            Path policy=server.getWorldPath(LevelResource.ROOT).resolve("gaslight-protected-chunks.csv");
++            try{
++                Files.writeString(policy,"64,64,64,64\n");check(!a.prepare(valid),"destination protected column rejected");
++                Files.writeString(policy,"broken-policy\n");check(!a.prepare(valid),"corrupt policy fail closed");
++                Files.writeString(policy,"# explicitly empty disposable fixture policy\n");
++            }catch(Exception e){throw new RuntimeException(e);}
++            var obstruction=net.minecraft.world.entity.EntityType.ARMOR_STAND.create(w);
++            check(obstruction!=null,"fixture obstruction");obstruction.setPos(valid.destination());w.addFreshEntity(obstruction);
++            check(!a.prepare(valid),"same-dimension destination occupancy veto");obstruction.discard();
++            if(System.getProperty("gaslight.probe.mode","live").equals("prepare-only")){output("FIXTURE_PREPARED_NO_PUBLICATION "+a.status());server.saveEverything(false,true,true);server.halt(false);return;}
++            server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"gaslight-fixed create 0.5 82.5 0.5 1024.5 82.5 1024.5");
++            check(a.status().state().equals("ACTIVE"),"genuine production console command publication: "+a.status());
++            previous=a.token();check(a.status().portals()==4&&a.status().ownedChunks()==50,"bounded four-entity pair, fifty owned chunks");
++            check(!a.retire(new FixedPortalAdapter.Token(previous.owner(),previous.generation())),"identity-fenced stale retirement");
++            output("READY "+a.status());
++        });
++        ServerPlayConnectionEvents.JOIN.register((handler,sender,server)->{
++            var player=handler.player;player.setGameMode(GameType.CREATIVE);
++            player.teleportTo(server.overworld(),.5,81,3.5,180,0);
++            player.getInventory().setItem(0,new ItemStack(Items.GOLD_BLOCK,64));player.containerMenu.broadcastChanges();
++            output("JOIN "+player.getGameProfile().getName());
++        });
++        ServerTickEvents.END_SERVER_TICK.register(server->{
++            try{
++                Path request=Path.of("probe-server.txt");if(!Files.exists(request))return;
++                String command=Files.readString(request).trim();if(command.isEmpty()||command.equals(last))return;last=command;
++                var a=GaslightProvider.service(server);var w=server.overworld();
++                if(command.startsWith("snapshot")){
++                    int full=0;for(int x=62;x<=66;x++)for(int z=62;z<=66;z++)if(w.getChunkSource().getChunkNow(x,z)!=null)full++;
++                    var remote=w.getChunkSource().getChunkNow(64,63);var placed=w.getChunkSource().getChunkNow(64,63);
++                    output(command+" "+a.status()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position().toString()).toList());
++                }
++                else if(command.startsWith("pose")){String[] v=command.split(" ");for(var player:server.getPlayerList().getPlayers())player.teleportTo(w,Double.parseDouble(v[1]),Double.parseDouble(v[2]),Double.parseDouble(v[3]),Float.parseFloat(v[4]),Float.parseFloat(v[5]));output(command+" RESET_FIXTURE_POSE");}
++                else if(command.startsWith("dimension")){for(var player:server.getPlayerList().getPlayers())player.teleportTo(server.getLevel(net.minecraft.world.level.Level.NETHER),0,90,0,0,0);output(command+" REAL_DIMENSION_CHANGE");}
++                else if(command.startsWith("update")){w.setBlockAndUpdate(new BlockPos(1024,82,1021),Blocks.EMERALD_BLOCK.defaultBlockState());output(command+" UPDATED");}
++                else if(command.startsWith("retire"))output(command+" result="+a.retire(previous)+" "+a.status());
++                else if(command.startsWith("reprepare")){
++                    var next=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(1024.5,82.5,1024.5),4,4);
++                    check(a.prepare(next),"repeat acquisition");check(!a.retire(previous),"old generation cannot retire successor");previous=a.token();output(command+" "+a.status());
++                }
++                else if(command.startsWith("stop")){output("STOP "+a.status());server.halt(false);}
++                else throw new IllegalArgumentException(command);
++            }catch(Throwable e){e.printStackTrace();output("FAIL "+e);server.halt(false);}
++        });
++    }
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/integration/resources/fabric.mod.json
+@@ -0,0 +1 @@
++{"schemaVersion":1,"id":"gaslight_phase_a_probe","version":"1","environment":"*","name":"Disposable Phase A integration driver","entrypoints":{"main":["dev.kondalabs.gaslight.probe.ServerProbe"],"client":["dev.kondalabs.gaslight.probe.ClientProbe"]},"depends":{"gaslight_provider":"*"}}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java
+@@ -0,0 +1,135 @@
++package dev.kondalabs.gaslight.provider;
++
++import dev.kondalabs.gaslight.NativePortal;
++import dev.kondalabs.gaslight.NativePortal.*;
++import dev.kondalabs.gaslight.Phase3RecoveryJournal;
++import dev.kondalabs.gaslight.StructureEnvelope;
++import dev.kondalabs.gaslight.ProtectedChunkRegions;
++import java.io.IOException;
++import java.nio.file.*;
++import java.util.*;
++import net.minecraft.core.BlockPos;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.world.entity.Entity;
++import net.minecraft.world.level.storage.LevelResource;
++import net.minecraft.world.phys.AABB;
++import net.minecraft.world.phys.Vec3;
++import qouteall.imm_ptl.core.api.PortalAPI;
++import qouteall.imm_ptl.core.chunk_loading.ChunkLoader;
++import qouteall.imm_ptl.core.portal.Portal;
++import qouteall.imm_ptl.core.IPGlobal;
++
++/** Phase A fixed link only. Creation and retirement require no connected observers.
++ * Dynamic publication/camera authority is intentionally not claimed or enabled. */
++public final class FixedPortalAdapter {
++    public static final String TAG="gaslight-phase-a:";
++    public static final String MARKER="GASLIGHT_PHASE_A_DISPOSABLE_V1";
++    public record Spec(ServerLevel source,Vec3 origin,ServerLevel target,Vec3 destination,double width,double height){}
++    public record Token(UUID owner,long generation){}
++    public record Status(String state,String reason,int portals,int ownedLoaders,int ownedChunks,int intents,long generation){}
++    private final MinecraftServer server;
++    private final Phase3RecoveryJournal.FileStore journal;
++    private final Set<UUID> authorized=new HashSet<>();
++    private final List<Portal> portals=new ArrayList<>();
++    private final List<ChunkLoader> loaders=new ArrayList<>();
++    private String state="DISABLED",reason="disposable marker absent";
++    private Token token;private long generation;private boolean hadViewer;
++    private Spec spec;
++    private final int previousRadius,previousLayers,previousRenderLimit;
++
++    FixedPortalAdapter(MinecraftServer server){
++        this.server=server;
++        previousRadius=IPGlobal.indirectLoadingRadiusCap;previousLayers=IPGlobal.maxPortalLayer;previousRenderLimit=IPGlobal.portalRenderLimit;
++        Path root=server.getWorldPath(LevelResource.ROOT);
++        boolean permitted=false;
++        try { Path marker=root.resolve(".gaslight-phase-a-disposable");permitted=Files.isRegularFile(marker,LinkOption.NOFOLLOW_LINKS)&&Files.size(marker)<=128&&Files.readString(marker).trim().equals(MARKER); }
++        catch(IOException|RuntimeException ignored) { /* Absent or unreadable authorization keeps all effects disabled. */ }
++        journal=permitted?new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin")):null;
++        if(journal!=null){ state=journal.blockedOnOpen()?"QUARANTINED":"IDLE";reason=journal.diagnostic();IPGlobal.indirectLoadingRadiusCap=2;IPGlobal.maxPortalLayer=2;IPGlobal.portalRenderLimit=8; }
++    }
++    public static boolean owned(Portal p){return p.portalTag!=null&&p.portalTag.startsWith(TAG);}
++    boolean permits(Portal p){return authorized.contains(p.getUUID()) && (state.equals("STAGING")||state.equals("ACTIVE"));}
++    private void thread(){if(!server.isSameThread())throw new IllegalStateException("server thread required");}
++    private boolean refuse(String why){reason=why;GaslightProvider.LOG.info("GASLIGHT_FIXED_REFUSED {}",why);return false;}
++    public Status status(){thread();return new Status(state,reason,portals.size(),loaders.size(),loaders.stream().mapToInt(ChunkLoader::getChunkNum).sum(),journal==null?0:journal.outstanding(),generation);}
++    public Token token(){thread();return token;}
++    public boolean prepare(Spec s){
++        thread();
++        if(journal==null||journal.blockedOnOpen()||!state.equals("IDLE"))return refuse("disabled, outstanding recovery or active generation");
++        if(!server.getPlayerList().getPlayers().isEmpty())return refuse("publication requires an observer-free server");
++        try {
++            Objects.requireNonNull(s);Objects.requireNonNull(s.source);Objects.requireNonNull(s.target);
++            if(s.source.getServer()!=server||s.target.getServer()!=server)throw new IllegalArgumentException("foreign world");
++            Surface a=surface(s.origin,s.width,s.height),b=surface(s.destination,s.width,s.height);
++            if(s.width>16||s.height>16||s.width<2||s.height<3)throw new IllegalArgumentException("fixed prototype size budget");
++            audit(s.source,a);audit(s.target,b);
++            for(var side:List.of(Map.entry(s.source,s.origin),Map.entry(s.target,s.destination)))if(side.getKey().getEntities(null,box(side.getValue(),s.width,s.height).inflate(1)).stream().anyMatch(e->!e.isRemoved()))throw new IllegalArgumentException("occupied portal footprint");
++            token=new Token(UUID.randomUUID(),++generation);spec=s;
++            // NativePortal geometry is an intent carrier; provider API owns the actual rigid transform.
++            if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
++            state="STAGING";
++            addLoader(s.source,s.origin);addLoader(s.target,s.destination);
++            Portal forward=Portal.ENTITY_TYPE.create(s.source);
++            if(forward==null)throw new IllegalStateException("provider entity creation failed");
++            forward.setOriginPos(s.origin);forward.setOrientationAndSize(new Vec3(1,0,0),new Vec3(0,1,0),s.width,s.height);
++            forward.setDestinationDimension(s.target.dimension());forward.setDestination(s.destination);
++            forward.setScaleTransformation(1);forward.setRotation(null);
++            var reverse=PortalAPI.createReversePortal(forward);
++            for(Portal p:List.of(forward,PortalAPI.createFlippedPortal(forward),reverse,PortalAPI.createFlippedPortal(reverse))){
++                p.portalTag=TAG+token.owner+":"+token.generation;
++                authorized.add(p.getUUID());portals.add(p);
++                if(!((ServerLevel)p.level()).addFreshEntity(p))throw new IllegalStateException("provider spawn refused");
++            }
++            state="ACTIVE";reason="fixed rigid link ready; automatic replacement disabled";hadViewer=false;
++            GaslightProvider.LOG.info("GASLIGHT_FIXED_READY {}",status());return true;
++        }catch(RuntimeException failure){
++            reason=failure.toString();
++            if(state.equals("STAGING")){rollback();state="QUARANTINED";} // Keep uncertain intent for recovery.
++            return refuse(reason);
++        }
++    }
++    private static Surface surface(Vec3 v,double w,double h){Objects.requireNonNull(v);return new Surface(new V(v.x,v.y,v.z),new V(1,0,0),w,h);}
++    private static AABB box(Vec3 p,double w,double h){return new AABB(p.x-w/2,p.y-h/2,p.z-.1,p.x+w/2,p.y+h/2,p.z+.1);}
++    private static void audit(ServerLevel world,Surface s){
++        var policy=ProtectedChunkRegions.load(world.getServer().getWorldPath(LevelResource.ROOT).resolve("gaslight-protected-chunks.csv"));
++        if(!policy.valid())throw new IllegalArgumentException(policy.reason());
++        if(s.centre().y()-s.height()/2<world.getMinBuildHeight()||s.centre().y()+s.height()/2>world.getMaxBuildHeight())throw new IllegalArgumentException("build height");
++        var result=StructureEnvelope.audit(s,1,25,(x,z)->{
++            var chunk=world.getChunkSource().getChunkNow(x,z);
++            if(chunk==null)return StructureEnvelope.Result.UNKNOWN;
++            if(policy.protectedAt(x,z))return StructureEnvelope.Result.USER_PROTECTED;
++            if(!world.getWorldBorder().isWithinBounds(new BlockPos(x*16,(int)s.centre().y(),z*16)))return StructureEnvelope.Result.UNKNOWN;
++            if(chunk.getAllStarts().values().stream().anyMatch(start->start!=null&&start.isValid())||chunk.getAllReferences().values().stream().anyMatch(ref->!ref.isEmpty()))return StructureEnvelope.Result.STRUCTURE;
++            return StructureEnvelope.Result.SAFE;
++        });
++        if(!result.accepted())throw new IllegalArgumentException(result.reason());
++        // Provider lease touches 5x5; unknown/structured lease dependencies are vetoes too.
++        int cx=Math.floorDiv((int)Math.floor(s.centre().x()),16),cz=Math.floorDiv((int)Math.floor(s.centre().z()),16);
++        for(int x=cx-2;x<=cx+2;x++)for(int z=cz-2;z<=cz+2;z++){
++            var chunk=world.getChunkSource().getChunkNow(x,z);
++            if(chunk==null||policy.protectedAt(x,z)||!world.getWorldBorder().isWithinBounds(new BlockPos(x*16,(int)s.centre().y(),z*16))||chunk.getAllStarts().values().stream().anyMatch(start->start!=null&&start.isValid())||chunk.getAllReferences().values().stream().anyMatch(ref->!ref.isEmpty()))throw new IllegalArgumentException("uncertified lease footprint");
++        }
++    }
++    private void addLoader(ServerLevel world,Vec3 p){
++        var loader=new ChunkLoader(world.dimension(),Math.floorDiv((int)Math.floor(p.x),16),Math.floorDiv((int)Math.floor(p.z),16),2);
++        PortalAPI.addGlobalChunkLoader(server,loader);loaders.add(loader);
++    }
++    private void rollback(){
++        for(Portal p:portals){p.setTeleportable(false);p.setIsVisible(false);p.discard();}portals.clear();authorized.clear();
++        for(ChunkLoader l:loaders)PortalAPI.removeGlobalChunkLoader(server,l);loaders.clear();
++    }
++    public boolean retire(Token requested){
++        thread();if(token!=requested||!state.equals("ACTIVE"))return refuse("stale retirement token");
++        if(!server.getPlayerList().getPlayers().isEmpty())return refuse("retirement requires no observers");
++        for(Portal p:portals)if(!p.level().getEntities(p,p.getBoundingBox().inflate(1),e->!(e instanceof Portal)).isEmpty())return refuse("crossing occupancy");
++        rollback();
++        // Vanilla save completion is not an authenticated durable entity-removal receipt.
++        // Keep the intent until Phase C supplies crash reconciliation; never silently settle it.
++        if(!server.saveEverything(false,true,true)){state="QUARANTINED";return refuse("retirement save failure; unresolved intent retained");}
++        state="RETIRED_PENDING_RECOVERY";reason="closed; durable intent retained for crash reconciliation";spec=null;hadViewer=false;
++        GaslightProvider.LOG.info("GASLIGHT_FIXED_RETIRED {}",status());return true;
++    }
++    void tick(){thread();if(state.equals("ACTIVE")){if(!server.getPlayerList().getPlayers().isEmpty())hadViewer=true;else if(hadViewer)retire(token);}}
++    void shutdown(){thread();if(state.equals("ACTIVE")&&!retire(token)){rollback();state="QUARANTINED";reason="shutdown retains unresolved intent";}if(journal!=null){IPGlobal.indirectLoadingRadiusCap=previousRadius;IPGlobal.maxPortalLayer=previousLayers;IPGlobal.portalRenderLimit=previousRenderLimit;}}
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java
+@@ -0,0 +1,33 @@
++package dev.kondalabs.gaslight.provider;
++
++import com.mojang.brigadier.arguments.DoubleArgumentType;
++import com.mojang.brigadier.context.CommandContext;
++import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
++import net.minecraft.commands.CommandSourceStack;
++import net.minecraft.commands.Commands;
++import net.minecraft.network.chat.Component;
++import net.minecraft.world.phys.Vec3;
++
++/** Explicit fixed-link operations, still subject to the adapter's observer and world vetoes. */
++final class FixedPortalCommands {
++    static void register(){
++        CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(
++            Commands.literal("gaslight-fixed").requires(s->s.hasPermission(4))
++                .then(Commands.literal("status").executes(c->{var a=GaslightProvider.service(c.getSource().getServer());c.getSource().sendSuccess(()->Component.literal(a.status().toString()),false);return 1;}))
++                .then(Commands.literal("retire").executes(c->{var a=GaslightProvider.service(c.getSource().getServer());boolean ok=a.retire(a.token());c.getSource().sendSuccess(()->Component.literal(a.status().toString()),false);return ok?1:0;}))
++                .then(Commands.literal("create")
++                    .then(Commands.argument("x",DoubleArgumentType.doubleArg(-29000000,29000000))
++                    .then(Commands.argument("y",DoubleArgumentType.doubleArg(-2048,2048))
++                    .then(Commands.argument("z",DoubleArgumentType.doubleArg(-29000000,29000000))
++                    .then(Commands.argument("tx",DoubleArgumentType.doubleArg(-29000000,29000000))
++                    .then(Commands.argument("ty",DoubleArgumentType.doubleArg(-2048,2048))
++                    .then(Commands.argument("tz",DoubleArgumentType.doubleArg(-29000000,29000000)).executes(FixedPortalCommands::create))))))))));
++    }
++    private static int create(CommandContext<CommandSourceStack> c){
++        var source=c.getSource();var a=GaslightProvider.service(source.getServer());
++        var origin=new Vec3(value(c,"x"),value(c,"y"),value(c,"z"));var target=new Vec3(value(c,"tx"),value(c,"ty"),value(c,"tz"));
++        boolean ok=a.prepare(new FixedPortalAdapter.Spec(source.getLevel(),origin,source.getLevel(),target,4,4));
++        source.sendSuccess(()->Component.literal(a.status().toString()),false);return ok?1:0;
++    }
++    private static double value(CommandContext<CommandSourceStack> c,String name){return DoubleArgumentType.getDouble(c,name);}
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java
+@@ -0,0 +1,31 @@
++package dev.kondalabs.gaslight.provider;
++import net.fabricmc.api.ModInitializer;
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
++import net.minecraft.server.MinecraftServer;
++import qouteall.imm_ptl.core.portal.Portal;
++import java.util.IdentityHashMap;
++import java.util.Map;
++public final class GaslightProvider implements ModInitializer {
++    public static final Logger LOG=LoggerFactory.getLogger("gaslight-provider");
++    private static final Map<MinecraftServer,FixedPortalAdapter> SERVICES=new IdentityHashMap<>();
++    public static FixedPortalAdapter service(MinecraftServer server){ return SERVICES.get(server); }
++    @Override public void onInitialize(){
++        LOG.info("GASLIGHT provider adapter initialized; automatic replacement disabled");
++        LOG.info("GASLIGHT_CODE_SOURCE {}",GaslightProvider.class.getProtectionDomain().getCodeSource().getLocation());
++        FixedPortalCommands.register();
++        ServerLifecycleEvents.SERVER_STARTING.register(s->SERVICES.put(s,new FixedPortalAdapter(s)));
++        ServerEntityEvents.ENTITY_LOAD.register((entity,world)->{
++            if(entity instanceof Portal portal && FixedPortalAdapter.owned(portal)){
++                var service=SERVICES.get(world.getServer());
++                if(service==null||!service.permits(portal)) { portal.setTeleportable(false);portal.setIsVisible(false);portal.discard(); }
++            }
++        });
++        ServerTickEvents.END_SERVER_TICK.register(s->{var service=SERVICES.get(s);if(service!=null)service.tick();});
++        ServerLifecycleEvents.SERVER_STOPPING.register(s->{var service=SERVICES.get(s);if(service!=null)service.shutdown();});
++        ServerLifecycleEvents.SERVER_STOPPED.register(SERVICES::remove);
++    }
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/main/resources/fabric.mod.json
+@@ -0,0 +1,8 @@
++{
++  "schemaVersion":1,"id":"gaslight_provider","version":"${version}",
++  "name":"GASLIGHT Provider Adapter — Phase A",
++  "description":"Opt-in fixed portal integration. Automatic world replacement remains disabled.",
++  "authors":["Konda Labs"],"license":"MIT","environment":"*",
++  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"]},
++  "depends":{"fabricloader":">=0.19.5","minecraft":"=1.21.1","java":">=25","fabric-api":"*","immersive_portals":"=6.0.6"}
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/src/test/java/dev/kondalabs/gaslight/provider/RecoveryAndFootprintTest.java
+@@ -0,0 +1,47 @@
++package dev.kondalabs.gaslight.provider;
++
++import dev.kondalabs.gaslight.*;
++import dev.kondalabs.gaslight.NativePortal.*;
++import java.nio.file.*;
++import java.util.*;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.io.TempDir;
++import static org.junit.jupiter.api.Assertions.*;
++
++/** Actual filesystem durability/CAS and loader-independent structure-footprint checks.
++ * These unit results are not Minecraft rendering or traversal evidence. */
++final class RecoveryAndFootprintTest {
++    @TempDir Path dir;
++    private Passage intent(long generation){
++        return new Passage(new Surface(new V(.5,82.5,.5),new V(1,0,0),4,4),
++            new Surface(new V(1024.5,82.5,1024.5),new V(1,0,0),4,4),UUID.fromString("f52ec5ee-1d5c-4212-97a5-8dd9ac5b02d7"),generation);
++    }
++    @Test void actualDurabilityOrConservativeRefusal()throws Exception{
++        Path file=dir.resolve("intent.bin");var store=new Phase3RecoveryJournal.FileStore(file);var p=intent(1);
++        if(store.begin(List.of(p))){
++            var restarted=new Phase3RecoveryJournal.FileStore(file);
++            assertTrue(restarted.blockedOnOpen());assertEquals(1,restarted.outstanding());
++            assertTrue(store.settle(p.owner(),p.generation()));
++            assertFalse(new Phase3RecoveryJournal.FileStore(file).blockedOnOpen());
++        }else{
++            assertTrue(store.blockedOnOpen(),"failed durability must prevent physical publication");
++            try(var entries=Files.list(dir)){assertTrue(entries.anyMatch(Files::isRegularFile),"unresolved evidence must survive refusal");}
++        }
++    }
++    @Test void staleActualFilesystemWriterCannotReplaceIntent(){
++        Path file=dir.resolve("cas.bin");var first=new Phase3RecoveryJournal.FileStore(file);var stale=new Phase3RecoveryJournal.FileStore(file);
++        if(!first.begin(List.of(intent(1)))){assertTrue(first.blockedOnOpen());return;}
++        assertFalse(stale.begin(List.of(intent(2))));
++        var reopened=new Phase3RecoveryJournal.FileStore(file);assertEquals(1,reopened.outstanding());assertTrue(reopened.blockedOnOpen());
++    }
++    @Test void fullColumnContactAndUnknownAreHardVetoes(){
++        var surface=new Surface(new V(.5,82.5,.5),new V(1,0,0),4,4);
++        var audited=new ArrayList<String>();
++        var safe=StructureEnvelope.audit(surface,1,25,(x,z)->{audited.add(x+","+z);return StructureEnvelope.Result.SAFE;});
++        assertTrue(safe.accepted());assertTrue(audited.contains("1,1"),"diagonal structure contact column included");
++        for(var rejection:List.of(StructureEnvelope.Result.STRUCTURE,StructureEnvelope.Result.UNKNOWN,StructureEnvelope.Result.USER_PROTECTED)){
++            assertFalse(StructureEnvelope.audit(surface,1,25,(x,z)->x==1&&z==1?rejection:StructureEnvelope.Result.SAFE).accepted());
++        }
++        assertFalse(StructureEnvelope.audit(surface,1,1,(x,z)->StructureEnvelope.Result.SAFE).accepted(),"exhausted scan budget vetoes");
++    }
++}
+--- /dev/null
++++ b/provider-adapters/fabric-1.21.1/THIRD_PARTY_NOTICES.md
+@@ -0,0 +1,20 @@
++# Third-party notices
++
++GASLIGHT's adapter and reused GASLIGHT geometry, structure and journal classes retain
++their existing MIT license. See LICENSE. No WorldEdit code is included.
++
++Immersive Portals 6.0.6 is an unmodified, separately installed Apache-2.0 dependency.
++Source: https://github.com/iPortalTeam/ImmersivePortalsMod/tree/1.21
++Inspected source commit: 2b1d3546aa60c7d866adfcb7236fba136a8433cb.
++This is the inspected branch commit, not a claim that the binary was rebuilt from it.
++The published binary and nested dependencies are pinned in provider.lock.json.
++Its renderer, world synchronization, traversal, collision and interaction are reused
++through its public APIs. Their authors retain their copyright and attribution.
++
++The provider embeds DimLib, Cloth Config and MidnightLib with their original metadata
++and license files. Development builds extract these unchanged nested JARs because Loom
++does not discover them transitively in this setup. Do not separately add these extracted
++development copies to a normal modpack; the provider already embeds them.
++
++Minecraft, Fabric Loader, Fabric API, Gradle and JDK dependencies remain their respective
++authors' work. No Minecraft game binary or assets are redistributed in this package.

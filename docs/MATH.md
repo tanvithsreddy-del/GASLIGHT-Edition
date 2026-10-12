@@ -83,3 +83,23 @@ At most one logical planning epoch per 20 ticks. Each candidate is certified bef
 
 ## 9. Why certainty cannot be promised yet
 The frustum and analytical line are merely necessary constraints. Absolute 'never observed' requires actual client-render frame synchronization, all cameras/zoom states, async chunk latency, geometry/collision/lighting consistency, and atomic present/retire. The offline model cannot certify it without a real renderer and game tests.
+# Verified provider transform and a legacy mapping limitation
+
+The fixed Fabric 1.21.1 link uses the provider transform `T(p)=p+(B-A)` and
+`T(v)=v`, with unit scale, identity rotation and inverse translation for return.
+This was exercised by real movement. It does not use `NativePortal.Passage.mapPosition`
+or `mapVelocity` for physical movement.
+
+For oriented orthonormal source and destination bases `(t,y,n)`, the legacy mapping
+preserves the tangent and vertical components and negates the normal component:
+`M=[t_exit,y,-n_exit] [t_entry,y,n_entry]^T`. Its determinant is -1. It is a reflection;
+it must not be silently substituted for a proper rigid rotation (determinant +1).
+In the fixed adapter, those legacy surfaces carry journal geometry and structure
+footprints only. A future coherent contour must derive every facet from one verified
+proper transform and reconcile the provider's reverse-portal orientation explicitly.
+
+Current-frame frustum rejection is not a guarantee about the next frame. A server's
+player yaw/pitch is not authenticated knowledge of the client render camera. The
+automatic adapter still needs a real synchronized frame contract and whole-bundle
+publication; passing pure geometry assertions does not supply either.
+

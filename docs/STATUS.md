@@ -1,4 +1,6 @@
 # GASLIGHT checkpoint: Java first
+Current unattended delivery: the Fabric 1.21.1 fixed-link adapter has genuine packaged-JAR graphical/server evidence. Full GASLIGHT remains NO-GO; automatic publication, crash reconciliation, arbitrary destination preparation and loader ports remain unfinished. See [the current report](PHASE_A_REPORT.md). Older native/provider checkpoint details below remain historical evidence.
+
 
 Date: 2026-10-12. This is an experimental development checkpoint, not a playable GASLIGHT release.
 

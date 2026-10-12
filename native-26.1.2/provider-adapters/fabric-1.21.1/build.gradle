@@ -1,0 +1,63 @@
+plugins { id 'net.fabricmc.fabric-loom-remap' version '1.18.4' }
+group = 'dev.kondalabs.gaslight'
+base { archivesName = 'gaslight-provider-fabric-1.21.1' }
+repositories { mavenCentral() }
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.1'
+    mappings loom.officialMojangMappings()
+    modImplementation 'net.fabricmc:fabric-loader:0.19.5'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.109.0+1.21.1'
+    modImplementation files('deps/immersive-portals-6.0.6-mc1.21.1-fabric.jar')
+    modImplementation files('deps/DimLib-v1.1.0-mc1.21.1.jar', 'deps/cloth-config-fabric-15.0.130-fabric.jar')
+    modImplementation files('deps/midnightlib-1.5.7-fabric.jar')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(25) }; withSourcesJar() }
+sourceSets.main.java {
+    srcDir '../../src/main/java'
+    include 'dev/kondalabs/gaslight/provider/**', 'dev/kondalabs/gaslight/Geometry.java',
+        'dev/kondalabs/gaslight/NativePortal.java', 'dev/kondalabs/gaslight/StructureEnvelope.java',
+        'dev/kondalabs/gaslight/Phase3RecoveryJournal.java', 'dev/kondalabs/gaslight/ProtectedChunkRegions.java'
+}
+tasks.withType(JavaCompile).configureEach { options.release = 25; options.encoding = 'UTF-8' }
+tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+jar { from('LICENSE'); from('THIRD_PARTY_NOTICES.md'); manifest { attributes 'Fabric-Mapping-Namespace':'named' } }
+test {
+    useJUnitPlatform(); maxHeapSize = '512m'
+    def fixtures=layout.buildDirectory.dir('journal-unit-fixtures').get().asFile
+    systemProperty 'java.io.tmpdir',fixtures.absolutePath
+    doFirst { fixtures.mkdirs() }
+}
+processResources { inputs.property 'version', version; filesMatching('fabric.mod.json') { expand 'version': version } }
+tasks.register('writeTestClasspath') { doLast { layout.buildDirectory.file('runtime-classpath.txt').get().asFile.text = sourceSets.main.runtimeClasspath.asPath } }
+sourceSets {
+    integration {
+        compileClasspath += sourceSets.main.compileClasspath + sourceSets.main.output
+        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
+    }
+}
+loom {
+    mods {
+        gaslight_provider { sourceSet sourceSets.main }
+        gaslight_phase_a_probe { sourceSet sourceSets.integration }
+    }
+    runs {
+        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+System.getProperty('gaslight.probe.mode','live') }
+        clientProof { client(); source sourceSets.integration; runDir 'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true'; programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
+    }
+}
+tasks.named('check') { dependsOn tasks.named('integrationClasses') }
+
+// This option tests the actual named development JAR, without loose production classes.
+if(project.hasProperty('gaslightPackaged')) {
+    ['runServerProof','runClientProof'].each { name ->
+        tasks.named(name,JavaExec).configure {
+            dependsOn tasks.named('jar')
+            def loose=sourceSets.main.output.files
+            classpath=files(classpath.files.findAll { !loose.contains(it) },tasks.named('jar').get().archiveFile)
+            systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
+            systemProperty 'fabric.addMods',tasks.named('jar').get().archiveFile.get().asFile.absolutePath
+        }
+    }
+}

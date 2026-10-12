@@ -1,0 +1,302 @@
+{
+  "artifacts\\windows\\gaslight-provider-fabric-1.21.1-0.1.0-phase-a-dev.jar": {
+    "sha256": "daa597b6b33384de793897ec7445d9e6d318e5ecccfb831f2d74b90e9667176c",
+    "bytes": 64643,
+    "mapping": "named",
+    "runtime_loaded_directly": true,
+    "entries": [
+      "META-INF/",
+      "META-INF/MANIFEST.MF",
+      "dev/",
+      "dev/kondalabs/",
+      "dev/kondalabs/gaslight/",
+      "dev/kondalabs/gaslight/Geometry$Camera.class",
+      "dev/kondalabs/gaslight/Geometry$Chunk.class",
+      "dev/kondalabs/gaslight/Geometry$InfiniteRearLine.class",
+      "dev/kondalabs/gaslight/Geometry$Segment.class",
+      "dev/kondalabs/gaslight/Geometry$V2.class",
+      "dev/kondalabs/gaslight/Geometry$V3.class",
+      "dev/kondalabs/gaslight/Geometry.class",
+      "dev/kondalabs/gaslight/NativePortal$Crossing.class",
+      "dev/kondalabs/gaslight/NativePortal$Passage.class",
+      "dev/kondalabs/gaslight/NativePortal$Surface.class",
+      "dev/kondalabs/gaslight/NativePortal$V.class",
+      "dev/kondalabs/gaslight/NativePortal.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FaultPoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore$Decoded.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Key.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Store.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$TestMemoryStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$WritePoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Policy.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Rect.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Audit.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Inspector.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Result.class",
+      "dev/kondalabs/gaslight/StructureEnvelope.class",
+      "dev/kondalabs/gaslight/provider/",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Spec.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Status.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Token.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalCommands.class",
+      "dev/kondalabs/gaslight/provider/GaslightProvider.class",
+      "fabric.mod.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "id": "gaslight_provider",
+      "version": "0.1.0-phase-a",
+      "name": "GASLIGHT Provider Adapter \u2014 Phase A",
+      "description": "Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+      "authors": [
+        "Konda Labs"
+      ],
+      "license": "MIT",
+      "environment": "*",
+      "entrypoints": {
+        "main": [
+          "dev.kondalabs.gaslight.provider.GaslightProvider"
+        ]
+      },
+      "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "=1.21.1",
+        "java": ">=25",
+        "fabric-api": "*",
+        "immersive_portals": "=6.0.6"
+      }
+    },
+    "manifest": "Manifest-Version: 1.0\r\nFabric-Mapping-Namespace: named\r\n\r\n"
+  },
+  "artifacts\\windows\\gaslight-provider-fabric-1.21.1-0.1.0-phase-a.jar": {
+    "sha256": "0d35f7e49e141ebf879d3674a62b148978cd3190fb59ac86e340d6de3f21985b",
+    "bytes": 65766,
+    "mapping": "intermediary",
+    "runtime_loaded_directly": false,
+    "entries": [
+      "META-INF/MANIFEST.MF",
+      "LICENSE",
+      "META-INF/",
+      "THIRD_PARTY_NOTICES.md",
+      "dev/",
+      "dev/kondalabs/",
+      "dev/kondalabs/gaslight/",
+      "dev/kondalabs/gaslight/Geometry$Camera.class",
+      "dev/kondalabs/gaslight/Geometry$Chunk.class",
+      "dev/kondalabs/gaslight/Geometry$InfiniteRearLine.class",
+      "dev/kondalabs/gaslight/Geometry$Segment.class",
+      "dev/kondalabs/gaslight/Geometry$V2.class",
+      "dev/kondalabs/gaslight/Geometry$V3.class",
+      "dev/kondalabs/gaslight/Geometry.class",
+      "dev/kondalabs/gaslight/NativePortal$Crossing.class",
+      "dev/kondalabs/gaslight/NativePortal$Passage.class",
+      "dev/kondalabs/gaslight/NativePortal$Surface.class",
+      "dev/kondalabs/gaslight/NativePortal$V.class",
+      "dev/kondalabs/gaslight/NativePortal.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FaultPoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore$Decoded.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Key.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Store.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$TestMemoryStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$WritePoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Policy.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Rect.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Audit.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Inspector.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Result.class",
+      "dev/kondalabs/gaslight/StructureEnvelope.class",
+      "dev/kondalabs/gaslight/provider/",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Spec.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Status.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Token.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalCommands.class",
+      "dev/kondalabs/gaslight/provider/GaslightProvider.class",
+      "fabric.mod.json"
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "id": "gaslight_provider",
+      "version": "0.1.0-phase-a",
+      "name": "GASLIGHT Provider Adapter \u2014 Phase A",
+      "description": "Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+      "authors": [
+        "Konda Labs"
+      ],
+      "license": "MIT",
+      "environment": "*",
+      "entrypoints": {
+        "main": [
+          "dev.kondalabs.gaslight.provider.GaslightProvider"
+        ]
+      },
+      "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "=1.21.1",
+        "java": ">=25",
+        "fabric-api": "*",
+        "immersive_portals": "=6.0.6"
+      }
+    },
+    "manifest": "Manifest-Version: 1.0\r\nFabric-Mapping-Namespace: intermediary\r\nFabric-Jar-Type: classes\r\nFabric-Loom-Mixin-Remap-Type: static\r\nFabric-Gradle-Version: 9.7.0\r\nFabric-Loom-Version: 1.18.4\r\nFabric-Mixin-Compile-Extensions-Version: 0.6.0\r\nFabric-Minecraft-Version: 1.21.1\r\nFabric-Tiny-Remapper-Version: 0.14.1\r\nFabric-Loader-Version: 0.19.5\r\nFabric-Mixin-Version: 0.17.4+mixin.0.8.7\r\nFabric-Mixin-Group: net.fabricmc\r\n\r\n"
+  },
+  "artifacts\\linux\\gaslight-provider-fabric-1.21.1-0.1.0-phase-a-dev.jar": {
+    "sha256": "daa597b6b33384de793897ec7445d9e6d318e5ecccfb831f2d74b90e9667176c",
+    "bytes": 64643,
+    "mapping": "named",
+    "runtime_loaded_directly": true,
+    "entries": [
+      "META-INF/",
+      "META-INF/MANIFEST.MF",
+      "dev/",
+      "dev/kondalabs/",
+      "dev/kondalabs/gaslight/",
+      "dev/kondalabs/gaslight/Geometry$Camera.class",
+      "dev/kondalabs/gaslight/Geometry$Chunk.class",
+      "dev/kondalabs/gaslight/Geometry$InfiniteRearLine.class",
+      "dev/kondalabs/gaslight/Geometry$Segment.class",
+      "dev/kondalabs/gaslight/Geometry$V2.class",
+      "dev/kondalabs/gaslight/Geometry$V3.class",
+      "dev/kondalabs/gaslight/Geometry.class",
+      "dev/kondalabs/gaslight/NativePortal$Crossing.class",
+      "dev/kondalabs/gaslight/NativePortal$Passage.class",
+      "dev/kondalabs/gaslight/NativePortal$Surface.class",
+      "dev/kondalabs/gaslight/NativePortal$V.class",
+      "dev/kondalabs/gaslight/NativePortal.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FaultPoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore$Decoded.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Key.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Store.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$TestMemoryStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$WritePoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Policy.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Rect.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Audit.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Inspector.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Result.class",
+      "dev/kondalabs/gaslight/StructureEnvelope.class",
+      "dev/kondalabs/gaslight/provider/",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Spec.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Status.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Token.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalCommands.class",
+      "dev/kondalabs/gaslight/provider/GaslightProvider.class",
+      "fabric.mod.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "id": "gaslight_provider",
+      "version": "0.1.0-phase-a",
+      "name": "GASLIGHT Provider Adapter \u2014 Phase A",
+      "description": "Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+      "authors": [
+        "Konda Labs"
+      ],
+      "license": "MIT",
+      "environment": "*",
+      "entrypoints": {
+        "main": [
+          "dev.kondalabs.gaslight.provider.GaslightProvider"
+        ]
+      },
+      "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "=1.21.1",
+        "java": ">=25",
+        "fabric-api": "*",
+        "immersive_portals": "=6.0.6"
+      }
+    },
+    "manifest": "Manifest-Version: 1.0\r\nFabric-Mapping-Namespace: named\r\n\r\n"
+  },
+  "artifacts\\linux\\gaslight-provider-fabric-1.21.1-0.1.0-phase-a.jar": {
+    "sha256": "0d35f7e49e141ebf879d3674a62b148978cd3190fb59ac86e340d6de3f21985b",
+    "bytes": 65766,
+    "mapping": "intermediary",
+    "runtime_loaded_directly": false,
+    "entries": [
+      "META-INF/MANIFEST.MF",
+      "LICENSE",
+      "META-INF/",
+      "THIRD_PARTY_NOTICES.md",
+      "dev/",
+      "dev/kondalabs/",
+      "dev/kondalabs/gaslight/",
+      "dev/kondalabs/gaslight/Geometry$Camera.class",
+      "dev/kondalabs/gaslight/Geometry$Chunk.class",
+      "dev/kondalabs/gaslight/Geometry$InfiniteRearLine.class",
+      "dev/kondalabs/gaslight/Geometry$Segment.class",
+      "dev/kondalabs/gaslight/Geometry$V2.class",
+      "dev/kondalabs/gaslight/Geometry$V3.class",
+      "dev/kondalabs/gaslight/Geometry.class",
+      "dev/kondalabs/gaslight/NativePortal$Crossing.class",
+      "dev/kondalabs/gaslight/NativePortal$Passage.class",
+      "dev/kondalabs/gaslight/NativePortal$Surface.class",
+      "dev/kondalabs/gaslight/NativePortal$V.class",
+      "dev/kondalabs/gaslight/NativePortal.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FaultPoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore$Decoded.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$FileStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Key.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$Store.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$TestMemoryStore.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal$WritePoint.class",
+      "dev/kondalabs/gaslight/Phase3RecoveryJournal.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Policy.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions$Rect.class",
+      "dev/kondalabs/gaslight/ProtectedChunkRegions.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Audit.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Inspector.class",
+      "dev/kondalabs/gaslight/StructureEnvelope$Result.class",
+      "dev/kondalabs/gaslight/StructureEnvelope.class",
+      "dev/kondalabs/gaslight/provider/",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Spec.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Status.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter$Token.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalAdapter.class",
+      "dev/kondalabs/gaslight/provider/FixedPortalCommands.class",
+      "dev/kondalabs/gaslight/provider/GaslightProvider.class",
+      "fabric.mod.json"
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "id": "gaslight_provider",
+      "version": "0.1.0-phase-a",
+      "name": "GASLIGHT Provider Adapter \u2014 Phase A",
+      "description": "Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+      "authors": [
+        "Konda Labs"
+      ],
+      "license": "MIT",
+      "environment": "*",
+      "entrypoints": {
+        "main": [
+          "dev.kondalabs.gaslight.provider.GaslightProvider"
+        ]
+      },
+      "depends": {
+        "fabricloader": ">=0.19.5",
+        "minecraft": "=1.21.1",
+        "java": ">=25",
+        "fabric-api": "*",
+        "immersive_portals": "=6.0.6"
+      }
+    },
+    "manifest": "Manifest-Version: 1.0\r\nFabric-Mapping-Namespace: intermediary\r\nFabric-Jar-Type: classes\r\nFabric-Loom-Mixin-Remap-Type: static\r\nFabric-Gradle-Version: 9.7.0\r\nFabric-Loom-Version: 1.18.4\r\nFabric-Mixin-Compile-Extensions-Version: 0.6.0\r\nFabric-Minecraft-Version: 1.21.1\r\nFabric-Tiny-Remapper-Version: 0.14.1\r\nFabric-Loader-Version: 0.19.5\r\nFabric-Mixin-Version: 0.17.4+mixin.0.8.7\r\nFabric-Mixin-Group: net.fabricmc\r\n\r\n"
+  }
+}

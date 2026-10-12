@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"gaslight_phase_a_probe","version":"1","environment":"*","name":"Disposable Phase A integration driver","entrypoints":{"main":["dev.kondalabs.gaslight.probe.ServerProbe"],"client":["dev.kondalabs.gaslight.probe.ClientProbe"]},"depends":{"gaslight_provider":"*"}}

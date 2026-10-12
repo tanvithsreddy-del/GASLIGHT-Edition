@@ -1,0 +1,8 @@
+{
+  "schemaVersion":1,"id":"gaslight_provider","version":"${version}",
+  "name":"GASLIGHT Provider Adapter — Phase A",
+  "description":"Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+  "authors":["Konda Labs"],"license":"MIT","environment":"*",
+  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"]},
+  "depends":{"fabricloader":">=0.19.5","minecraft":"=1.21.1","java":">=25","fabric-api":"*","immersive_portals":"=6.0.6"}
+}

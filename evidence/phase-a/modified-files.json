@@ -1,0 +1,262 @@
+{
+  "new_source_files": [
+    "native-26.1.2/provider-adapters/fabric-1.21.1/build.gradle",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/gradle/wrapper/gradle-wrapper.jar",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/gradle/wrapper/gradle-wrapper.properties",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/gradle.properties",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/gradlew",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/gradlew.bat",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/LICENSE",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/prepare_disposable_test.py",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/provider.lock.json",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/README.md",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/settings.gradle",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/setup_deps.py",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/integration/java/dev/kondalabs/gaslight/probe/ClientProbe.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/integration/java/dev/kondalabs/gaslight/probe/ServerProbe.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/integration/resources/fabric.mod.json",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/resources/fabric.mod.json",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/src/test/java/dev/kondalabs/gaslight/provider/RecoveryAndFootprintTest.java",
+    "native-26.1.2/provider-adapters/fabric-1.21.1/THIRD_PARTY_NOTICES.md"
+  ],
+  "new_production_java": [
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java",
+      "lines": 135
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java",
+      "lines": 33
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java",
+      "lines": 31
+    }
+  ],
+  "new_production_lines": 199,
+  "native_source": [
+    {
+      "file": "src/main/resources/fabric.mod.json",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "323f5df8647adfcacda12e57891954b8d93745bf6b330bc335fd6e528fe04b6b"
+    },
+    {
+      "file": "src/main/resources/gaslight-acquisition.mixins.json",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "2223d1a059bafc445cdeef5cd82461e9a58285048a20af5f29c293c135fa5267"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/FixedPortalRig.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "8c40f780000304f726e4ca2c81ca22b84ac468ecd2bf48d1f2cc1d1e07c37797"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/GaslightNativeMod.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "07b5eceb11b02ce004fb4f472c6c0e658993aeafb3df00f925a22416f42ecb1b"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Geometry.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "9c0eff2605658816b301bca6866e20548628a4cd652793891aab4fa1866d355a"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/NativePortal.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "4d470be225ef13b912a0036b4081662bfc900bee86600008709eb48c4fff8df8"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/NativeScheduler.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "81d8041249529edc6cf3332c47ff153a96c05ef4d88d0c36a4ab5906156a7fb5"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/NativeWorldEngine.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "2d646ee2e3ce495cf31b58c3609124efac9106eae1ef5153cc77c2f0a8d48f9f"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3CameraWitness.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "1059ec0c94df277fdeea17f8898c285d0145c73d9bfe40bc12d1e385259cd2b1"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3DestinationProfile.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "b5a3d0fa4d568de3a2d644274a2d260a8f9638295873c086544d466e9f2b5749"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3DestinationSelector.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "a82b68da8fca9a8dcdbad9c32a4eee829599bea07ea6e86b9fe543d29f770cf0"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3Engine.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "35e5dc130b863d3f85f1b474182d62f8cf833318adb3846b29a1af5989d65fba"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3GenerationGeometry.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "e7946b59ef714ced25c6ce68febb012381801302c8ce58b14956d235686d2707"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3LoopRoute.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "9ece8f190652c558b8ffe4f1b917b46e0a85c13dbda0943c1f9032aef0fe7d31"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3PreparedCatalog.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "3e5e6ef3dbc228c9c6bb84d69154bd7b5758c227e49c28dc4dbf627adf31b599"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3Publication.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "c7b2880eefc98ce8aecdad2013c61b5076c9f274666ae277fffc0c055dc61909"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3RecoveryJournal.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "48774fbea3e4d222a8af92584f7a6eb77752912a0c82b3c0f5697fc5effaf76f"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3Route.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "594ae2d43bacb8ecab6b18638fcd5d38d4426875a0c08af5c4fbcee4298c6ac9"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3SafetyGate.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "7cb1e2958fe23244245054036b99c213465f91e019dc8e2b024d02bf91445f03"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3TerrainMatcher.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "1af9c7d9ac061aa2ca258904da9eea1937fa540e2474aea6531f60ae105945a2"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/Phase3Visibility.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "6e662a3cee9b2420e53e846defa7e4ee8cc87b49dd2998e68562185f7ce29359"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalCandidate.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "f04d2269ae5accc15e3a1637efdd2d4aba62d572c9ff2db4022aa4762b15e71b"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalCrossingController.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "ebfcf004c06247e353bef1a4ec39f2ee7d184bb03d38c90d3fa2c59dac2a0b63"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalForegroundOcclusion.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "5217d96381b636b91a6440fa5c2270b38d6ade180bb2fd64076a0392b0940d6f"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalPreviewCore.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "77b97675d86416e8a43ee6b993349ebd192279a25868aea7050985e7630c0f67"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalSnapshotPayload.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "27e612410d151539398b6628eb857e24f8e11971bf735a03941193e08bc7644d"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/PortalSnapshotWire.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "1a050d2fcf383b3fa5a09081b1e653cdd103e4ce0eab544e285251a555d2f33f"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/ProtectedChunkRegions.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "294b4e4e8cca84c6081e5dca3f22d9f2b86daaaf9b43a2ab5d39ab4956a1413b"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteChunkAcquisition.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "0b2c424b87b3bb63272bcf650712c2c3ef63f33342668ce08959a1bdcff22a05"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteChunkCapture.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "8fd82c7e645b5fd1fa251d0d4ba4c76f1ff81644ab0beb777af161c887024234"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteChunkData.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "bd2933c7913151f7175df5e3637007b18c1568d04bbe45c67b18bc93f83c7dac"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteChunkLeases.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "e682551e83f4b94d6b9dfd387a0bc1f5c95f427f3fe8964067071601602ad032"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteRegionRead.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "5818cb8019c00f58e46a95467ed9eeb9a5bb43cc53f41cea10df73077f819858"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteViewRaycaster.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "2e6ff7568073bfacacaedbb92b9d1e7e81c1f307ae4629510f6ef992f045a690"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteWorldBudget.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "26455ddc151a8b3cf21e85c810e106c35eb895f13705b32bc514aeca7cfecd51"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteWorldCache.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "7ea56c86481efcfdf08453c6ee9c6fe449505950551f8c08455fc29662150d76"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteWorldPayload.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "66c9768c77a6362f916b8c9e34d29a075f276a99d5bb192e0a3cb142582f46e9"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteWorldSync.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "91e408b9bc8bae45f11289a32e4a6e548b4da9885f668116c00fb5326bc5f51a"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/RemoteWorldWire.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "0d475c7ba30c06760e320204e76b783eba6dee5d6a19dcd045ced6dcf73926af"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/StructureEnvelope.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "880a6f7b680fa67e496b67572cb6a6bddc233ab60809d7b6d0c000cc417812d8"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/StructureSafety.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "15a2d197c20682f867501e0697c7869edb3fb5fbde56aa285e3cbfb9c38d8c7f"
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/mixin/RemoteGenerationObserver.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "e76208aaacaf7e5e8b9ccbe1ce76608ba665bcc6c4eced01b586bd090d009eb5"
+    },
+    {
+      "file": "src/client/java/dev/kondalabs/gaslight/client/GaslightPreviewClient.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "7dbab2de7521250b9e5d8ad7ee1e62713735548c97049c6574dd246e0b0a0456"
+    },
+    {
+      "file": "src/client/java/dev/kondalabs/gaslight/client/RemoteWorldClient.java",
+      "unchanged_from_prior_checkpoint": true,
+      "sha256": "2c519c8d01c22a8029c25ca9d0ed4df71bb94c3fd4c0a64bcfd1668b1a170c9f"
+    }
+  ]
+}

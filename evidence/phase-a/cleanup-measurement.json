@@ -1,0 +1,9 @@
+{
+  "elapsed_seconds_observed": 0.6869999999998981,
+  "polling_interval_seconds": 0.15,
+  "checks": [
+    "[22:50:32] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-measured-cleanup-0 Status[state=RETIRED_PENDING_RECOVERY, reason=closed; durable intent retained for crash reconciliation, portals=0, ownedLoaders=0, ownedChunks=0, intents=1, generation=1] remoteFull=25 providerTickets=162 averageTickMs=1.796223 heapUsed=316398400 remote=Block{minecraft:diamond_block} placed=Block{minecraft:air} players=[]",
+    "[22:50:32] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-measured-cleanup-1 Status[state=RETIRED_PENDING_RECOVERY, reason=closed; durable intent retained for crash reconciliation, portals=0, ownedLoaders=0, ownedChunks=0, intents=1, generation=1] remoteFull=0 providerTickets=0 averageTickMs=4.139964 heapUsed=415445192 remote=UNAVAILABLE placed=UNAVAILABLE players=[]"
+  ],
+  "scope": "One final warm fixture; includes controller command and polling overhead, not a statistical latency benchmark"
+}

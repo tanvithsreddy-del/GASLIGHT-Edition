@@ -1,0 +1,78 @@
+# GASLIGHT fixed-portal development prototype
+
+**Minecraft 1.21.1, Fabric, Java 25. Full GASLIGHT remains NO-GO.** This module is
+separate from the preserved native 26.1.2 data/acquisition experiment. It does not
+make houses or terrain disappear when you look away. Those automatic changes remain
+disabled because their authenticated frame barrier and crash reconciliation are missing.
+
+The genuine named development JAR was loaded directly in a graphical Windows client
+and Linux/ext4 dedicated server. Fixed remote views, lighting, live block updates,
+placement/mining through the link, walking/return, creative flight, dimension changes,
+disconnect/reconnect and chunk unloading were exercised. See the evidence report for
+the exact scope, known provider errors and performance sampling limits.
+
+## Reproduce the isolated proof
+
+Keep this module inside `ACTIVE_PROJECT/provider-adapters/fabric-1.21.1` or the
+repository's corresponding `native-26.1.2/provider-adapters/fabric-1.21.1` directory.
+Five existing pure GASLIGHT classes are compiled from the parent native source tree.
+No HISTORY code or temporary Minecraft stubs are used.
+
+```
+python setup_deps.py
+./gradlew --no-daemon --max-workers=2 clean build
+python prepare_disposable_test.py 01
+# Accept Minecraft's EULA for this new test environment if needed.
+./gradlew --no-daemon --max-workers=2 runServerProof -PgaslightPackaged
+./gradlew --no-daemon --max-workers=2 runClientProof -PgaslightPackaged
+```
+
+Use `gradlew.bat` on Windows. The server must use tested durable local Linux/ext4
+storage. Windows's directory-force failure is a real publication veto, so this is
+not currently a working Windows integrated-server/singleplayer edition. The tested
+mixed Windows/WSL profile used a loopback-only byte relay; commands and code are in
+the evidence tools. No firewall or security settings were changed by the agent.
+
+`-PgaslightPackaged` removes loose production classes from the run classpath and loads
+the actual named development JAR. Both logs print `GASLIGHT_CODE_SOURCE` for verification.
+The integration driver is a separate test mod and is absent from the production JAR.
+It generates exactly two 5x5 fixture windows and edits fixture floors/blocks only in
+the new disposable world. Native generation has neighboring work beyond these 50
+target chunks; the target count is not a proof of total generation cost.
+
+After the client joins, the test driver's `probe-client.txt` accepts `resume`, `view-N`,
+`place-N 1`, `mine-N 1`, `walk-N 35`, `fly-N 18`, `look 0 0`, `disconnect-N`, `connect-N`
+and `quit-N`. Use unique command labels. The server's `probe-server.txt` accepts
+`snapshot-N`, `update-N`, `pose .5 81 1.5 180 0`, `dimension-N`, and `stop-N`.
+Fixture poses are explicit setup; only subsequent player-input crossings count as
+portal traversal evidence. Do not run the test driver in any valuable world.
+
+## Production adapter and safety limits
+
+Without the exact disposable marker, creation is disabled. In a marked world, the
+operator console has `gaslight-fixed status`, `gaslight-fixed retire`, and
+`gaslight-fixed create x y z tx ty tz` (fixed 4x4 same-dimension link).
+Creation/retirement require no connected observers. Unknown/unloaded chunk columns,
+structure starts/references, protected columns, malformed policies, occupancy and
+durability failures veto creation. The adapter does not generate or edit terrain.
+
+This is one fixed pair made of four provider entities, with two owned radius-2
+loaders (50 chunk references). Server indirect loading radius is capped at 2 while
+this marked service is active. These limits do not bound all vanilla/provider work,
+GPU allocations, bandwidth or client recursion. Do not treat the JVM heap ceiling
+as a bound on all process memory.
+
+The last player's disconnect retires the link and releases ownership. The journal
+retains its intent because a vanilla save return value is not a durable entity-removal
+receipt. A restarted dirty world is quarantined. **Never delete a journal to unlock it.**
+Repeated safely reconciled publication in one saved world is not implemented.
+
+Installable intermediary JARs and named development JARs are labeled separately.
+The named JAR belongs in this Gradle development environment; it is not a normal
+launcher mod JAR. Install Fabric API 0.109.0+1.21.1 and Immersive Portals 6.0.6 separately
+for a normal modpack. Never add the extracted nested development dependencies there.
+
+Fabric Loader 0.19.5, Fabric API 0.109.0+1.21.1, Loom 1.18.4, Gradle 9.7.0 and JDK 25
+are pinned. Provider and nested dependency hashes are in `provider.lock.json`.
+Forge, NeoForge, vanilla-client seamless rendering and Bedrock are not supported by
+this prototype. Provider reuse does not supply GASLIGHT's missing safety/controller gates.

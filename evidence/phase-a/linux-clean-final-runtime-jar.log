@@ -1,0 +1,35 @@
+COMMAND: ["wsl", "-d", "Ubuntu", "--", "bash", "/mnt/c/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/phase_a_linux.sh", "clean", "build"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft
+UTC: 2026-10-12T17:44:01.373498+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :processIncludeJars
+> Task :sourcesJar
+> Task :remapSourcesJar
+> Task :remapJar
+> Task :compileIntegrationJava
+> Task :assemble
+> Task :processIntegrationResources
+> Task :integrationClasses
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :test
+> Task :validateAccessWidener NO-SOURCE
+> Task :check
+> Task :build
+
+BUILD SUCCESSFUL in 17s
+12 actionable tasks: 12 executed
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 18.406

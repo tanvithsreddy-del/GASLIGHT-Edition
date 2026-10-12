@@ -1,0 +1,178 @@
+{
+  "scope": "Sparse 4x4 same-dimension fixed portal, render distance 4, small framebuffer, FPS cap 60; snapshot measurements only",
+  "fps_snapshots": [
+    60,
+    60,
+    60,
+    59,
+    59,
+    60,
+    60,
+    59,
+    60,
+    59,
+    60,
+    60,
+    60,
+    60,
+    60,
+    57,
+    59,
+    59,
+    59,
+    59
+  ],
+  "client_used_heap_samples_bytes": [
+    493625520,
+    444434416,
+    450421160,
+    515708408,
+    449034760,
+    434783952,
+    410760184,
+    347702048,
+    372282608,
+    372425976,
+    468894968,
+    399029488,
+    336349040,
+    380389232,
+    584008536,
+    597640024,
+    510323208,
+    448538344,
+    432663200,
+    464120480
+  ],
+  "server_used_heap_samples_bytes": [
+    321898720,
+    343918816,
+    325695672,
+    360298680,
+    378648760,
+    414367552,
+    340247584,
+    452700544,
+    385921936,
+    289716080,
+    292337520,
+    410826608,
+    415020912,
+    430825352,
+    435319016,
+    308186536,
+    311639984,
+    313762208,
+    380832768,
+    385027072,
+    358352344,
+    412487496,
+    341280680,
+    291657056,
+    293754208,
+    316398400,
+    415445192,
+    486518496
+  ],
+  "server_average_tick_ms_samples": [
+    1.24419,
+    1.226314,
+    1.031555,
+    1.069949,
+    1.251373,
+    1.142873,
+    12.67367,
+    0.216575,
+    0.764382,
+    1.016184,
+    1.042542,
+    1.389731,
+    1.500469,
+    1.046639,
+    1.304604,
+    0.214704,
+    1.382799,
+    1.423809,
+    1.547693,
+    1.675128,
+    11.399999,
+    0.231763,
+    0.737764,
+    1.200797,
+    1.223009,
+    1.796223,
+    4.139964,
+    0.447559
+  ],
+  "relay_connections": [
+    {
+      "connection": 1,
+      "to_server_bytes": 84017,
+      "to_client_bytes": 118181,
+      "elapsed_seconds": 764.531
+    },
+    {
+      "connection": 2,
+      "to_server_bytes": 29072,
+      "to_client_bytes": 110170,
+      "elapsed_seconds": 207.594
+    },
+    {
+      "connection": 3,
+      "to_server_bytes": 7347,
+      "to_client_bytes": 72778,
+      "elapsed_seconds": 61.953
+    },
+    {
+      "connection": 4,
+      "to_server_bytes": 28007,
+      "to_client_bytes": 103657,
+      "elapsed_seconds": 222.297
+    },
+    {
+      "connection": 5,
+      "to_server_bytes": 20504,
+      "to_client_bytes": 106015,
+      "elapsed_seconds": 147.218
+    },
+    {
+      "connection": 6,
+      "to_server_bytes": 8810,
+      "to_client_bytes": 73100,
+      "elapsed_seconds": 75.828
+    },
+    {
+      "connection": 7,
+      "to_server_bytes": 35493,
+      "to_client_bytes": 94536,
+      "elapsed_seconds": 299.109
+    },
+    {
+      "connection": 8,
+      "to_server_bytes": 1385,
+      "to_client_bytes": 67487,
+      "elapsed_seconds": 1.563
+    }
+  ],
+  "server_to_client_total_bytes": 745924,
+  "client_to_server_total_bytes": 214635,
+  "limitations": [
+    "Not a sustained FPS benchmark",
+    "Heap samples include all game data and garbage; no retained-cache graph measurement",
+    "No hardware-independent efficiency conclusion",
+    "WSL clock was about 30 minutes behind Windows; no cross-host timestamp latency inference",
+    "50 target fixture chunks do not bound native generation dependencies",
+    "No separate bandwidth/memory/generation-work enforcement",
+    "One warm cleanup measured with polling overhead; no statistically representative latency distribution",
+    "One warm cleanup measured with polling overhead; no statistically representative latency distribution"
+  ],
+  "warm_cleanup": {
+    "elapsed_seconds_observed": 0.6869999999998981,
+    "polling_interval_seconds": 0.15,
+    "checks": [
+      "[22:50:32] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-measured-cleanup-0 Status[state=RETIRED_PENDING_RECOVERY, reason=closed; durable intent retained for crash reconciliation, portals=0, ownedLoaders=0, ownedChunks=0, intents=1, generation=1] remoteFull=25 providerTickets=162 averageTickMs=1.796223 heapUsed=316398400 remote=Block{minecraft:diamond_block} placed=Block{minecraft:air} players=[]",
+      "[22:50:32] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-measured-cleanup-1 Status[state=RETIRED_PENDING_RECOVERY, reason=closed; durable intent retained for crash reconciliation, portals=0, ownedLoaders=0, ownedChunks=0, intents=1, generation=1] remoteFull=0 providerTickets=0 averageTickMs=4.139964 heapUsed=415445192 remote=UNAVAILABLE placed=UNAVAILABLE players=[]"
+    ],
+    "scope": "One final warm fixture; includes controller command and polling overhead, not a statistical latency benchmark"
+  }
+}
