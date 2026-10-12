@@ -1,0 +1,812 @@
+[21:01:36] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 26.3 with Fabric Loader 0.19.5
+[21:01:36] [main/INFO] (FabricLoader/Mappings) Mappings not present!
+[21:01:37] [main/INFO] (FabricLoader) Loading 57 mods:
+	- cloth-basic-math 0.6.1
+	- cloth-config 26.3.159
+	- dimlib 1.1.0-port.1+mc26.3
+	- fabric-advancement-api-v1 1.0.0+38c7a2d55d
+	- fabric-api 0.161.0+26.3
+	- fabric-api-base 2.0.6+fcdff87f5d
+	- fabric-api-lookup-api-v1 2.0.24+3434d6d95d
+	- fabric-biome-api-v1 20.0.9+74ed1ea55d
+	- fabric-block-api-v1 3.1.0+0ae6f9115d
+	- fabric-block-getter-api-v2 2.0.9+3434d6d95d
+	- fabric-client-gametest-api-v1 6.0.7+4be74c3f5d
+	- fabric-command-api-v2 3.1.2+fcdff87f5d
+	- fabric-content-registries-v0 15.0.4+74ed1ea55d
+	- fabric-convention-tags-v2 4.10.3+6b5b47fd5d
+	- fabric-crash-report-info-v1 1.0.7+fcdff87f5d
+	- fabric-creative-tab-api-v1 5.0.21+fcdff87f5d
+	- fabric-data-attachment-api-v1 2.2.30+3434d6d95d
+	- fabric-data-generation-api-v1 27.2.4+427eab975d
+	- fabric-debug-api-v1 1.0.4+3434d6d95d
+	- fabric-dimensions-v1 5.1.19+47f74c985d
+	- fabric-entity-events-v1 6.0.4+3434d6d95d
+	- fabric-events-interaction-v0 5.3.6+3434d6d95d
+	- fabric-game-rule-api-v1 4.0.10+3434d6d95d
+	- fabric-gametest-api-v1 4.0.32+3434d6d95d
+	- fabric-item-api-v1 14.7.0+cf6bc2db5d
+	- fabric-key-mapping-api-v1 2.0.8+3434d6d95d
+	- fabric-lifecycle-events-v1 4.1.9+ffef5f675d
+	- fabric-loot-api-v3 4.0.8+4068fd645d
+	- fabric-menu-api-v1 2.0.27+ed66f0a35d
+	- fabric-message-api-v1 7.0.10+3434d6d95d
+	- fabric-model-loading-api-v1 8.0.35+fcdff87f5d
+	- fabric-networking-api-v1 6.3.8+fcdff87f5d
+	- fabric-object-builder-api-v1 24.1.9+3434d6d95d
+	- fabric-particles-v1 5.0.24+3434d6d95d
+	- fabric-permission-api-v1 1.0.8+fcdff87f5d
+	- fabric-recipe-api-v1 10.0.8+fcdff87f5d
+	- fabric-registry-sync-v0 8.0.1+fcdff87f5d
+	- fabric-renderer-api-v1 17.0.15+79385d0b5d
+	- fabric-renderer-indigo 9.1.23+b9d63e335d
+	- fabric-rendering-fluids-v1 6.0.6+3434d6d95d
+	- fabric-rendering-v1 27.0.14+901a437c5d
+	- fabric-resource-conditions-api-v1 6.1.5+3434d6d95d
+	- fabric-resource-loader-v0 3.3.26+4fc5413f5d
+	- fabric-resource-loader-v1 3.0.4+fcdff87f5d
+	- fabric-screen-api-v1 5.2.4+48607d035d
+	- fabric-serialization-api-v1 2.0.7+74ed1ea55d
+	- fabric-sound-api-v1 2.0.7+3434d6d95d
+	- fabric-tag-api-v1 2.1.10+fcdff87f5d
+	- fabric-transfer-api-v1 8.0.25+fcdff87f5d
+	- fabric-transitive-access-wideners-v1 8.1.16+52268a0e5d
+	- fabricloader 0.19.5
+	- immersive_portals 6.0.6
+	- immersive_portals_gametest 1.0.0
+	- java 25
+	- midnightlib 1.9.3
+	- minecraft 26.3
+	- mixinextras 0.5.5
+[21:01:37] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Tanvith/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/5f66cc9f59b8efaa942155a3d5a30599bf6640dd/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[21:01:41] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[21:01:43] [Datafixer Bootstrap #0/INFO] (Minecraft) 307 Datafixer optimizations took 714 milliseconds
+[21:01:45] [main/ERROR] (HkeyPerformanceDataUtil) Unable to locate English counter names in registry Perflib 009. Counters may need to be rebuilt: 
+com.sun.jna.platform.win32.Win32Exception: The parameter is incorrect.
+	at knot//com.sun.jna.platform.win32.Advapi32Util.registryGetStringArray(Advapi32Util.java:921)
+	at knot//com.sun.jna.platform.win32.Advapi32Util.registryGetStringArray(Advapi32Util.java:898)
+	at knot//oshi.driver.windows.registry.HkeyPerformanceDataUtil.mapCounterIndicesFromRegistry(HkeyPerformanceDataUtil.java:274)
+	at knot//oshi.driver.windows.registry.HkeyPerformanceDataUtil.<clinit>(HkeyPerformanceDataUtil.java:51)
+	at knot//oshi.driver.windows.registry.ProcessPerformanceData.buildProcessMapFromRegistry(ProcessPerformanceData.java:45)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.queryProcessMapFromRegistry(WindowsOperatingSystem.java:328)
+	at knot//oshi.util.Memoizer$1.get(Memoizer.java:65)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.processMapToList(WindowsOperatingSystem.java:298)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.getProcess(WindowsOperatingSystem.java:292)
+	at knot//oshi.software.os.OperatingSystem.getCurrentProcess(OperatingSystem.java:246)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[21:01:45] [main/WARN] (PerfCounterQuery) Unable to locate English counter names in registry Perflib 009. Assuming English counters. Error 0x80070057. See https://support.microsoft.com/en-us/help/300956/how-to-manually-rebuild-performance-counter-library-values
+[21:01:45] [main/WARN] (Minecraft) Failed to get system info for Process Loads
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getUserTime()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$0(SystemReport.java:190)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:189)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[21:01:45] [main/WARN] (Minecraft) Failed to get system info for Process Virtual Size (MiB)
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getVirtualSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$1(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[21:01:45] [main/WARN] (Minecraft) Failed to get system info for Process Resident Size (MiB)
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getResidentSetSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$2(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[21:01:58] [Render thread/INFO] (Minecraft) Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[21:01:58] [Render thread/INFO] (Minecraft) Setting user: Player311
+[21:01:58] [Render thread/INFO] (DimLibEntry) DimLib initializing
+[21:01:59] [Render thread/INFO] (iPortal) Loading Immersive Portals config
+[21:01:59] [Render thread/INFO] (iPortal) iPortal Config Applied
+[21:01:59] [Render thread/INFO] (iPortal) Immersive Portals Mod Initializing
+[21:01:59] [Render thread/INFO] (ImmPtlNetworkConfig) Immersive Portals Core version 6.0.6
+[21:01:59] [Download-2/ERROR] (Minecraft) Failed to fetch user properties
+com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
+	at knot//com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:70)
+	at knot//com.mojang.authlib.services.MinecraftServicesUserApiService.fetchProperties(MinecraftServicesUserApiService.java:168)
+	at knot//net.minecraft.client.Minecraft.lambda$new$1(Minecraft.java:451)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1789)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: MinecraftClientHttpException[type=HTTP_ERROR, status=401, response=ErrorResponse[path=/player/attributes, error=null, errorMessage=null, details=null]]
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.buildHttpException(MinecraftClient.java:170)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.readServiceResponse(MinecraftClient.java:147)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.getWithEtag(MinecraftClient.java:81)
+	at knot//com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:65)
+	at knot//com.mojang.authlib.services.MinecraftServicesUserApiService.fetchProperties(MinecraftServicesUserApiService.java:118)
+	... 5 more
+[21:02:00] [Render thread/INFO] (iPortal) Dimensional Threading is not present
+[21:02:00] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[21:02:01] [Worker-Main-1/INFO] (IPModInfoChecking) No iPortal mod info is published for this game version (https://qouteall.fun/immptl_info/26.3.json)
+[21:02:01] [Render thread/ERROR] (Minecraft) Illegal option value 0 for Anisotropic Filtering
+[21:02:01] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.4.3-snapshot
+[21:02:01] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App name: Minecraft
+[21:02:01] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App version: 26.3
+[21:02:01] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App ID: com.mojang.minecraft
+[21:02:01] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: SDL revision: SDL-3.4.14-62f10da
+[21:02:03] [Render thread/INFO] (Minecraft) Using graphics backend OpenGL, using drivers: 3.3.0 Core Profile Context 25.20.24.03.251024
+[21:02:03] [Render thread/INFO] (Minecraft) Using graphics device: AMD Radeon(TM)  860M Graphics (ATI Technologies Inc.)
+[21:02:03] [Render thread/INFO] (Minecraft) Using graphics device extensions: GL_ARB_multi_draw_indirect, GL_ARB_buffer_storage, GL_ARB_shader_draw_parameters, GL_ARB_base_instance, GL_KHR_debug, GL_ARB_draw_indirect, GL_ARB_clip_control, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+[21:02:03] [Render thread/INFO] (Minecraft) Created window using SDL video driver: windows
+[21:02:04] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, vanilla, cloth-config, dimlib, fabric-advancement-api-v1, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-getter-api-v2, fabric-client-gametest-api-v1, fabric-command-api-v2, fabric-content-registries-v0, fabric-convention-tags-v2, fabric-crash-report-info-v1, fabric-creative-tab-api-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-debug-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-game-rule-api-v1, fabric-gametest-api-v1, fabric-item-api-v1, fabric-key-mapping-api-v1, fabric-lifecycle-events-v1, fabric-loot-api-v3, fabric-menu-api-v1, fabric-message-api-v1, fabric-model-loading-api-v1, fabric-networking-api-v1, fabric-object-builder-api-v1, fabric-particles-v1, fabric-permission-api-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-rendering-fluids-v1, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-resource-loader-v1, fabric-screen-api-v1, fabric-serialization-api-v1, fabric-sound-api-v1, fabric-tag-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, immersive_portals, midnightlib
+[21:02:04] [Download-2/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
+[21:02:04] [Download-2/ERROR] (Minecraft) Failed to fetch Realms feature flags
+com.mojang.realmsclient.exception.RealmsServiceException: Realms authentication error with message 'java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC'
+	at knot//com.mojang.realmsclient.client.RealmsClient.execute(RealmsClient.java:625)
+	at knot//com.mojang.realmsclient.client.RealmsClient.fetchFeatureFlags(RealmsClient.java:204)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1789)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[21:02:04] [Worker-Main-10/INFO] (Minecraft) Found unifont_pua-17.0.01.hex, loading
+[21:02:04] [Worker-Main-11/INFO] (Minecraft) Found unifont_all_no_pua-17.0.01.hex, loading
+[21:02:04] [Worker-Main-5/INFO] (Minecraft) Found unifont_jp_patch-17.0.01.hex, loading
+[21:02:06] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Speakers (Senary Audio)
+[21:02:06] [Render thread/INFO] (Minecraft) Sound engine started
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/celestials.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/decorated_pot.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/shield_patterns.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/banner_patterns.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 2048x2048x4 minecraft:textures/atlas/blocks.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/items.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 1024x1024x0 minecraft:textures/atlas/gui.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 128x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/chest.png-atlas
+[21:02:06] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/shulker_boxes.png-atlas
+[21:02:11] [Worker-Main-15/INFO] (Minecraft) Loaded 1866 advancements
+[21:02:11] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.GenericMessageScreen@c1b9374
+[21:02:11] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:02:11] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:11] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 67 new biomes in 1.308 ms
+[21:02:11] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 26.3
+[21:02:11] [Server thread/INFO] (Minecraft) Generating keypair
+[21:02:11] [Server thread/INFO] (Minecraft) Selecting global world spawn...
+[21:02:12] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:overworld
+[21:02:12] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[21:02:12] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_end
+[21:02:12] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[21:02:12] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_nether
+[21:02:12] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[21:02:12] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:12] [Server thread/INFO] (Minecraft) Loading 0 persistent chunks...
+[21:02:12] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[21:02:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:02:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:02:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:02:12] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[21:02:12] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:12] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:12] [Render thread/INFO] (ImmPtlNetworkConfig) Client login init
+[21:02:12] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:12] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:12] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:12] [Netty Local IO #1/INFO] (ImmPtlNetworkConfig) Client received ImmPtl config packet. Server mod version: 6.0.6
+[21:02:12] [Netty Local IO #2/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 6.0.6 Player: Player311 d4625839-68ff-34de-8208-19f0e474753e
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Server thread/INFO] (Minecraft) Loading 48 chunks for player spawn...
+[21:02:13] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Server thread/INFO] (Minecraft) Preparing spawn area: 100%
+[21:02:13] [Server thread/INFO] (Minecraft) Time elapsed: 1548 ms
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Server thread/INFO] (Minecraft) Player311[local:E:0d8f591f] logged in with entity id 1 at (0.5, -60.0, 0.5)
+[21:02:13] [Server thread/INFO] (Minecraft) System chat: Player311 joined the game
+[21:02:13] [Server thread/INFO] (iPortal) Player login 0 ServerPlayer['Player311'/1, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=0.50]
+[21:02:13] [Server thread/INFO] (Minecraft) Changing view distance to 5, from 10
+[21:02:13] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:13] [Render thread/INFO] (DimLibNetworking) Client received dimension info
+minecraft:overworld
+minecraft:the_nether
+minecraft:the_end
+[21:02:13] [Render thread/INFO] (MiscNetworking) Client received dim id sync packet
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:13] [Render thread/INFO] (MiscNetworking) Client accepted dimension type mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=ResourceKey[minecraft:dimension_type / minecraft:overworld], ResourceKey[minecraft:dimension / minecraft:the_nether]=ResourceKey[minecraft:dimension_type / minecraft:the_nether], ResourceKey[minecraft:dimension / minecraft:the_end]=ResourceKey[minecraft:dimension_type / minecraft:the_end]}
+[21:02:13] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:13] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[21:02:13] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:13] [Render thread/WARN] (PortalRenderer) The stencil and framebuffer portal renderers are not ported to Minecraft 26.3. Portals into other dimensions are drawn by the PortalViewRenderer prototype (one portal layer, no mirrors).
+[21:02:14] [Render thread/WARN] (Minecraft) Requested post effect does not exist: minecraft:end_of_frame
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 2 reached during a single frame. New capacity will be 4.
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 4 reached during a single frame. New capacity will be 8.
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 8 reached during a single frame. New capacity will be 16.
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 2 reached during a single frame. New capacity will be 8.
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 2 reached during a single frame. New capacity will be 8.
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 8 reached during a single frame. New capacity will be 16.
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 8 reached during a single frame. New capacity will be 16.
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 16 reached during a single frame. New capacity will be 32.
+[21:02:14] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 16 reached during a single frame. New capacity will be 32.
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@18853777
+[21:02:14] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: null
+[21:02:16] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 32 reached during a single frame. New capacity will be 64.
+[21:02:16] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 32 reached during a single frame. New capacity will be 64.
+[21:02:17] [Server thread/INFO] (Minecraft) System chat: Marked chunk [0, 0] in minecraft:the_nether to be force loaded
+[21:02:18] [Server thread/INFO] (Minecraft) System chat: Successfully filled 343 block(s)
+[21:02:18] [Server thread/INFO] (Minecraft) System chat: Successfully filled 125 block(s)
+[21:02:18] [Server thread/INFO] (Minecraft) System chat: Successfully filled 25 block(s)
+[21:02:18] [Server thread/INFO] (Minecraft) System chat: Successfully filled 49 block(s)
+[21:02:18] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 0.500000
+[21:02:18] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:18] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[21:02:19] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 64 reached during a single frame. New capacity will be 128.
+[21:02:19] [Render thread/INFO] (Minecraft) [STDOUT]: [imm_ptl test] nether client chunks: 36 render ticks 0 around origin: (-2,-2)=true (-2,-1)=true (-2,0)=true (-2,1)=true (-1,-2)=true (-1,-1)=true (-1,0)=true (-1,1)=true (0,-2)=true (0,-1)=true (0,0)=true (0,1)=true (1,-2)=true (1,-1)=true (1,0)=true (1,1)=true 
+[21:02:19] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 64 reached during a single frame. New capacity will be 128.
+[21:02:19] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 16 reached during a single frame. New capacity will be 32.
+[21:02:19] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 128 reached during a single frame. New capacity will be 256.
+[21:02:20] [Render thread/INFO] (PortalViewRenderer) Saved portal view to C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\upstream-casebacon-26.3\build\clientgametest\screenshots\imm_ptl_01b_portal_view_target.png
+[21:02:20] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 128 reached during a single frame. New capacity will be 256.
+[21:02:20] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, -2.470000
+[21:02:20] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2000ms or 40 ticks behind
+[21:02:20] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, -2.47)
+[21:02:20] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 0.500000
+[21:02:20] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:21] [Render thread/INFO] (iPortal) Client Changed Dimension from minecraft:overworld to minecraft:the_nether time: 131 age: 131
+[21:02:21] [Render thread/INFO] (ClientTeleportationManager) Client Teleported Statically
+portal: Portal{2,south,(minecraft:overworld 0.5 -58.5 -2.5)->(minecraft:the_nether 0.5 101.5 0.5)}
+eye pos: (0.5, -58.37999999523163, -2.4783143412028994) -> (0.5, -58.37999999523163, -2.5387511100061824)
+[21:02:21] [Server thread/INFO] (Minecraft) System chat: Player311 has made the advancement [We Need to Go Deeper]
+[21:02:22] [Render thread/INFO] (Minecraft) [System] [CHAT] Player311 has made the advancement [We Need to Go Deeper]
+[21:02:22] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:02:22] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:02:23] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 256 reached during a single frame. New capacity will be 512.
+[21:02:23] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 6.500000
+[21:02:23] [Server thread/INFO] (Minecraft) [ImmPtl] Ignoring player move packet. Player: ServerPlayer['Player311'/1, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=6.50] Packet: minecraft:the_nether 0.5 -60.0 6.5
+[21:02:23] [Render thread/INFO] (Minecraft) Client cleanup
+[21:02:23] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 6.5)
+[21:02:23] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[21:02:24] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 6.500000
+[21:02:24] [Server thread/INFO] (Minecraft) System chat: Successfully filled 70 block(s)
+[21:02:24] [Server thread/INFO] (Minecraft) System chat: Successfully filled 70 block(s)
+[21:02:24] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 6.5)
+[21:02:24] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 256 reached during a single frame. New capacity will be 512.
+[21:02:24] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 32 reached during a single frame. New capacity will be 64.
+[21:02:27] [Render thread/INFO] (Minecraft) Resizing Terrain UBO, capacity limit of 1 reached during a single frame. New capacity will be 2.
+[21:02:27] [Render thread/INFO] (Minecraft) Resizing Terrain UBO, capacity limit of 2 reached during a single frame. New capacity will be 4.
+[21:02:28] [Render thread/INFO] (Minecraft) Resizing Terrain UBO, capacity limit of 4 reached during a single frame. New capacity will be 8.
+[21:02:28] [Server thread/INFO] (Minecraft) Player311 lost connection: Disconnected
+[21:02:28] [Server thread/INFO] (Minecraft) System chat: Player311 left the game
+[21:02:28] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[21:02:28] [Server thread/INFO] (Minecraft) Stopping server
+[21:02:28] [Server thread/INFO] (Minecraft) Saving players
+[21:02:28] [Server thread/INFO] (Minecraft) Saving worlds
+[21:02:28] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:02:29] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:02:29] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:02:29] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:02:29] [Render thread/INFO] (Minecraft) Client cleanup
+[21:02:29] [Render thread/INFO] (Minecraft) Client exit world
+[21:02:29] [Download-1/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
+[21:02:29] [Download-1/ERROR] (Minecraft) Couldn't connect to realms
+com.mojang.realmsclient.exception.RealmsServiceException: Realms authentication error with message 'java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC'
+	at knot//com.mojang.realmsclient.client.RealmsClient.execute(RealmsClient.java:625)
+	at knot//com.mojang.realmsclient.client.RealmsClient.clientCompatible(RealmsClient.java:354)
+	at knot//com.mojang.realmsclient.RealmsAvailability.lambda$check$0(RealmsAvailability.java:48)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1789)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[21:02:29] [Worker-Main-10/INFO] (Minecraft) Loaded 1866 advancements
+[21:02:30] [Thread-2/WARN] (Minecraft) Failed to get system info for Process Loads
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getUserTime()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$0(SystemReport.java:190)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:189)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.server.Main.main(Main.java:104)
+	at knot//net.fabricmc.fabric.impl.client.gametest.util.DedicatedServerImplUtil.lambda$start$0(DedicatedServerImplUtil.java:77)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[21:02:30] [Thread-2/WARN] (Minecraft) Failed to get system info for Process Virtual Size (MiB)
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getVirtualSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$1(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.server.Main.main(Main.java:104)
+	at knot//net.fabricmc.fabric.impl.client.gametest.util.DedicatedServerImplUtil.lambda$start$0(DedicatedServerImplUtil.java:77)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[21:02:30] [Thread-2/WARN] (Minecraft) Failed to get system info for Process Resident Size (MiB)
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getResidentSetSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$2(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.server.Main.main(Main.java:104)
+	at knot//net.fabricmc.fabric.impl.client.gametest.util.DedicatedServerImplUtil.lambda$start$0(DedicatedServerImplUtil.java:77)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[21:02:30] [Thread-2/INFO] (Minecraft) Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[21:02:30] [Worker-Main-8/INFO] (Minecraft) Loaded 1866 advancements
+[21:02:30] [Thread-2/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 67 new biomes in 244.8 μs
+[21:02:31] [Server thread/INFO] (Minecraft) Starting minecraft server version 26.3
+[21:02:31] [Server thread/INFO] (Minecraft) Loading properties
+[21:02:31] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[21:02:31] [Server thread/INFO] (Minecraft) Generating keypair
+[21:02:31] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
+[21:02:31] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[21:02:31] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
+[21:02:31] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[21:02:31] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
+[21:02:31] [Server thread/INFO] (Minecraft) Preparing level "world"
+[21:02:31] [Server thread/INFO] (Minecraft) Selecting global world spawn...
+[21:02:31] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:overworld
+[21:02:31] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[21:02:31] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_end
+[21:02:31] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[21:02:31] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_nether
+[21:02:31] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[21:02:31] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:31] [Server thread/INFO] (Minecraft) Loading 0 persistent chunks...
+[21:02:31] [Server thread/INFO] (Minecraft) Preparing spawn area: 100%
+[21:02:31] [Server thread/INFO] (Minecraft) Time elapsed: 77 ms
+[21:02:31] [Server thread/INFO] (Minecraft) Done (0.087s)! For help, type "help"
+[21:02:31] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:02:31] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:02:31] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:02:31] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[21:02:31] [Server thread/INFO] (Minecraft) System chat: Marked chunk [0, 0] in minecraft:the_nether to be force loaded
+[21:02:31] [Server thread/INFO] (Minecraft) System chat: Successfully filled 343 block(s)
+[21:02:31] [Server thread/INFO] (Minecraft) System chat: Successfully filled 125 block(s)
+[21:02:31] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:02:31] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:31] [Render thread/INFO] (Minecraft) Connecting to localhost, 25565
+[21:02:31] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:31] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:31] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:31] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:31] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Server Connector #1/INFO] (ImmPtlNetworkConfig) Client login init
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Netty NIO IO #1/INFO] (ImmPtlNetworkConfig) Client received ImmPtl config packet. Server mod version: 6.0.6
+[21:02:32] [Netty NIO IO #2/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 6.0.6 Player: Player311 d4625839-68ff-34de-8208-19f0e474753e
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.ConnectScreen@28de8cad
+[21:02:32] [Server thread/INFO] (Minecraft) Player311[/127.0.0.1:57928] logged in with entity id 5 at (0.5, -60.0, 0.5)
+[21:02:32] [Server thread/INFO] (Minecraft) System chat: Player311 joined the game
+[21:02:32] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:32] [Server thread/INFO] (iPortal) Player login 22 ServerPlayer['Player311'/5, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=0.50]
+[21:02:32] [Render thread/INFO] (DimLibNetworking) Client received dimension info
+minecraft:overworld
+minecraft:the_nether
+minecraft:the_end
+[21:02:32] [Render thread/INFO] (MiscNetworking) Client received dim id sync packet
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:32] [Render thread/INFO] (MiscNetworking) Client accepted dimension type mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=ResourceKey[minecraft:dimension_type / minecraft:overworld], ResourceKey[minecraft:dimension / minecraft:the_nether]=ResourceKey[minecraft:dimension_type / minecraft:the_nether], ResourceKey[minecraft:dimension / minecraft:the_end]=ResourceKey[minecraft:dimension_type / minecraft:the_end]}
+[21:02:32] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:32] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@54b341fe
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@54b341fe
+[21:02:32] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: null
+[21:02:33] [Server thread/INFO] (iPortal) Server performance level: good
+[21:02:36] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 0.500000
+[21:02:36] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:36] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[21:02:38] [Render thread/INFO] (iPortal) Client Changed Dimension from minecraft:overworld to minecraft:the_nether time: 355 age: 105
+[21:02:38] [Render thread/INFO] (ClientTeleportationManager) Client Teleported Statically
+portal: Portal{6,south,(minecraft:overworld 0.5 -58.5 -2.5)->(minecraft:the_nether 0.5 101.5 0.5)}
+eye pos: (0.5, -58.37999999523163, -2.478314186818094) -> (0.5, -58.37999999523163, -2.5344344529594203)
+[21:02:38] [Server thread/INFO] (Minecraft) System chat: Player311 has made the advancement [We Need to Go Deeper]
+[21:02:38] [Render thread/INFO] (Minecraft) [System] [CHAT] Player311 has made the advancement [We Need to Go Deeper]
+[21:02:38] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:02:39] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:02:39] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 6.500000
+[21:02:39] [Server thread/INFO] (Minecraft) [ImmPtl] Ignoring player move packet. Player: ServerPlayer['Player311'/5, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=6.50] Packet: minecraft:the_nether 0.5 -60.0 6.5
+[21:02:39] [Render thread/INFO] (Minecraft) Client cleanup
+[21:02:39] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 6.5)
+[21:02:40] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:02:40] [Render thread/INFO] (Minecraft) Client cleanup
+[21:02:40] [Render thread/INFO] (Minecraft) Client exit world
+[21:02:40] [Server thread/INFO] (Minecraft) Player311 lost connection: Disconnected
+[21:02:40] [Server thread/INFO] (Minecraft) System chat: Player311 left the game
+[21:02:40] [Server thread/INFO] (Minecraft) Stopping server
+[21:02:40] [Server thread/INFO] (Minecraft) Saving players
+[21:02:40] [Server thread/INFO] (Minecraft) Saving worlds
+[21:02:40] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:02:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:02:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:02:41] [Test thread/WARN] (IrisShaderPackTests) SKIPPED IrisShaderPackTests: Iris is not loaded
+[21:02:41] [Worker-Main-9/INFO] (Minecraft) Loaded 1866 advancements
+[21:02:41] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.GenericMessageScreen@7f135fe7
+[21:02:41] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:02:41] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:41] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 67 new biomes in 406.4 μs
+[21:02:41] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 26.3
+[21:02:41] [Server thread/INFO] (Minecraft) Generating keypair
+[21:02:41] [Server thread/INFO] (Minecraft) Selecting global world spawn...
+[21:02:41] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:overworld
+[21:02:41] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[21:02:41] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_end
+[21:02:41] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[21:02:41] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_nether
+[21:02:41] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[21:02:41] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:41] [Server thread/INFO] (Minecraft) Loading 0 persistent chunks...
+[21:02:41] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[21:02:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:02:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:02:41] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:02:41] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[21:02:41] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:41] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:41] [Render thread/INFO] (ImmPtlNetworkConfig) Client login init
+[21:02:41] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:41] [Netty Local IO #4/INFO] (ImmPtlNetworkConfig) Client received ImmPtl config packet. Server mod version: 6.0.6
+[21:02:41] [Netty Local IO #5/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 6.0.6 Player: Player311 d4625839-68ff-34de-8208-19f0e474753e
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Server thread/INFO] (Minecraft) Loading 48 chunks for player spawn...
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Server thread/INFO] (Minecraft) Preparing spawn area: 58%
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Server thread/INFO] (Minecraft) Time elapsed: 578 ms
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Server thread/INFO] (Minecraft) Player311[local:E:f5d83c26] logged in with entity id 8 at (0.5, -60.0, 0.5)
+[21:02:42] [Server thread/INFO] (Minecraft) System chat: Player311 joined the game
+[21:02:42] [Server thread/INFO] (iPortal) Player login 0 ServerPlayer['Player311'/8, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=0.50]
+[21:02:42] [Server thread/INFO] (Minecraft) Changing view distance to 5, from 10
+[21:02:42] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:02:42] [Render thread/INFO] (DimLibNetworking) Client received dimension info
+minecraft:overworld
+minecraft:the_nether
+minecraft:the_end
+[21:02:42] [Render thread/INFO] (MiscNetworking) Client received dim id sync packet
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:02:42] [Render thread/INFO] (MiscNetworking) Client accepted dimension type mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=ResourceKey[minecraft:dimension_type / minecraft:overworld], ResourceKey[minecraft:dimension / minecraft:the_nether]=ResourceKey[minecraft:dimension_type / minecraft:the_nether], ResourceKey[minecraft:dimension / minecraft:the_end]=ResourceKey[minecraft:dimension_type / minecraft:the_end]}
+[21:02:42] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:02:42] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:42] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:43] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:43] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:43] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@6efcef2
+[21:02:43] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: null
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Set Player311's game mode to Spectator Mode
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Set minecraft:overworld to time marker minecraft:noon
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Marked 16 chunks in minecraft:the_nether from [-2, -2] to [1, 1] to be force loaded
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 12453 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 648 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 540 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 68 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 56 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 24 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 54 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 132 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 60 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Successfully filled 1053 block(s)
+[21:02:45] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -59.120000, 1.500000
+[21:02:45] [Render thread/INFO] (Minecraft) [System] [CHAT] Your game mode has been updated to Spectator Mode
+[21:02:45] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -59.12, 1.5)
+[21:02:45] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[21:02:47] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -59.120000, 1.500000
+[21:02:47] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -59.12, 1.5)
+[21:02:49] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -59.120000, -1.500000
+[21:02:49] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -59.12, -1.5)
+[21:02:51] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -59.120000, -2.250000
+[21:02:51] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -59.12, -2.25)
+[21:02:52] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 3.000000, -59.120000, -0.500000
+[21:02:52] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (3.0, -59.12, -0.5)
+[21:02:54] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to -1.500000, -58.320000, -1.000000
+[21:02:54] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (-1.5, -58.32, -1.0)
+[21:02:56] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 4.000000, -59.620000, -1.700000
+[21:02:56] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (4.0, -59.62, -1.7)
+[21:02:57] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 1.300000, -58.920000, -2.300000
+[21:02:57] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (1.3, -58.92, -2.3)
+[21:02:59] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.100000, -58.120000, -2.000000
+[21:02:59] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.1, -58.12, -2.0)
+[21:03:01] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Command Buffer, capacity limit of 512 reached during a single frame. New capacity will be 1024.
+[21:03:01] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 1.000000, -60.320000, -1.300000
+[21:03:01] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (1.0, -60.32, -1.3)
+[21:03:03] [Server thread/INFO] (Minecraft) System chat: Player311 has made the advancement [We Need to Go Deeper]
+[21:03:03] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, 106.880000, 4.500000
+[21:03:03] [Render thread/INFO] (Minecraft) Client cleanup
+[21:03:03] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (0.5, 106.88, 4.5)
+[21:03:03] [Render thread/INFO] (Minecraft) [System] [CHAT] Player311 has made the advancement [We Need to Go Deeper]
+[21:03:03] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:03:03] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:03:05] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, 106.880000, 4.500000
+[21:03:05] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (0.5, 106.88, 4.5)
+[21:03:05] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:overworld
+[21:03:07] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders front_far mean 0.00 bad 0.0000 of 62135
+[21:03:07] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, 106.880000, 1.500000
+[21:03:07] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (0.5, 106.88, 1.5)
+[21:03:09] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders front_near mean 0.01 bad 0.0000 of 409912
+[21:03:09] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, 106.880000, 0.750000
+[21:03:09] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2136ms or 42 ticks behind
+[21:03:09] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (0.5, 106.88, 0.75)
+[21:03:11] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders front_close mean 0.02 bad 0.0000 of 409892
+[21:03:11] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 3.000000, 106.880000, 2.500000
+[21:03:11] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (3.0, 106.88, 2.5)
+[21:03:12] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders side_right mean 0.03 bad 0.0000 of 97020
+[21:03:12] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to -1.500000, 107.680000, 2.000000
+[21:03:12] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (-1.5, 107.68, 2.0)
+[21:03:14] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders side_left_up mean 0.00 bad 0.0000 of 157657
+[21:03:14] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 4.000000, 106.380000, 1.300000
+[21:03:14] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (4.0, 106.38, 1.3)
+[21:03:16] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders grazing_right mean 0.11 bad 0.0000 of 33715
+[21:03:16] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 1.300000, 107.080000, 0.700000
+[21:03:16] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (1.3, 107.08, 0.7)
+[21:03:18] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders close_oblique mean 0.21 bad 0.0000 of 287439
+[21:03:18] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.100000, 107.880000, 1.000000
+[21:03:18] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (0.1, 107.88, 1.0)
+[21:03:20] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders close_steep mean 0.00 bad 0.0000 of 371582
+[21:03:20] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 1.000000, 105.680000, 1.700000
+[21:03:20] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether (1.0, 105.68, 1.7)
+[21:03:21] [Test thread/INFO] (PortalViewAccuracyTests) [imm_ptl accuracy] no_shaders below_up mean 0.00 bad 0.0000 of 260424
+[21:03:21] [Server thread/INFO] (Minecraft) Player311 lost connection: Disconnected
+[21:03:21] [Server thread/INFO] (Minecraft) System chat: Player311 left the game
+[21:03:21] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[21:03:22] [Server thread/INFO] (Minecraft) Stopping server
+[21:03:22] [Server thread/INFO] (Minecraft) Saving players
+[21:03:22] [Server thread/INFO] (Minecraft) Saving worlds
+[21:03:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:03:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:03:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:03:23] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:03:23] [Render thread/INFO] (Minecraft) Client cleanup
+[21:03:23] [Render thread/INFO] (Minecraft) Client exit world
+[21:03:23] [Test thread/INFO] (PortalViewAccuracyTests) 
+[imm_ptl accuracy] pack pose meanDiff badFraction pixels
+[imm_ptl accuracy] no_shaders front_far 0.00 0.0000 62135
+[imm_ptl accuracy] no_shaders front_near 0.01 0.0000 409912
+[imm_ptl accuracy] no_shaders front_close 0.02 0.0000 409892
+[imm_ptl accuracy] no_shaders side_right 0.03 0.0000 97020
+[imm_ptl accuracy] no_shaders side_left_up 0.00 0.0000 157657
+[imm_ptl accuracy] no_shaders grazing_right 0.11 0.0000 33715
+[imm_ptl accuracy] no_shaders close_oblique 0.21 0.0000 287439
+[imm_ptl accuracy] no_shaders close_steep 0.00 0.0000 371582
+[imm_ptl accuracy] no_shaders below_up 0.00 0.0000 260424
+
+[21:03:24] [Worker-Main-5/INFO] (Minecraft) Loaded 1866 advancements
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.GenericMessageScreen@d49aa07
+[21:03:24] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:03:24] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:03:24] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 67 new biomes in 210.9 μs
+[21:03:24] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 26.3
+[21:03:24] [Server thread/INFO] (Minecraft) Generating keypair
+[21:03:24] [Server thread/INFO] (Minecraft) Selecting global world spawn...
+[21:03:24] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:overworld
+[21:03:24] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[21:03:24] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_end
+[21:03:24] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[21:03:24] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_nether
+[21:03:24] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[21:03:24] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:03:24] [Server thread/INFO] (Minecraft) Loading 0 persistent chunks...
+[21:03:24] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[21:03:24] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:03:24] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:03:24] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:03:24] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Render thread/INFO] (ImmPtlNetworkConfig) Client login init
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Netty Local IO #7/INFO] (ImmPtlNetworkConfig) Client received ImmPtl config packet. Server mod version: 6.0.6
+[21:03:24] [Netty Local IO #8/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 6.0.6 Player: Player311 d4625839-68ff-34de-8208-19f0e474753e
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Server thread/INFO] (Minecraft) Loading 48 chunks for player spawn...
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Server thread/INFO] (Minecraft) Preparing spawn area: 100%
+[21:03:24] [Server thread/INFO] (Minecraft) Time elapsed: 522 ms
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Server thread/INFO] (Minecraft) Player311[local:E:6149e224] logged in with entity id 10 at (0.5, -60.0, 0.5)
+[21:03:24] [Server thread/INFO] (Minecraft) System chat: Player311 joined the game
+[21:03:24] [Server thread/INFO] (iPortal) Player login 0 ServerPlayer['Player311'/10, l='ServerWorld minecraft:overworld New World', x=0.50, y=-60.00, z=0.50]
+[21:03:24] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
+[21:03:24] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:24] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[21:03:24] [Render thread/INFO] (DimLibNetworking) Client received dimension info
+minecraft:overworld
+minecraft:the_nether
+minecraft:the_end
+[21:03:24] [Render thread/INFO] (MiscNetworking) Client received dim id sync packet
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[21:03:24] [Render thread/INFO] (MiscNetworking) Client accepted dimension type mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=ResourceKey[minecraft:dimension_type / minecraft:overworld], ResourceKey[minecraft:dimension / minecraft:the_nether]=ResourceKey[minecraft:dimension_type / minecraft:the_nether], ResourceKey[minecraft:dimension / minecraft:the_end]=ResourceKey[minecraft:dimension_type / minecraft:the_end]}
+[21:03:24] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:03:24] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[21:03:24] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@3f02f193
+[21:03:25] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: null
+[21:03:30] [Server thread/INFO] (Minecraft) System chat: Set Player311's game mode to Creative Mode
+[21:03:30] [Server thread/INFO] (Minecraft) System chat: Teleported Player311 to 0.500000, -60.000000, 0.500000
+[21:03:30] [Render thread/INFO] (Minecraft) [System] [CHAT] Your game mode has been updated to Creative Mode
+[21:03:30] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld (0.5, -60.0, 0.5)
+[21:03:30] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[21:03:30] [Render thread/INFO] (Minecraft) [System] [CHAT] [Immersive Portals] Check the wiki about how to customize portals https://qouteall.fun/immptl/wiki/Portal-Customization
+[21:03:32] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] overworld 2s           perf(server/client)=good/good fps 51 freeMB 5176 loaders=r8 sent=113 (radius 5) client=113 (radius 5) sodiumReady=-1
+[21:03:35] [Render thread/INFO] (Minecraft) Resizing Chunk Sections Instanced, capacity limit of 512 reached during a single frame. New capacity will be 1024.
+[21:03:35] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] overworld 5s           perf(server/client)=good/good fps 52 freeMB 5206 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[21:03:40] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] overworld 10s          perf(server/client)=good/good fps 52 freeMB 5169 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[21:03:50] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] overworld 20s          perf(server/client)=good/good fps 42 freeMB 5104 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[21:04:10] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] overworld 40s          perf(server/client)=good/good fps 29 freeMB 5100 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[21:04:11] [Render thread/INFO] (iPortal) Client Changed Dimension from minecraft:overworld to minecraft:the_nether time: 2043 age: 935
+[21:04:11] [Render thread/INFO] (ClientTeleportationManager) Client Teleported Statically
+portal: Portal{11,south,(minecraft:overworld 0.5 -58.5 -2.5)->(minecraft:the_nether 0.5 100.5 0.5)}
+eye pos: (0.5, -58.37999999523163, -2.478314186818094) -> (0.5, -58.37999999523163, -2.534436794462299)
+[21:04:11] [Server thread/INFO] (Minecraft) System chat: Player311 has made the advancement [We Need to Go Deeper]
+[21:04:11] [Render thread/INFO] (Minecraft) [System] [CHAT] Player311 has made the advancement [We Need to Go Deeper]
+[21:04:11] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:04:11] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[21:04:12] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] nether +0s             perf(server/client)=good/good fps 32 freeMB 5136 loaders=r12 sent=416 (radius 11) client=416 (radius 11) sodiumReady=-1
+[21:04:14] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] nether +2s             perf(server/client)=good/good fps 35 freeMB 5103 loaders=r12 sent=588 (radius 13) client=588 (radius 13) sodiumReady=-1
+[21:04:22] [Test thread/INFO] (RemoteChunkLoadingTests) [imm_ptl chunks] nether +10s            perf(server/client)=good/good fps 47 freeMB 5047 loaders=r12 sent=625 (radius 13) client=625 (radius 13) sodiumReady=-1
+[21:04:22] [Server thread/INFO] (Minecraft) Player311 lost connection: Disconnected
+[21:04:22] [Server thread/INFO] (Minecraft) System chat: Player311 left the game
+[21:04:22] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[21:04:22] [Server thread/INFO] (Minecraft) Stopping server
+[21:04:22] [Server thread/INFO] (Minecraft) Saving players
+[21:04:22] [Server thread/INFO] (Minecraft) Saving worlds
+[21:04:23] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld New World'/minecraft:overworld
+[21:04:23] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end New World'/minecraft:the_end
+[21:04:23] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether New World'/minecraft:the_nether
+[21:04:24] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:04:24] [Render thread/INFO] (Minecraft) Client cleanup
+[21:04:24] [Render thread/INFO] (Minecraft) Client exit world
+[21:04:24] [Test thread/INFO] (RemoteChunkLoadingTests) 
+[imm_ptl chunks] overworld 2s           perf(server/client)=good/good fps 51 freeMB 5176 loaders=r8 sent=113 (radius 5) client=113 (radius 5) sodiumReady=-1
+[imm_ptl chunks] overworld 5s           perf(server/client)=good/good fps 52 freeMB 5206 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[imm_ptl chunks] overworld 10s          perf(server/client)=good/good fps 52 freeMB 5169 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[imm_ptl chunks] overworld 20s          perf(server/client)=good/good fps 42 freeMB 5104 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[imm_ptl chunks] overworld 40s          perf(server/client)=good/good fps 29 freeMB 5100 loaders=r8 sent=289 (radius 8) client=289 (radius 8) sodiumReady=-1
+[imm_ptl chunks] nether +0s             perf(server/client)=good/good fps 32 freeMB 5136 loaders=r12 sent=416 (radius 11) client=416 (radius 11) sodiumReady=-1
+[imm_ptl chunks] nether +2s             perf(server/client)=good/good fps 35 freeMB 5103 loaders=r12 sent=588 (radius 13) client=588 (radius 13) sodiumReady=-1
+[imm_ptl chunks] nether +10s            perf(server/client)=good/good fps 47 freeMB 5047 loaders=r12 sent=625 (radius 13) client=625 (radius 13) sodiumReady=-1
+
+[21:04:24] [Render thread/INFO] (Minecraft) Stopping!
+[21:04:24] [Render thread/INFO] (ClientDimensionInfo) Cleaning up client dimension info
+[21:04:24] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup

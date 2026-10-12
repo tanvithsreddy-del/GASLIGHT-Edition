@@ -1,0 +1,131 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\upstream-casebacon-26.3\\gradlew.bat", "--no-daemon", "--max-workers=2", "build", "--stacktrace", "--console=plain"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\upstream-casebacon-26.3
+UTC: 2026-10-12T15:25:51.524878+00:00
+Downloading https://services.gradle.org/distributions/gradle-9.6.0-bin.zip
+.............10%.............20%..............30%.............40%..............50%.............60%.............70%..............80%.............90%..............100%
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/Tanvith/.gradle/wrapper/dists/gradle-9.6.0-bin/42k10rwplmzkhuboz9kdazi7s/gradle-9.6.0/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.6.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.17.21
+
+> Configure project :dimlib
+Fabric Loom: 1.17.21
+
+> Task :dimlib:compileJava
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :processResources
+> Task :classes
+> Task :dimlib:processResources
+> Task :dimlib:classes
+> Task :dimlib:processIncludeJars
+> Task :dimlib:jar
+> Task :sourcesJar
+> Task :processIncludeJars
+> Task :jar
+> Task :compileTestJava
+> Task :assemble
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :dimlib:exportClasspath
+> Task :validateAccessWidener
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/C:/Users/Tanvith/.gradle/caches/modules-2/files-2.1/org.joml/joml/1.10.9/438e036486bad66b189bff385dd07dea4f74a146/joml-1.10.9.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+
+> Task :test
+
+RemoteCallRegistrationTest > callSitesAreRegistered() PASSED
+
+RemoteCallRegistrationTest > clientMethodsAreNotCallableByClients() PASSED
+
+ObliqueClippingTest > nearPlaneBecomesTheClipPlane(boolean, boolean) > [1] false, false PASSED
+
+ObliqueClippingTest > nearPlaneBecomesTheClipPlane(boolean, boolean) > [2] false, true PASSED
+
+ObliqueClippingTest > nearPlaneBecomesTheClipPlane(boolean, boolean) > [3] true, false PASSED
+
+ObliqueClippingTest > nearPlaneBecomesTheClipPlane(boolean, boolean) > [4] true, true PASSED
+
+PortalAreaMeshTest > partBehindTheCameraIsCut() PASSED
+
+PortalAreaMeshTest > triangleBehindTheCameraIsDropped() PASSED
+
+PortalAreaMeshTest > plainTrianglesAreKept() PASSED
+
+PortalAreaMeshTest > projectionKeepsTheScreenPosition() PASSED
+
+ShaderClipPlaneTest > distanceFromClipXYWMatchesViewSpaceDistance(boolean, boolean) > [1] false, false PASSED
+
+ShaderClipPlaneTest > distanceFromClipXYWMatchesViewSpaceDistance(boolean, boolean) > [2] false, true PASSED
+
+ShaderClipPlaneTest > distanceFromClipXYWMatchesViewSpaceDistance(boolean, boolean) > [3] true, false PASSED
+
+ShaderClipPlaneTest > distanceFromClipXYWMatchesViewSpaceDistance(boolean, boolean) > [4] true, true PASSED
+
+TeleportRequestCheckTest > acceptsConsistentRequest() PASSED
+
+TeleportRequestCheckTest > rejectsNonFiniteDistances() PASSED
+
+TeleportRequestCheckTest > mountedPlayerIsValidatedLikeAnyPlayer() PASSED
+
+TeleportRequestCheckTest > distanceLimitsAreInclusive() PASSED
+
+ImplRemoteProcedureCallTest > acceptsRegisteredMethod() PASSED
+
+ImplRemoteProcedureCallTest > rejectsEmptyPayload() PASSED
+
+ImplRemoteProcedureCallTest > serverboundMethodsMustTakePlayer() PASSED
+
+ImplRemoteProcedureCallTest > rejectsTruncatedArguments() PASSED
+
+ImplRemoteProcedureCallTest > rejectsTrailingBytes() PASSED
+
+ImplRemoteProcedureCallTest > rejectsUnregisteredPublicStaticMethod() PASSED
+
+ImplRemoteProcedureCallTest > rejectsArbitraryClassName() PASSED
+
+ImplRemoteProcedureCallTest > rejectsOversizedString() PASSED
+
+HelperTest > testRemoveIfEarlyExit() PASSED
+
+Mesh2DTest > test() PASSED
+
+Mesh2DTest > testFixIntersection() PASSED
+
+> Task :check
+> Task :build
+> Task :dimlib:assemble
+> Task :dimlib:compileTestJava NO-SOURCE
+> Task :dimlib:processTestResources NO-SOURCE
+> Task :dimlib:testClasses UP-TO-DATE
+> Task :dimlib:test NO-SOURCE
+> Task :dimlib:validateAccessWidener NO-SOURCE
+> Task :dimlib:check UP-TO-DATE
+> Task :dimlib:build
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/upstream-casebacon-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.6.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 6s
+13 actionable tasks: 13 executed
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 188.657

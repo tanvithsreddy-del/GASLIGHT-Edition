@@ -32,7 +32,7 @@ The CurseForge project 'Immersive Portal' advertises a modern rewrite, but its l
 
 Immersive Gateways has real Fabric/NeoForge 26.1.2 source, but the inspected renderer draws end-gateway/rune effects and its traversal uses ordinary entity teleportation. It does not replace the seamless remote-scene engine.
 
-CaseBacon's source-backed 26.3 fork has a real single-layer remote-view renderer, portal traversal and graphical GameTests. Its documented limits include no nested portals/mirrors in this renderer and no same-dimension views with Sodium. It is under genuine-build investigation; upstream claims are not local proof. A separate Minecraft version experiment must never be described as 26.1.2 compatibility.
+CaseBacon's source-backed 26.3 fork has a real single-layer remote-view renderer, portal traversal and graphical GameTests. Its documented limits include no nested portals/mirrors in this renderer and no same-dimension views with Sodium. Its genuine local build and baseline graphical/dedicated-server tests passed; see PROVIDER_PROOF.md for exact scope, skipped shader tests and measured limits. A separate Minecraft version experiment must never be described as 26.1.2 compatibility.
 
 The community NeoForge fork UpperMoon0/ImmersivePortals targets 1.21.1, not 26.1.2 or 26.3. A source-backed 1.21.1 Fabric/NeoForge profile is the fallback if the modern renderer cannot pass local proof. Forge needs its own verified version/provider. No universal cross-loader JAR is promised.
 

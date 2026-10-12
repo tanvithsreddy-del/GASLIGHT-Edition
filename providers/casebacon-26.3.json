@@ -1,0 +1,68 @@
+{
+  "repository": "https://github.com/CaseBacon/ImmersivePortalsMod",
+  "commit": "c5a83c77cb493b4fbab2663a6d4f0de004895ea8",
+  "minecraft": "26.3",
+  "loader": "Fabric 0.19.5",
+  "jar": "immersive-portals-6.0.6-mc26.3-fabric.jar",
+  "sha256": "640efa04baee30e448ad9be2f62d55c2cd383b926461c1a24c2bccc446d23eef",
+  "license": "Apache-2.0",
+  "unit_suites": [
+    {
+      "suite": "qouteall.imm_ptl.core.network.RemoteCallRegistrationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.imm_ptl.core.portal_view.ObliqueClippingTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.imm_ptl.core.portal_view.PortalAreaMeshTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.imm_ptl.core.portal_view.ShaderClipPlaneTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.imm_ptl.core.teleportation.TeleportRequestCheckTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.q_misc_util.ImplRemoteProcedureCallTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.q_misc_util.my_util.HelperTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "qouteall.q_misc_util.my_util.Mesh2DTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "status": "provider proof only; not GASLIGHT gameplay"
+}
