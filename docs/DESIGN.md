@@ -30,7 +30,7 @@ An ordinary player should experience continuity. Absolute undetectability with a
 
 ## Mathematical model
 
-Let P be horizontal player position, h horizontal forward unit direction, n=(-h_z,h_x), and F the conservative projection of the real camera frustum relative to P.
+Let P be horizontal player position, h horizontal forward unit direction, n=(-h_z,h_x), and F the conservative projection of the real camera frustum in world coordinates.
 
 Rear curve: Gamma(u)=P+u*n-[D+A*exp(-u*u/(W*W))]*h, u real, D>=0, A>=0, W>0. Keep this analytic; materialize only finite certified sections within budgets. A full-height wall uses both worlds' actual min/max build heights.
 
