@@ -1,0 +1,17 @@
+[
+  "build.gradle",
+  "gradle.properties",
+  "run_offline_checks.sh",
+  "src/main/java/dev/kondalabs/gaslight/FixedPortalRig.java",
+  "src/main/java/dev/kondalabs/gaslight/GaslightNativeMod.java",
+  "src/main/java/dev/kondalabs/gaslight/mixin/RemoteGenerationObserver.java",
+  "src/main/java/dev/kondalabs/gaslight/NativeWorldEngine.java",
+  "src/main/java/dev/kondalabs/gaslight/RemoteChunkAcquisition.java",
+  "src/main/java/dev/kondalabs/gaslight/RemoteChunkLeases.java",
+  "src/main/java/dev/kondalabs/gaslight/RemoteRegionRead.java",
+  "src/main/java/dev/kondalabs/gaslight/RemoteWorldSync.java",
+  "src/main/resources/fabric.mod.json",
+  "src/main/resources/gaslight-acquisition.mixins.json",
+  "src/test/java/dev/kondalabs/gaslight/RemoteChunkLeaseTests.java",
+  "src/test/java/dev/kondalabs/gaslight/StandaloneSuitesTest.java"
+]

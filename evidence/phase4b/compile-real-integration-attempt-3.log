@@ -1,0 +1,6 @@
+COMMAND: ["C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\javac.exe", "@C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4b_integration\\javac.args"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\phase4b_integration
+UTC: 2026-10-12T15:08:33.364724+00:00
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 1.437

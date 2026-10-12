@@ -1,0 +1,835 @@
+--- a/build.gradle
++++ b/build.gradle
+@@ -223,3 +223,9 @@
+     maxHeapSize = '256m'
+ }
+ tasks.named('check') { dependsOn tasks.named('remoteWorldCheck') }
++tasks.register('remoteAcquisitionCheck', JavaExec) {
++    dependsOn tasks.named('testClasses')
++    classpath = sourceSets.test.runtimeClasspath
++    mainClass = 'dev.kondalabs.gaslight.RemoteChunkLeaseTests'
++}
++tasks.named('check') { dependsOn tasks.named('remoteAcquisitionCheck') }
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -4,5 +4,5 @@
+ loader_version=0.19.5
+ loom_version=1.18.4
+ fabric_api_version=0.155.3+26.1.2
+-version=0.9.0-phase4-remote-data
++version=0.9.1-phase4b-acquisition
+ group=dev.kondalabs
+--- a/run_offline_checks.sh
++++ b/run_offline_checks.sh
+@@ -47,6 +47,8 @@
+   src/test/java/dev/kondalabs/gaslight/JournalTestSupport.java \
+   src/test/java/dev/kondalabs/gaslight/RecoveryJournalTests.java \
+   src/main/java/dev/kondalabs/gaslight/RemoteChunkData.java \
++  src/main/java/dev/kondalabs/gaslight/RemoteChunkLeases.java \
++  src/test/java/dev/kondalabs/gaslight/RemoteChunkLeaseTests.java \
+   src/main/java/dev/kondalabs/gaslight/RemoteWorldWire.java \
+   src/main/java/dev/kondalabs/gaslight/RemoteWorldCache.java \
+   src/main/java/dev/kondalabs/gaslight/RemoteWorldBudget.java \
+@@ -84,3 +86,4 @@
+ java -Xmx512m -cp build/core-test-classes dev.kondalabs.gaslight.RecoveryJournalTests
+ 
+ java -Xmx256m -cp build/core-test-classes dev.kondalabs.gaslight.RemoteWorldDataTests
++java -Xmx256m -cp build/core-test-classes dev.kondalabs.gaslight.RemoteChunkLeaseTests
+--- a/src/main/java/dev/kondalabs/gaslight/FixedPortalRig.java
++++ b/src/main/java/dev/kondalabs/gaslight/FixedPortalRig.java
+@@ -35,11 +35,13 @@
+     public Status status(){return new Status(state,reason,cursor,required.size(),crossed);}
+     public Optional<Passage> active(){return state==State.ACTIVE?Optional.of(passage):Optional.empty();}
+     private void stop(String why){
++        if(state==State.LOADING)host.onPortalPreparationCancelled(passage);
+         if(state==State.ACTIVE)host.onPortalRetired(passage);
+         if(owner!=null)walker.forget(owner);
+         state=State.REFUSED;reason=why;
+     }
+     public void close(){
++        if(state==State.LOADING)host.onPortalPreparationCancelled(passage);
+         if(state==State.ACTIVE)host.onPortalRetired(passage);
+         if(owner!=null)walker.forget(owner);
+         passage=null;state=State.DISABLED;reason="closed";
+@@ -72,6 +74,7 @@
+                 }
+                 if(all.size()>96){stop("chunk budget");return;}
+                 required=List.copyOf(all);state=State.LOADING;reason="certifying both portal ends";
++                host.onPortalPreparing(passage);
+             }catch(RuntimeException ex){stop("geometry: "+ex.getMessage());return;}
+         }
+         if(state==State.LOADING){
+@@ -80,6 +83,7 @@
+                 if(!host.loadChunk(c.x(),c.z())){stop("source or destination chunk unavailable");return;}
+                 cursor++;return; // strict one chunk load per tick
+             }
++            if(!host.portalDestinationReady(passage)){if(tick>600)stop("destination preparation timeout");return;}
+             if(!certified()){stop("structure or unknown-chunk veto");return;}
+             state=State.ACTIVE;reason="certified static link";
+             host.onPortalActivated(passage);
+--- a/src/main/java/dev/kondalabs/gaslight/GaslightNativeMod.java
++++ b/src/main/java/dev/kondalabs/gaslight/GaslightNativeMod.java
+@@ -22,6 +22,7 @@
+ public final class GaslightNativeMod implements ModInitializer {
+     private static boolean configuredEnabled;
+     private static boolean allowRemoteChunkGeneration;
++    public static boolean remoteGenerationPermitted(){return allowRemoteChunkGeneration;}
+     private static boolean previewExperimental;
+     private static boolean phase2StaticMode;
+     private static boolean phase2AllowCrossing;
+@@ -263,6 +264,9 @@
+         @Override public void onPortalActivated(NativePortal.Passage passage) {
+             if(previewExperimental)RemoteWorldSync.offer(server,passage);
+         }
++        @Override public void onPortalPreparing(NativePortal.Passage passage){RemoteWorldSync.hint(server,passage);}
++        @Override public void onPortalPreparationCancelled(NativePortal.Passage passage){RemoteWorldSync.retire(server,passage);}
++        @Override public boolean portalDestinationReady(NativePortal.Passage passage){return RemoteWorldSync.destinationReady(server,passage);}
+         @Override public void onPortalRetired(NativePortal.Passage passage){
+             RemoteWorldSync.retire(server,passage);
+             ServerPlayer player=server.getPlayerList().getPlayer(passage.owner());
+--- a/src/main/java/dev/kondalabs/gaslight/mixin/RemoteGenerationObserver.java
++++ b/src/main/java/dev/kondalabs/gaslight/mixin/RemoteGenerationObserver.java
+@@ -0,0 +1,18 @@
++package dev.kondalabs.gaslight.mixin;
++import dev.kondalabs.gaslight.RemoteChunkAcquisition;
++import net.minecraft.server.level.*;
++import net.minecraft.world.level.chunk.*;
++import net.minecraft.world.level.chunk.status.ChunkStep;
++import net.minecraft.util.StaticCache2D;
++import java.util.concurrent.CompletableFuture;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.injection.*;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
++/** Measurement only: never cancels or replaces Minecraft generation. */
++@Mixin(ChunkMap.class)
++public abstract class RemoteGenerationObserver {
++    @Inject(method="applyStep",at=@At("HEAD"))
++    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
++        RemoteChunkAcquisition.observe((ChunkMap)(Object)this,holder,step);
++    }
++}
+--- a/src/main/java/dev/kondalabs/gaslight/NativeWorldEngine.java
++++ b/src/main/java/dev/kondalabs/gaslight/NativeWorldEngine.java
+@@ -18,6 +18,9 @@
+         boolean singleplayer();
+         /** Read-only preview notification. Never affects physical portal certification. */
+         default void onPortalActivated(Passage passage) {}
++        default void onPortalPreparing(Passage passage) {}
++        default void onPortalPreparationCancelled(Passage passage) {}
++        default boolean portalDestinationReady(Passage passage){return true;}
+         default void onPortalRetired(Passage passage) {}
+     }
+     public record Actor(UUID id,V position,double yaw,double pitch,boolean spectator,boolean passenger) {}
+@@ -49,7 +52,7 @@
+     public void enabled(boolean value){
+         enabled=value;
+         if(!value){for(Live l:live)host.onPortalRetired(l.passage());
+-            live.clear();pending.clear();trackedPlayers.clear();}
++            live.clear();for(Job job:pending)host.onPortalPreparationCancelled(job.passage);pending.clear();trackedPlayers.clear();}
+     }
+     public boolean enabled(){return enabled;}
+     public Snapshot snapshot(){return new Snapshot(ticks,generations,activated,crossings,refused,pending.size(),live.size(),recentRefusal);}
+@@ -116,25 +119,29 @@
+         if(needs.size()>MAX_SCAN){reject("too many chunks");return;}
+         LinkedHashSet<Geometry.Chunk> unique=new LinkedHashSet<>(needs);
+         pending.add(new Job(p,new ArrayList<>(unique)));
++        host.onPortalPreparing(p);
+     }
+     private void processOnePendingChunk(){
+         Job job=pending.peek();if(job==null)return;
+         if(job.cursor<job.needs.size()){
+             Geometry.Chunk c=job.needs.get(job.cursor);
+-            if(!host.loadChunk(c.x(),c.z())) {pending.remove();reject("chunk load failed");return;}
++            if(!host.loadChunk(c.x(),c.z())) {pending.remove();host.onPortalPreparationCancelled(job.passage);reject("chunk load failed");return;}
+             job.cursor++;
+             return;
+         }
+         pending.remove();
++        if(!host.portalDestinationReady(job.passage)){host.onPortalPreparationCancelled(job.passage);reject("destination data not ready");return;}
+         StructureEnvelope.Inspector inspector=host::inspectChunk;
+         StructureEnvelope.Audit src=StructureEnvelope.audit(job.passage.entrance(),HALO,MAX_SCAN,inspector);
+         StructureEnvelope.Audit dst=StructureEnvelope.audit(job.passage.exit(),HALO,MAX_SCAN,inspector);
+         if(!src.accepted()||!dst.accepted()){
++            host.onPortalPreparationCancelled(job.passage);
+             reject("structure veto: "+src.reason()+" / "+dst.reason());return;
+         }
+         // Whole-world plane is mathematical; this is only a 12-block portal section.
+         // Limit live pairs; refuse rather than remove occupied connections.
+         if(live.size()>=PHYSICAL_CAP){
++            host.onPortalPreparationCancelled(job.passage);
+             reject("live portal budget");return;
+         }
+         live.add(new Live(job.passage,ticks)); activated++;
+--- a/src/main/java/dev/kondalabs/gaslight/RemoteChunkAcquisition.java
++++ b/src/main/java/dev/kondalabs/gaslight/RemoteChunkAcquisition.java
+@@ -0,0 +1,160 @@
++package dev.kondalabs.gaslight;
++
++import java.io.*;
++import java.nio.file.*;
++import java.util.*;
++import java.util.concurrent.*;
++import java.util.concurrent.atomic.*;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.level.*;
++import net.minecraft.resources.*;
++import net.minecraft.core.registries.Registries;
++import net.minecraft.world.level.*;
++import net.minecraft.world.level.chunk.status.*;
++import net.minecraft.world.level.dimension.DimensionType;
++import net.minecraft.world.level.storage.LevelResource;
++import dev.kondalabs.gaslight.RemoteChunkLeases.*;
++
++/** Minecraft backend. Disk reads are detached; optional native generation owns only non-persistent loading tickets. */
++public final class RemoteChunkAcquisition implements Backend {
++    public static final TicketType TICKET=new TicketType(0,TicketType.FLAG_LOADING|TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
++    private static final Map<ChunkMap,NativeGeneration> OBSERVED=new ConcurrentHashMap<>();
++    private final MinecraftServer server;private final Limits limits;private final boolean generationEnabled;
++    private final long nativeMemoryBudget;private final ExecutorService io;
++    private final AtomicInteger ioPending=new AtomicInteger();private final Map<Future<?>,Runnable> tasks=new ConcurrentHashMap<>();
++    private final AtomicInteger generationStepsPerformed=new AtomicInteger();private static final AtomicLong READER_IDS=new AtomicLong();
++    private final String readerPrefix="gaslight-remote-read-"+READER_IDS.incrementAndGet();
++    private final List<NativeGeneration> nativeJobs=new ArrayList<>();private boolean closed;
++    private final RemoteWorldBudget captureBudget=new RemoteWorldBudget(System::nanoTime);
++    private long diskReads,diskNanos,peakDiskNanos,liveNanos,peakLiveNanos,ticketsAdded,ticketsRemoved;
++    public RemoteChunkAcquisition(MinecraftServer server,Limits limits,boolean generationEnabled,long nativeMemoryBudget){
++        this.server=server;this.limits=limits;this.generationEnabled=generationEnabled;this.nativeMemoryBudget=nativeMemoryBudget;
++        if(nativeMemoryBudget<16*1_048_576L||nativeMemoryBudget>256*1_048_576L)throw new IllegalArgumentException("native memory reservation bound");
++        io=Executors.newFixedThreadPool(limits.pending(),r->{Thread t=new Thread(r,readerPrefix);t.setDaemon(true);return t;});
++    }
++    private ServerLevel level(String dimension)throws IOException{
++        if(closed)throw new IOException("acquisition backend closed");
++        var level=server.getLevel(ResourceKey.create(Registries.DIMENSION,Identifier.parse(dimension)));
++        if(level==null)throw new IOException("destination world unavailable");return level;
++    }
++    private Path region(ServerLevel level){return DimensionType.getStorageFolder(level.dimension(),server.getWorldPath(LevelResource.ROOT)).resolve("region");}
++    private static ProtectedChunkRegions.Policy policy()throws IOException{
++        var p=ProtectedChunkRegions.load(Path.of("config/gaslight-protected-chunks.csv"));if(!p.valid())throw new IOException(p.reason());return p;
++    }
++    private <T> Job<T> submit(Callable<T> action)throws IOException{
++        if(closed||pending()>=limits.pending())throw new Retry("pending acquisition budget");
++        var result=new CompletableFuture<T>();var slot=new AtomicReference<Future<?>>();var state=new AtomicInteger();ioPending.incrementAndGet();
++        try{Future<?> future=io.submit(()->{if(!state.compareAndSet(0,1))return;long start=System.nanoTime();try{result.complete(action.call());}
++            catch(Throwable e){result.completeExceptionally(e);}finally{long cost=System.nanoTime()-start;synchronized(this){diskReads++;diskNanos+=cost;peakDiskNanos=Math.max(peakDiskNanos,cost);}state.set(2);ioPending.decrementAndGet();Future<?> f=slot.get();if(f!=null)tasks.remove(f);}});
++            Runnable cancel=()->{future.cancel(true);if(state.compareAndSet(0,2)){ioPending.decrementAndGet();tasks.remove(future);}result.completeExceptionally(new InterruptedIOException("read cancelled"));};
++            slot.set(future);tasks.put(future,cancel);if(future.isDone())tasks.remove(future);
++            return new Job<>(result,cancel);
++        }catch(RejectedExecutionException e){ioPending.decrementAndGet();throw new IOException("read executor refused",e);}
++    }
++    private record Job<T>(CompletableFuture<T> result,Runnable cancel){}
++    @Override public Read read(Key key)throws IOException{
++        ServerLevel level=level(key.dimension());if(policy().protectedAt(key.x(),key.z()))throw new IOException("protected destination chunk");
++        if(resident(key)){
++            if(!captureBudget.canCapture())throw new Retry("preparation CPU credit");long start=System.nanoTime();
++            try{return new Read(CompletableFuture.completedFuture(Optional.of(capture(key,start+RemoteWorldBudget.CAPTURE_NANOS))),()->{});}
++            catch(IOException e){if(e.getMessage().contains("deadline")||e.getMessage().contains("lighting"))throw new Retry(e.getMessage());throw e;}
++            finally{long cost=System.nanoTime()-start;captureBudget.captureCost(cost);liveNanos+=cost;peakLiveNanos=Math.max(peakLiveNanos,cost);}
++        }
++        if(level.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)throw new Retry("native destination transitioning");
++        Job<Optional<RemoteChunkData>> job=submit(()->{
++            var pos=new ChunkPos(key.x(),key.z());var tag=RemoteRegionRead.readTag(region(level),pos);
++            if(tag.isEmpty())return Optional.empty();
++            return Optional.of(RemoteRegionRead.decode(level,pos,tag.get(),System.nanoTime()+250_000_000L));
++        });return new Read(job.result,job.cancel);
++    }
++    @Override public boolean resident(Key key){try{return level(key.dimension()).getChunkSource().hasChunk(key.x(),key.z());}catch(IOException e){return false;}}
++    @Override public RemoteChunkData capture(Key key,long deadline)throws IOException{return RemoteChunkCapture.capture(level(key.dimension()),key.x(),key.z(),deadline);}
++    @Override public boolean generationPermitted(){return generationEnabled&&GaslightNativeMod.remoteGenerationPermitted();}
++    @Override public Set<Key> footprint(Set<Key> targets)throws IOException{
++        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
++        var result=new LinkedHashSet<Key>();var p=policy();
++        for(Key target:targets){ServerLevel level=level(target.dimension());
++            for(int z=target.z()-radius;z<=target.z()+radius;z++)for(int x=target.x()-radius;x<=target.x()+radius;x++){
++                Key key=new Key(target.dimension(),x,z);if(p.protectedAt(x,z)||!level.getWorldBorder().isWithinBounds(new ChunkPos(x,z)))throw new IOException("generation footprint protection/border veto");result.add(key);
++            }}return Set.copyOf(result);
++    }
++    @Override public int generationStepBound(Set<Key> footprint){return Math.multiplyExact(footprint.size(),ChunkPyramid.GENERATION_PYRAMID.steps().size());}
++    @Override public Generation generate(Set<Key> targets,Set<Key> footprint,int steps)throws IOException{
++        if(!generationPermitted())throw new IOException("both explicit generation permissions required");
++        if(nativeJobs.stream().anyMatch(g->!g.drained()))throw new IOException("native generation reservation busy/draining");
++        if(generationStepsPerformed.get()+steps>limits.generationSteps())throw new IOException("remaining lifetime generation work budget");
++        // Reserve memory independently of data-cache bytes, including every native dependency holder.
++        if(footprint.size()*160_000L>nativeMemoryBudget)throw new IOException("native memory reservation budget");
++        var job=new NativeGeneration(targets,footprint,steps);nativeJobs.add(job);return job;
++    }
++    @Override public int pending(){return ioPending.get()+(int)nativeJobs.stream().filter(g->g.future!=null&&!g.future.isDone()).count();}
++    public static void observe(ChunkMap map,GenerationChunkHolder holder,ChunkStep step){
++        NativeGeneration g=OBSERVED.get(map);if(g!=null){Key key=new Key(g.dimension,holder.getPos().x(),holder.getPos().z());
++            if(g.footprint.contains(key)&&step==ChunkPyramid.GENERATION_PYRAMID.getStepTo(step.targetStatus()))g.observe(key,step);}
++    }
++    private final class NativeGeneration implements Generation {
++        final String dimension;final ServerLevel world;final Set<Key> footprint,targets;final int stepBound;
++        final List<Key> order;final Set<Key> tickets=new LinkedHashSet<>();final Set<String> steps=ConcurrentHashMap.newKeySet();
++        final Job<Boolean> preflight;final long baseHeap;CompletableFuture<ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> future;
++        int cursor;volatile boolean released;boolean failed,ready;String reason="generation preflight";Key current;
++        NativeGeneration(Set<Key> targets,Set<Key> footprint,int bound)throws IOException{
++            this.targets=Set.copyOf(targets);this.footprint=Set.copyOf(footprint);stepBound=bound;order=targets.stream().sorted(Comparator.comparingInt(Key::z).thenComparingInt(Key::x)).toList();
++            dimension=order.getFirst().dimension();world=level(dimension);baseHeap=usedHeap();
++            preflight=submit(()->{
++                var p=policy();for(Key key:footprint){
++                    if(Thread.currentThread().isInterrupted())throw new InterruptedIOException("generation preflight cancelled");
++                    if(p.protectedAt(key.x(),key.z()))throw new IOException("generation protection veto");
++                    var tag=RemoteRegionRead.readTag(region(world),new ChunkPos(key.x(),key.z()));
++                    if(tag.isPresent()){
++                        if(tag.get().getIntOr("DataVersion",-1)!=net.minecraft.SharedConstants.getCurrentVersion().dataVersion().version())throw new IOException("existing footprint chunk requires migration");
++                        if(RemoteRegionRead.hasStructures(tag.get()))throw new IOException("existing structure in generation footprint");
++                    }
++                }return true;
++            });
++        }
++        void observe(Key key,ChunkStep step){steps.add(key.x()+","+key.z()+":"+step.targetStatus());generationStepsPerformed.incrementAndGet();}
++        @Override public void tick(){
++            if(released||failed||ready)return;
++            if(!generationPermitted()){refuse("generation permission revoked");return;}
++            if(usedHeap()-baseHeap>nativeMemoryBudget||Runtime.getRuntime().maxMemory()-usedHeap()<64*1_048_576L){refuse("native heap headroom/budget");return;}
++            if(steps.size()>stepBound){refuse("native generation step bound exceeded");return;}
++            if(!preflight.result.isDone())return;
++            try{preflight.result.join();}catch(RuntimeException e){refuse("generation preflight failed: "+e.getCause());return;}
++            try{
++                var p=policy();for(Key key:footprint)if(p.protectedAt(key.x(),key.z()))throw new IOException("generation policy changed");
++                if(current==null){
++                    if(cursor>=order.size()){ready=true;reason="native destination FULL and light-correct";return;}
++                    current=order.get(cursor);OBSERVED.put(world.getChunkSource().chunkMap,this);
++                    world.getChunkSource().addTicketWithRadius(TICKET,new ChunkPos(current.x(),current.z()),0);tickets.add(current);ticketsAdded++;
++                }
++                if(future==null){
++                    var holder=world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(current.x(),current.z()).pack());
++                    if(holder==null||holder.getTicketLevel()>ChunkLevel.byStatus(ChunkStatus.FULL))return;
++                    if(pending()>=limits.pending())return;
++                    future=world.getChunkSource().getChunkFuture(current.x(),current.z(),ChunkStatus.FULL,false);return;
++                }
++                if(!future.isDone())return;
++                var chunk=future.join().orElse(null);if(chunk==null){future=null;return;}
++                if(!world.getChunkSource().hasChunk(current.x(),current.z())||!chunk.isLightCorrect())return;
++                future=null;current=null;cursor++;
++            }catch(IOException|RuntimeException e){refuse("native generation failed: "+e);}
++        }
++        private void refuse(String why){failed=true;reason=why;release();}
++        @Override public boolean ready(){return ready;}@Override public boolean failed(){return failed;}@Override public String reason(){return reason;}
++        @Override public void release(){if(released)return;released=true;preflight.cancel.run();
++            for(Key key:tickets){world.getChunkSource().removeTicketWithRadius(TICKET,new ChunkPos(key.x(),key.z()),0);ticketsRemoved++;}tickets.clear();
++            System.out.println("[GASLIGHT acquisition] NATIVE_RELEASE targets="+targets.size()+" footprint="+footprint.size()+" unique_steps="+steps.size()+" reason="+reason);
++        }
++        @Override public boolean drained(){
++            if(!released)return false;if(future!=null&&!future.isDone()||!preflight.result.isDone())return false;
++            for(Key key:footprint)if(world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)return false;OBSERVED.remove(world.getChunkSource().chunkMap,this);return true;
++        }
++    }
++    private static long usedHeap(){return Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();}
++    public long tickets(){return ticketsAdded-ticketsRemoved;}
++    public String readerPrefix(){return readerPrefix;}
++    public String metrics(){return "owned_tickets="+tickets()+" tickets_added="+ticketsAdded+" tickets_removed="+ticketsRemoved+" generation_steps="+generationStepsPerformed.get()+" io_pending="+ioPending.get()+" disk_reads="+diskReads+" disk_ns="+diskNanos+" peak_disk_ns="+peakDiskNanos+" live_ns="+liveNanos+" peak_live_ns="+peakLiveNanos;}
++    @Override public void close(){if(closed)return;for(var g:nativeJobs){g.release();OBSERVED.remove(g.world.getChunkSource().chunkMap,g);}closed=true;for(Runnable cancel:tasks.values())cancel.run();io.shutdownNow();
++        try{if(!io.awaitTermination(1,TimeUnit.SECONDS))System.err.println("[GASLIGHT acquisition] read executor still draining after shutdown");}catch(InterruptedException e){Thread.currentThread().interrupt();}
++        System.out.println("[GASLIGHT acquisition] SHUTDOWN "+metrics());}
++}
+--- a/src/main/java/dev/kondalabs/gaslight/RemoteChunkLeases.java
++++ b/src/main/java/dev/kondalabs/gaslight/RemoteChunkLeases.java
+@@ -0,0 +1,160 @@
++package dev.kondalabs.gaslight;
++
++import java.io.IOException;
++import java.util.*;
++import java.util.concurrent.CompletableFuture;
++import java.util.function.LongSupplier;
++
++/** Server-thread lease book. Handles are identity-fenced; cancelled work never owns a successor. */
++public final class RemoteChunkLeases implements AutoCloseable {
++    public record Key(String dimension,int x,int z) {
++        public Key {RemoteWorldWire.identifier(dimension);RemoteWorldWire.coordinate(x,z);}
++    }
++    public record Limits(int active,int requests,int pending,long dataBytes,int nativeChunks,int generationChunks,
++                         int generationSteps,long preparationNanos,long freshnessNanos) {
++        public Limits {
++            if(active<9||active>36||requests<1||requests>8||pending<1||pending>4||dataBytes<1_048_576||dataBytes>16*1_048_576L||
++               nativeChunks<0||nativeChunks>1024||generationChunks<0||generationChunks>1024||generationSteps<0||generationSteps>16384||
++               preparationNanos<1_000_000_000L||preparationNanos>60_000_000_000L||freshnessNanos<1_000_000_000L||freshnessNanos>5_000_000_000L)
++                throw new IllegalArgumentException("acquisition limits outside hard bounds");
++        }
++        public static Limits defaults(){return new Limits(18,4,2,8*1_048_576L,625,625,8192,30_000_000_000L,5_000_000_000L);}
++    }
++    public record Read(CompletableFuture<Optional<RemoteChunkData>> result,Runnable cancel) {}
++    public static final class Retry extends IOException {public Retry(String reason){super(reason);}}
++    public interface Generation {
++        void tick(); boolean ready(); boolean failed(); String reason(); void release(); boolean drained();
++    }
++    public interface Backend {
++        Read read(Key key)throws IOException;
++        boolean resident(Key key);
++        RemoteChunkData capture(Key key,long deadline)throws IOException;
++        boolean generationPermitted();
++        Set<Key> footprint(Set<Key> targets)throws IOException;
++        int generationStepBound(Set<Key> footprint);
++        Generation generate(Set<Key> targets,Set<Key> footprint,int stepBound)throws IOException;
++        int pending();
++        default void close(){}
++    }
++    public enum State {PREPARING,READY,FAILED,CANCELLED}
++    public final class Lease {
++        private final UUID id;private final long generation;private final Group group;
++        private State state=State.PREPARING;private String reason="preparing";
++        private Lease(UUID id,long generation,Group group){this.id=id;this.generation=generation;this.group=group;}
++        public UUID id(){return id;}public long generation(){return generation;}
++        public State state(){return state;}public String reason(){return reason;}
++        public boolean ready(){return current(this)&&state==State.READY;}
++        public Set<Key> required(){return group.keys;}
++    }
++    private static final class Entry {
++        final Key key;int refs;RemoteChunkData data;Read work;boolean absent;long seen,retry;String error;
++        Entry(Key key){this.key=key;}
++    }
++    private final class Group {
++        final Set<Key> keys;final boolean permission;final long deadline;final List<Lease> leases=new ArrayList<>();
++        Generation nativeWork;Set<Key> footprint=Set.of();boolean initialReady;
++        Group(Set<Key> keys,boolean permission,long now){this.keys=Set.copyOf(keys);this.permission=permission;deadline=now+limits.preparationNanos;}
++    }
++    private final Backend backend;private final Limits limits;private final LongSupplier clock;
++    private final Map<Key,Entry> entries=new LinkedHashMap<>();private final Map<UUID,Lease> leases=new HashMap<>();
++    private final List<Group> groups=new ArrayList<>();private final List<Generation> draining=new ArrayList<>();
++    private final List<Read> orphaned=new ArrayList<>();private boolean closed;
++    private long bytes,peakBytes,reads,rejections,cancellations,staleReleases,generationSpent;private int reservedNative,peakActive,peakPending;
++    private final Set<Key> generatedFootprint=new HashSet<>();
++    public RemoteChunkLeases(Backend backend,Limits limits,LongSupplier clock){this.backend=Objects.requireNonNull(backend);this.limits=limits;this.clock=clock;}
++    private boolean current(Lease lease){return lease!=null&&leases.get(lease.id)==lease;}
++    public Lease prepare(UUID id,long generation,String dimension,int cx,int cz,boolean allowGeneration){
++        if(id==null||generation<1)throw new IllegalArgumentException("invalid lease fence");
++        Lease previous=leases.get(id);
++        if(previous!=null){if(generation<=previous.generation)throw new IllegalArgumentException("stale or duplicate lease generation");release(previous);}
++        var keys=new LinkedHashSet<Key>();for(int z=cz-1;z<=cz+1;z++)for(int x=cx-1;x<=cx+1;x++)keys.add(new Key(dimension,x,z));
++        long now=clock.getAsLong();Group group=null;
++        for(Group candidate:groups)if(candidate.keys.equals(keys)&&candidate.permission==allowGeneration){group=candidate;break;}
++        if(group==null)group=new Group(keys,allowGeneration,now);
++        Lease lease=new Lease(id,generation,group);
++        long added=keys.stream().filter(k->!entries.containsKey(k)).count();
++        if(closed||leases.size()>=limits.requests||entries.size()+added>limits.active){lease.state=State.FAILED;lease.reason="request/active chunk budget or closed";rejections++;return lease;}
++        if(!groups.contains(group)){groups.add(group);for(Key key:keys)entries.computeIfAbsent(key,Entry::new).refs++;}
++        leases.put(id,lease);group.leases.add(lease);peakActive=Math.max(peakActive,entries.size());return lease;
++    }
++    public void release(Lease lease){
++        if(!current(lease)){staleReleases++;return;}
++        leases.remove(lease.id);lease.state=State.CANCELLED;lease.reason="released";cancellations++;
++        Group group=lease.group;group.leases.remove(lease);if(group.leases.isEmpty())removeGroup(group);
++    }
++    private void removeGroup(Group group){
++        groups.remove(group);
++        if(group.nativeWork!=null){group.nativeWork.release();draining.add(group.nativeWork);}
++        for(Key key:group.keys){Entry entry=entries.get(key);if(--entry.refs>0)continue;entries.remove(key);
++            if(entry.data!=null){bytes-=entry.data.residentBytes();entry.data=null;}
++            if(entry.work!=null){entry.work.cancel.run();orphaned.add(entry.work);entry.work=null;}}
++    }
++    private void fail(Group group,String reason){
++        for(Lease lease:group.leases){leases.remove(lease.id);lease.state=State.FAILED;lease.reason=reason;}
++        group.leases.clear();rejections++;removeGroup(group);
++    }
++    public void tick(){
++        if(closed)return;long now=clock.getAsLong();orphaned.removeIf(r->r.result.isDone());
++        for(var it=draining.iterator();it.hasNext();){Generation g=it.next();g.tick();if(g.drained()){reservedNative-=nativeReservations.remove(g);it.remove();}}
++        for(Entry entry:new ArrayList<>(entries.values()))if(entry.work!=null&&entry.work.result.isDone()){
++            Read work=entry.work;entry.work=null;
++            try{
++                Optional<RemoteChunkData> result=work.result.join();
++                if(result.isEmpty()){entry.absent=true;entry.seen=now;}
++                else {RemoteChunkData data=result.get();if(data.x()!=entry.key.x||data.z()!=entry.key.z)throw new IOException("read coordinate mismatch");
++                    long old=entry.data==null?0:entry.data.residentBytes(),next=bytes-old+data.residentBytes();
++                    if(next>limits.dataBytes)throw new IOException("acquisition data memory budget");
++                    entry.data=data;entry.absent=false;entry.seen=now;entry.error=null;bytes=next;peakBytes=Math.max(peakBytes,bytes);}
++            }catch(RuntimeException|IOException e){
++                // Short capture/transition failures retry only until the original wall-clock preparation deadline.
++                Throwable cause=e;while(cause.getCause()!=null)cause=cause.getCause();
++                entry.error=cause instanceof Retry?null:cause.toString();
++                entry.retry=now+250_000_000L;if(!(cause instanceof Retry)&&entry.data!=null){bytes-=entry.data.residentBytes();entry.data=null;}entry.absent=false;
++            }
++        }
++        for(Group group:new ArrayList<>(groups)){
++            String error=group.keys.stream().map(k->entries.get(k).error).filter(Objects::nonNull).findFirst().orElse(null);
++            if(error!=null){fail(group,"destination read failed: "+error);continue;}
++            if(group.nativeWork!=null){group.nativeWork.tick();if(group.nativeWork.failed()){fail(group,group.nativeWork.reason());continue;}}
++            boolean all=true,missing=false,probed=true;
++            for(Key key:group.keys){Entry e=entries.get(key);all&=e.data!=null&&now-e.seen<=limits.freshnessNanos;missing|=e.absent;probed&=e.data!=null||e.absent;}
++            if(all){group.initialReady=true;for(Lease l:group.leases){l.state=State.READY;l.reason="all required destination data ready";}}
++            else if(group.initialReady){fail(group,"destination data no longer fresh/ready");continue;}
++            if(!group.initialReady&&now>group.deadline){fail(group,"preparation wall-clock timeout");continue;}
++            if(missing&&probed&&group.nativeWork==null){
++                if(!group.permission||!backend.generationPermitted()){fail(group,"saved destination missing; generation not permitted");continue;}
++                try{
++                    Set<Key> footprint=backend.footprint(group.keys);int steps=backend.generationStepBound(footprint);
++                    long newlyAuthorized=footprint.stream().filter(k->!generatedFootprint.contains(k)).count();
++                    if(reservedNative+footprint.size()>limits.nativeChunks||generationSpent+newlyAuthorized>limits.generationChunks||steps>limits.generationSteps)
++                        throw new IOException("native footprint/generation work budget");
++                    group.nativeWork=backend.generate(group.keys,footprint,steps);group.footprint=footprint;
++                    reservedNative+=footprint.size();generatedFootprint.addAll(footprint);generationSpent+=newlyAuthorized;nativeReservations.put(group.nativeWork,footprint.size());
++                    for(Key key:group.keys){Entry e=entries.get(key);e.absent=false;e.retry=now+250_000_000L;}
++                }catch(IOException|RuntimeException e){fail(group,"generation refused: "+e.getMessage());continue;}
++            }
++        }
++        for(Entry entry:new ArrayList<>(entries.values())){
++            if(backend.pending()>=limits.pending||entry.work!=null||now<entry.retry)continue;
++            boolean generating=groups.stream().anyMatch(g->g.keys.contains(entry.key)&&g.nativeWork!=null&&!g.nativeWork.ready());
++            if(generating)continue;
++            if(entry.data!=null&&now-entry.seen<Math.min(2_000_000_000L,limits.freshnessNanos/2))continue;
++            if(entry.absent)continue;
++            try{entry.work=backend.read(entry.key);reads++;peakPending=Math.max(peakPending,backend.pending());}
++            catch(IOException|RuntimeException e){entry.retry=now+250_000_000L;if(!(e instanceof Retry))entry.error=e.toString();}
++        }
++    }
++    private final Map<Generation,Integer> nativeReservations=new IdentityHashMap<>();
++    public RemoteChunkData data(Lease lease,int x,int z,long deadline)throws IOException{
++        if(!current(lease)||!lease.group.initialReady)throw new IOException("lease/session not ready");
++        Key key=new Key(lease.group.keys.iterator().next().dimension,x,z);Entry e=entries.get(key);
++        if(e==null||!lease.group.keys.contains(key))throw new IOException("outside lease namespace");
++        if(backend.resident(key))return backend.capture(key,deadline);
++        if(e.data==null||clock.getAsLong()-e.seen>limits.freshnessNanos)throw new IOException("saved destination not fresh/available");return e.data;
++    }
++    public int active(){return entries.size();}public int requests(){return leases.size();}public long dataBytes(){return bytes;}
++    public int nativeReserved(){return reservedNative;}
++    public String metrics(){return "active="+active()+" requests="+requests()+" pending="+backend.pending()+" data_bytes="+bytes+" peak_data_bytes="+peakBytes+" peak_active="+peakActive+
++        " peak_pending="+peakPending+" native_reserved="+reservedNative+" generation_reserved_lifetime="+generationSpent+" reads="+reads+" refusals="+rejections+" releases="+cancellations+" stale_releases="+staleReleases;}
++    @Override public void close(){if(closed)return;for(Lease l:new ArrayList<>(leases.values()))release(l);closed=true;backend.close();draining.clear();nativeReservations.clear();reservedNative=0;orphaned.clear();}
++}
+--- a/src/main/java/dev/kondalabs/gaslight/RemoteRegionRead.java
++++ b/src/main/java/dev/kondalabs/gaslight/RemoteRegionRead.java
+@@ -0,0 +1,116 @@
++package dev.kondalabs.gaslight;
++
++import java.io.*;
++import java.nio.*;
++import java.nio.channels.FileChannel;
++import java.nio.file.*;
++import java.util.*;
++import net.minecraft.core.*;
++import net.minecraft.core.registries.*;
++import net.minecraft.nbt.*;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.world.level.ChunkPos;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.block.entity.BlockEntity;
++import net.minecraft.world.level.chunk.*;
++import net.minecraft.world.level.chunk.status.ChunkStatus;
++import net.minecraft.world.level.chunk.storage.*;
++
++/** Read-only Anvil input; native compression, NBT accounting and palette codecs.
++ * Native RegionFileStorage.read creates absent region files, so it is deliberately not used here. */
++public final class RemoteRegionRead {
++    public static final int NBT_BYTES=4*1_048_576,COMPRESSED_BYTES=2*1_048_576;
++    private RemoteRegionRead(){}
++    private static void interrupted()throws IOException{if(Thread.currentThread().isInterrupted())throw new InterruptedIOException("acquisition cancelled");}
++    private static void read(FileChannel channel,ByteBuffer bytes,long offset)throws IOException{
++        while(bytes.hasRemaining()){interrupted();int n=channel.read(bytes,offset);if(n<=0)throw new EOFException("partial region record");offset+=n;}bytes.flip();
++    }
++    public static Optional<CompoundTag> readTag(Path region,ChunkPos pos)throws IOException{
++        interrupted();Path file=region.resolve("r."+Math.floorDiv(pos.x(),32)+"."+Math.floorDiv(pos.z(),32)+".mca");
++        if(!Files.exists(file))return Optional.empty();
++        try(FileChannel channel=FileChannel.open(file,StandardOpenOption.READ)){
++            long length=channel.size();var modified=Files.getLastModifiedTime(file);if(length<8192)throw new IOException("partial region header");
++            long index=4L*(Math.floorMod(pos.x(),32)+32*Math.floorMod(pos.z(),32));
++            var header=ByteBuffer.allocate(4);read(channel,header,index);int location=header.getInt();if(location==0)return Optional.empty();
++            int sector=location>>>8,count=location&255;
++            if(sector<2||count==0||(long)sector*4096+(long)count*4096>length)throw new IOException("region sector outside file");
++            var meta=ByteBuffer.allocate(5);read(channel,meta,(long)sector*4096);int size=meta.getInt(),compression=Byte.toUnsignedInt(meta.get());
++            if(size<1||size>count*4096-4||size-1>COMPRESSED_BYTES)throw new IOException("compressed region record budget/length");
++            RegionFileVersion version=RegionFileVersion.fromId(compression&127);if(version==null)throw new IOException("unknown region compression");
++            byte[] payload;
++            if((compression&128)!=0){
++                if(size!=1)throw new IOException("invalid external region record");
++                Path external=region.resolve("c."+pos.x()+"."+pos.z()+".mcc");
++                try(FileChannel ext=FileChannel.open(external,StandardOpenOption.READ)){
++                    long n=ext.size();if(n<1||n>COMPRESSED_BYTES)throw new IOException("external record budget");var buffer=ByteBuffer.allocate((int)n);read(ext,buffer,0);payload=buffer.array();}
++            }else{var buffer=ByteBuffer.allocate(size-1);read(channel,buffer,(long)sector*4096+5);payload=buffer.array();}
++            CompoundTag tag;
++            try(var input=new DataInputStream(version.wrap(new ByteArrayInputStream(payload)))){tag=NbtIo.read(input,NbtAccounter.create(NBT_BYTES));}
++            header.clear();read(channel,header,index);if(header.getInt()!=location||channel.size()!=length||!modified.equals(Files.getLastModifiedTime(file)))throw new RemoteChunkLeases.Retry("region changed during read");
++            interrupted();if(tag==null)throw new IOException("missing chunk NBT");return Optional.of(tag);
++        }
++    }
++    public static boolean hasStructures(CompoundTag tag){
++        var structures=tag.getCompoundOrEmpty("structures");return !structures.getCompoundOrEmpty("starts").isEmpty()||!structures.getCompoundOrEmpty("References").isEmpty();
++    }
++    public static RemoteChunkData decode(ServerLevel level,ChunkPos pos,CompoundTag tag,long deadline)throws IOException{
++        interrupted();RemoteChunkCapture.budget(deadline);
++        // A cold render read is never permitted to upgrade, retrogen or repair a saved world.
++        int current=net.minecraft.SharedConstants.getCurrentVersion().dataVersion().version();
++        if(tag.getIntOr("DataVersion",-1)!=current)throw new IOException("saved chunk version requires native migration outside acquisition");
++        var encoded=tag.get("sections");if(!(encoded instanceof ListTag list))throw new IOException("saved sections absent/malformed");
++        var factory=level.palettedContainerFactory();var present=new HashSet<Integer>();
++        for(var value:list){
++            if(!(value instanceof CompoundTag section))throw new IOException("malformed saved section");
++            int y=section.getByteOr("Y",(byte)127);if(y<level.getMinY()/16||y>=level.getMinY()/16+level.getSectionsCount())continue;
++            if(!present.add(y)||!section.contains("block_states")||!section.contains("biomes"))throw new IOException("missing/duplicate render section");
++            if(factory.blockStatesContainerCodec().parse(NbtOps.INSTANCE,section.getCompoundOrEmpty("block_states")).error().isPresent()||
++               factory.biomeContainerCodec().parse(NbtOps.INSTANCE,section.getCompoundOrEmpty("biomes")).error().isPresent())throw new IOException("invalid saved block/biome palette");
++        }
++        if(present.size()!=level.getSectionsCount())throw new IOException("saved render sections incomplete; never substitute air");
++        var data=SerializableChunkData.parse(level,level.palettedContainerFactory(),tag);
++        if(data==null||!data.chunkPos().equals(pos)||data.chunkStatus()!=ChunkStatus.FULL||!data.lightCorrect()||data.belowZeroRetrogen()!=null)
++            throw new IOException("saved chunk is not matching FULL, light-correct data");
++        int n=level.getSectionsCount(),min=level.getMinY(),first=min/16-1;
++        if(n<1||n>RemoteChunkData.MAX_SECTIONS)throw new IOException("saved height budget");
++        var sections=new HashMap<Integer,SerializableChunkData.SectionData>();for(var s:data.sectionData())if(sections.put(s.y(),s)!=null)throw new IOException("duplicate saved section");
++        int[] states=new int[n*4096],biomes=new int[n*64];var registry=level.registryAccess().lookupOrThrow(Registries.BIOME);
++        for(int i=0;i<n;i++){
++            interrupted();RemoteChunkCapture.budget(deadline);var saved=sections.get(min/16+i);
++            if(saved==null||saved.chunkSection()==null)throw new IOException("decoded saved render section missing");
++            var section=saved.chunkSection();
++            for(int y=0;y<16;y++)for(int z=0;z<16;z++)for(int x=0;x<16;x++)states[i*4096+y*256+z*16+x]=Block.BLOCK_STATE_REGISTRY.getId(section.getBlockState(x,y,z));
++            for(int y=0;y<4;y++)for(int z=0;z<4;z++)for(int x=0;x<4;x++)biomes[i*64+y*16+z*4+x]=registry.getId(section.getNoiseBiome(x,y,z).value());
++        }
++        byte[][] sky=new byte[n+2][2048],block=new byte[n+2][2048];
++        for(int i=0;i<n+2;i++){
++            RemoteChunkCapture.budget(deadline);var saved=sections.get(first+i);
++            if(saved!=null&&saved.blockLight()!=null)block[i]=saved.blockLight().copy().getData();
++            if(!level.dimensionType().hasSkyLight())continue;
++            if(saved!=null&&saved.skyLight()!=null){sky[i]=saved.skyLight().copy().getData();continue;}
++            // Native SkyLightSectionStorage extrapolates a missing section from the next layer's bottom plane.
++            DataLayer above=null;int top=sections.keySet().stream().max(Integer::compare).orElse(first+n+1);
++            for(int y=first+i+1;y<=top;y++){var s=sections.get(y);if(s!=null&&s.skyLight()!=null){above=s.skyLight();break;}}
++            if(above==null){Arrays.fill(sky[i],(byte)255);continue;}
++            for(int y=0;y<16;y++)for(int z=0;z<16;z++)for(int x=0;x<16;x++){int index=y*256+z*16+x;sky[i][index>>1]|=(byte)(above.get(x,0,z)<<(4*(index&1)));}
++        }
++        var entities=new ArrayList<RemoteChunkData.BlockEntityData>();int total=0;
++        if(data.blockEntities().size()>RemoteChunkData.MAX_BLOCK_ENTITIES)throw new IOException("saved block entity count budget");
++        for(var saved:data.blockEntities()){
++            interrupted();RemoteChunkCapture.budget(deadline);BlockPos p=BlockEntity.getPosFromTag(pos,saved);
++            if(p.getX()>>4!=pos.x()||p.getZ()>>4!=pos.z()||p.getY()<min||p.getY()>=min+n*16)throw new IOException("saved block entity outside chunk");
++            int index=(p.getY()-min)*256+(p.getZ()&15)*16+(p.getX()&15);var state=Block.BLOCK_STATE_REGISTRY.byId(states[index]);
++            var be=BlockEntity.loadStatic(p,state,saved,level.registryAccess());if(be==null)throw new IOException("saved block entity could not be decoded");
++            // Detached BE is never attached/ticked; only vanilla client-visible update data leaves the server.
++            var bytes=new ByteArrayOutputStream();NbtIo.write(be.getUpdateTag(level.registryAccess()),new DataOutputStream(new BoundedOutput(bytes,RemoteChunkData.MAX_TAG)));
++            total+=bytes.size();if(total>RemoteChunkData.MAX_TAG_TOTAL)throw new IOException("saved update tag budget");
++            entities.add(new RemoteChunkData.BlockEntityData(p.getX(),p.getY(),p.getZ(),BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString(),bytes.toByteArray()));
++        }
++        var heights=new TreeMap<String,long[]>();data.heightmaps().forEach((type,values)->heights.put(type.name(),values));
++        RemoteChunkCapture.budget(deadline);return new RemoteChunkData(pos.x(),pos.z(),min,n,states,biomes,sky,block,entities,heights);
++    }
++    private static final class BoundedOutput extends OutputStream {
++        final OutputStream out;final int limit;int count;BoundedOutput(OutputStream out,int limit){this.out=out;this.limit=limit;}
++        @Override public void write(int value)throws IOException{if(++count>limit)throw new IOException("saved tag byte budget");out.write(value);}
++    }
++}
+--- a/src/main/java/dev/kondalabs/gaslight/RemoteWorldSync.java
++++ b/src/main/java/dev/kondalabs/gaslight/RemoteWorldSync.java
+@@ -12,7 +12,7 @@
+ import net.minecraft.world.level.Level;
+ import static dev.kondalabs.gaslight.RemoteWorldWire.*;
+ 
+-/** One permanent read-only data link, one viewer, no physical activation. */
++/** One permanent data link, with predictive destination leases; no physical activation. */
+ public final class RemoteWorldSync {
+     private static final Map<MinecraftServer,RemoteWorldSync> SERVERS=new IdentityHashMap<>();
+     private static final AtomicLong EPOCH=new AtomicLong();
+@@ -20,7 +20,9 @@
+     private final MinecraftServer server;private final ResourceKey<Level> source,destination;
+     private final NativePortal.Surface entrance,exit;private final RemoteWorldBudget budget=new RemoteWorldBudget(System::nanoTime);
+     private final RemoteWorldBudget replyBudget=new RemoteWorldBudget(System::nanoTime,4096,2048);
+-    private final boolean followCertified;private NativePortal.Passage certified;
++    private final boolean followCertified,allowGeneration;private NativePortal.Passage certified,candidate;
++    private final RemoteChunkAcquisition acquisition;private final RemoteChunkLeases leases;
++    private RemoteChunkLeases.Lease preparation;private UUID preparingOwner;private long nextPreparationTick;
+     private Session session;private long tick,bytesSent,captures,captureNanos,peakCaptureNanos,retries,refusals,acks;
+     private int cursor;private final ArrayDeque<Packet> controls=new ArrayDeque<>();
+     private static final class Slot {long revision;byte[] hash;boolean available;String refusal;}
+@@ -31,18 +33,26 @@
+     private RemoteWorldSync(MinecraftServer server,Properties p){
+         this.server=server;source=key(p.getProperty("sourceDimension","minecraft:overworld"));destination=key(p.getProperty("destinationDimension","minecraft:overworld"));
+         followCertified=Boolean.parseBoolean(p.getProperty("followCertifiedStaticPortal","false"));
++        allowGeneration=Boolean.parseBoolean(p.getProperty("allowGeneration","false"));
++        var defaults=RemoteChunkLeases.Limits.defaults();
++        var limits=new RemoteChunkLeases.Limits(integer(p,"maxActiveChunks",defaults.active()),integer(p,"maxRequests",defaults.requests()),integer(p,"maxPendingLoads",defaults.pending()),
++            integer(p,"maxDataBytes",(int)defaults.dataBytes()),integer(p,"maxNativeChunks",defaults.nativeChunks()),integer(p,"maxGenerationChunks",defaults.generationChunks()),
++            integer(p,"maxGenerationSteps",defaults.generationSteps()),integer(p,"preparationTimeoutSeconds",30)*1_000_000_000L,defaults.freshnessNanos());
++        acquisition=new RemoteChunkAcquisition(server,limits,allowGeneration,integer(p,"maxNativeMemoryBytes",128*1_048_576));
++        leases=new RemoteChunkLeases(acquisition,limits,System::nanoTime);
+         double yaw=Math.toRadians(number(p,"yaw",0));var tangent=new NativePortal.V(Math.cos(yaw),0,Math.sin(yaw));
+         entrance=new NativePortal.Surface(new NativePortal.V(number(p,"sourceX",0.5),number(p,"sourceY",68),number(p,"sourceZ",0.5)),tangent,8,10);
+         exit=new NativePortal.Surface(new NativePortal.V(number(p,"destinationX",1024.5),number(p,"destinationY",68),number(p,"destinationZ",1024.5)),tangent,8,10);
+     }
+     private static ResourceKey<Level> key(String text){identifier(text);return ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION,Identifier.parse(text));}
+     private static double number(Properties p,String key,double fallback){double v=Double.parseDouble(p.getProperty(key,Double.toString(fallback)));if(!Double.isFinite(v))throw new IllegalArgumentException("nonfinite portal coordinate");return v;}
++    private static int integer(Properties p,String key,int fallback){return Integer.parseInt(p.getProperty(key,Integer.toString(fallback)));}
+     public static void register(){
+         RemoteWorldPayload.register();
+         ServerLifecycleEvents.SERVER_STARTED.register(server->{
+             try{
+                 Path file=Path.of("config/gaslight-remote-world.properties");
+-                if(Files.notExists(file)){Files.createDirectories(file.getParent());Files.writeString(file,"# One read-only permanent portal data link; no generation, tickets or crossing.\nenabled=false\nsourceDimension=minecraft:overworld\nsourceX=0.5\nsourceY=68\nsourceZ=0.5\ndestinationDimension=minecraft:overworld\ndestinationX=1024.5\ndestinationY=68\ndestinationZ=1024.5\nyaw=0\n");return;}
++                if(Files.notExists(file)){Files.createDirectories(file.getParent());Files.writeString(file,"# One permanent data link; generation requires both explicit permissions.\nenabled=false\nallowGeneration=false\nmaxActiveChunks=18\nmaxRequests=4\nmaxPendingLoads=2\nmaxNativeChunks=625\nmaxGenerationChunks=625\nmaxGenerationSteps=8192\nmaxDataBytes=8388608\nmaxNativeMemoryBytes=134217728\npreparationTimeoutSeconds=30\nsourceDimension=minecraft:overworld\nsourceX=0.5\nsourceY=68\nsourceZ=0.5\ndestinationDimension=minecraft:overworld\ndestinationX=1024.5\ndestinationY=68\ndestinationZ=1024.5\nyaw=0\n");return;}
+                 var p=new Properties();try(var in=Files.newInputStream(file)){p.load(in);}
+                 if(!Boolean.parseBoolean(p.getProperty("enabled","false")))return;
+                 if(!ProtectedChunkRegions.load(Path.of("config/gaslight-protected-chunks.csv")).valid())throw new IOException("invalid protection policy");
+@@ -50,41 +60,67 @@
+                 if(server.getLevel(sync.source)==null||dst==null)throw new IOException("unknown dimension");
+                 // Validate configured geometry and height before any session/network access.
+                 sync.scope(UUID.randomUUID(),UUID.randomUUID(),1,dst);
+-                SERVERS.put(server,sync);System.out.println("[GASLIGHT remote] enabled read-only link; chunks=9 viewers=1 forced-loads=0 bandwidth=262144B/s");
++                SERVERS.put(server,sync);System.out.println("[GASLIGHT remote] predictive acquisition enabled; data chunks=9 viewers=1 generation="+sync.allowGeneration+" bandwidth=262144B/s");
+             }catch(IOException|RuntimeException e){System.err.println("[GASLIGHT remote] configuration refused: "+e);}
+         });
+         ServerTickEvents.END_SERVER_TICK.register(server->{var sync=SERVERS.get(server);if(sync!=null)sync.tick();});
+-        ServerLifecycleEvents.SERVER_STOPPING.register(server->{var sync=SERVERS.remove(server);if(sync!=null)sync.close("server stopping");});
++        ServerLifecycleEvents.SERVER_STOPPING.register(server->{var sync=SERVERS.remove(server);if(sync!=null){sync.close("server stopping");sync.leases.close();}});
+         ServerPlayNetworking.registerGlobalReceiver(RemoteWorldPayload.Reply.TYPE,(payload,context)->{
+             var sync=SERVERS.get(context.server());if(sync!=null)sync.reply(context.player(),payload.bytes());
+         });
+     }
+     private Scope scope(UUID id,UUID owner,long epoch,ServerLevel dst){
+-        var passage=certified==null?new NativePortal.Passage(entrance,exit,owner,1):certified;
++        var passage=candidate==null?new NativePortal.Passage(entrance,exit,owner,1):candidate;
+         String type=dst.dimensionTypeRegistration().unwrapKey().orElseThrow().identifier().toString();
+         return new Scope(id,PORTAL,owner,epoch,source.identifier().toString(),destination.identifier().toString(),type,
+             (int)Math.floor(passage.exit().centre().x()/16),(int)Math.floor(passage.exit().centre().z()/16),dst.getMinY(),dst.getSectionsCount(),passage);
+     }
+     public static void offer(MinecraftServer server,NativePortal.Passage passage){
+         var sync=SERVERS.get(server);if(sync==null||!sync.followCertified)return;
+-        if(sync.certified!=null&&!sync.certified.equals(passage))return;sync.certified=passage;
++        if(!destinationReady(server,passage))return;sync.certified=passage;
+     }
++    public static void hint(MinecraftServer server,NativePortal.Passage passage){
++        var sync=SERVERS.get(server);if(sync==null||!sync.followCertified)return;
++        if(sync.candidate!=null&&!sync.candidate.equals(passage))return;sync.candidate=passage;
++    }
++    public static boolean destinationReady(MinecraftServer server,NativePortal.Passage passage){
++        var sync=SERVERS.get(server);return sync!=null&&passage.equals(sync.candidate)&&sync.preparation!=null&&sync.preparation.ready()&&passage.owner().equals(sync.preparingOwner);
++    }
++    /** Server-only API for additional preparation consumers; never exposed in C2S packets. */
++    public static Optional<RemoteChunkLeases> acquisition(MinecraftServer server){var sync=SERVERS.get(server);return sync==null?Optional.empty():Optional.of(sync.leases);}
++    public static String acquisitionMetrics(MinecraftServer server){var sync=SERVERS.get(server);return sync==null?"closed":sync.metrics();}
+     public static void retire(MinecraftServer server,NativePortal.Passage passage){
+-        var sync=SERVERS.get(server);if(sync!=null&&sync.followCertified&&passage.equals(sync.certified)){sync.close("certified portal retired");sync.certified=null;}
++        var sync=SERVERS.get(server);if(sync!=null&&sync.followCertified&&passage.equals(sync.candidate)){sync.close("portal retired");sync.certified=null;sync.candidate=null;}
+     }
+     private boolean eligible(ServerPlayer p){var center=certified==null?entrance.centre():certified.entrance().centre();return
+         (!followCertified||certified!=null&&certified.owner().equals(p.getUUID()))&&p.level().dimension().equals(source)&&p.position().distanceToSqr(center.x(),center.y(),center.z())<=4096&&
+         ServerPlayNetworking.canSend(p,RemoteWorldPayload.TYPE)&&ServerPlayNetworking.canSend(p,PortalSnapshotPayload.TYPE);}
+     private ServerPlayer owner(){return session==null?null:server.getPlayerList().getPlayer(session.scope.owner());}
++    private boolean predictiveEligible(ServerPlayer p){var center=candidate==null?entrance.centre():candidate.entrance().centre();return
++        (!followCertified||candidate!=null&&candidate.owner().equals(p.getUUID()))&&p.level().dimension().equals(source)&&p.position().distanceToSqr(center.x(),center.y(),center.z())<=256*256&&
++        ServerPlayNetworking.canSend(p,RemoteWorldPayload.TYPE)&&ServerPlayNetworking.canSend(p,PortalSnapshotPayload.TYPE);}
++    private void preparePredictively(){
++        ServerPlayer player=preparingOwner==null?null:server.getPlayerList().getPlayer(preparingOwner);
++        if(preparation!=null&&(player==null||!predictiveEligible(player))){close("preparation cancelled: disconnect/dimension/range");return;}
++        if(preparation!=null&&preparation.state()==RemoteChunkLeases.State.FAILED){System.out.println("[GASLIGHT acquisition] PREPARATION_FAILED "+preparation.reason());close("acquisition failure");nextPreparationTick=tick+100;return;}
++        if(preparation==null&&tick>=nextPreparationTick&&tick%20==0)for(var p:server.getPlayerList().getPlayers())if(predictiveEligible(p)){
++            var proposed=scope(UUID.randomUUID(),p.getUUID(),EPOCH.incrementAndGet(),server.getLevel(destination));preparingOwner=p.getUUID();
++            preparation=leases.prepare(proposed.session(),proposed.epoch(),proposed.destinationDimension(),proposed.centerX(),proposed.centerZ(),allowGeneration);
++            System.out.println("[GASLIGHT acquisition] PREPARING epoch="+proposed.epoch()+" destination="+proposed.centerX()+","+proposed.centerZ());break;
++        }
++    }
+     private void tick(){
+         tick++;
+         try{
++            leases.tick();preparePredictively();
++            if(session!=null&&(preparation==null||!preparation.ready())){close("destination lease no longer ready");return;}
+             if(session!=null&&(owner()==null||!eligible(owner()))){close("disconnect/dimension/range");return;}
+             if(session==null){
+-                if(tick%20!=0)return;
++                if(tick%20!=0||preparation==null||!preparation.ready())return;
+                 for(var p:server.getPlayerList().getPlayers())if(eligible(p)){
+                     ServerLevel dst=server.getLevel(destination);if(dst==null)return;
+-                    session=new Session(scope(UUID.randomUUID(),p.getUUID(),EPOCH.incrementAndGet(),dst),tick);cursor=0;
++                    if(!p.getUUID().equals(preparingOwner))continue;
++                    session=new Session(scope(preparation.id(),p.getUUID(),preparation.generation(),dst),tick);cursor=0;
+                     queue(control(Kind.OPEN,session.scope,session.scope.centerX(),session.scope.centerZ(),0));
+                     System.out.println("[GASLIGHT remote] OPEN epoch="+session.scope.epoch()+" destination="+session.scope.destinationDimension());break;
+                 }
+@@ -114,7 +150,7 @@
+         int i=cursor++%MAX_CHUNKS,cx=x(i),cz=z(i);Slot slot=session.slots[i];long started=System.nanoTime();
+         try{
+             ServerLevel dst=server.getLevel(destination);if(dst==null)throw new IOException("dimension unavailable");
+-            RemoteChunkData data=RemoteChunkCapture.capture(dst,cx,cz,started+RemoteWorldBudget.CAPTURE_NANOS);
++            RemoteChunkData data=leases.data(preparation,cx,cz,started+RemoteWorldBudget.CAPTURE_NANOS);
+             byte[] raw=data.raw();byte[] digest=hash(raw);RemoteChunkCapture.budget(started+RemoteWorldBudget.CAPTURE_NANOS);
+             if(slot.available&&Arrays.equals(digest,slot.hash))return;
+             byte[] compressed=RemoteChunkData.compress(raw);RemoteChunkCapture.budget(started+RemoteWorldBudget.CAPTURE_NANOS);
+@@ -156,6 +192,7 @@
+             byte[] data=encode(control(Kind.CLOSE,session.scope,session.scope.centerX(),session.scope.centerZ(),0));if(budget.send(data.length+64)){ServerPlayNetworking.send(p,new RemoteWorldPayload(data));bytesSent+=data.length+64;}}}catch(IOException|RuntimeException ignored){}
+             System.out.println("[GASLIGHT remote] CLOSE reason="+reason+" "+metrics());}
+         controls.clear();session=null;
++        if(preparation!=null)leases.release(preparation);preparation=null;preparingOwner=null;
+     }
+-    public String metrics(){return "bytes="+bytesSent+" captures="+captures+" capture_ns="+captureNanos+" peak_capture_ns="+peakCaptureNanos+" retries="+retries+" refusals="+refusals+" acks="+acks+" forced_loads=0 server_retained_compressed_limit=1048576";}
++    public String metrics(){return "bytes="+bytesSent+" captures="+captures+" capture_ns="+captureNanos+" peak_capture_ns="+peakCaptureNanos+" retries="+retries+" refusals="+refusals+" acks="+acks+" server_retained_compressed_limit=1048576 "+leases.metrics()+" "+acquisition.metrics();}
+ }
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -7,6 +7,7 @@
+   "authors": ["Konda Labs"],
+   "license": "MIT",
+   "environment": "*",
++  "mixins": ["gaslight-acquisition.mixins.json"],
+   "entrypoints": {"main": ["dev.kondalabs.gaslight.GaslightNativeMod"], "client": ["dev.kondalabs.gaslight.client.GaslightPreviewClient"]},
+   "depends": {
+     "fabricloader": ">=0.19.5",
+--- a/src/main/resources/gaslight-acquisition.mixins.json
++++ b/src/main/resources/gaslight-acquisition.mixins.json
+@@ -0,0 +1 @@
++{"required":true,"package":"dev.kondalabs.gaslight.mixin","compatibilityLevel":"JAVA_25","mixins":["RemoteGenerationObserver"],"injectors":{"defaultRequire":1}}
+--- a/src/test/java/dev/kondalabs/gaslight/RemoteChunkLeaseTests.java
++++ b/src/test/java/dev/kondalabs/gaslight/RemoteChunkLeaseTests.java
+@@ -0,0 +1,60 @@
++package dev.kondalabs.gaslight;
++import java.util.*;
++import java.util.concurrent.*;
++import java.util.concurrent.atomic.AtomicLong;
++import java.io.IOException;
++import static dev.kondalabs.gaslight.RemoteChunkLeases.*;
++/** Lifecycle model tests. They deliberately do not claim Minecraft loading proof. */
++public final class RemoteChunkLeaseTests {
++    private static int checks;private static void check(boolean yes,String why){checks++;if(!yes)throw new AssertionError(why);}
++    private static RemoteChunkData data(Key k,int n){return new RemoteChunkData(k.x(),k.z(),0,n,new int[n*4096],new int[n*64],new byte[n+2][2048],new byte[n+2][2048],List.of(),Map.of());}
++    private static final class Fake implements Backend {
++        final Map<Key,CompletableFuture<Optional<RemoteChunkData>>> reads=new LinkedHashMap<>();
++        boolean missing,permission,slow,failed,drained=true;int cancelled,generated,activeGeneration,n=1;Set<Key> generatedKeys=Set.of();
++        public Read read(Key k){var f=new CompletableFuture<Optional<RemoteChunkData>>();reads.put(k,f);
++            if(!slow){if(failed)f.completeExceptionally(new IOException("injected read failure"));else f.complete(missing&&!generatedKeys.contains(k)?Optional.empty():Optional.of(data(k,n)));}
++            return new Read(f,()->{cancelled++;});}
++        public boolean resident(Key k){return false;}public RemoteChunkData capture(Key k,long deadline){return data(k,n);}
++        public boolean generationPermitted(){return permission;}
++        public Set<Key> footprint(Set<Key> keys){var r=new HashSet<Key>();for(Key k:keys)for(int z=k.z()-11;z<=k.z()+11;z++)for(int x=k.x()-11;x<=k.x()+11;x++)r.add(new Key(k.dimension(),x,z));return r;}
++        public int generationStepBound(Set<Key> keys){return keys.size()*12;}
++        public Generation generate(Set<Key> keys,Set<Key> footprint,int bound){generated++;activeGeneration++;generatedKeys=keys;
++            return new Generation(){boolean release;public void tick(){}public boolean ready(){return true;}public boolean failed(){return false;}public String reason(){return "";}
++                public void release(){if(!release){release=true;activeGeneration--;}}public boolean drained(){return release&&Fake.this.drained;}};}
++        public int pending(){return (int)reads.values().stream().filter(f->!f.isDone()).count();}
++    }
++    private static void ticks(RemoteChunkLeases book,AtomicLong clock,int n){for(int i=0;i<n;i++){clock.addAndGet(50_000_000);book.tick();}}
++    public static void main(String[] args)throws Exception {
++        var clock=new AtomicLong();var fake=new Fake();var limits=Limits.defaults();var book=new RemoteChunkLeases(fake,limits,clock::get);
++        UUID id=UUID.randomUUID();var a=book.prepare(id,1,"minecraft:the_nether",0,0,false);var b=book.prepare(UUID.randomUUID(),1,"minecraft:the_nether",0,0,false);
++        ticks(book,clock,15);check(a.ready()&&b.ready(),"saved aliases ready");check(book.active()==9,"shared ownership uses nine entries");
++        book.release(a);check(b.ready()&&book.active()==9,"first release must not unload another owner");
++        var successor=book.prepare(id,2,"minecraft:the_nether",0,0,false);ticks(book,clock,2);book.release(a);check(successor.ready()&&b.ready(),"stale cleanup cannot release successor");
++        book.release(successor);book.release(b);check(book.active()==0&&book.dataBytes()==0,"last reference deterministic cleanup");
++        for(int cycle=0;cycle<30;cycle++){var l=book.prepare(UUID.randomUUID(),1,"minecraft:the_nether",0,0,false);ticks(book,clock,15);check(l.ready(),"repeated load");book.release(l);check(book.active()==0,"repeated unload");}
++        book.close();
++        fake=new Fake();fake.slow=true;book=new RemoteChunkLeases(fake,limits,clock::get);id=UUID.randomUUID();a=book.prepare(id,1,"minecraft:overworld",100,100,false);ticks(book,clock,2);
++        check(fake.pending()==2,"pending load cap");book.release(a);check(book.active()==0&&fake.cancelled==2,"cancel loading clears ownership");
++        var late=new ArrayList<>(fake.reads.entrySet());for(var r:late)r.getValue().complete(Optional.of(data(r.getKey(),1)));
++        fake.slow=false;b=book.prepare(id,2,"minecraft:overworld",100,100,false);ticks(book,clock,15);check(b.ready(),"successor after late completions");book.release(a);check(b.ready(),"outdated release ignored");book.close();
++        fake=new Fake();fake.slow=true;book=new RemoteChunkLeases(fake,limits,clock::get);a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,false);ticks(book,clock,610);
++        check(a.state()==State.FAILED&&a.reason().contains("timeout")&&book.active()==0,"slow read timeout fails closed");book.close();
++        fake=new Fake();fake.missing=true;book=new RemoteChunkLeases(fake,limits,clock::get);a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,false);ticks(book,clock,15);
++        check(a.state()==State.FAILED&&fake.generated==0,"missing is not empty terrain and no generation without permission");book.close();
++        fake=new Fake();fake.missing=true;fake.permission=true;book=new RemoteChunkLeases(fake,limits,clock::get);a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,true);ticks(book,clock,25);
++        check(a.ready()&&fake.generated==1&&book.nativeReserved()==625,"generation reserves complete native halo");
++        fake.drained=false;book.release(a);check(fake.activeGeneration==0&&book.nativeReserved()==625,"reservation retained while cancelled native work drains");ticks(book,clock,3);
++        b=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",100,100,true);ticks(book,clock,20);check(b.state()==State.FAILED&&fake.generated==1,"generation cannot exceed lifetime/halo budgets");
++        fake.drained=true;ticks(book,clock,1);check(book.nativeReserved()==0,"drain reservation released");book.close();
++        fake=new Fake();fake.failed=true;book=new RemoteChunkLeases(fake,limits,clock::get);a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,false);ticks(book,clock,3);
++        check(a.state()==State.FAILED&&book.dataBytes()==0,"read failure never publishes");book.close();
++        fake=new Fake();fake.n=32;var tiny=new Limits(18,4,2,1_048_576,625,625,8192,30_000_000_000L,5_000_000_000L);
++        book=new RemoteChunkLeases(fake,tiny,clock::get);a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,false);ticks(book,clock,15);
++        check(a.state()==State.FAILED&&book.dataBytes()==0,"data-memory exhaustion fails closed");book.close();
++        fake=new Fake();book=new RemoteChunkLeases(fake,limits,clock::get);
++        a=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",0,0,false);b=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",100,100,false);
++        var rejected=book.prepare(UUID.randomUUID(),1,"minecraft:overworld",200,200,false);check(rejected.state()==State.FAILED&&book.active()==18,"active chunk exhaustion");
++        ticks(book,clock,15);check(a.ready()&&b.ready(),"two independent simultaneous preparations");book.close();check(book.active()==0&&book.requests()==0,"shutdown cleanup");
++        System.out.println("REMOTE_CHUNK_LEASE_MODEL_PASS: checks="+checks+" cycles=30");
++    }
++}
+--- a/src/test/java/dev/kondalabs/gaslight/StandaloneSuitesTest.java
++++ b/src/test/java/dev/kondalabs/gaslight/StandaloneSuitesTest.java
+@@ -18,4 +18,5 @@
+     @Test void hostIsolation() throws Exception { Phase4HostIsolationTests.main(new String[0]); }
+     @Test void recoveryJournal() throws Exception { RecoveryJournalTests.main(new String[0]); }
+     @Test void remoteWorldData() throws Exception { RemoteWorldDataTests.main(new String[0]); }
++    @Test void remoteChunkLeases() throws Exception { RemoteChunkLeaseTests.main(new String[0]); }
+ }

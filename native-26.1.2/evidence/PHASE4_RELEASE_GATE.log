@@ -1,0 +1,19 @@
+PASSED 383217 standalone assertions in 345 ms
+PHASE2_PREVIEW_PASS: 1835 assertions
+PHASE12_WIRE_AND_OCCLUSION_PASS: 1273 assertions, 870 compressed bytes
+Phase3 optics/routes passed 39629
+PHASE3_HARDENING_PASS: 12115 assertions
+PHASE3_FINAL_PASS: 97163 assertions
+PHASE3_DESTINATION_PASS: 19802 assertions
+PHASE4_PLANNING: 180 full epochs accepted=150 inspected_columns=6646
+PHASE4_LIFECYCLE: 200000 virtual ticks 10000 epochs elapsed_ms=44 proposals_blocked=10000
+PHASE4_VALIDATION_PASS: assertions=1410549 chunk_sample_oracle_cases=594000 structure_injections=1800 lifecycle_ticks=200000 seed=6617717088294
+Generated 24 adapter syntax-only stubs; not real Minecraft APIs
+PASS: adapter Java syntax against fabricated API shapes (NOT a genuine Fabric build)
+MUTATION,chunk_boundary_omission,detected=True,exit=1,expected_message=touching an exact chunk face
+MUTATION,camera_pitch_basis_regression,detected=True,exit=1,expected_message=valid yaw/pitch witness
+MUTATION,lost_journal_cas,detected=True,exit=1,expected_message=stale concurrent journal writer
+MUTATION_GATE_PASS: 3 independent safety regressions detected
+PASS: static fail-closed host contract
+OFFLINE VALIDATION PASSED; RELEASE NO-GO: Java25 Minecraft/Fabric launch, GPU renderer, in-game crossing and save tests unverified.
+RELEASE_GATE_EXIT_CODE=42

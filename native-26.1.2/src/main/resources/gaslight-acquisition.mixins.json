@@ -1,0 +1,1 @@
+{"required":true,"package":"dev.kondalabs.gaslight.mixin","compatibilityLevel":"JAVA_25","mixins":["RemoteGenerationObserver"],"injectors":{"defaultRequire":1}}

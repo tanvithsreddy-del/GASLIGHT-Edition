@@ -1,0 +1,84 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\gradlew.bat", "--no-daemon", "--max-workers=2", "clean", "build", "dependencyManifest", "--stacktrace", "--console=plain"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT
+UTC: 2026-10-12T15:25:24.603982+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :compileClientJava
+> Task :processClientResources NO-SOURCE
+> Task :processIncludeJars
+> Task :jar
+> Task :sourcesJar
+> Task :assemble
+> Task :clientClasses
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :coreCheck
+PASSED 383217 standalone assertions in 369 ms
+
+> Task :phase12WireCheck
+PHASE12_WIRE_AND_OCCLUSION_PASS: 1273 assertions, 870 compressed bytes
+
+> Task :phase2Check
+PHASE2_PREVIEW_PASS: 1835 assertions
+
+> Task :phase3Check
+Phase3 optics/routes passed 39629
+
+> Task :phase3DestinationCheck
+PHASE3_DESTINATION_PASS: 19803 assertions
+
+> Task :phase3FinalCheck
+PHASE3_FINAL_PASS: 97162 assertions
+
+> Task :phase3HardeningCheck
+PHASE3_HARDENING_PASS: 12115 assertions
+
+> Task :phase4FinalSafetyCheck
+PHASE4_FINAL_SAFETY_PASS: assertions=17568 malformed_packets=2500 finite_geometry_checks=10000 hostile_hosts=4
+
+> Task :phase4HostIsolationCheck
+PHASE4_HOST_ISOLATION_PASS: 22 assertions; 5 injected fatal host failures quarantined
+
+> Task :phase4ValidationCheck
+PHASE4_PLANNING: 180 full epochs accepted=150 inspected_columns=6646
+PHASE4_LIFECYCLE: 200000 virtual ticks 10000 epochs elapsed_ms=42 proposals_blocked=10000
+PHASE4_VALIDATION_PASS: assertions=1410549 chunk_sample_oracle_cases=594000 structure_injections=1800 lifecycle_ticks=200000 seed=6617717088294
+
+> Task :remoteAcquisitionCheck
+REMOTE_CHUNK_LEASE_MODEL_PASS: checks=80 cycles=30
+
+> Task :remoteWorldCheck
+REMOTE_WORLD_DATA_PASS: assertions=891 fragments=6 peak_cache_bytes=510384 peak_staging_bytes=276588
+
+> Task :test
+> Task :validateAccessWidener NO-SOURCE
+> Task :check
+> Task :build
+
+> Task :dependencyManifest
+DEPENDENCY_MANIFEST: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\build\reports\gaslight\dependencies.json
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/handoff/GASLIGHT_CODEX_HANDOFF/ACTIVE_PROJECT/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 3s
+22 actionable tasks: 22 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.0/userguide/configuration_cache_enabling.html
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 64.171

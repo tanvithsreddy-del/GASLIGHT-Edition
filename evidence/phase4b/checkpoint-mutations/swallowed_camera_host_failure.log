@@ -1,0 +1,10 @@
+COMMAND: C:\Program Files\Git\bin\bash.exe run_offline_checks.sh
+SUITE: dev.kondalabs.gaslight.Phase4HostIsolationTests
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-6d5k6xkj\project\build\journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-6d5k6xkj\project\build\journal-test-temp"
+Exception in thread "main" java.lang.AssertionError: unexpected callback must quarantine test=9
+	at dev.kondalabs.gaslight.Phase4HostIsolationTests.yes(Phase4HostIsolationTests.java:15)
+	at dev.kondalabs.gaslight.Phase4HostIsolationTests.tickExceptionIsolation(Phase4HostIsolationTests.java:68)
+	at dev.kondalabs.gaslight.Phase4HostIsolationTests.main(Phase4HostIsolationTests.java:89)
+
+EXIT_CODE: 1

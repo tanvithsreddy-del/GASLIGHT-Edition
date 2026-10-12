@@ -1,0 +1,6 @@
+PHASE4_BENCH_ENV,java=21.0.12.1,processors=4,heap_max_bytes=536870912
+BENCH,geometry_supercover,operations_per_round=4000,median_ns_per_op=73487.47,p95_ns_per_op=96084.63,range_min_ms=280.643,range_max_ms=384.339
+BENCH,paired_structure_gate,operations_per_round=1200,median_ns_per_op=2106.79,p95_ns_per_op=6092.86,range_min_ms=1.810,range_max_ms=7.311
+BENCH,camera_visibility,operations_per_round=80000,median_ns_per_op=48.69,p95_ns_per_op=53.35,range_min_ms=3.592,range_max_ms=4.268
+BENCH,paired_terrain_gate,operations_per_round=3000,median_ns_per_op=1500.45,p95_ns_per_op=1995.42,range_min_ms=4.227,range_max_ms=5.986
+BENCH_END,blackhole=6510400

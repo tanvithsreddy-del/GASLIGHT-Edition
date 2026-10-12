@@ -1,0 +1,15 @@
+COMMAND: ["C:\\Users\\Tanvith\\AppData\\Local\\Programs\\Python\\Python312\\python.exe", "C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4b_tests.py", "saved"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft
+UTC: 2026-10-12T14:55:04.257335+00:00
+RESULT {"request": "world_connect#saved-initial", "status": "FAIL", "detail": "java.lang.NullPointerException: Cannot invoke \"net.minecraft.client.multiplayer.ClientLevel.getBlockState(net.minecraft.core.BlockPos)\" because \"<parameter1>.level\" is null", "metrics": "packets=394 bytes=91899 rejected=0 commits=9 decode_ns=105360300 peak_decode_ns=13317900 cache_bytes=3112295 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275", "elapsed_ms": 42.2879, "dimension": "disconnected", "chunks": 0, "dropped": 0, "corrupted": 0, "retained_heap_bytes": 544, "runner_wait_seconds": 0.25}
+Traceback (most recent call last):
+  File "C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\phase4b_tests.py", line 13, in <module>
+    c.ready();c.probe('world_connect#saved-initial');c.probe('ready_data#saved-initial');c.probe('saved_content#saved-initial')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\phase4b_control.py", line 35, in probe
+    if expected is not None and result['status']!=expected:raise RuntimeError('unexpected result '+json.dumps(result))
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: unexpected result {"request": "world_connect#saved-initial", "status": "FAIL", "detail": "java.lang.NullPointerException: Cannot invoke \"net.minecraft.client.multiplayer.ClientLevel.getBlockState(net.minecraft.core.BlockPos)\" because \"<parameter1>.level\" is null", "metrics": "packets=394 bytes=91899 rejected=0 commits=9 decode_ns=105360300 peak_decode_ns=13317900 cache_bytes=3112295 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275", "elapsed_ms": 42.2879, "dimension": "disconnected", "chunks": 0, "dropped": 0, "corrupted": 0, "retained_heap_bytes": 544, "runner_wait_seconds": 0.25}
+
+EXIT_CODE: 1
+ELAPSED_SECONDS: 0.36

@@ -1,0 +1,16 @@
+# Gradle output and cache
+.gradle/
+build/
+out/
+# Local Minecraft saves and run state
+run/
+saves/
+logs/
+crash-reports/
+# IDE/editor
+.idea/
+.vscode/
+*.iml
+# Mac and Windows
+.DS_Store
+Thumbs.db

@@ -1,0 +1,2 @@
+MUTATION,chunk_boundary_omission,detected=True,exit=1,expected_message=touching an exact chunk face
+MUTATION,camera_pitch_basis_regression,detected=True,exit=1,expected_message=valid yaw/pitch witness

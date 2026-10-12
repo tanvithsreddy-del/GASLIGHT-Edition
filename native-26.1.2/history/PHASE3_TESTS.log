@@ -1,0 +1,4 @@
+PASSED 383217 standalone assertions in 332 ms
+PHASE2_PREVIEW_PASS: 1835 assertions
+PHASE12_WIRE_AND_OCCLUSION_PASS: 1273 assertions, 870 compressed bytes
+Phase3 optics/routes passed 39629

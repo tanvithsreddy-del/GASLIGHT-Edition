@@ -1,0 +1,8 @@
+{
+  "pid": 13896,
+  "command": [
+    "C:\\Program Files\\Eclipse Adoptium\\jdk-25.0.4.101-hotspot\\bin\\java.exe",
+    "@C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4b\\b-generation-server.args"
+  ],
+  "cwd": "C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4b\\server"
+}

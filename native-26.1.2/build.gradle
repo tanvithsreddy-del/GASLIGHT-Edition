@@ -1,0 +1,231 @@
+import java.security.MessageDigest
+
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        "gaslight_native" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+group = project.group
+version = project.version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    maxHeapSize = '512m'
+}
+
+// Use the project filesystem for crash/durability fixtures: /tmp may be tmpfs.
+tasks.matching { it instanceof JavaExec || it instanceof Test }.configureEach {
+    def fixtures = layout.buildDirectory.dir('journal-test-temp').get().asFile
+    systemProperty 'java.io.tmpdir', fixtures.absolutePath
+    doFirst { fixtures.mkdirs() }
+}
+
+processResources {
+    inputs.property 'version', version
+    filesMatching('fabric.mod.json') {
+        expand 'version': version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    withSourcesJar()
+}
+
+// Keep resolved production/test classpaths stable across clean builds.
+configurations.matching {
+    it.name in ['compileClasspath', 'runtimeClasspath', 'clientCompileClasspath',
+                'clientRuntimeClasspath', 'testCompileClasspath', 'testRuntimeClasspath']
+}.configureEach {
+    resolutionStrategy.activateDependencyLocking()
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+tasks.register('dependencyManifest') {
+    group = 'verification'
+    description = 'Record genuine resolved production/test artifacts and checksums.'
+    doLast {
+        def result = [:]
+        configurations.findAll { it.canBeResolved &&
+            it.name in ['compileClasspath', 'runtimeClasspath', 'clientCompileClasspath',
+                        'clientRuntimeClasspath', 'testCompileClasspath', 'testRuntimeClasspath']
+        }.each { configuration ->
+            result[configuration.name] = configuration.resolvedConfiguration.resolvedArtifacts.collect { artifact ->
+                def digest = MessageDigest.getInstance('SHA-256')
+                artifact.file.withInputStream { stream ->
+                    byte[] buffer = new byte[65536]
+                    int n
+                    while ((n = stream.read(buffer)) != -1) digest.update(buffer, 0, n)
+                }
+                [module: artifact.moduleVersion.id.toString(), classifier: artifact.classifier,
+                 file: artifact.file.name, sha256: digest.digest().encodeHex().toString()]
+            }.sort { it.module + ':' + (it.classifier ?: '') }
+        }
+        def target = layout.buildDirectory.file('reports/gaslight/dependencies.json').get().asFile
+        target.parentFile.mkdirs()
+        target.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(result))
+        println "DEPENDENCY_MANIFEST: ${target}"
+    }
+}
+
+// The standalone test suite has its own assertions and main() rather than JUnit.
+// Integrate it into Gradle's check/build lifecycle so it cannot be accidentally skipped.
+tasks.register('coreCheck', JavaExec) {
+    group = 'verification'
+    description = 'Execute standalone GASLIGHT geometry, portal, safety and scheduler tests.'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.NativeTests'
+    maxHeapSize = '512m'
+}
+
+tasks.register('phase2Check', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase2PreviewTests'
+    maxHeapSize = '512m'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('phase2Check')
+    dependsOn tasks.named('coreCheck')
+}
+
+// Phase 1/2 integration must fail the regular build if bounded transport or
+// foreground occlusion tests fail, rather than silently publishing a JAR.
+tasks.register('phase12WireCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase12WireTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase12WireCheck') }
+
+// Phase 3 uses independent JVM tests. This task must run on the real Fabric CI build.
+tasks.register('phase3Check', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase3Tests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase3Check') }
+
+// Phase 3 adversarial tests must also pass during a genuine Fabric CI build.
+tasks.register('phase3HardeningCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase3HardeningTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase3HardeningCheck') }
+
+// Final Phase 3 supercover, persistent-journal and quarantine regressions.
+tasks.register('phase3FinalCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase3FinalTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase3FinalCheck') }
+
+// Phase 3 destination validation must not be omitted in CI.
+tasks.register('phase3DestinationCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase3DestinationTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase3DestinationCheck') }
+
+// Phase 4 independent deterministic property / failure-injection suite.
+// A genuine Fabric CI build must fail if it fails.
+tasks.register('phase4ValidationCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase4ValidationTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase4ValidationCheck') }
+// Benchmarks are intentionally manual: environment-dependent numbers should not
+// determine functional correctness, and a CI runner is not a Minecraft GPU.
+tasks.register('phase4OfflineBenchmarks', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase4Benchmarks'
+    maxHeapSize = '512m'
+}
+
+// Final fail-closed safety checks run on every genuine Fabric CI check/build.
+tasks.register('phase4FinalSafetyCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase4FinalSafetyTests'
+    maxHeapSize = '512m'
+}
+tasks.named('check') { dependsOn tasks.named('phase4FinalSafetyCheck') }
+
+// Hard gate: unexpected exceptions from game/renderer/journal Host callbacks
+// must quarantine the automatic controller and halt physical world operations.
+tasks.register('phase4HostIsolationCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.Phase4HostIsolationTests'
+    maxHeapSize = '256m'
+}
+tasks.named('check') { dependsOn tasks.named('phase4HostIsolationCheck') }
+
+tasks.register('remoteWorldCheck', JavaExec) {
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.RemoteWorldDataTests'
+    maxHeapSize = '256m'
+}
+tasks.named('check') { dependsOn tasks.named('remoteWorldCheck') }
+tasks.register('remoteAcquisitionCheck', JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.kondalabs.gaslight.RemoteChunkLeaseTests'
+}
+tasks.named('check') { dependsOn tasks.named('remoteAcquisitionCheck') }

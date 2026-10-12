@@ -1,0 +1,11 @@
+.gradle/
+**/build/
+**/run/
+**/saves/
+__pycache__/
+*.mca
+*.mcc
+*.dat
+*.dat_old
+*.lck
+private/

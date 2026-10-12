@@ -1,0 +1,3 @@
+[GASLIGHT] Phase 1: Java/Fabric binary build gate
+javac 21.0.12.1
+BLOCKED: JDK 25 required for Minecraft 26.1.2

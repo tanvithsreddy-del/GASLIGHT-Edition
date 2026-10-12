@@ -1,0 +1,8 @@
+UTC: 2026-10-12T05:03:14Z
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)
+Gradle executable: missing
+/usr/bin/javac
+javac 21.0.12.1
+Gradle download host DNS unavailable

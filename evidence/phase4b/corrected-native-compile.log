@@ -1,0 +1,35 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\gradlew.bat", "--no-daemon", "--max-workers=2", "compileJava", "compileClientJava", "dependencyManifest", "-I", "C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4-integration.init.gradle", "phase4IntegrationClasspath", "--stacktrace", "--console=plain"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT
+UTC: 2026-10-12T14:45:07.921787+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :compileClientJava UP-TO-DATE
+
+> Task :dependencyManifest
+DEPENDENCY_MANIFEST: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\build\reports\gaslight\dependencies.json
+
+> Task :processClientResources NO-SOURCE
+> Task :clientClasses UP-TO-DATE
+> Task :phase4IntegrationClasspath
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/handoff/GASLIGHT_CODEX_HANDOFF/ACTIVE_PROJECT/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 8s
+5 actionable tasks: 4 executed, 1 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.7.0/userguide/configuration_cache_enabling.html
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 9.172

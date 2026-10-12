@@ -1,0 +1,815 @@
+Compiled from "ChunkLevel.java"
+public class net.minecraft.server.level.ChunkLevel {
+  private static final int FULL_CHUNK_LEVEL;
+
+  private static final int BLOCK_TICKING_LEVEL;
+
+  private static final int ENTITY_TICKING_LEVEL;
+
+  private static final net.minecraft.world.level.chunk.status.ChunkStep FULL_CHUNK_STEP;
+
+  public static final int RADIUS_AROUND_FULL_CHUNK;
+
+  public static final int MAX_LEVEL;
+
+  public net.minecraft.server.level.ChunkLevel();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static net.minecraft.world.level.chunk.status.ChunkStatus generationStatus(int);
+    Code:
+         0: iload_0
+         1: bipush        33
+         3: isub
+         4: aconst_null
+         5: invokestatic  #9                  // Method getStatusAroundFullChunk:(ILnet/minecraft/world/level/chunk/status/ChunkStatus;)Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+         8: areturn
+
+  public static net.minecraft.world.level.chunk.status.ChunkStatus getStatusAroundFullChunk(int, net.minecraft.world.level.chunk.status.ChunkStatus);
+    Code:
+         0: iload_0
+         1: getstatic     #13                 // Field RADIUS_AROUND_FULL_CHUNK:I
+         4: if_icmple     9
+         7: aload_1
+         8: areturn
+         9: iload_0
+        10: ifgt          17
+        13: getstatic     #17                 // Field net/minecraft/world/level/chunk/status/ChunkStatus.FULL:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+        16: areturn
+        17: getstatic     #23                 // Field FULL_CHUNK_STEP:Lnet/minecraft/world/level/chunk/status/ChunkStep;
+        20: invokevirtual #27                 // Method net/minecraft/world/level/chunk/status/ChunkStep.accumulatedDependencies:()Lnet/minecraft/world/level/chunk/status/ChunkDependencies;
+        23: iload_0
+        24: invokevirtual #33                 // Method net/minecraft/world/level/chunk/status/ChunkDependencies.get:(I)Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+        27: areturn
+
+  public static net.minecraft.world.level.chunk.status.ChunkStatus getStatusAroundFullChunk(int);
+    Code:
+         0: iload_0
+         1: getstatic     #39                 // Field net/minecraft/world/level/chunk/status/ChunkStatus.EMPTY:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+         4: invokestatic  #9                  // Method getStatusAroundFullChunk:(ILnet/minecraft/world/level/chunk/status/ChunkStatus;)Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+         7: areturn
+
+  public static int byStatus(net.minecraft.world.level.chunk.status.ChunkStatus);
+    Code:
+         0: bipush        33
+         2: getstatic     #23                 // Field FULL_CHUNK_STEP:Lnet/minecraft/world/level/chunk/status/ChunkStep;
+         5: aload_0
+         6: invokevirtual #42                 // Method net/minecraft/world/level/chunk/status/ChunkStep.getAccumulatedRadiusOf:(Lnet/minecraft/world/level/chunk/status/ChunkStatus;)I
+         9: iadd
+        10: ireturn
+
+  public static net.minecraft.server.level.FullChunkStatus fullStatus(int);
+    Code:
+         0: iload_0
+         1: bipush        31
+         3: if_icmpgt     10
+         6: getstatic     #46                 // Field net/minecraft/server/level/FullChunkStatus.ENTITY_TICKING:Lnet/minecraft/server/level/FullChunkStatus;
+         9: areturn
+        10: iload_0
+        11: bipush        32
+        13: if_icmpgt     20
+        16: getstatic     #52                 // Field net/minecraft/server/level/FullChunkStatus.BLOCK_TICKING:Lnet/minecraft/server/level/FullChunkStatus;
+        19: areturn
+        20: iload_0
+        21: bipush        33
+        23: if_icmpgt     30
+        26: getstatic     #55                 // Field net/minecraft/server/level/FullChunkStatus.FULL:Lnet/minecraft/server/level/FullChunkStatus;
+        29: areturn
+        30: getstatic     #57                 // Field net/minecraft/server/level/FullChunkStatus.INACCESSIBLE:Lnet/minecraft/server/level/FullChunkStatus;
+        33: areturn
+
+  public static int byStatus(net.minecraft.server.level.FullChunkStatus);
+    Code:
+         0: getstatic     #60                 // Field net/minecraft/server/level/ChunkLevel$1.$SwitchMap$net$minecraft$server$level$FullChunkStatus:[I
+         3: aload_0
+         4: invokevirtual #66                 // Method net/minecraft/server/level/FullChunkStatus.ordinal:()I
+         7: iaload
+         8: tableswitch   { // 1 to 4
+                       1: 50
+                       2: 56
+                       3: 61
+                       4: 66
+                 default: 40
+            }
+        40: new           #70                 // class java/lang/MatchException
+        43: dup
+        44: aconst_null
+        45: aconst_null
+        46: invokespecial #72                 // Method java/lang/MatchException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+        49: athrow
+        50: getstatic     #75                 // Field MAX_LEVEL:I
+        53: goto          68
+        56: bipush        33
+        58: goto          68
+        61: bipush        32
+        63: goto          68
+        66: bipush        31
+        68: ireturn
+
+  public static boolean isEntityTicking(int);
+    Code:
+         0: iload_0
+         1: bipush        31
+         3: if_icmpgt     10
+         6: iconst_1
+         7: goto          11
+        10: iconst_0
+        11: ireturn
+
+  public static boolean isBlockTicking(int);
+    Code:
+         0: iload_0
+         1: bipush        32
+         3: if_icmpgt     10
+         6: iconst_1
+         7: goto          11
+        10: iconst_0
+        11: ireturn
+
+  public static boolean isLoaded(int);
+    Code:
+         0: iload_0
+         1: getstatic     #75                 // Field MAX_LEVEL:I
+         4: if_icmpgt     11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: ireturn
+
+  static {};
+    Code:
+         0: getstatic     #78                 // Field net/minecraft/world/level/chunk/status/ChunkPyramid.GENERATION_PYRAMID:Lnet/minecraft/world/level/chunk/status/ChunkPyramid;
+         3: getstatic     #17                 // Field net/minecraft/world/level/chunk/status/ChunkStatus.FULL:Lnet/minecraft/world/level/chunk/status/ChunkStatus;
+         6: invokevirtual #84                 // Method net/minecraft/world/level/chunk/status/ChunkPyramid.getStepTo:(Lnet/minecraft/world/level/chunk/status/ChunkStatus;)Lnet/minecraft/world/level/chunk/status/ChunkStep;
+         9: putstatic     #23                 // Field FULL_CHUNK_STEP:Lnet/minecraft/world/level/chunk/status/ChunkStep;
+        12: getstatic     #23                 // Field FULL_CHUNK_STEP:Lnet/minecraft/world/level/chunk/status/ChunkStep;
+        15: invokevirtual #27                 // Method net/minecraft/world/level/chunk/status/ChunkStep.accumulatedDependencies:()Lnet/minecraft/world/level/chunk/status/ChunkDependencies;
+        18: invokevirtual #88                 // Method net/minecraft/world/level/chunk/status/ChunkDependencies.getRadius:()I
+        21: putstatic     #13                 // Field RADIUS_AROUND_FULL_CHUNK:I
+        24: bipush        33
+        26: getstatic     #13                 // Field RADIUS_AROUND_FULL_CHUNK:I
+        29: iadd
+        30: putstatic     #75                 // Field MAX_LEVEL:I
+        33: return
+}
+Compiled from "RegionFileStorage.java"
+public final class net.minecraft.world.level.chunk.storage.RegionFileStorage implements java.lang.AutoCloseable {
+  public static final java.lang.String ANVIL_EXTENSION;
+
+  private static final int MAX_CACHE_SIZE;
+
+  private final it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap<net.minecraft.world.level.chunk.storage.RegionFile> regionCache;
+
+  private final net.minecraft.world.level.chunk.storage.RegionStorageInfo info;
+
+  private final java.nio.file.Path folder;
+
+  private final boolean sync;
+
+  net.minecraft.world.level.chunk.storage.RegionFileStorage(net.minecraft.world.level.chunk.storage.RegionStorageInfo, java.nio.file.Path, boolean);
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: new           #7                  // class it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap
+         8: dup
+         9: invokespecial #9                  // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap."<init>":()V
+        12: putfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+        15: aload_0
+        16: aload_2
+        17: putfield      #16                 // Field folder:Ljava/nio/file/Path;
+        20: aload_0
+        21: iload_3
+        22: putfield      #20                 // Field sync:Z
+        25: aload_0
+        26: aload_1
+        27: putfield      #24                 // Field info:Lnet/minecraft/world/level/chunk/storage/RegionStorageInfo;
+        30: return
+
+  private net.minecraft.world.level.chunk.storage.RegionFile getRegionFile(net.minecraft.world.level.ChunkPos) throws java.io.IOException;
+    Code:
+         0: aload_1
+         1: invokevirtual #28                 // Method net/minecraft/world/level/ChunkPos.getRegionX:()I
+         4: aload_1
+         5: invokevirtual #34                 // Method net/minecraft/world/level/ChunkPos.getRegionZ:()I
+         8: invokestatic  #37                 // Method net/minecraft/world/level/ChunkPos.pack:(II)J
+        11: lstore_2
+        12: aload_0
+        13: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+        16: lload_2
+        17: invokevirtual #41                 // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.getAndMoveToFirst:(J)Ljava/lang/Object;
+        20: checkcast     #45                 // class net/minecraft/world/level/chunk/storage/RegionFile
+        23: astore        4
+        25: aload         4
+        27: ifnull        33
+        30: aload         4
+        32: areturn
+        33: aload_0
+        34: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+        37: invokevirtual #47                 // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.size:()I
+        40: sipush        256
+        43: if_icmplt     59
+        46: aload_0
+        47: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+        50: invokevirtual #50                 // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.removeLast:()Ljava/lang/Object;
+        53: checkcast     #45                 // class net/minecraft/world/level/chunk/storage/RegionFile
+        56: invokevirtual #54                 // Method net/minecraft/world/level/chunk/storage/RegionFile.close:()V
+        59: aload_0
+        60: getfield      #16                 // Field folder:Ljava/nio/file/Path;
+        63: invokestatic  #57                 // Method net/minecraft/util/FileUtil.createDirectoriesSafe:(Ljava/nio/file/Path;)V
+        66: aload_0
+        67: getfield      #16                 // Field folder:Ljava/nio/file/Path;
+        70: aload_1
+        71: invokevirtual #28                 // Method net/minecraft/world/level/ChunkPos.getRegionX:()I
+        74: aload_1
+        75: invokevirtual #34                 // Method net/minecraft/world/level/ChunkPos.getRegionZ:()I
+        78: invokedynamic #63,  0             // InvokeDynamic #0:makeConcatWithConstants:(II)Ljava/lang/String;
+        83: invokeinterface #67,  2           // InterfaceMethod java/nio/file/Path.resolve:(Ljava/lang/String;)Ljava/nio/file/Path;
+        88: astore        5
+        90: new           #45                 // class net/minecraft/world/level/chunk/storage/RegionFile
+        93: dup
+        94: aload_0
+        95: getfield      #24                 // Field info:Lnet/minecraft/world/level/chunk/storage/RegionStorageInfo;
+        98: aload         5
+       100: aload_0
+       101: getfield      #16                 // Field folder:Ljava/nio/file/Path;
+       104: aload_0
+       105: getfield      #20                 // Field sync:Z
+       108: invokespecial #73                 // Method net/minecraft/world/level/chunk/storage/RegionFile."<init>":(Lnet/minecraft/world/level/chunk/storage/RegionStorageInfo;Ljava/nio/file/Path;Ljava/nio/file/Path;Z)V
+       111: astore        6
+       113: aload_0
+       114: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+       117: lload_2
+       118: aload         6
+       120: invokevirtual #76                 // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.putAndMoveToFirst:(JLjava/lang/Object;)Ljava/lang/Object;
+       123: pop
+       124: aload         6
+       126: areturn
+
+  public net.minecraft.nbt.CompoundTag read(net.minecraft.world.level.ChunkPos) throws java.io.IOException;
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #80                 // Method getRegionFile:(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;
+         5: astore_2
+         6: aload_2
+         7: aload_1
+         8: invokevirtual #84                 // Method net/minecraft/world/level/chunk/storage/RegionFile.getChunkDataInputStream:(Lnet/minecraft/world/level/ChunkPos;)Ljava/io/DataInputStream;
+        11: astore_3
+        12: aload_3
+        13: ifnonnull     30
+        16: aconst_null
+        17: astore        4
+        19: aload_3
+        20: ifnull        27
+        23: aload_3
+        24: invokevirtual #88                 // Method java/io/DataInputStream.close:()V
+        27: aload         4
+        29: areturn
+        30: aload_3
+        31: invokestatic  #91                 // Method net/minecraft/nbt/NbtIo.read:(Ljava/io/DataInput;)Lnet/minecraft/nbt/CompoundTag;
+        34: astore        4
+        36: aload_3
+        37: ifnull        44
+        40: aload_3
+        41: invokevirtual #88                 // Method java/io/DataInputStream.close:()V
+        44: aload         4
+        46: areturn
+        47: astore        4
+        49: aload_3
+        50: ifnull        69
+        53: aload_3
+        54: invokevirtual #88                 // Method java/io/DataInputStream.close:()V
+        57: goto          69
+        60: astore        5
+        62: aload         4
+        64: aload         5
+        66: invokevirtual #99                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+        69: aload         4
+        71: athrow
+      Exception table:
+         from    to  target type
+            12    19    47   Class java/lang/Throwable
+            30    36    47   Class java/lang/Throwable
+            53    57    60   Class java/lang/Throwable
+
+  public void scanChunk(net.minecraft.world.level.ChunkPos, net.minecraft.nbt.StreamTagVisitor) throws java.io.IOException;
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #80                 // Method getRegionFile:(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;
+         5: astore_3
+         6: aload_3
+         7: aload_1
+         8: invokevirtual #84                 // Method net/minecraft/world/level/chunk/storage/RegionFile.getChunkDataInputStream:(Lnet/minecraft/world/level/ChunkPos;)Ljava/io/DataInputStream;
+        11: astore        4
+        13: aload         4
+        15: ifnull        27
+        18: aload         4
+        20: aload_2
+        21: invokestatic  #103                // Method net/minecraft/nbt/NbtAccounter.unlimitedHeap:()Lnet/minecraft/nbt/NbtAccounter;
+        24: invokestatic  #109                // Method net/minecraft/nbt/NbtIo.parse:(Ljava/io/DataInput;Lnet/minecraft/nbt/StreamTagVisitor;Lnet/minecraft/nbt/NbtAccounter;)V
+        27: aload         4
+        29: ifnull        67
+        32: aload         4
+        34: invokevirtual #88                 // Method java/io/DataInputStream.close:()V
+        37: goto          67
+        40: astore        5
+        42: aload         4
+        44: ifnull        64
+        47: aload         4
+        49: invokevirtual #88                 // Method java/io/DataInputStream.close:()V
+        52: goto          64
+        55: astore        6
+        57: aload         5
+        59: aload         6
+        61: invokevirtual #99                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+        64: aload         5
+        66: athrow
+        67: return
+      Exception table:
+         from    to  target type
+            13    27    40   Class java/lang/Throwable
+            47    52    55   Class java/lang/Throwable
+
+  protected void write(net.minecraft.world.level.ChunkPos, net.minecraft.nbt.CompoundTag) throws java.io.IOException;
+    Code:
+         0: getstatic     #113                // Field net/minecraft/SharedConstants.DEBUG_DONT_SAVE_WORLD:Z
+         3: ifeq          7
+         6: return
+         7: aload_0
+         8: aload_1
+         9: invokevirtual #80                 // Method getRegionFile:(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;
+        12: astore_3
+        13: aload_2
+        14: ifnonnull     25
+        17: aload_3
+        18: aload_1
+        19: invokevirtual #118                // Method net/minecraft/world/level/chunk/storage/RegionFile.clear:(Lnet/minecraft/world/level/ChunkPos;)V
+        22: goto          78
+        25: aload_3
+        26: aload_1
+        27: invokevirtual #122                // Method net/minecraft/world/level/chunk/storage/RegionFile.getChunkDataOutputStream:(Lnet/minecraft/world/level/ChunkPos;)Ljava/io/DataOutputStream;
+        30: astore        4
+        32: aload_2
+        33: aload         4
+        35: invokestatic  #126                // Method net/minecraft/nbt/NbtIo.write:(Lnet/minecraft/nbt/CompoundTag;Ljava/io/DataOutput;)V
+        38: aload         4
+        40: ifnull        78
+        43: aload         4
+        45: invokevirtual #130                // Method java/io/DataOutputStream.close:()V
+        48: goto          78
+        51: astore        5
+        53: aload         4
+        55: ifnull        75
+        58: aload         4
+        60: invokevirtual #130                // Method java/io/DataOutputStream.close:()V
+        63: goto          75
+        66: astore        6
+        68: aload         5
+        70: aload         6
+        72: invokevirtual #99                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+        75: aload         5
+        77: athrow
+        78: return
+      Exception table:
+         from    to  target type
+            32    38    51   Class java/lang/Throwable
+            58    63    66   Class java/lang/Throwable
+
+  public void close() throws java.io.IOException;
+    Code:
+         0: new           #133                // class net/minecraft/util/ExceptionCollector
+         3: dup
+         4: invokespecial #135                // Method net/minecraft/util/ExceptionCollector."<init>":()V
+         7: astore_1
+         8: aload_0
+         9: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+        12: invokevirtual #136                // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.values:()Lit/unimi/dsi/fastutil/objects/ObjectCollection;
+        15: invokeinterface #140,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/ObjectCollection.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectIterator;
+        20: astore_2
+        21: aload_2
+        22: invokeinterface #146,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        27: ifeq          58
+        30: aload_2
+        31: invokeinterface #152,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        36: checkcast     #45                 // class net/minecraft/world/level/chunk/storage/RegionFile
+        39: astore_3
+        40: aload_3
+        41: invokevirtual #54                 // Method net/minecraft/world/level/chunk/storage/RegionFile.close:()V
+        44: goto          55
+        47: astore        4
+        49: aload_1
+        50: aload         4
+        52: invokevirtual #157                // Method net/minecraft/util/ExceptionCollector.add:(Ljava/lang/Throwable;)V
+        55: goto          21
+        58: aload_1
+        59: invokevirtual #160                // Method net/minecraft/util/ExceptionCollector.throwIfPresent:()V
+        62: return
+      Exception table:
+         from    to  target type
+            40    44    47   Class java/io/IOException
+
+  public void flush() throws java.io.IOException;
+    Code:
+         0: aload_0
+         1: getfield      #10                 // Field regionCache:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;
+         4: invokevirtual #136                // Method it/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap.values:()Lit/unimi/dsi/fastutil/objects/ObjectCollection;
+         7: invokeinterface #140,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/ObjectCollection.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectIterator;
+        12: astore_1
+        13: aload_1
+        14: invokeinterface #146,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        19: ifeq          39
+        22: aload_1
+        23: invokeinterface #152,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        28: checkcast     #45                 // class net/minecraft/world/level/chunk/storage/RegionFile
+        31: astore_2
+        32: aload_2
+        33: invokevirtual #163                // Method net/minecraft/world/level/chunk/storage/RegionFile.flush:()V
+        36: goto          13
+        39: return
+
+  public net.minecraft.world.level.chunk.storage.RegionStorageInfo info();
+    Code:
+         0: aload_0
+         1: getfield      #24                 // Field info:Lnet/minecraft/world/level/chunk/storage/RegionStorageInfo;
+         4: areturn
+}
+Compiled from "SkyLightSectionStorage.java"
+public class net.minecraft.world.level.lighting.SkyLightSectionStorage extends net.minecraft.world.level.lighting.LayerLightSectionStorage<net.minecraft.world.level.lighting.SkyLightSectionStorage$SkyDataLayerStorageMap> {
+  protected net.minecraft.world.level.lighting.SkyLightSectionStorage(net.minecraft.world.level.chunk.LightChunkGetter);
+    Code:
+         0: aload_0
+         1: getstatic     #1                  // Field net/minecraft/world/level/LightLayer.SKY:Lnet/minecraft/world/level/LightLayer;
+         4: aload_1
+         5: new           #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+         8: dup
+         9: new           #9                  // class it/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap
+        12: dup
+        13: invokespecial #11                 // Method it/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap."<init>":()V
+        16: new           #15                 // class it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap
+        19: dup
+        20: invokespecial #17                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap."<init>":()V
+        23: ldc           #20                 // int 2147483647
+        25: invokespecial #21                 // Method net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap."<init>":(Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;I)V
+        28: invokespecial #24                 // Method net/minecraft/world/level/lighting/LayerLightSectionStorage."<init>":(Lnet/minecraft/world/level/LightLayer;Lnet/minecraft/world/level/chunk/LightChunkGetter;Lnet/minecraft/world/level/lighting/DataLayerStorageMap;)V
+        31: return
+
+  protected int getLightValue(long);
+    Code:
+         0: aload_0
+         1: lload_1
+         2: iconst_0
+         3: invokevirtual #29                 // Method getLightValue:(JZ)I
+         6: ireturn
+
+  protected int getLightValue(long, boolean);
+    Code:
+         0: lload_1
+         1: invokestatic  #35                 // Method net/minecraft/core/SectionPos.blockToSection:(J)J
+         4: lstore        4
+         6: lload         4
+         8: invokestatic  #41                 // Method net/minecraft/core/SectionPos.y:(J)I
+        11: istore        6
+        13: iload_3
+        14: ifeq          27
+        17: aload_0
+        18: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        21: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        24: goto          34
+        27: aload_0
+        28: getfield      #49                 // Field visibleSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        31: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        34: astore        7
+        36: aload         7
+        38: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        41: lload         4
+        43: invokestatic  #56                 // Method net/minecraft/core/SectionPos.getZeroNode:(J)J
+        46: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        49: istore        8
+        51: iload         8
+        53: aload         7
+        55: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        58: if_icmpeq     68
+        61: iload         6
+        63: iload         8
+        65: if_icmplt     86
+        68: iload_3
+        69: ifeq          83
+        72: aload_0
+        73: lload         4
+        75: invokevirtual #66                 // Method lightOnInSection:(J)Z
+        78: ifne          83
+        81: iconst_0
+        82: ireturn
+        83: bipush        15
+        85: ireturn
+        86: aload_0
+        87: aload         7
+        89: lload         4
+        91: invokevirtual #72                 // Method getDataLayer:(Lnet/minecraft/world/level/lighting/DataLayerStorageMap;J)Lnet/minecraft/world/level/chunk/DataLayer;
+        94: astore        9
+        96: aload         9
+        98: ifnonnull     147
+       101: lload_1
+       102: invokestatic  #76                 // Method net/minecraft/core/BlockPos.getFlatIndex:(J)J
+       105: lstore_1
+       106: aload         9
+       108: ifnonnull     147
+       111: iinc          6, 1
+       114: iload         6
+       116: iload         8
+       118: if_icmplt     124
+       121: bipush        15
+       123: ireturn
+       124: lload         4
+       126: getstatic     #81                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+       129: invokestatic  #87                 // Method net/minecraft/core/SectionPos.offset:(JLnet/minecraft/core/Direction;)J
+       132: lstore        4
+       134: aload_0
+       135: aload         7
+       137: lload         4
+       139: invokevirtual #72                 // Method getDataLayer:(Lnet/minecraft/world/level/lighting/DataLayerStorageMap;J)Lnet/minecraft/world/level/chunk/DataLayer;
+       142: astore        9
+       144: goto          106
+       147: aload         9
+       149: lload_1
+       150: invokestatic  #91                 // Method net/minecraft/core/BlockPos.getX:(J)I
+       153: invokestatic  #94                 // Method net/minecraft/core/SectionPos.sectionRelative:(I)I
+       156: lload_1
+       157: invokestatic  #98                 // Method net/minecraft/core/BlockPos.getY:(J)I
+       160: invokestatic  #94                 // Method net/minecraft/core/SectionPos.sectionRelative:(I)I
+       163: lload_1
+       164: invokestatic  #101                // Method net/minecraft/core/BlockPos.getZ:(J)I
+       167: invokestatic  #94                 // Method net/minecraft/core/SectionPos.sectionRelative:(I)I
+       170: invokevirtual #104                // Method net/minecraft/world/level/chunk/DataLayer.get:(III)I
+       173: ireturn
+
+  protected void onNodeAdded(long);
+    Code:
+         0: lload_1
+         1: invokestatic  #41                 // Method net/minecraft/core/SectionPos.y:(J)I
+         4: istore_3
+         5: aload_0
+         6: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+         9: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        12: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        15: iload_3
+        16: if_icmple     53
+        19: aload_0
+        20: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        23: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        26: iload_3
+        27: putfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        30: aload_0
+        31: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        34: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        37: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        40: aload_0
+        41: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        44: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        47: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        50: invokevirtual #109                // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.defaultReturnValue:(I)V
+        53: lload_1
+        54: invokestatic  #56                 // Method net/minecraft/core/SectionPos.getZeroNode:(J)J
+        57: lstore        4
+        59: aload_0
+        60: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        63: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        66: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        69: lload         4
+        71: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        74: istore        6
+        76: iload         6
+        78: iload_3
+        79: iconst_1
+        80: iadd
+        81: if_icmpge     103
+        84: aload_0
+        85: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        88: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        91: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        94: lload         4
+        96: iload_3
+        97: iconst_1
+        98: iadd
+        99: invokevirtual #113                // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.put:(JI)I
+       102: pop
+       103: return
+
+  protected void onNodeRemoved(long);
+    Code:
+         0: lload_1
+         1: invokestatic  #56                 // Method net/minecraft/core/SectionPos.getZeroNode:(J)J
+         4: lstore_3
+         5: lload_1
+         6: invokestatic  #41                 // Method net/minecraft/core/SectionPos.y:(J)I
+         9: istore        5
+        11: aload_0
+        12: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        15: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        18: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        21: lload_3
+        22: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        25: iload         5
+        27: iconst_1
+        28: iadd
+        29: if_icmpne     115
+        32: lload_1
+        33: lstore        6
+        35: aload_0
+        36: lload         6
+        38: invokevirtual #117                // Method storingLightForSection:(J)Z
+        41: ifne          69
+        44: aload_0
+        45: iload         5
+        47: invokevirtual #120                // Method hasLightDataAtOrBelow:(I)Z
+        50: ifeq          69
+        53: iinc          5, -1
+        56: lload         6
+        58: getstatic     #124                // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
+        61: invokestatic  #87                 // Method net/minecraft/core/SectionPos.offset:(JLnet/minecraft/core/Direction;)J
+        64: lstore        6
+        66: goto          35
+        69: aload_0
+        70: lload         6
+        72: invokevirtual #117                // Method storingLightForSection:(J)Z
+        75: ifeq          100
+        78: aload_0
+        79: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        82: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        85: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        88: lload_3
+        89: iload         5
+        91: iconst_1
+        92: iadd
+        93: invokevirtual #113                // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.put:(JI)I
+        96: pop
+        97: goto          115
+       100: aload_0
+       101: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+       104: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+       107: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+       110: lload_3
+       111: invokevirtual #127                // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.remove:(J)I
+       114: pop
+       115: return
+
+  protected net.minecraft.world.level.chunk.DataLayer createDataLayer(long);
+    Code:
+         0: aload_0
+         1: getfield      #130                // Field queuedSections:Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
+         4: lload_1
+         5: invokeinterface #134,  3          // InterfaceMethod it/unimi/dsi/fastutil/longs/Long2ObjectMap.get:(J)Ljava/lang/Object;
+        10: checkcast     #105                // class net/minecraft/world/level/chunk/DataLayer
+        13: astore_3
+        14: aload_3
+        15: ifnull        20
+        18: aload_3
+        19: areturn
+        20: aload_0
+        21: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        24: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        27: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        30: lload_1
+        31: invokestatic  #56                 // Method net/minecraft/core/SectionPos.getZeroNode:(J)J
+        34: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        37: istore        4
+        39: iload         4
+        41: aload_0
+        42: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        45: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        48: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        51: if_icmpeq     63
+        54: lload_1
+        55: invokestatic  #41                 // Method net/minecraft/core/SectionPos.y:(J)I
+        58: iload         4
+        60: if_icmplt     89
+        63: aload_0
+        64: lload_1
+        65: invokevirtual #66                 // Method lightOnInSection:(J)Z
+        68: ifeq          81
+        71: new           #105                // class net/minecraft/world/level/chunk/DataLayer
+        74: dup
+        75: bipush        15
+        77: invokespecial #139                // Method net/minecraft/world/level/chunk/DataLayer."<init>":(I)V
+        80: areturn
+        81: new           #105                // class net/minecraft/world/level/chunk/DataLayer
+        84: dup
+        85: invokespecial #141                // Method net/minecraft/world/level/chunk/DataLayer."<init>":()V
+        88: areturn
+        89: lload_1
+        90: getstatic     #81                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+        93: invokestatic  #87                 // Method net/minecraft/core/SectionPos.offset:(JLnet/minecraft/core/Direction;)J
+        96: lstore        5
+        98: aload_0
+        99: lload         5
+       101: iconst_1
+       102: invokevirtual #142                // Method getDataLayer:(JZ)Lnet/minecraft/world/level/chunk/DataLayer;
+       105: dup
+       106: astore        7
+       108: ifnonnull     124
+       111: lload         5
+       113: getstatic     #81                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;
+       116: invokestatic  #87                 // Method net/minecraft/core/SectionPos.offset:(JLnet/minecraft/core/Direction;)J
+       119: lstore        5
+       121: goto          98
+       124: aload         7
+       126: invokestatic  #145                // Method repeatFirstLayer:(Lnet/minecraft/world/level/chunk/DataLayer;)Lnet/minecraft/world/level/chunk/DataLayer;
+       129: areturn
+
+  private static net.minecraft.world.level.chunk.DataLayer repeatFirstLayer(net.minecraft.world.level.chunk.DataLayer);
+    Code:
+         0: aload_0
+         1: invokevirtual #149                // Method net/minecraft/world/level/chunk/DataLayer.isDefinitelyHomogenous:()Z
+         4: ifeq          12
+         7: aload_0
+         8: invokevirtual #153                // Method net/minecraft/world/level/chunk/DataLayer.copy:()Lnet/minecraft/world/level/chunk/DataLayer;
+        11: areturn
+        12: aload_0
+        13: invokevirtual #157                // Method net/minecraft/world/level/chunk/DataLayer.getData:()[B
+        16: astore_1
+        17: sipush        2048
+        20: newarray       byte
+        22: astore_2
+        23: iconst_0
+        24: istore_3
+        25: iload_3
+        26: bipush        16
+        28: if_icmpge     51
+        31: aload_1
+        32: iconst_0
+        33: aload_2
+        34: iload_3
+        35: sipush        128
+        38: imul
+        39: sipush        128
+        42: invokestatic  #161                // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+        45: iinc          3, 1
+        48: goto          25
+        51: new           #105                // class net/minecraft/world/level/chunk/DataLayer
+        54: dup
+        55: aload_2
+        56: invokespecial #167                // Method net/minecraft/world/level/chunk/DataLayer."<init>":([B)V
+        59: areturn
+
+  protected boolean hasLightDataAtOrBelow(int);
+    Code:
+         0: iload_1
+         1: aload_0
+         2: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+         5: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+         8: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        11: if_icmplt     18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: ireturn
+
+  protected boolean isAboveData(long);
+    Code:
+         0: lload_1
+         1: invokestatic  #56                 // Method net/minecraft/core/SectionPos.getZeroNode:(J)J
+         4: lstore_3
+         5: aload_0
+         6: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+         9: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        12: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        15: lload_3
+        16: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        19: istore        5
+        21: iload         5
+        23: aload_0
+        24: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+        27: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+        30: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        33: if_icmpeq     45
+        36: lload_1
+        37: invokestatic  #41                 // Method net/minecraft/core/SectionPos.y:(J)I
+        40: iload         5
+        42: if_icmplt     49
+        45: iconst_1
+        46: goto          50
+        49: iconst_0
+        50: ireturn
+
+  protected int getTopSectionY(long);
+    Code:
+         0: aload_0
+         1: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+         4: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+         7: getfield      #52                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.topSections:Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;
+        10: lload_1
+        11: invokevirtual #59                 // Method it/unimi/dsi/fastutil/longs/Long2IntOpenHashMap.get:(J)I
+        14: ireturn
+
+  protected int getBottomSectionY();
+    Code:
+         0: aload_0
+         1: getfield      #45                 // Field updatingSectionData:Lnet/minecraft/world/level/lighting/DataLayerStorageMap;
+         4: checkcast     #7                  // class net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap
+         7: getfield      #62                 // Field net/minecraft/world/level/lighting/SkyLightSectionStorage$SkyDataLayerStorageMap.currentLowestY:I
+        10: ireturn
+}

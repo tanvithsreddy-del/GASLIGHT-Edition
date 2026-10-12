@@ -1,0 +1,46 @@
+name: GASLIGHT Java 25 Fabric 26.1.2 build
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  fabric-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25.0.0+36'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.7.0'
+      - name: Compile and run core gate against real dependencies
+        run: bash ./gradlew --no-daemon clean build --stacktrace
+      - name: Verify 26.1.2 unobfuscated jar and metadata
+        run: bash scripts/check_jar.sh
+      - name: Disposable dedicated-server startup smoke (no world edits)
+        run: bash scripts/smoke_server.sh
+        timeout-minutes: 7
+      - name: Archive genuine Fabric output
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaslight-phase1-fabric-build
+          path: |
+            build/libs/*.jar
+            build/reports/**
+          if-no-files-found: error
+      - name: Archive failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaslight-phase1-diagnostics
+          path: |
+            build/reports/**
+            build/test-results/**
+            .gradle/daemon/**
+          if-no-files-found: ignore

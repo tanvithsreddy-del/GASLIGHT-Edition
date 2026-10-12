@@ -1,0 +1,15 @@
+COMMAND: ["C:\\Users\\Tanvith\\AppData\\Local\\Programs\\Python\\Python312\\python.exe", "C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\phase4b_tests.py", "gen-probe"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft
+UTC: 2026-10-12T15:04:46.742263+00:00
+RESULT {"request": "ready_data#new-distant", "status": "FAIL", "detail": "java.lang.AssertionError: missing actual acquired render data", "metrics": "packets=24 bytes=39584 rejected=0 commits=9 decode_ns=45283100 peak_decode_ns=14696300 cache_bytes=3111840 peak_cache_bytes=3111840 staging_bytes=0 peak_staging_bytes=6619", "elapsed_ms": 7742.0928, "session": "ba96831d-f905-402e-b491-b85db31dab28", "remote_dimension": "minecraft:the_nether", "center_x": 64000, "center_z": 64000, "dimension": "minecraft:overworld", "chunks": 9, "dropped": 0, "corrupted": 0, "retained_heap_bytes": 3085640, "runner_wait_seconds": 8.062999999998283}
+Traceback (most recent call last):
+  File "C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\phase4b_tests.py", line 40, in <module>
+    c.ready();result=c.probe('ready_data#new-distant');native=c.server_probe()
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\phase4b_control.py", line 35, in probe
+    if expected is not None and result['status']!=expected:raise RuntimeError('unexpected result '+json.dumps(result))
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: unexpected result {"request": "ready_data#new-distant", "status": "FAIL", "detail": "java.lang.AssertionError: missing actual acquired render data", "metrics": "packets=24 bytes=39584 rejected=0 commits=9 decode_ns=45283100 peak_decode_ns=14696300 cache_bytes=3111840 peak_cache_bytes=3111840 staging_bytes=0 peak_staging_bytes=6619", "elapsed_ms": 7742.0928, "session": "ba96831d-f905-402e-b491-b85db31dab28", "remote_dimension": "minecraft:the_nether", "center_x": 64000, "center_z": 64000, "dimension": "minecraft:overworld", "chunks": 9, "dropped": 0, "corrupted": 0, "retained_heap_bytes": 3085640, "runner_wait_seconds": 8.062999999998283}
+
+EXIT_CODE: 1
+ELAPSED_SECONDS: 8.171

@@ -1,0 +1,203 @@
+Compiled from "SerializableChunkData.java"
+public final class net.minecraft.world.level.chunk.storage.SerializableChunkData$SectionData extends java.lang.Record {
+  private final int y;
+  private final net.minecraft.world.level.chunk.LevelChunkSection chunkSection;
+  private final net.minecraft.world.level.chunk.DataLayer blockLight;
+  private final net.minecraft.world.level.chunk.DataLayer skyLight;
+  public net.minecraft.world.level.chunk.storage.SerializableChunkData$SectionData(int, net.minecraft.world.level.chunk.LevelChunkSection, net.minecraft.world.level.chunk.DataLayer, net.minecraft.world.level.chunk.DataLayer);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public int y();
+  public net.minecraft.world.level.chunk.LevelChunkSection chunkSection();
+  public net.minecraft.world.level.chunk.DataLayer blockLight();
+  public net.minecraft.world.level.chunk.DataLayer skyLight();
+}
+Compiled from "PalettedContainerFactory.java"
+public final class net.minecraft.world.level.chunk.PalettedContainerFactory extends java.lang.Record {
+  private final net.minecraft.world.level.chunk.Strategy<net.minecraft.world.level.block.state.BlockState> blockStatesStrategy;
+  private final net.minecraft.world.level.block.state.BlockState defaultBlockState;
+  private final com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainer<net.minecraft.world.level.block.state.BlockState>> blockStatesContainerCodec;
+  private final net.minecraft.world.level.chunk.Strategy<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> biomeStrategy;
+  private final net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> defaultBiome;
+  private final com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainerRO<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>> biomeContainerCodec;
+  public net.minecraft.world.level.chunk.PalettedContainerFactory(net.minecraft.world.level.chunk.Strategy<net.minecraft.world.level.block.state.BlockState>, net.minecraft.world.level.block.state.BlockState, com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainer<net.minecraft.world.level.block.state.BlockState>>, net.minecraft.world.level.chunk.Strategy<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>, net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>, com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainerRO<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>>);
+  public static net.minecraft.world.level.chunk.PalettedContainerFactory create(net.minecraft.core.RegistryAccess);
+  public net.minecraft.world.level.chunk.PalettedContainer<net.minecraft.world.level.block.state.BlockState> createForBlockStates();
+  public net.minecraft.world.level.chunk.PalettedContainer<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> createForBiomes();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.level.chunk.Strategy<net.minecraft.world.level.block.state.BlockState> blockStatesStrategy();
+  public net.minecraft.world.level.block.state.BlockState defaultBlockState();
+  public com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainer<net.minecraft.world.level.block.state.BlockState>> blockStatesContainerCodec();
+  public net.minecraft.world.level.chunk.Strategy<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> biomeStrategy();
+  public net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> defaultBiome();
+  public com.mojang.serialization.Codec<net.minecraft.world.level.chunk.PalettedContainerRO<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>>> biomeContainerCodec();
+}
+Compiled from "BlockEntity.java"
+public abstract class net.minecraft.world.level.block.entity.BlockEntity implements net.minecraft.util.debug.DebugValueSource, net.minecraft.core.TypedInstance<net.minecraft.world.level.block.entity.BlockEntityType<?>> {
+  private static final com.mojang.serialization.Codec<net.minecraft.world.level.block.entity.BlockEntityType<?>> TYPE_CODEC;
+  private static final org.slf4j.Logger LOGGER;
+  private final net.minecraft.world.level.block.entity.BlockEntityType<?> type;
+  protected net.minecraft.world.level.Level level;
+  protected final net.minecraft.core.BlockPos worldPosition;
+  protected boolean remove;
+  private net.minecraft.world.level.block.state.BlockState blockState;
+  private net.minecraft.core.component.DataComponentMap components;
+  public net.minecraft.world.level.block.entity.BlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?>, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  private void validateBlockState(net.minecraft.world.level.block.state.BlockState);
+  public boolean isValidBlockState(net.minecraft.world.level.block.state.BlockState);
+  public static net.minecraft.core.BlockPos getPosFromTag(net.minecraft.world.level.ChunkPos, net.minecraft.nbt.CompoundTag);
+  public net.minecraft.world.level.Level getLevel();
+  public void setLevel(net.minecraft.world.level.Level);
+  public boolean hasLevel();
+  protected void loadAdditional(net.minecraft.world.level.storage.ValueInput);
+  public final void loadWithComponents(net.minecraft.world.level.storage.ValueInput);
+  public final void loadCustomOnly(net.minecraft.world.level.storage.ValueInput);
+  protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput);
+  public final net.minecraft.nbt.CompoundTag saveWithFullMetadata(net.minecraft.core.HolderLookup$Provider);
+  public void saveWithFullMetadata(net.minecraft.world.level.storage.ValueOutput);
+  public void saveWithId(net.minecraft.world.level.storage.ValueOutput);
+  public final net.minecraft.nbt.CompoundTag saveWithoutMetadata(net.minecraft.core.HolderLookup$Provider);
+  public void saveWithoutMetadata(net.minecraft.world.level.storage.ValueOutput);
+  public final net.minecraft.nbt.CompoundTag saveCustomOnly(net.minecraft.core.HolderLookup$Provider);
+  public void saveCustomOnly(net.minecraft.world.level.storage.ValueOutput);
+  private void saveId(net.minecraft.world.level.storage.ValueOutput);
+  public static void addEntityType(net.minecraft.world.level.storage.ValueOutput, net.minecraft.world.level.block.entity.BlockEntityType<?>);
+  private void saveMetadata(net.minecraft.world.level.storage.ValueOutput);
+  public static net.minecraft.world.level.block.entity.BlockEntity loadStatic(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.nbt.CompoundTag, net.minecraft.core.HolderLookup$Provider);
+  public void setChanged();
+  protected static void setChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.core.BlockPos getBlockPos();
+  public net.minecraft.world.level.block.state.BlockState getBlockState();
+  public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getUpdatePacket();
+  public net.minecraft.nbt.CompoundTag getUpdateTag(net.minecraft.core.HolderLookup$Provider);
+  public boolean isRemoved();
+  public void setRemoved();
+  public void clearRemoved();
+  public void preRemoveSideEffects(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public boolean triggerEvent(int, int);
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
+  public java.lang.String getNameForReporting();
+  public net.minecraft.world.level.block.entity.BlockEntityType<?> getType();
+  public net.minecraft.core.Holder<net.minecraft.world.level.block.entity.BlockEntityType<?>> typeHolder();
+  public void setBlockState(net.minecraft.world.level.block.state.BlockState);
+  protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter);
+  public final void applyComponentsFromItemStack(net.minecraft.world.item.ItemStack);
+  public final void applyComponents(net.minecraft.core.component.DataComponentMap, net.minecraft.core.component.DataComponentPatch);
+  protected void collectImplicitComponents(net.minecraft.core.component.DataComponentMap$Builder);
+  public void removeComponentsFromTag(net.minecraft.world.level.storage.ValueOutput);
+  public final net.minecraft.core.component.DataComponentMap collectComponents();
+  public net.minecraft.core.component.DataComponentMap components();
+  public void setComponents(net.minecraft.core.component.DataComponentMap);
+  public static net.minecraft.network.chat.Component parseCustomNameSafe(net.minecraft.world.level.storage.ValueInput, java.lang.String);
+  public net.minecraft.util.ProblemReporter$PathElement problemPath();
+  public void registerDebugValues(net.minecraft.server.level.ServerLevel, net.minecraft.util.debug.DebugValueSource$Registration);
+  private java.lang.String lambda$fillCrashReportCategory$0() throws java.lang.Exception;
+  static {};
+}
+Compiled from "NbtAccounter.java"
+public class net.minecraft.nbt.NbtAccounter {
+  public static final int DEFAULT_NBT_QUOTA;
+  public static final int UNCOMPRESSED_NBT_QUOTA;
+  private static final int MAX_STACK_DEPTH;
+  private final long quota;
+  private long usage;
+  private final int maxDepth;
+  private int depth;
+  public net.minecraft.nbt.NbtAccounter(long, int);
+  public static net.minecraft.nbt.NbtAccounter create(long);
+  public static net.minecraft.nbt.NbtAccounter defaultQuota();
+  public static net.minecraft.nbt.NbtAccounter uncompressedQuota();
+  public static net.minecraft.nbt.NbtAccounter unlimitedHeap();
+  public void accountBytes(long, long);
+  public void accountBytes(long);
+  public void pushDepth();
+  public void popDepth();
+  public long getUsage();
+  public int getDepth();
+}
+Compiled from "NbtIo.java"
+public class net.minecraft.nbt.NbtIo {
+  private static final java.nio.file.OpenOption[] SYNC_OUTPUT_OPTIONS;
+  public net.minecraft.nbt.NbtIo();
+  public static net.minecraft.nbt.CompoundTag readCompressed(java.nio.file.Path, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  private static java.io.DataInputStream createDecompressorStream(java.io.InputStream) throws java.io.IOException;
+  private static java.io.DataOutputStream createCompressorStream(java.io.OutputStream) throws java.io.IOException;
+  public static net.minecraft.nbt.CompoundTag readCompressed(java.io.InputStream, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static void parseCompressed(java.nio.file.Path, net.minecraft.nbt.StreamTagVisitor, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static void parseCompressed(java.io.InputStream, net.minecraft.nbt.StreamTagVisitor, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static void writeCompressed(net.minecraft.nbt.CompoundTag, java.nio.file.Path) throws java.io.IOException;
+  public static void writeCompressed(net.minecraft.nbt.CompoundTag, java.io.OutputStream) throws java.io.IOException;
+  public static void write(net.minecraft.nbt.CompoundTag, java.nio.file.Path) throws java.io.IOException;
+  public static net.minecraft.nbt.CompoundTag read(java.nio.file.Path) throws java.io.IOException;
+  public static net.minecraft.nbt.CompoundTag read(java.io.DataInput) throws java.io.IOException;
+  public static net.minecraft.nbt.CompoundTag read(java.io.DataInput, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static void write(net.minecraft.nbt.CompoundTag, java.io.DataOutput) throws java.io.IOException;
+  public static void parse(java.io.DataInput, net.minecraft.nbt.StreamTagVisitor, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static net.minecraft.nbt.Tag readAnyTag(java.io.DataInput, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  public static void writeAnyTag(net.minecraft.nbt.Tag, java.io.DataOutput) throws java.io.IOException;
+  public static void writeUnnamedTag(net.minecraft.nbt.Tag, java.io.DataOutput) throws java.io.IOException;
+  public static void writeUnnamedTagWithFallback(net.minecraft.nbt.Tag, java.io.DataOutput) throws java.io.IOException;
+  public static net.minecraft.nbt.Tag readUnnamedTag(java.io.DataInput, net.minecraft.nbt.NbtAccounter) throws java.io.IOException;
+  private static net.minecraft.nbt.Tag readTagSafe(java.io.DataInput, net.minecraft.nbt.NbtAccounter, byte);
+  static {};
+}
+Compiled from "GenerationChunkHolder.java"
+public abstract class net.minecraft.server.level.GenerationChunkHolder {
+  private static final java.util.List<net.minecraft.world.level.chunk.status.ChunkStatus> CHUNK_STATUSES;
+  private static final net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess> NOT_DONE_YET;
+  public static final net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess> UNLOADED_CHUNK;
+  public static final java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> UNLOADED_CHUNK_FUTURE;
+  protected final net.minecraft.world.level.ChunkPos pos;
+  private volatile net.minecraft.world.level.chunk.status.ChunkStatus highestAllowedStatus;
+  private final java.util.concurrent.atomic.AtomicReference<net.minecraft.world.level.chunk.status.ChunkStatus> startedWork;
+  private final java.util.concurrent.atomic.AtomicReferenceArray<java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>>> futures;
+  private final java.util.concurrent.atomic.AtomicReference<net.minecraft.server.level.ChunkGenerationTask> task;
+  private final java.util.concurrent.atomic.AtomicInteger generationRefCount;
+  private volatile java.util.concurrent.CompletableFuture<java.lang.Void> generationSaveSyncFuture;
+  public net.minecraft.server.level.GenerationChunkHolder(net.minecraft.world.level.ChunkPos);
+  public java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> scheduleChunkGenerationTask(net.minecraft.world.level.chunk.status.ChunkStatus, net.minecraft.server.level.ChunkMap);
+  java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> applyStep(net.minecraft.world.level.chunk.status.ChunkStep, net.minecraft.server.level.GeneratingChunkMap, net.minecraft.util.StaticCache2D<net.minecraft.server.level.GenerationChunkHolder>);
+  protected void updateHighestAllowedStatus(net.minecraft.server.level.ChunkMap);
+  public void replaceProtoChunk(net.minecraft.world.level.chunk.ImposterProtoChunk);
+  void removeTask(net.minecraft.server.level.ChunkGenerationTask);
+  private void rescheduleChunkTask(net.minecraft.server.level.ChunkMap, net.minecraft.world.level.chunk.status.ChunkStatus);
+  private java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> getOrCreateFuture(net.minecraft.world.level.chunk.status.ChunkStatus);
+  private void failAndClearPendingFuturesBetween(net.minecraft.world.level.chunk.status.ChunkStatus, net.minecraft.world.level.chunk.status.ChunkStatus);
+  private void failAndClearPendingFuture(int, java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>>);
+  private void completeFuture(net.minecraft.world.level.chunk.status.ChunkStatus, net.minecraft.world.level.chunk.ChunkAccess);
+  private net.minecraft.world.level.chunk.status.ChunkStatus findHighestStatusWithPendingFuture(net.minecraft.world.level.chunk.status.ChunkStatus);
+  private boolean acquireStatusBump(net.minecraft.world.level.chunk.status.ChunkStatus);
+  private boolean isStatusDisallowed(net.minecraft.world.level.chunk.status.ChunkStatus);
+  protected abstract void addSaveDependency(java.util.concurrent.CompletableFuture<?>);
+  public void increaseGenerationRefCount();
+  public void decreaseGenerationRefCount();
+  public net.minecraft.world.level.chunk.ChunkAccess getChunkIfPresentUnchecked(net.minecraft.world.level.chunk.status.ChunkStatus);
+  public net.minecraft.world.level.chunk.ChunkAccess getChunkIfPresent(net.minecraft.world.level.chunk.status.ChunkStatus);
+  public net.minecraft.world.level.chunk.ChunkAccess getLatestChunk();
+  public net.minecraft.world.level.chunk.status.ChunkStatus getPersistedStatus();
+  public net.minecraft.world.level.ChunkPos getPos();
+  public net.minecraft.server.level.FullChunkStatus getFullStatus();
+  public abstract int getTicketLevel();
+  public abstract int getQueueLevel();
+  public java.util.List<com.mojang.datafixers.util.Pair<net.minecraft.world.level.chunk.status.ChunkStatus, java.util.concurrent.CompletableFuture<net.minecraft.server.level.ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>>>> getAllFutures();
+  public net.minecraft.world.level.chunk.status.ChunkStatus getLatestStatus();
+  private net.minecraft.server.level.ChunkResult lambda$applyStep$0(net.minecraft.world.level.chunk.status.ChunkStep, net.minecraft.world.level.chunk.ChunkAccess, java.lang.Throwable);
+  static {};
+}
+Compiled from "ChunkResult.java"
+public interface net.minecraft.server.level.ChunkResult<T> {
+  public static <T> net.minecraft.server.level.ChunkResult<T> of(T);
+  public static <T> net.minecraft.server.level.ChunkResult<T> error(java.lang.String);
+  public static <T> net.minecraft.server.level.ChunkResult<T> error(java.util.function.Supplier<java.lang.String>);
+  public abstract boolean isSuccess();
+  public abstract T orElse(T);
+  public static <R> R orElse(net.minecraft.server.level.ChunkResult<? extends R>, R);
+  public abstract java.lang.String getError();
+  public abstract net.minecraft.server.level.ChunkResult<T> ifSuccess(java.util.function.Consumer<T>);
+  public abstract <R> net.minecraft.server.level.ChunkResult<R> map(java.util.function.Function<T, R>);
+  public abstract <E extends java.lang.Throwable> T orElseThrow(java.util.function.Supplier<E>) throws E;
+  private static java.lang.String lambda$error$0(java.lang.String);
+}

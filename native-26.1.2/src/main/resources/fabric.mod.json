@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "gaslight_native",
+  "version": "${version}",
+  "name": "GASLIGHT Native - Experimental",
+  "description": "Bounded server-authoritative remote chunk render data for one permanent link. Physical portal features and CPU diagnostic view remain disabled by default; no seamless GPU compositor.",
+  "authors": ["Konda Labs"],
+  "license": "MIT",
+  "environment": "*",
+  "mixins": ["gaslight-acquisition.mixins.json"],
+  "entrypoints": {"main": ["dev.kondalabs.gaslight.GaslightNativeMod"], "client": ["dev.kondalabs.gaslight.client.GaslightPreviewClient"]},
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "=26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

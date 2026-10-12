@@ -1,0 +1,67 @@
+{
+  "tick": 1600,
+  "nano_time": 25010571007600,
+  "dimension": "minecraft:the_nether",
+  "center_x": 0,
+  "center_z": 0,
+  "live_full_holders": 0,
+  "hot_objects": 0,
+  "loaded_chunks": 0,
+  "force_loaded_chunks": 0,
+  "chunks": [
+    {
+      "full_holder": false,
+      "z": -1,
+      "hot_object": false,
+      "x": -1
+    },
+    {
+      "full_holder": false,
+      "z": 0,
+      "hot_object": false,
+      "x": -1
+    },
+    {
+      "full_holder": false,
+      "z": 1,
+      "hot_object": false,
+      "x": -1
+    },
+    {
+      "full_holder": false,
+      "z": -1,
+      "hot_object": false,
+      "x": 0
+    },
+    {
+      "full_holder": false,
+      "z": 0,
+      "hot_object": false,
+      "x": 0
+    },
+    {
+      "full_holder": false,
+      "z": 1,
+      "hot_object": false,
+      "x": 0
+    },
+    {
+      "full_holder": false,
+      "z": -1,
+      "hot_object": false,
+      "x": 1
+    },
+    {
+      "full_holder": false,
+      "z": 0,
+      "hot_object": false,
+      "x": 1
+    },
+    {
+      "full_holder": false,
+      "z": 1,
+      "hot_object": false,
+      "x": 1
+    }
+  ]
+}

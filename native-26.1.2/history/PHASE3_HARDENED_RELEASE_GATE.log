@@ -1,0 +1,9 @@
+PASSED 383217 standalone assertions in 434 ms
+PHASE2_PREVIEW_PASS: 1835 assertions
+PHASE12_WIRE_AND_OCCLUSION_PASS: 1273 assertions, 870 compressed bytes
+Phase3 optics/routes passed 39629
+PHASE3_HARDENING_PASS: 12096 assertions
+Generated 23 adapter syntax-only stubs; not real Minecraft APIs
+PASS: adapter Java syntax against fabricated API shapes (NOT a genuine Fabric build)
+PASS: source-level fail-closed safety invariants
+NO-GO: real Java25 Fabric build, client 3D renderer, authoritative camera, atomic compositor and in-game crossing unverified.

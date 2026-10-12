@@ -1,0 +1,293 @@
+{
+  "disconnect1": {
+    "request": "disconnect#saved-cycle1",
+    "status": "PASS",
+    "detail": "real connection closed and remote namespace cleared",
+    "metrics": "packets=2184 bytes=397386 rejected=0 commits=18 decode_ns=284614500 peak_decode_ns=13317900 cache_bytes=0 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 240.6141,
+    "dimension": "disconnected",
+    "chunks": 0,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 544,
+    "runner_wait_seconds": 0.5149999999994179
+  },
+  "reconnect1": {
+    "request": "reconnect#saved-cycle1",
+    "status": "PASS",
+    "detail": "real reconnect/world switch received fresh remote namespace",
+    "metrics": "packets=2210 bytes=432981 rejected=0 commits=27 decode_ns=309342100 peak_decode_ns=13317900 cache_bytes=3112295 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 3752.3356,
+    "session": "e342426f-f887-4e54-9b4c-540f1c65e7e3",
+    "remote_dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "dimension": "minecraft:overworld",
+    "chunks": 9,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 3085960,
+    "runner_wait_seconds": 4.01600000000326
+  },
+  "native1": {
+    "tick": 5260,
+    "nano_time": 25193570982800,
+    "dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "live_full_holders": 0,
+    "hot_objects": 0,
+    "loaded_chunks": 0,
+    "force_loaded_chunks": 0,
+    "chunks": [
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 1
+      }
+    ]
+  },
+  "disconnect2": {
+    "request": "disconnect#saved-cycle2",
+    "status": "PASS",
+    "detail": "real connection closed and remote namespace cleared",
+    "metrics": "packets=2212 bytes=433287 rejected=0 commits=27 decode_ns=309465500 peak_decode_ns=13317900 cache_bytes=0 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 235.1804,
+    "dimension": "disconnected",
+    "chunks": 0,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 544,
+    "runner_wait_seconds": 0.5
+  },
+  "reconnect2": {
+    "request": "reconnect#saved-cycle2",
+    "status": "PASS",
+    "detail": "real reconnect/world switch received fresh remote namespace",
+    "metrics": "packets=2237 bytes=468729 rejected=0 commits=36 decode_ns=333648300 peak_decode_ns=13317900 cache_bytes=3112295 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 3252.3506,
+    "session": "70e53773-52c1-4720-b3c2-9df942ed8ec5",
+    "remote_dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "dimension": "minecraft:overworld",
+    "chunks": 9,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 3085960,
+    "runner_wait_seconds": 3.5159999999996217
+  },
+  "native2": {
+    "tick": 5360,
+    "nano_time": 25198570584100,
+    "dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "live_full_holders": 0,
+    "hot_objects": 0,
+    "loaded_chunks": 0,
+    "force_loaded_chunks": 0,
+    "chunks": [
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 1
+      }
+    ]
+  },
+  "disconnect3": {
+    "request": "disconnect#saved-cycle3",
+    "status": "PASS",
+    "detail": "real connection closed and remote namespace cleared",
+    "metrics": "packets=2239 bytes=469035 rejected=0 commits=36 decode_ns=333751500 peak_decode_ns=13317900 cache_bytes=0 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 269.2502,
+    "dimension": "disconnected",
+    "chunks": 0,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 544,
+    "runner_wait_seconds": 0.5
+  },
+  "reconnect3": {
+    "request": "reconnect#saved-cycle3",
+    "status": "PASS",
+    "detail": "real reconnect/world switch received fresh remote namespace",
+    "metrics": "packets=2264 bytes=504477 rejected=0 commits=45 decode_ns=362147900 peak_decode_ns=13317900 cache_bytes=3112295 peak_cache_bytes=3112295 staging_bytes=0 peak_staging_bytes=4275",
+    "elapsed_ms": 3252.7767,
+    "session": "6975aeed-7261-427e-9858-a60c359396d2",
+    "remote_dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "dimension": "minecraft:overworld",
+    "chunks": 9,
+    "dropped": 0,
+    "corrupted": 0,
+    "retained_heap_bytes": 3085960,
+    "runner_wait_seconds": 3.514999999999418
+  },
+  "native3": {
+    "tick": 5460,
+    "nano_time": 25203574892000,
+    "dimension": "minecraft:the_nether",
+    "center_x": 0,
+    "center_z": 0,
+    "live_full_holders": 0,
+    "hot_objects": 0,
+    "loaded_chunks": 0,
+    "force_loaded_chunks": 0,
+    "chunks": [
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": -1
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 0
+      },
+      {
+        "full_holder": false,
+        "z": -1,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 0,
+        "hot_object": false,
+        "x": 1
+      },
+      {
+        "full_holder": false,
+        "z": 1,
+        "hot_object": false,
+        "x": 1
+      }
+    ]
+  }
+}

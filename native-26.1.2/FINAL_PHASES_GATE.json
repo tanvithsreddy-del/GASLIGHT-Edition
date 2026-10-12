@@ -1,0 +1,54 @@
+{
+  "target": "Minecraft 26.1.2 Fabric",
+  "assessment_date": "2026-10-12",
+  "offline_test_assertions": {
+    "native_core": 383217,
+    "phase2_preview": 1835,
+    "phase12_wire": 1273,
+    "phase3_optics_route": 39629,
+    "phase3_hardening": 12115,
+    "phase3_final": 97163,
+    "phase3_destination": 19803,
+    "phase4_validation": 1410549,
+    "phase4_final_safety": 17568,
+    "phase4_host_isolation": 22
+  },
+  "offline_assertions_total": 1983174,
+  "offline_suites": 10,
+  "mutation_regressions_detected": 6,
+  "release_approved": false,
+  "release_gate_exit_code": 42,
+  "real_fabric_build": {
+    "passed": false,
+    "status": "blocked_JDK25_and_dependency_network",
+    "phase1_verify_exit": 21
+  },
+  "phase_status": {
+    "phase1": {
+      "offline": "validated",
+      "game": "blocked_real_build"
+    },
+    "phase2": {
+      "offline": "validated_synthetic_preview",
+      "game": "incomplete_native_renderer"
+    },
+    "phase3": {
+      "offline": "validated_bounded_logic",
+      "game": "physical_activation_disabled"
+    },
+    "phase4": {
+      "offline": "validated_10_suites_and_6_mutants",
+      "game": "not_testable_here"
+    }
+  },
+  "release_blockers": [
+    "Java 25 and genuine Fabric binary compile",
+    "in-game server and client launch",
+    "actual GPU portal compositor and synchronized remote view",
+    "live atomic publication and authoritative camera",
+    "real gameplay movement/collision/actors",
+    "save integrity and crash recovery in Minecraft",
+    "actual FPS/TPS/memory benchmarks"
+  ],
+  "scope": "Final source-level Phase 1-4 environment ceiling, no Minecraft release claims"
+}
