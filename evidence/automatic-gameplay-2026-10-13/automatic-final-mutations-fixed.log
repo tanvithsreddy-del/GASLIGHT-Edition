@@ -1,0 +1,7 @@
+MUTATION,chunk_boundary_omission,detected=True,exit=1,expected_message=touching an exact chunk face
+MUTATION,camera_pitch_basis_regression,detected=True,exit=1,expected_message=valid yaw/pitch witness
+MUTATION,lost_journal_cas,detected=True,exit=1,expected_message=stale concurrent journal writer
+MUTATION,nonfinite_chunk_geometry,detected=True,exit=1,expected_message=nonfinite segment X veto
+MUTATION,blocked_headroom_compatibility,detected=True,exit=1,expected_message=repeated headroom mismatch veto
+MUTATION,swallowed_camera_host_failure,detected=True,exit=1,expected_message=unexpected callback must quarantine
+MUTATION_GATE_PASS: 6 independent safety regressions detected

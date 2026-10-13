@@ -1,0 +1,118 @@
+{
+  "modified_source_files": 41,
+  "production_files": 22,
+  "production_added": 915,
+  "production_removed": 9,
+  "files": [
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/AutomaticClient.java",
+      "added": 183,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/AutomaticPortalService.java",
+      "added": 245,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/ByteBudget.java",
+      "added": 13,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java",
+      "added": 15,
+      "removed": 1
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/GenerationFence.java",
+      "added": 45,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneLease.java",
+      "added": 77,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/ScenePortal.java",
+      "added": 23,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneProtocol.java",
+      "added": 87,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneTerrainCopy.java",
+      "added": 26,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneTraffic.java",
+      "added": 40,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneVisibility.java",
+      "added": 18,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SceneWorkBudget.java",
+      "added": 17,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/SqliteIntentStore.java",
+      "added": 40,
+      "removed": 5
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/PortalWikiMessage.java",
+      "added": 10,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/SceneChannelAccessor.java",
+      "added": 9,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/SceneConnectionAccessor.java",
+      "added": 9,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/SelectionInteractionFence.java",
+      "added": 16,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/SelectionMovementFence.java",
+      "added": 11,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/java/dev/kondalabs/gaslight/provider/mixin/VanillaDimensionPortals.java",
+      "added": 11,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/resources/data/gaslight_provider/dimension/unobserved.json",
+      "added": 8,
+      "removed": 0
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/resources/fabric.mod.json",
+      "added": 4,
+      "removed": 3
+    },
+    {
+      "file": "native-26.1.2/provider-adapters/fabric-1.21.1/src/main/resources/gaslight-gameplay.mixins.json",
+      "added": 8,
+      "removed": 0
+    }
+  ]
+}

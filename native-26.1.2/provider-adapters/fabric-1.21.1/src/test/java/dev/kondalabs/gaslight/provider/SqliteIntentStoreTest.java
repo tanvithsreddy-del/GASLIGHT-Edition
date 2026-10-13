@@ -80,4 +80,12 @@ final class SqliteIntentStoreTest {
         try(var store=new SqliteIntentStore(p)){assertTrue(store.blockedOnOpen());assertTrue(store.diagnostic().contains("page budget"));assertFalse(store.begin(List.of(intent(1))));}
         assertTrue(Files.exists(p));
     }
+    @Test void originalReturnAnchorSurvivesRestartAndRejectsCorruption()throws Exception{
+        Path p=dir.resolve("anchor.sqlite");UUID player=UUID.randomUUID();var expected=new SqliteIntentStore.Anchor("minecraft:overworld",.5,82,3.5);
+        try(var store=new SqliteIntentStore(p)){assertTrue(store.saveAnchor(player,expected),store.diagnostic());}
+        try(var store=new SqliteIntentStore(p)){assertEquals(expected,store.loadAnchor(player));}
+        try(var connection=DriverManager.getConnection("jdbc:sqlite:"+p);var query=connection.createStatement()){query.executeUpdate("UPDATE anchors SET x=123456");}
+        try(var store=new SqliteIntentStore(p)){assertNull(store.loadAnchor(player));assertTrue(store.blockedOnOpen());assertFalse(store.begin(List.of(intent(1))));}
+        assertThrows(IllegalArgumentException.class,()->new SqliteIntentStore.Anchor("gaslight_provider:unobserved",0,64,0));
+    }
 }

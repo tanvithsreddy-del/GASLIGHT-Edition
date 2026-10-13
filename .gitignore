@@ -1,6 +1,7 @@
 .gradle/
 **/build/
 **/run/
+**/run-*/
 **/deps/
 **/saves/
 __pycache__/

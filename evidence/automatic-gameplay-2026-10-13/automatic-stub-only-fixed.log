@@ -1,0 +1,452 @@
+STUB ONLY: fabricated API syntax check, separate from genuine builds
+Generated 24 adapter syntax-only stubs; not real Minecraft APIs
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:5: error: package net.minecraft.world.level.chunk.status does not exist
+import net.minecraft.world.level.chunk.status.ChunkStep;
+                                             ^
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:6: error: package net.minecraft.util does not exist
+import net.minecraft.util.StaticCache2D;
+                         ^
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:8: error: package org.spongepowered.asm.mixin does not exist
+import org.spongepowered.asm.mixin.Mixin;
+                                  ^
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:10: error: package org.spongepowered.asm.mixin.injection.callback does not exist
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+                                                     ^
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:12: error: cannot find symbol
+@Mixin(ChunkMap.class)
+ ^
+  symbol: class Mixin
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                  ^
+  symbol:   class GenerationChunkHolder
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                                               ^
+  symbol:   class ChunkStep
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                                                              ^
+  symbol:   class StaticCache2D
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                                                                            ^
+  symbol:   class GenerationChunkHolder
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                                                                                                         ^
+  symbol:   class CallbackInfoReturnable
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:15: error: cannot find symbol
+    private void gaslight$observe(GenerationChunkHolder holder,ChunkStep step,StaticCache2D<GenerationChunkHolder> cache,CallbackInfoReturnable<CompletableFuture<ChunkAccess>> result){
+                                                                                                                                                                  ^
+  symbol:   class ChunkAccess
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:9: error: package org.spongepowered.asm.mixin.injection does not exist
+import org.spongepowered.asm.mixin.injection.*;
+                                  ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:11: error: package net.minecraft.core.registries does not exist
+import net.minecraft.core.registries.Registries;
+                                    ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:14: error: package net.minecraft.world.level.dimension does not exist
+import net.minecraft.world.level.dimension.DimensionType;
+                                          ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:20: error: cannot find symbol
+    public static final TicketType TICKET=new TicketType(0,TicketType.FLAG_LOADING|TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
+                        ^
+  symbol:   class TicketType
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:21: error: cannot find symbol
+    private static final Map<ChunkMap,NativeGeneration> OBSERVED=new ConcurrentHashMap<>();
+                             ^
+  symbol:   class ChunkMap
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:91: error: cannot find symbol
+    public static void observe(ChunkMap map,GenerationChunkHolder holder,ChunkStep step){
+                               ^
+  symbol:   class ChunkMap
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:91: error: cannot find symbol
+    public static void observe(ChunkMap map,GenerationChunkHolder holder,ChunkStep step){
+                                            ^
+  symbol:   class GenerationChunkHolder
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:91: error: cannot find symbol
+    public static void observe(ChunkMap map,GenerationChunkHolder holder,ChunkStep step){
+                                                                         ^
+  symbol:   class ChunkStep
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:98: error: cannot find symbol
+        final Job<Boolean> preflight;final long baseHeap;CompletableFuture<ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> future;
+                                                                           ^
+  symbol:   class ChunkResult
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:98: error: cannot find symbol
+        final Job<Boolean> preflight;final long baseHeap;CompletableFuture<ChunkResult<net.minecraft.world.level.chunk.ChunkAccess>> future;
+                                                                                                                      ^
+  symbol:   class ChunkAccess
+  location: package net.minecraft.world.level.chunk
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:115: error: cannot find symbol
+        void observe(Key key,ChunkStep step){steps.add(key.x()+","+key.z()+":"+step.targetStatus());generationStepsPerformed.incrementAndGet();}
+                             ^
+  symbol:   class ChunkStep
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:12: error: package net.minecraft.world.level does not exist
+import net.minecraft.world.level.*;
+                          ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:13: error: package net.minecraft.world.level.chunk.status does not exist
+import net.minecraft.world.level.chunk.status.*;
+                                      ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:7: error: package net.minecraft.nbt does not exist
+import net.minecraft.nbt.NbtIo;
+                        ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:9: error: cannot find symbol
+import net.minecraft.world.level.LightLayer;
+                                ^
+  symbol:   class LightLayer
+  location: package net.minecraft.world.level
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:10: error: cannot find symbol
+import net.minecraft.world.level.block.Block;
+                                      ^
+  symbol:   class Block
+  location: package net.minecraft.world.level.block
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:54: error: cannot find symbol
+    private static byte[][] light(ServerLevel level,int cx,int cz,int first,int n,LightLayer layer,long deadline)throws IOException{
+                                                                                  ^
+  symbol:   class LightLayer
+  location: class RemoteChunkCapture
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:6: error: package net.minecraft.core.registries does not exist
+import net.minecraft.core.registries.*;
+                         ^
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:12: error: cannot find symbol
+import net.minecraft.world.level.ChunkPos;
+                                ^
+  symbol:   class ChunkPos
+  location: package net.minecraft.world.level
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:13: error: cannot find symbol
+import net.minecraft.world.level.block.Block;
+                                      ^
+  symbol:   class Block
+  location: package net.minecraft.world.level.block
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:14: error: package net.minecraft.world.level.block.entity does not exist
+import net.minecraft.world.level.block.entity.BlockEntity;
+                                             ^
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:16: error: package net.minecraft.world.level.chunk.status does not exist
+import net.minecraft.world.level.chunk.status.ChunkStatus;
+                                             ^
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:28: error: cannot find symbol
+    public static Optional<CompoundTag> readTag(Path region,ChunkPos pos)throws IOException{
+                                                            ^
+  symbol:   class ChunkPos
+  location: class RemoteRegionRead
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:28: error: cannot find symbol
+    public static Optional<CompoundTag> readTag(Path region,ChunkPos pos)throws IOException{
+                           ^
+  symbol:   class CompoundTag
+  location: class RemoteRegionRead
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:53: error: cannot find symbol
+    public static boolean hasStructures(CompoundTag tag){
+                                        ^
+  symbol:   class CompoundTag
+  location: class RemoteRegionRead
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:56: error: cannot find symbol
+    public static RemoteChunkData decode(ServerLevel level,ChunkPos pos,CompoundTag tag,long deadline)throws IOException{
+                                                           ^
+  symbol:   class ChunkPos
+  location: class RemoteRegionRead
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:56: error: cannot find symbol
+    public static RemoteChunkData decode(ServerLevel level,ChunkPos pos,CompoundTag tag,long deadline)throws IOException{
+                                                                        ^
+  symbol:   class CompoundTag
+  location: class RemoteRegionRead
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:9: error: package net.minecraft.core.registries does not exist
+import net.minecraft.core.registries.*;
+                         ^
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:10: error: package net.minecraft.nbt does not exist
+import net.minecraft.nbt.*;
+                    ^
+src\main\java\dev\kondalabs\gaslight\RemoteRegionRead.java:17: error: package net.minecraft.world.level.chunk.storage does not exist
+import net.minecraft.world.level.chunk.storage.*;
+                                      ^
+src\main\java\dev\kondalabs\gaslight\RemoteWorldSync.java:12: error: cannot find symbol
+import net.minecraft.world.level.Level;
+                                ^
+  symbol:   class Level
+  location: package net.minecraft.world.level
+src\main\java\dev\kondalabs\gaslight\RemoteWorldSync.java:20: error: cannot find symbol
+    private final MinecraftServer server;private final ResourceKey<Level> source,destination;
+                                                       ^
+  symbol:   class ResourceKey
+  location: class RemoteWorldSync
+src\main\java\dev\kondalabs\gaslight\RemoteWorldSync.java:20: error: cannot find symbol
+    private final MinecraftServer server;private final ResourceKey<Level> source,destination;
+                                                                   ^
+  symbol:   class Level
+  location: class RemoteWorldSync
+src\main\java\dev\kondalabs\gaslight\RemoteWorldSync.java:47: error: cannot find symbol
+    private static ResourceKey<Level> key(String text){identifier(text);return ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION,Identifier.parse(text));}
+                   ^
+  symbol:   class ResourceKey
+  location: class RemoteWorldSync
+src\main\java\dev\kondalabs\gaslight\RemoteWorldSync.java:47: error: cannot find symbol
+    private static ResourceKey<Level> key(String text){identifier(text);return ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION,Identifier.parse(text));}
+                               ^
+  symbol:   class Level
+  location: class RemoteWorldSync
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:7: error: package net.fabricmc.fabric.api.client.event.lifecycle.v1 does not exist
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+                                                        ^
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:13: error: cannot find symbol
+import net.minecraft.world.level.block.Block;
+                                      ^
+  symbol:   class Block
+  location: package net.minecraft.world.level.block
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:15: error: package net.minecraft.world.level.biome does not exist
+import net.minecraft.world.level.biome.Biome;
+                                      ^
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:87: error: cannot find symbol
+    private static CompoundTag readTag(byte[] bytes)throws IOException{
+                   ^
+  symbol:   class CompoundTag
+  location: class RemoteWorldClient
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:36: error: package Holder does not exist
+        public Optional<Holder.Reference<Biome>> biome(BlockPos pos){return data(pos).flatMap(c->Minecraft.getInstance().getConnection().registryAccess().lookupOrThrow(Registries.BIOME).get(c.biomeId(pos.getX(),pos.getY(),pos.getZ())));}
+                              ^
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:36: error: cannot find symbol
+        public Optional<Holder.Reference<Biome>> biome(BlockPos pos){return data(pos).flatMap(c->Minecraft.getInstance().getConnection().registryAccess().lookupOrThrow(Registries.BIOME).get(c.biomeId(pos.getX(),pos.getY(),pos.getZ())));}
+                                         ^
+  symbol:   class Biome
+  location: class View
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:38: error: cannot find symbol
+        public Optional<CompoundTag> blockEntityTag(BlockPos pos){
+                        ^
+  symbol:   class CompoundTag
+  location: class View
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:11: error: package net.minecraft.core.registries does not exist
+import net.minecraft.core.registries.*;
+                         ^
+src\client\java\dev\kondalabs\gaslight\client\RemoteWorldClient.java:12: error: package net.minecraft.nbt does not exist
+import net.minecraft.nbt.*;
+                    ^
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:12: error: cannot find symbol
+@Mixin(ChunkMap.class)
+       ^
+  symbol: class ChunkMap
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:14: error: cannot find symbol
+    @Inject(method="applyStep",at=@At("HEAD"))
+     ^
+  symbol:   class Inject
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:14: error: cannot find symbol
+    @Inject(method="applyStep",at=@At("HEAD"))
+                                   ^
+  symbol:   class At
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\mixin\RemoteGenerationObserver.java:16: error: cannot find symbol
+        RemoteChunkAcquisition.observe((ChunkMap)(Object)this,holder,step);
+                                        ^
+  symbol:   class ChunkMap
+  location: class RemoteGenerationObserver
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:20: error: cannot find symbol
+    public static final TicketType TICKET=new TicketType(0,TicketType.FLAG_LOADING|TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
+                                              ^
+  symbol:   class TicketType
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:20: error: cannot find symbol
+    public static final TicketType TICKET=new TicketType(0,TicketType.FLAG_LOADING|TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
+                                                           ^
+  symbol:   variable TicketType
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:20: error: cannot find symbol
+    public static final TicketType TICKET=new TicketType(0,TicketType.FLAG_LOADING|TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
+                                                                                   ^
+  symbol:   variable TicketType
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:37: error: cannot find symbol
+        var level=server.getLevel(ResourceKey.create(Registries.DIMENSION,Identifier.parse(dimension)));
+                                                     ^
+  symbol:   variable Registries
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:37: error: cannot find symbol
+        var level=server.getLevel(ResourceKey.create(Registries.DIMENSION,Identifier.parse(dimension)));
+                                  ^
+  symbol:   variable ResourceKey
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:37: error: cannot find symbol
+        var level=server.getLevel(ResourceKey.create(Registries.DIMENSION,Identifier.parse(dimension)));
+                                                                                    ^
+  symbol:   method parse(String)
+  location: class Identifier
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:40: error: cannot find symbol
+    private Path region(ServerLevel level){return DimensionType.getStorageFolder(level.dimension(),server.getWorldPath(LevelResource.ROOT)).resolve("region");}
+                                                  ^
+  symbol:   variable DimensionType
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:40: error: cannot find symbol
+    private Path region(ServerLevel level){return DimensionType.getStorageFolder(level.dimension(),server.getWorldPath(LevelResource.ROOT)).resolve("region");}
+                                                                                      ^
+  symbol:   method dimension()
+  location: variable level of type ServerLevel
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:63: error: cannot find symbol
+        if(level.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)throw new Retry("native destination transitioning");
+                                 ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:63: error: cannot find symbol
+        if(level.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)throw new Retry("native destination transitioning");
+                                                                         ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:65: error: cannot find symbol
+            var pos=new ChunkPos(key.x(),key.z());var tag=RemoteRegionRead.readTag(region(level),pos);
+                        ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:74: error: cannot find symbol
+        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
+                            ^
+  symbol:   variable ChunkLevel
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:74: error: cannot find symbol
+        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
+                                                                     ^
+  symbol:   variable ChunkStatus
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:74: error: cannot find symbol
+        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
+                                                 ^
+  symbol:   variable ChunkLevel
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:74: error: cannot find symbol
+        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
+                                                                                                                                 ^
+  symbol:   variable ChunkStatus
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:74: error: package ChunkPyramid does not exist
+        int radius=Math.max(ChunkLevel.MAX_LEVEL-ChunkLevel.byStatus(ChunkStatus.FULL),ChunkPyramid.GENERATION_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius());
+                                                                                                   ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:78: error: cannot find symbol
+                Key key=new Key(target.dimension(),x,z);if(p.protectedAt(x,z)||!level.getWorldBorder().isWithinBounds(new ChunkPos(x,z)))throw new IOException("generation footprint protection/border veto");result.add(key);
+                                                                                                                          ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:78: error: cannot find symbol
+                Key key=new Key(target.dimension(),x,z);if(p.protectedAt(x,z)||!level.getWorldBorder().isWithinBounds(new ChunkPos(x,z)))throw new IOException("generation footprint protection/border veto");result.add(key);
+                                                                                     ^
+  symbol:   method getWorldBorder()
+  location: variable level of type ServerLevel
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:81: error: package ChunkPyramid does not exist
+    @Override public int generationStepBound(Set<Key> footprint){return Math.multiplyExact(footprint.size(),ChunkPyramid.GENERATION_PYRAMID.steps().size());}
+                                                                                                                        ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:93: error: package ChunkPyramid does not exist
+            if(g.footprint.contains(key)&&step==ChunkPyramid.GENERATION_PYRAMID.getStepTo(step.targetStatus()))g.observe(key,step);}
+                                                            ^
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:107: error: cannot find symbol
+                    var tag=RemoteRegionRead.readTag(region(world),new ChunkPos(key.x(),key.z()));
+                                                                       ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:109: error: cannot find symbol
+                        if(tag.get().getIntOr("DataVersion",-1)!=net.minecraft.SharedConstants.getCurrentVersion().dataVersion().version())throw new IOException("existing footprint chunk requires migration");
+                                                                              ^
+  symbol:   class SharedConstants
+  location: package net.minecraft
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:127: error: cannot find symbol
+                    current=order.get(cursor);OBSERVED.put(world.getChunkSource().chunkMap,this);
+                                                                                 ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:128: error: cannot find symbol
+                    world.getChunkSource().addTicketWithRadius(TICKET,new ChunkPos(current.x(),current.z()),0);tickets.add(current);ticketsAdded++;
+                                                                          ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:131: error: cannot find symbol
+                    var holder=world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(current.x(),current.z()).pack());
+                                                     ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:131: error: cannot find symbol
+                    var holder=world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(current.x(),current.z()).pack());
+                                                                                             ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:132: error: cannot find symbol
+                    if(holder==null||holder.getTicketLevel()>ChunkLevel.byStatus(ChunkStatus.FULL))return;
+                                                                                 ^
+  symbol:   variable ChunkStatus
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:132: error: cannot find symbol
+                    if(holder==null||holder.getTicketLevel()>ChunkLevel.byStatus(ChunkStatus.FULL))return;
+                                                             ^
+  symbol:   variable ChunkLevel
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:134: error: cannot find symbol
+                    future=world.getChunkSource().getChunkFuture(current.x(),current.z(),ChunkStatus.FULL,false);return;
+                                                                                         ^
+  symbol:   variable ChunkStatus
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:145: error: cannot find symbol
+            for(Key key:tickets){world.getChunkSource().removeTicketWithRadius(TICKET,new ChunkPos(key.x(),key.z()),0);ticketsRemoved++;}tickets.clear();
+                                                                                          ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:150: error: cannot find symbol
+            for(Key key:footprint)if(world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)return false;OBSERVED.remove(world.getChunkSource().chunkMap,this);return true;
+                                                           ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:150: error: cannot find symbol
+            for(Key key:footprint)if(world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)return false;OBSERVED.remove(world.getChunkSource().chunkMap,this);return true;
+                                                                                                   ^
+  symbol:   class ChunkPos
+  location: class RemoteChunkAcquisition.NativeGeneration
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:150: error: cannot find symbol
+            for(Key key:footprint)if(world.getChunkSource().chunkMap.getUpdatingChunkIfPresent(new ChunkPos(key.x(),key.z()).pack())!=null)return false;OBSERVED.remove(world.getChunkSource().chunkMap,this);return true;
+                                                                                                                                                                                              ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkAcquisition.java:157: error: cannot find symbol
+    @Override public void close(){if(closed)return;for(var g:nativeJobs){g.release();OBSERVED.remove(g.world.getChunkSource().chunkMap,g);}closed=true;for(Runnable cancel:tasks.values())cancel.run();io.shutdownNow();
+                                                                                                                             ^
+  symbol:   variable chunkMap
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:20: error: cannot find symbol
+        LevelChunk chunk=level.getChunkSource().getChunkNow(cx,cz);
+                                               ^
+  symbol:   method getChunkNow(int,int)
+  location: class ServerLevel.ChunkSource
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:22: error: cannot find symbol
+        if(!chunk.isLightCorrect())throw new IOException("destination chunk lighting not certified");
+                 ^
+  symbol:   method isLightCorrect()
+  location: variable chunk of type LevelChunk
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:27: error: cannot find symbol
+        int minY=level.getMinY(),n=chunk.getSections().length;
+                                        ^
+  symbol:   method getSections()
+  location: variable chunk of type LevelChunk
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:30: error: cannot find symbol
+        var biomeRegistry=level.registryAccess().lookupOrThrow(Registries.BIOME);
+                                                               ^
+  symbol:   variable Registries
+  location: class RemoteChunkCapture
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:30: error: cannot find symbol
+        var biomeRegistry=level.registryAccess().lookupOrThrow(Registries.BIOME);
+                               ^
+  symbol:   method registryAccess()
+  location: variable level of type ServerLevel
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:32: error: cannot find symbol
+            budget(deadline);var section=chunk.getSections()[s];
+                                              ^
+  symbol:   method getSections()
+  location: variable chunk of type LevelChunk
+src\main\java\dev\kondalabs\gaslight\RemoteChunkCapture.java:34: error: package Block does not exist
+                states[s*4096+y*256+z*16+x]=Block.BLOCK_STATE_REGISTRY.getId(section.getBlockState(x,y,z));
+                                                 ^
+100 errors
+only showing the first 100 errors, of 208 total; use -Xmaxerrs if you would like to see more

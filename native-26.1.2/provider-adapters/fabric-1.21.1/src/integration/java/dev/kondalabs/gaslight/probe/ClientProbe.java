@@ -17,7 +17,7 @@ import qouteall.imm_ptl.core.ClientWorldLoader;
 import qouteall.imm_ptl.core.block_manipulation.BlockManipulationClient;
 
 public final class ClientProbe implements ClientModInitializer {
-    private String last="";private int remaining;private String pending;
+    private String last="";private int remaining;private String pending;private long reportAt;private String committed="";
     private static void output(String s){System.out.println("GASLIGHT_A_CLIENT "+s);}
     private static String availableBlock(Minecraft mc,BlockPos p){
         var chunk=mc.level.getChunkSource().getChunk(Math.floorDiv(p.getX(),16),Math.floorDiv(p.getZ(),16),net.minecraft.world.level.chunk.status.ChunkStatus.FULL,false);
@@ -27,6 +27,13 @@ public final class ClientProbe implements ClientModInitializer {
     @Override public void onInitializeClient(){
         if(!Boolean.getBoolean("gaslight.phaseA.probe"))throw new IllegalStateException("probe must be explicitly enabled");
         ClientTickEvents.END_CLIENT_TICK.register(mc->{try{
+            if(Boolean.getBoolean("gaslight.automatic.evidence")&&mc.level!=null){
+                String status=dev.kondalabs.gaslight.provider.AutomaticClient.status();long now=System.nanoTime();
+                if(now-reportAt>2_000_000_000L){reportAt=now;output("AUTOMATIC_EVIDENCE "+status+" position="+mc.player.position()+" fps="+mc.getFps()+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory()));}
+                if(status.contains("ack=true")&&status.contains("offer=0")&&!status.equals(committed)&&!status.substring(status.indexOf("selected=")).equals(committed)){
+                    committed=status.substring(status.indexOf("selected="));Screenshot.grab(mc.gameDirectory,mc.getMainRenderTarget(),c->output("COMMIT_EVIDENCE "+committed+" "+c.getString()));
+                }
+            }
             if(remaining>0&&--remaining==0){release(mc);output(pending+" DONE position="+(mc.player==null?null:mc.player.position()));}
             Path p=mc.gameDirectory.toPath().resolve("probe-client.txt");if(!Files.exists(p))return;
             String cmd=Files.readString(p).trim();if(cmd.isEmpty()||cmd.equals(last))return;last=cmd;
@@ -50,10 +57,12 @@ public final class ClientProbe implements ClientModInitializer {
                 if(frame==null)throw new IllegalStateException("actual rendered camera unavailable");
                 output(cmd+" camera="+frame.x()+","+frame.y()+","+frame.z()+" perspective="+mc.options.getCameraType()+" portalExcluded="+frame.excludes(-1.5,80.5,.4,2.5,84.5,.6));
             }
+            else if(cmd.startsWith("game")){output(cmd+" "+dev.kondalabs.gaslight.provider.AutomaticClient.status()+" position="+(mc.player==null?null:mc.player.position())+" fps="+mc.getFps()+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory()));}
             else if(cmd.startsWith("disconnect")){release(mc);mc.level.disconnect();mc.disconnect();mc.setScreen(new TitleScreen());output(cmd+" DONE initialized="+ClientWorldLoader.getIsInitialized());}
             else if(cmd.startsWith("connect")){var data=new ServerData("Phase A disposable","127.0.0.1:25588",ServerData.Type.OTHER);ConnectScreen.startConnecting(new TitleScreen(),mc,ServerAddress.parseString(data.ip),data,false,null);output(cmd+" REQUESTED");}
             else if(cmd.startsWith("quit")){output("QUIT");mc.stop();}
             else throw new IllegalArgumentException(cmd);
-        }catch(Throwable e){e.printStackTrace();output("FAIL "+e);}});
+        }catch(java.nio.file.NoSuchFileException transientRequest){/* Control-file removal is harmless. */}
+        catch(Throwable e){e.printStackTrace();output("FAIL "+e);}});
     }
 }

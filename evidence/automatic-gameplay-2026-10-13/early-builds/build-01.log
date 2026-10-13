@@ -1,0 +1,64 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+
+> Task :compileJava
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:18: error: method type in record Offer cannot be applied to given types;
+        static final Type<Offer> TYPE=type("scene_offer");
+                                      ^
+  required: no arguments
+  found:    String
+  reason: actual and formal argument lists differ in length
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:38: error: method type in record Selection cannot be applied to given types;
+        static final Type<Selection> TYPE=type("scene_selection");
+                                          ^
+  required: no arguments
+  found:    String
+  reason: actual and formal argument lists differ in length
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:43: error: method type in record Ack cannot be applied to given types;
+        static final Type<Ack> TYPE=type("scene_ack");
+                                    ^
+  required: no arguments
+  found:    String
+  reason: actual and formal argument lists differ in length
+3 errors
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-edition/native-26.1.2/provider-adapters/fabric-1.21.1/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:18: error: method type in record Offer cannot be applied to given types;
+          static final Type<Offer> TYPE=type("scene_offer");
+                                        ^
+    required: no arguments
+    found:    String
+    reason: actual and formal argument lists differ in length
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:38: error: method type in record Selection cannot be applied to given types;
+          static final Type<Selection> TYPE=type("scene_selection");
+                                            ^
+    required: no arguments
+    found:    String
+    reason: actual and formal argument lists differ in length
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\SceneProtocol.java:43: error: method type in record Ack cannot be applied to given types;
+          static final Type<Ack> TYPE=type("scene_ack");
+                                      ^
+    required: no arguments
+    found:    String
+    reason: actual and formal argument lists differ in length
+  3 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 15s
+2 actionable tasks: 2 executed

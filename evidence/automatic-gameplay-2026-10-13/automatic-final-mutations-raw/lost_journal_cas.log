@@ -1,0 +1,10 @@
+COMMAND: C:\Program Files\Git\bin\bash.exe run_offline_checks.sh
+SUITE: dev.kondalabs.gaslight.Phase4ValidationTests
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-dlevozyx\project\build\journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-dlevozyx\project\build\journal-test-temp"
+Exception in thread "main" java.lang.AssertionError: PHASE4: stale concurrent journal writer cannot overwrite outstanding intent assertion=1409086
+	at dev.kondalabs.gaslight.Phase4ValidationTests.yes(Phase4ValidationTests.java:13)
+	at dev.kondalabs.gaslight.Phase4ValidationTests.journalCrashAndTamper(Phase4ValidationTests.java:163)
+	at dev.kondalabs.gaslight.Phase4ValidationTests.main(Phase4ValidationTests.java:292)
+
+EXIT_CODE: 1

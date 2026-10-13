@@ -1,4 +1,15 @@
-# Current recovery preview checkpoint - 2026-10-13
+# Current automatic prototype - 2026-10-13
+
+Full requested GASLIGHT: NO-GO. Real 1.21.1 Fabric automatic hidden selections,
+native mesh readiness, server arm/ack, portal crossing, durable return and vanilla
+Nether/End transitions are now demonstrated. A bundled development JAR exists.
+Continuous one-unseen-frame replacement, natural joined seams, indefinite travel
+and other loaders remain unimplemented/unverified. See
+[AUTOMATIC_GAMEPLAY_REPORT.md](AUTOMATIC_GAMEPLAY_REPORT.md) and the separate
+[technical reference](GASLIGHT_TECHNICAL_REFERENCE.md). Earlier checkpoints below
+are historical, not current acceptance claims.
+
+# Recovery preview checkpoint - 2026-10-13
 
 The full automatic GASLIGHT effect remains NO-GO. The tested recovery preview adds Windows-native SQLite durability, retained recovery history, nonpersistent owned portals, saved-but-unloaded preparation and actual camera telemetry. See [the current report](RECOVERY_PREVIEW_REPORT.md). Older checkpoint text below is historical.
 

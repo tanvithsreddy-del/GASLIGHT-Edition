@@ -1,0 +1,7 @@
+MUTATION,chunk_boundary_omission,detected=False,exit=2,expected_message=touching an exact chunk face
+MUTATION,camera_pitch_basis_regression,detected=False,exit=2,expected_message=valid yaw/pitch witness
+MUTATION,lost_journal_cas,detected=False,exit=2,expected_message=stale concurrent journal writer
+MUTATION,nonfinite_chunk_geometry,detected=False,exit=2,expected_message=nonfinite segment X veto
+MUTATION,blocked_headroom_compatibility,detected=False,exit=2,expected_message=repeated headroom mismatch veto
+MUTATION,swallowed_camera_host_failure,detected=False,exit=2,expected_message=unexpected callback must quarantine
+MUTATION_GATE_FAILED: [('chunk_boundary_omission', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n'), ('camera_pitch_basis_regression', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n'), ('lost_journal_cas', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n'), ('nonfinite_chunk_geometry', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n'), ('blocked_headroom_compatibility', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n'), ('swallowed_camera_host_failure', 'run_offline_checks.sh: line 2: set: pipefail\n: invalid option name\n')]

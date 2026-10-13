@@ -1,0 +1,42 @@
+openjdk version "25.0.4.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by org.joml.MemUtil$MemUtilUnsafe (file:/mnt/c/Users/Tanvith/.gradle/caches/modules-2/files-2.1/org.joml/joml/1.10.5/22566d58af70ad3d72308bab63b8339906deb649/joml-1.10.5.jar)
+WARNING: Please consider reporting this to the maintainers of class org.joml.MemUtil$MemUtilUnsafe
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+CAMERA_OBSERVATION_PAYLOAD_BYTES=141
+REAL_SQLITE_PROCESS_HALT begin exit=71 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+DURABLE_BEGIN_ACKNOWLEDGED
+
+REAL_SQLITE_PROCESS_HALT settle exit=72 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+DURABLE_TOMBSTONE_ACKNOWLEDGED
+
+REAL_SQLITE_PROCESS_HALT midwrite exit=73 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+INTERRUPTED_UNCOMMITTED_PAYLOAD_UPDATE
+
+
+Test run finished after 26742 ms
+[        11 containers found      ]
+[         0 containers skipped    ]
+[        11 containers started    ]
+[         0 containers aborted    ]
+[        11 containers successful ]
+[         0 containers failed     ]
+[        26 tests found           ]
+[         0 tests skipped         ]
+[        26 tests started         ]
+[         0 tests aborted         ]
+[        26 tests successful      ]
+[         0 tests failed          ]
+
+GENUINE_LINUX_NATIVE_FILESYSTEM_FIXTURES /tmp/gaslight-native-journal.QebGre

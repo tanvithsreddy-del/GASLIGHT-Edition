@@ -1,13 +1,17 @@
 plugins { id 'net.fabricmc.fabric-loom-remap' version '1.18.4' }
 group = 'dev.kondalabs.gaslight'
 base { archivesName = 'gaslight-provider-fabric-1.21.1' }
-repositories { mavenCentral() }
+repositories { mavenCentral(); flatDir { dirs 'deps' } }
 dependencies {
     minecraft 'com.mojang:minecraft:1.21.1'
     mappings loom.officialMojangMappings()
     modImplementation 'net.fabricmc:fabric-loader:0.19.5'
     modImplementation 'net.fabricmc.fabric-api:fabric-api:0.109.0+1.21.1'
     modImplementation files('deps/immersive-portals-6.0.6-mc1.21.1-fabric.jar')
+    // Loom needs module capabilities for nesting; the unmodified local binary
+    // is pinned by provider.lock.json, not an invented upstream Maven release.
+    include 'dev.gaslight.pinned:immersive-portals:6.0.6-mc1.21.1-fabric'
+    include 'net.fabricmc.fabric-api:fabric-api:0.109.0+1.21.1'
     modImplementation files('deps/DimLib-v1.1.0-mc1.21.1.jar', 'deps/cloth-config-fabric-15.0.130-fabric.jar')
     modImplementation files('deps/midnightlib-1.5.7-fabric.jar')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
@@ -45,8 +49,8 @@ loom {
         gaslight_phase_a_probe { sourceSet sourceSets.integration }
     }
     runs {
-        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','--enable-native-access=ALL-UNNAMED','-Dgaslight.sqlite='+project.hasProperty('gaslightSqlite'),'-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+(project.findProperty('gaslightProbe')?:System.getProperty('gaslight.probe.mode','live')) }
-        clientProof { client(); source sourceSets.integration; runDir 'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true'; programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
+        serverProof { server(); source sourceSets.integration; runDir project.hasProperty('gaslightAutomatic')?'run-gameplay-server':'run-server'; vmArgs project.hasProperty('gaslightAutomatic')?'-Xmx1024m':'-Xmx768m','-Xms256m','--enable-native-access=ALL-UNNAMED','-Dgaslight.sqlite='+project.hasProperty('gaslightSqlite'),'-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+(project.findProperty('gaslightProbe')?:System.getProperty('gaslight.probe.mode','live')) }
+        clientProof { client(); source sourceSets.integration; runDir project.hasProperty('gaslightAutomatic')?'run-gameplay-client':'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true','-Dgaslight.automatic.evidence='+project.hasProperty('gaslightEvidence'); programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
     }
 }
 tasks.named('check') { dependsOn tasks.named('integrationClasses') }

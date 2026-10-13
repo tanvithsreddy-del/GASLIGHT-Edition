@@ -3,7 +3,10 @@
 GASLIGHT's adapter and reused GASLIGHT geometry, structure and journal classes retain
 their existing MIT license. See LICENSE. No WorldEdit code is included.
 
-Immersive Portals 6.0.6 is an unmodified, separately installed Apache-2.0 dependency.
+Immersive Portals 6.0.6 is an unmodified Apache-2.0 dependency, bundled inside the
+0.3.0 remapped development distribution. Fabric API 0.109.0+1.21.1 is bundled too.
+Their embedded license files and original mod metadata are retained. Fabric Loader
+and a licensed Minecraft installation remain required.
 Source: https://github.com/iPortalTeam/ImmersivePortalsMod/tree/1.21
 Inspected source commit: 2b1d3546aa60c7d866adfcb7236fba136a8433cb.
 This is the inspected branch commit, not a claim that the binary was rebuilt from it.

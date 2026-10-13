@@ -1,0 +1,313 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateLog4jConfig UP-TO-DATE
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :generateDLIConfig UP-TO-DATE
+> Task :configureLaunch UP-TO-DATE
+
+> Task :compileJava
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:66: error: cannot access Policy
+        var policy=ProtectedChunkRegions.load(server.getWorldPath(LevelResource.ROOT).resolve("gaslight-protected-chunks.csv"));
+                                             ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\ProtectedChunkRegions$Policy.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\ProtectedChunkRegions$Policy.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot access V
+        var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                    ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$V.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$V.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot find symbol
+        var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                                                             ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot find symbol
+        var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                                                                          ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:69: error: cannot access Inspector
+        var verdict=dev.kondalabs.gaslight.StructureEnvelope.audit(surface,1,64,(x,z)->{
+                                                            ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Inspector.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Inspector.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+        Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                  ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+        Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                                                                   ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+        Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                                                                                ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:89: error: cannot find symbol
+        Surface b=new Surface(new V(s.destination.x,s.destination.y,s.destination.z),a.tangent(),64,a.height());
+                                  ^
+  symbol:   class V
+  location: class AutomaticPortalService
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:90: error: cannot access Passage
+        if(!journal.begin(List.of(new Passage(a,b,session,s.generation))))throw new IllegalStateException(journal.diagnostic());
+                                      ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:90: error: cannot access Passage
+        if(!journal.begin(List.of(new Passage(a,b,session,s.generation))))throw new IllegalStateException(journal.diagnostic());
+                   ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\CameraObserver.java:17: error: cannot access EphemeralPortal
+        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(EphemeralPortal.TYPE,qouteall.imm_ptl.core.render.PortalEntityRenderer::new);
+                                                                                    ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\EphemeralPortal.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\EphemeralPortal.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:56: error: cannot access FileStore
+            new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin"));
+                                     ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\Phase3RecoveryJournal$FileStore.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\Phase3RecoveryJournal$FileStore.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:71: error: cannot access Stats
+    public String preparationStatus(){thread();return preparation==null?"none":preparation.stats().toString();}
+                                                                                                ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$Stats.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$Stats.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:100: error: cannot find symbol
+            if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
+                                          ^
+  symbol:   class Passage
+  location: class FixedPortalAdapter
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:100: error: incompatible types: inferred type does not conform to equality constraint(s)
+            if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
+                                     ^
+    inferred: Object
+    equality constraints(s): Passage
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:123: error: cannot find symbol
+    private static Surface surface(Vec3 v,double w,double h){Objects.requireNonNull(v);return new Surface(new V(v.x,v.y,v.z),new V(1,0,0),w,h);}
+                                                                                                              ^
+  symbol:   class V
+  location: class FixedPortalAdapter
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:123: error: cannot find symbol
+    private static Surface surface(Vec3 v,double w,double h){Objects.requireNonNull(v);return new Surface(new V(v.x,v.y,v.z),new V(1,0,0),w,h);}
+                                                                                                                                 ^
+  symbol:   class V
+  location: class FixedPortalAdapter
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:131: error: cannot access Result
+            if(chunk==null)return StructureEnvelope.Result.UNKNOWN;
+                                                   ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Result.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Result.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:132: error: cannot find symbol
+            if(policy.protectedAt(x,z))return StructureEnvelope.Result.USER_PROTECTED;
+                                                               ^
+  symbol:   variable Result
+  location: class StructureEnvelope
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:133: error: cannot find symbol
+            if(!world.getWorldBorder().isWithinBounds(new BlockPos(x*16,(int)s.centre().y(),z*16)))return StructureEnvelope.Result.UNKNOWN;
+                                                                                                                           ^
+  symbol:   variable Result
+  location: class StructureEnvelope
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:134: error: cannot find symbol
+            if(chunk.getAllStarts().values().stream().anyMatch(start->start!=null&&start.isValid())||chunk.getAllReferences().values().stream().anyMatch(ref->!ref.isEmpty()))return StructureEnvelope.Result.STRUCTURE;
+                                                                                                                                                                                                      ^
+  symbol:   variable Result
+  location: class StructureEnvelope
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:135: error: cannot find symbol
+            return StructureEnvelope.Result.SAFE;
+                                    ^
+  symbol:   variable Result
+  location: class StructureEnvelope
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:175: error: cannot access State
+            if(preparation.state()==SavedDestinationPreparation.State.READY){
+                                ^
+  bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$State.class
+    unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$State.class
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:175: error: cannot find symbol
+            if(preparation.state()==SavedDestinationPreparation.State.READY){
+                                                               ^
+  symbol:   variable State
+  location: class SavedDestinationPreparation
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:179: error: cannot find symbol
+            }else if(preparation.state()==SavedDestinationPreparation.State.FAILED){
+                                                                     ^
+  symbol:   variable State
+  location: class SavedDestinationPreparation
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+26 errors
+
+> Task :compileJava FAILED
+
+
+FAILURE: Build failed with an exception.
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-edition/native-26.1.2/provider-adapters/fabric-1.21.1/build/reports/problems/problems-report.html
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:100: error: incompatible types: inferred type does not conform to equality constraint(s)
+              if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
+                                       ^
+      inferred: Object
+      equality constraints(s): Passage
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:66: error: cannot access Policy
+          var policy=ProtectedChunkRegions.load(server.getWorldPath(LevelResource.ROOT).resolve("gaslight-protected-chunks.csv"));
+                                               ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\ProtectedChunkRegions$Policy.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\ProtectedChunkRegions$Policy.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot access V
+          var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                      ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$V.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$V.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:69: error: cannot access Inspector
+          var verdict=dev.kondalabs.gaslight.StructureEnvelope.audit(surface,1,64,(x,z)->{
+                                                              ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Inspector.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Inspector.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:90: error: cannot access Passage
+          if(!journal.begin(List.of(new Passage(a,b,session,s.generation))))throw new IllegalStateException(journal.diagnostic());
+                                        ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:90: error: cannot access Passage
+          if(!journal.begin(List.of(new Passage(a,b,session,s.generation))))throw new IllegalStateException(journal.diagnostic());
+                     ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\NativePortal$Passage.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\CameraObserver.java:17: error: cannot access EphemeralPortal
+          net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(EphemeralPortal.TYPE,qouteall.imm_ptl.core.render.PortalEntityRenderer::new);
+                                                                                      ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\EphemeralPortal.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\EphemeralPortal.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:56: error: cannot access FileStore
+              new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin"));
+                                       ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\Phase3RecoveryJournal$FileStore.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\Phase3RecoveryJournal$FileStore.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:71: error: cannot access Stats
+      public String preparationStatus(){thread();return preparation==null?"none":preparation.stats().toString();}
+                                                                                                  ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$Stats.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$Stats.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:131: error: cannot access Result
+              if(chunk==null)return StructureEnvelope.Result.UNKNOWN;
+                                                     ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Result.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\StructureEnvelope$Result.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:175: error: cannot access State
+              if(preparation.state()==SavedDestinationPreparation.State.READY){
+                                  ^
+    bad class file: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$State.class
+      unable to access file: java.nio.file.NoSuchFileException: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\build\classes\java\main\dev\kondalabs\gaslight\provider\SavedDestinationPreparation$State.class
+      Please remove or make sure it appears in the correct subdirectory of the classpath.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot find symbol
+          var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                                                               ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:68: error: cannot find symbol
+          var surface=new Surface(new V(origin.x,origin.y,origin.z),xPlane?new V(0,0,1):new V(1,0,0),64,world.getHeight());
+                                                                                            ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+          Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                    ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+          Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                                                                     ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:88: error: cannot find symbol
+          Surface a=new Surface(new V(s.origin.x,s.origin.y,s.origin.z),s.xPlane?new V(0,0,1):new V(1,0,0),64,s.maxY-s.minY);
+                                                                                                  ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\AutomaticPortalService.java:89: error: cannot find symbol
+          Surface b=new Surface(new V(s.destination.x,s.destination.y,s.destination.z),a.tangent(),64,a.height());
+                                    ^
+    symbol:   class V
+    location: class AutomaticPortalService
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:100: error: cannot find symbol
+              if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
+                                            ^
+    symbol:   class Passage
+    location: class FixedPortalAdapter
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:123: error: cannot find symbol
+      private static Surface surface(Vec3 v,double w,double h){Objects.requireNonNull(v);return new Surface(new V(v.x,v.y,v.z),new V(1,0,0),w,h);}
+                                                                                                                ^
+    symbol:   class V
+    location: class FixedPortalAdapter
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:123: error: cannot find symbol
+      private static Surface surface(Vec3 v,double w,double h){Objects.requireNonNull(v);return new Surface(new V(v.x,v.y,v.z),new V(1,0,0),w,h);}
+                                                                                                                                   ^
+    symbol:   class V
+    location: class FixedPortalAdapter
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:132: error: cannot find symbol
+              if(policy.protectedAt(x,z))return StructureEnvelope.Result.USER_PROTECTED;
+                                                                 ^
+    symbol:   variable Result
+    location: class StructureEnvelope
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:133: error: cannot find symbol
+              if(!world.getWorldBorder().isWithinBounds(new BlockPos(x*16,(int)s.centre().y(),z*16)))return StructureEnvelope.Result.UNKNOWN;
+                                                                                                                             ^
+    symbol:   variable Result
+    location: class StructureEnvelope
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:134: error: cannot find symbol
+              if(chunk.getAllStarts().values().stream().anyMatch(start->start!=null&&start.isValid())||chunk.getAllReferences().values().stream().anyMatch(ref->!ref.isEmpty()))return StructureEnvelope.Result.STRUCTURE;
+                                                                                                                                                                                                        ^
+    symbol:   variable Result
+    location: class StructureEnvelope
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:135: error: cannot find symbol
+              return StructureEnvelope.Result.SAFE;
+                                      ^
+    symbol:   variable Result
+    location: class StructureEnvelope
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:175: error: cannot find symbol
+              if(preparation.state()==SavedDestinationPreparation.State.READY){
+                                                                 ^
+    symbol:   variable State
+    location: class SavedDestinationPreparation
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-edition\native-26.1.2\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalAdapter.java:179: error: cannot find symbol
+              }else if(preparation.state()==SavedDestinationPreparation.State.FAILED){
+                                                                       ^
+    symbol:   variable State
+    location: class SavedDestinationPreparation
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  26 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 56s
+4 actionable tasks: 1 executed, 3 up-to-date

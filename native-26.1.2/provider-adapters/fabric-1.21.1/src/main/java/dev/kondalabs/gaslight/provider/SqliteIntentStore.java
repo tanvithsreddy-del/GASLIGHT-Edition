@@ -18,7 +18,13 @@ final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoClosea
     private boolean blocked, failed;
     private int outstanding=-1;
     private String reason="clean";
+    private final int maxOpen;
     SqliteIntentStore(Path file) {
+        this(file,1);
+    }
+    SqliteIntentStore(Path file,int maxOpen) {
+        if(maxOpen<1||maxOpen>3)throw new IllegalArgumentException("open intent budget");
+        this.maxOpen=maxOpen;
         try {
             file=file.toAbsolutePath().normalize();
             for(Path p=file;p!=null;p=p.getParent())
@@ -26,7 +32,15 @@ final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoClosea
             Files.createDirectories(file.getParent());
             if(Files.exists(file)&&(!Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS)||Files.size(file)>20*1024*1024L))throw new IOException("invalid ledger file");
             Class.forName("org.sqlite.JDBC");
-            connection=DriverManager.getConnection("jdbc:sqlite:"+file);
+            String nativePath=file.toString();
+            if(file.getFileSystem().getSeparator().equals("\\")&&nativePath.length()>=240) {
+                // Increasing the VFS budget alone does not extend Windows names.
+                // Escape '?' so JDBC cannot parse the prefix as PRAGMA options.
+                // win32-longpath retains the normal interprocess locking.
+                String extended=nativePath.startsWith("\\\\")?"\\\\?\\UNC\\"+nativePath.substring(2):"\\\\?\\"+nativePath;
+                nativePath="file:"+java.net.URLEncoder.encode(extended,java.nio.charset.StandardCharsets.UTF_8).replace("+","%20")+"?vfs=win32-longpath";
+            }
+            connection=DriverManager.getConnection("jdbc:sqlite:"+nativePath);
             sql("PRAGMA busy_timeout=1500");sql("PRAGMA trusted_schema=OFF");
             if(!scalar("PRAGMA journal_mode=PERSIST").equalsIgnoreCase("persist"))throw new IOException("persistent rollback journal unavailable");
             sql("PRAGMA synchronous=FULL");sql("PRAGMA max_page_count=4096");
@@ -38,6 +52,7 @@ final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoClosea
             sql("CREATE TABLE IF NOT EXISTS metadata (singleton INTEGER PRIMARY KEY CHECK(singleton=1), revision INTEGER NOT NULL)");
             sql("INSERT OR IGNORE INTO metadata VALUES(1,0)");
             sql("CREATE TABLE IF NOT EXISTS intents (owner TEXT NOT NULL, generation INTEGER NOT NULL CHECK(generation>0), state TEXT NOT NULL CHECK(state IN ('OPEN','RETIRED','RECOVERED')), payload BLOB NOT NULL, digest TEXT NOT NULL, PRIMARY KEY(owner,generation))");
+            sql("CREATE TABLE IF NOT EXISTS anchors (player TEXT PRIMARY KEY, dimension TEXT NOT NULL, x REAL NOT NULL, y REAL NOT NULL, z REAL NOT NULL, digest TEXT NOT NULL)");
             sql("PRAGMA user_version=1");
             revision=Long.parseLong(scalar("SELECT revision FROM metadata WHERE singleton=1"));
             if(revision<0||revision>100000)throw new IOException("invalid ledger revision");
@@ -109,21 +124,22 @@ final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoClosea
         if(blocked||failed)return false;
         try{
             byte[] payload=encode(bundle);Passage p=bundle.getFirst();transaction();
-            if(Integer.parseInt(scalar("SELECT count(*) FROM intents"))>=MAX_RECORDS||!scalar("SELECT count(*) FROM intents WHERE state='OPEN'").equals("0"))throw new SQLException("intent/history budget");
+            int existing=Integer.parseInt(scalar("SELECT count(*) FROM intents WHERE state='OPEN'"));
+            if(Integer.parseInt(scalar("SELECT count(*) FROM intents"))>=MAX_RECORDS||existing>=maxOpen)throw new SQLException("intent/history budget");
             try(var insert=connection.prepareStatement("INSERT INTO intents VALUES(?,?,'OPEN',?,?)")){
                 insert.setString(1,p.owner().toString());insert.setLong(2,p.generation());insert.setBytes(3,payload);insert.setString(4,digest(payload));insert.executeUpdate();
             }
-            commit();outstanding=1;reason="durable intent acknowledged";return true;
+            commit();outstanding=existing+1;reason="durable intent acknowledged";return true;
         }catch(Exception e){fail(e);return false;}
     }
     @Override public synchronized boolean settle(UUID owner,long generation){
-        if(failed||blocked||outstanding!=1)return false;
+        if(failed||blocked||outstanding<1)return false;
         try{
             transaction();
             try(var update=connection.prepareStatement("UPDATE intents SET state='RETIRED' WHERE owner=? AND generation=? AND state='OPEN'")){
                 update.setString(1,owner.toString());update.setLong(2,generation);if(update.executeUpdate()!=1)throw new SQLException("stale retirement");
             }
-            commit();outstanding=0;reason="retired intent retained as tombstone";return true;
+            commit();outstanding--;reason="retired intent retained as tombstone";return true;
         }catch(Exception e){fail(e);return false;}
     }
     /** Called only after the adapter's permanent load veto is installed, all owned
@@ -137,5 +153,24 @@ final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoClosea
     @Override public synchronized boolean blockedOnOpen(){return blocked||failed;}
     @Override public synchronized int outstanding(){return outstanding;}
     @Override public synchronized String diagnostic(){return reason;}
+    record Anchor(String dimension,double x,double y,double z){
+        Anchor{if(dimension==null||!dimension.matches("[a-z0-9_.-]+:[a-z0-9_./-]+")||dimension.equals("gaslight_provider:unobserved")||!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>29_000_000||Math.abs(z)>29_000_000||Math.abs(y)>2048)throw new IllegalArgumentException("invalid original return anchor");}
+    }
+    private static String anchorDigest(UUID player,Anchor a)throws Exception{return digest((player+"\n"+a.dimension()+"\n"+Double.toHexString(a.x())+"\n"+Double.toHexString(a.y())+"\n"+Double.toHexString(a.z())).getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+    synchronized boolean saveAnchor(UUID player,Anchor a){
+        if(blocked||failed)return false;
+        try{transaction();if(Integer.parseInt(scalar("SELECT count(*) FROM anchors"))>=1024)throw new IOException("anchor budget");
+            try(var insert=connection.prepareStatement("INSERT INTO anchors VALUES(?,?,?,?,?,?) ON CONFLICT(player) DO UPDATE SET dimension=excluded.dimension,x=excluded.x,y=excluded.y,z=excluded.z,digest=excluded.digest")){
+                insert.setString(1,player.toString());insert.setString(2,a.dimension());insert.setDouble(3,a.x());insert.setDouble(4,a.y());insert.setDouble(5,a.z());insert.setString(6,anchorDigest(player,a));insert.executeUpdate();
+            }commit();return true;
+        }catch(Exception e){fail(e);return false;}
+    }
+    synchronized Anchor loadAnchor(UUID player){
+        if(blocked||failed)return null;
+        try(var query=connection.prepareStatement("SELECT dimension,x,y,z,digest FROM anchors WHERE player=?")){
+            query.setString(1,player.toString());try(var rows=query.executeQuery()){if(!rows.next())return null;var a=new Anchor(rows.getString(1),rows.getDouble(2),rows.getDouble(3),rows.getDouble(4));if(!anchorDigest(player,a).equals(rows.getString(5)))throw new IOException("return anchor checksum mismatch");return a;}
+        }catch(Exception e){fail(e);return null;}
+    }
+    synchronized long nextGeneration(){try{return Long.parseLong(scalar("SELECT COALESCE(max(generation),0)+1 FROM intents"));}catch(SQLException e){fail(e);return -1;}}
     @Override public synchronized void close(){if(connection!=null)try{connection.close();connection=null;}catch(SQLException e){fail(e);}}
 }

@@ -27,6 +27,7 @@ public final class ServerProbe implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(server->{
             var w=server.overworld();var a=GaslightProvider.service(server);
             check(a!=null,"GASLIGHT initialized");
+            if(System.getProperty("gaslight.probe.mode","live").equals("automatic")){w.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false,server);output("AUTOMATIC_PROBE_READY "+GaslightProvider.automatic(server).status());return;}
             if(System.getProperty("gaslight.probe.mode","live").equals("guarded-recovery")){
                 output("PRE_GUARDED_RECOVERY "+a.status());return;
             }
@@ -73,16 +74,26 @@ public final class ServerProbe implements ModInitializer {
         });
         ServerPlayConnectionEvents.JOIN.register((handler,sender,server)->{
             var player=handler.player;player.setGameMode(GameType.CREATIVE);
-            player.teleportTo(server.overworld(),.5,81,3.5,180,0);
+            // Do not race the login packet's saved dimension in the gameplay test.
+            if(!System.getProperty("gaslight.probe.mode","live").equals("automatic"))player.teleportTo(server.overworld(),.5,81,3.5,180,0);
             player.getInventory().setItem(0,new ItemStack(Items.GOLD_BLOCK,64));player.containerMenu.broadcastChanges();
             output("JOIN "+player.getGameProfile().getName());
         });
         ServerTickEvents.END_SERVER_TICK.register(server->{
             try{
-                Path request=Path.of("probe-server.txt");if(!Files.exists(request))return;
+                Path request=Path.of("probe-server.txt");if(!Files.isRegularFile(request))return;
                 String command=Files.readString(request).trim();if(command.isEmpty()||command.equals(last))return;last=command;
                 var a=GaslightProvider.service(server);var w=server.overworld();
-                if(command.startsWith("snapshot")){
+                if(command.startsWith("game")){
+                    var service=GaslightProvider.automatic(server);
+                    if(command.contains("begin")){check(!server.getPlayerList().getPlayers().isEmpty(),"player joined");boolean begun=service.begin(server.getPlayerList().getPlayers().getFirst());check(begun,"automatic private-world entry: "+service.status());}
+                    else if(command.contains("home")){var player=server.getPlayerList().getPlayers().getFirst();service.leave();qouteall.imm_ptl.core.api.PortalAPI.teleportEntity(player,server.overworld(),new Vec3(.5,81,3.5));}
+                    else if(command.contains("house")){var player=server.getPlayerList().getPlayers().getFirst();var at=player.blockPosition().offset(0,0,-12);for(int x=-2;x<=2;x++)for(int y=0;y<4;y++)for(int z=-2;z<=2;z++)player.serverLevel().setBlockAndUpdate(at.offset(x,y,z),Blocks.OAK_PLANKS.defaultBlockState());output(command+" HOUSE_FIXTURE "+at);}
+                    else if(command.contains("pose")){String[] v=command.split(" ");var player=server.getPlayerList().getPlayers().getFirst();check(player.level().dimension().location().toString().equals("gaslight_provider:unobserved"),"private fixture only");player.teleportTo(player.serverLevel(),Double.parseDouble(v[2]),Double.parseDouble(v[3]),Double.parseDouble(v[4]),Float.parseFloat(v[5]),Float.parseFloat(v[6]));}
+                    else if(command.contains("leave"))service.leave();
+                    output(command+" "+service.status()+" providerTickets="+ImmPtlChunkTickets.get(server.getLevel(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DIMENSION,net.minecraft.resources.ResourceLocation.parse("gaslight_provider:unobserved")))).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" player="+server.getPlayerList().getPlayers().stream().map(p->p.position()+" "+p.level().dimension().location()).toList());
+                }
+                else if(command.startsWith("snapshot")){
                     int full=0;for(int x=62;x<=66;x++)for(int z=62;z<=66;z++)if(w.getChunkSource().getChunkNow(x,z)!=null)full++;
                     var remote=w.getChunkSource().getChunkNow(64,63);var placed=w.getChunkSource().getChunkNow(64,63);
                     output(command+" "+a.status()+" preparation="+a.preparationStatus()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position()+" camera="+CameraTelemetry.status(server,p.getUUID())).toList());
@@ -113,7 +124,8 @@ public final class ServerProbe implements ModInitializer {
                 }
                 else if(command.startsWith("stop")){output("STOP "+a.status());server.halt(false);}
                 else throw new IllegalArgumentException(command);
-            }catch(Throwable e){e.printStackTrace();output("FAIL "+e);server.halt(false);}
+            }catch(java.nio.file.NoSuchFileException transientRequest){/* A removed request is not a gameplay failure. */}
+            catch(Throwable e){e.printStackTrace();output("FAIL "+e);server.halt(false);}
         });
     }
 }

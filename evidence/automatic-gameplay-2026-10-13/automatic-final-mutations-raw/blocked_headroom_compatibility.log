@@ -1,0 +1,10 @@
+COMMAND: C:\Program Files\Git\bin\bash.exe run_offline_checks.sh
+SUITE: dev.kondalabs.gaslight.Phase3DestinationTests
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-hy3vnp14\project\build\journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-hy3vnp14\project\build\journal-test-temp"
+Exception in thread "main" java.lang.AssertionError: repeated headroom mismatch veto at 14
+	at dev.kondalabs.gaslight.Phase3DestinationTests.yes(Phase3DestinationTests.java:11)
+	at dev.kondalabs.gaslight.Phase3DestinationTests.fingerprints(Phase3DestinationTests.java:40)
+	at dev.kondalabs.gaslight.Phase3DestinationTests.main(Phase3DestinationTests.java:167)
+
+EXIT_CODE: 1

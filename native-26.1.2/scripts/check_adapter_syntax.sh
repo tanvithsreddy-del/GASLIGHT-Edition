@@ -3,9 +3,13 @@
 # in the source tree or distributable outputs. Genuine Fabric validation still required.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+mkdir -p build
+tmp="$(mktemp -d "$PWD/build/stub-syntax.XXXXXX")"
+case "$tmp" in "$PWD"/build/stub-syntax.*) trap 'rm -rf -- "$tmp"' EXIT;; *) echo "unsafe test cleanup path" >&2; exit 1;; esac
 export TMP_ADAPTER="$tmp"
-python3 - <<'PY'
+echo 'STUB ONLY: fabricated API syntax check, separate from genuine builds'
+if command -v python3 >/dev/null && python3 --version >/dev/null 2>&1; then syntax_python=python3; else syntax_python=python; fi
+"$syntax_python" - <<'PY'
 import os,pathlib
 root=pathlib.Path(os.environ['TMP_ADAPTER'])/'stubs'
 files={

@@ -1,0 +1,4 @@
+dd2bdfbd813ebb14d18650a0f1341d7b2e54ab4b9b0b5106d59e32f8eebc90a4  GASLIGHT-0.3.0-mc1.21.1-Fabric-DEVELOPMENT.jar
+9fe26355081c69eae218a93d2c93b60437bc77b83eecbe751ab7337104288a03  GASLIGHT-0.3.0-mc1.21.1-named-development.jar
+46ef3e359d07a8e5a0cb1688ac1b5ddced8886eb6a57fdbf0e8e0f3316ac55ef  GASLIGHT-0.3.0-mc1.21.1-sources.jar
+a47b805a3c1ad1b9f42c8e6486f54d64d3f5fba54b4db789890d1d3f6bfc29f2  GASLIGHT-0.3.0-source-and-docs.zip

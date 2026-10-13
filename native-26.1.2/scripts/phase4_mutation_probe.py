@@ -32,7 +32,7 @@ failed=[]
 for name,fn,original,replacement,expected,test_class in variants:
     with tempfile.TemporaryDirectory(prefix='gaslight-phase4-mutant-') as tmp:
         dest=pathlib.Path(tmp)/'project'
-        shutil.copytree(root,dest,ignore=shutil.ignore_patterns('build','*.log','SHA256SUMS.txt','.gradle'))
+        shutil.copytree(root,dest,ignore=shutil.ignore_patterns('build','*.log','SHA256SUMS.txt','.gradle','provider-adapters','run-*','deps','.git'))
         path=dest/fn
         content=path.read_text()
         if original not in content:

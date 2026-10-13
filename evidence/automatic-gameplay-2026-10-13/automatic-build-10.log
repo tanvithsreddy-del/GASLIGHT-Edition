@@ -1,0 +1,29 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :processIncludeJars FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':processIncludeJars' (registered by plugin 'fabric-loom').
+> Error while evaluating property 'jarIds' of task ':processIncludeJars'.
+   > Failed to calculate the value of task ':processIncludeJars' property 'jarIds'.
+      > Attempted to nest artifact immersive-portals-6.0.6-mc1.21.1-fabric.jar which is not a module component and has no capabilities.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 11s
+5 actionable tasks: 5 executed

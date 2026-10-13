@@ -1,0 +1,219 @@
+Downloading Minecraft server
+Installing Fabric Loader 0.19.5(1.21.1) on the server
+Downloading required files
+Downloading library org.ow2.asm:asm:9.10.1
+Downloading library org.ow2.asm:asm-analysis:9.10.1
+Downloading library org.ow2.asm:asm-commons:9.10.1
+Downloading library org.ow2.asm:asm-tree:9.10.1
+Downloading library org.ow2.asm:asm-util:9.10.1
+Downloading library net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7
+Downloading library net.fabricmc:intermediary:1.21.1
+Downloading library net.fabricmc:fabric-loader:0.19.5
+Generating server launch JAR
+Unpacking 1.21.1/server-1.21.1.jar (versions:1.21.1) to versions\1.21.1\server-1.21.1.jar
+Unpacking com/github/oshi/oshi-core/6.4.10/oshi-core-6.4.10.jar (libraries:com.github.oshi:oshi-core:6.4.10) to libraries\com\github\oshi\oshi-core\6.4.10\oshi-core-6.4.10.jar
+Unpacking com/google/code/gson/gson/2.10.1/gson-2.10.1.jar (libraries:com.google.code.gson:gson:2.10.1) to libraries\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar
+Unpacking com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar (libraries:com.google.guava:failureaccess:1.0.1) to libraries\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar
+Unpacking com/google/guava/guava/32.1.2-jre/guava-32.1.2-jre.jar (libraries:com.google.guava:guava:32.1.2-jre) to libraries\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar
+Unpacking com/mojang/authlib/6.0.54/authlib-6.0.54.jar (libraries:com.mojang:authlib:6.0.54) to libraries\com\mojang\authlib\6.0.54\authlib-6.0.54.jar
+Unpacking com/mojang/brigadier/1.3.10/brigadier-1.3.10.jar (libraries:com.mojang:brigadier:1.3.10) to libraries\com\mojang\brigadier\1.3.10\brigadier-1.3.10.jar
+Unpacking com/mojang/datafixerupper/8.0.16/datafixerupper-8.0.16.jar (libraries:com.mojang:datafixerupper:8.0.16) to libraries\com\mojang\datafixerupper\8.0.16\datafixerupper-8.0.16.jar
+Unpacking com/mojang/logging/1.2.7/logging-1.2.7.jar (libraries:com.mojang:logging:1.2.7) to libraries\com\mojang\logging\1.2.7\logging-1.2.7.jar
+Unpacking commons-io/commons-io/2.15.1/commons-io-2.15.1.jar (libraries:commons-io:commons-io:2.15.1) to libraries\commons-io\commons-io\2.15.1\commons-io-2.15.1.jar
+Unpacking io/netty/netty-buffer/4.1.97.Final/netty-buffer-4.1.97.Final.jar (libraries:io.netty:netty-buffer:4.1.97.Final) to libraries\io\netty\netty-buffer\4.1.97.Final\netty-buffer-4.1.97.Final.jar
+Unpacking io/netty/netty-codec/4.1.97.Final/netty-codec-4.1.97.Final.jar (libraries:io.netty:netty-codec:4.1.97.Final) to libraries\io\netty\netty-codec\4.1.97.Final\netty-codec-4.1.97.Final.jar
+Unpacking io/netty/netty-common/4.1.97.Final/netty-common-4.1.97.Final.jar (libraries:io.netty:netty-common:4.1.97.Final) to libraries\io\netty\netty-common\4.1.97.Final\netty-common-4.1.97.Final.jar
+Unpacking io/netty/netty-handler/4.1.97.Final/netty-handler-4.1.97.Final.jar (libraries:io.netty:netty-handler:4.1.97.Final) to libraries\io\netty\netty-handler\4.1.97.Final\netty-handler-4.1.97.Final.jar
+Unpacking io/netty/netty-resolver/4.1.97.Final/netty-resolver-4.1.97.Final.jar (libraries:io.netty:netty-resolver:4.1.97.Final) to libraries\io\netty\netty-resolver\4.1.97.Final\netty-resolver-4.1.97.Final.jar
+Unpacking io/netty/netty-transport/4.1.97.Final/netty-transport-4.1.97.Final.jar (libraries:io.netty:netty-transport:4.1.97.Final) to libraries\io\netty\netty-transport\4.1.97.Final\netty-transport-4.1.97.Final.jar
+Unpacking io/netty/netty-transport-classes-epoll/4.1.97.Final/netty-transport-classes-epoll-4.1.97.Final.jar (libraries:io.netty:netty-transport-classes-epoll:4.1.97.Final) to libraries\io\netty\netty-transport-classes-epoll\4.1.97.Final\netty-transport-classes-epoll-4.1.97.Final.jar
+Unpacking io/netty/netty-transport-native-epoll/4.1.97.Final/netty-transport-native-epoll-4.1.97.Final-linux-x86_64.jar (libraries:io.netty:netty-transport-native-epoll:4.1.97.Final:linux-x86_64) to libraries\io\netty\netty-transport-native-epoll\4.1.97.Final\netty-transport-native-epoll-4.1.97.Final-linux-x86_64.jar
+Unpacking io/netty/netty-transport-native-epoll/4.1.97.Final/netty-transport-native-epoll-4.1.97.Final-linux-aarch_64.jar (libraries:io.netty:netty-transport-native-epoll:4.1.97.Final:linux-aarch_64) to libraries\io\netty\netty-transport-native-epoll\4.1.97.Final\netty-transport-native-epoll-4.1.97.Final-linux-aarch_64.jar
+Unpacking io/netty/netty-transport-native-unix-common/4.1.97.Final/netty-transport-native-unix-common-4.1.97.Final.jar (libraries:io.netty:netty-transport-native-unix-common:4.1.97.Final) to libraries\io\netty\netty-transport-native-unix-common\4.1.97.Final\netty-transport-native-unix-common-4.1.97.Final.jar
+Unpacking it/unimi/dsi/fastutil/8.5.12/fastutil-8.5.12.jar (libraries:it.unimi.dsi:fastutil:8.5.12) to libraries\it\unimi\dsi\fastutil\8.5.12\fastutil-8.5.12.jar
+Unpacking net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar (libraries:net.java.dev.jna:jna:5.14.0) to libraries\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar
+Unpacking net/java/dev/jna/jna-platform/5.14.0/jna-platform-5.14.0.jar (libraries:net.java.dev.jna:jna-platform:5.14.0) to libraries\net\java\dev\jna\jna-platform\5.14.0\jna-platform-5.14.0.jar
+Unpacking net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar (libraries:net.sf.jopt-simple:jopt-simple:5.0.4) to libraries\net\sf\jopt-simple\jopt-simple\5.0.4\jopt-simple-5.0.4.jar
+Unpacking org/apache/commons/commons-lang3/3.14.0/commons-lang3-3.14.0.jar (libraries:org.apache.commons:commons-lang3:3.14.0) to libraries\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar
+Unpacking org/apache/logging/log4j/log4j-api/2.22.1/log4j-api-2.22.1.jar (libraries:org.apache.logging.log4j:log4j-api:2.22.1) to libraries\org\apache\logging\log4j\log4j-api\2.22.1\log4j-api-2.22.1.jar
+Unpacking org/apache/logging/log4j/log4j-core/2.22.1/log4j-core-2.22.1.jar (libraries:org.apache.logging.log4j:log4j-core:2.22.1) to libraries\org\apache\logging\log4j\log4j-core\2.22.1\log4j-core-2.22.1.jar
+Unpacking org/apache/logging/log4j/log4j-slf4j2-impl/2.22.1/log4j-slf4j2-impl-2.22.1.jar (libraries:org.apache.logging.log4j:log4j-slf4j2-impl:2.22.1) to libraries\org\apache\logging\log4j\log4j-slf4j2-impl\2.22.1\log4j-slf4j2-impl-2.22.1.jar
+Unpacking org/joml/joml/1.10.5/joml-1.10.5.jar (libraries:org.joml:joml:1.10.5) to libraries\org\joml\joml\1.10.5\joml-1.10.5.jar
+Unpacking org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar (libraries:org.lz4:lz4-java:1.8.0) to libraries\org\lz4\lz4-java\1.8.0\lz4-java-1.8.0.jar
+Unpacking org/slf4j/slf4j-api/2.0.9/slf4j-api-2.0.9.jar (libraries:org.slf4j:slf4j-api:2.0.9) to libraries\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar
+Starting net.fabricmc.loader.impl.game.minecraft.BundlerClassPathCapture
+[19:34:11] [main/INFO]: Loading Minecraft 1.21.1 with Fabric Loader 0.19.5
+[19:34:11] [main/INFO]: Fabric is preparing JARs on first launch, this may take a few seconds...
+[19:34:12] [main/INFO]: Loading 48 mods:
+	- fabricloader 0.19.5
+	   \-- mixinextras 0.5.5
+	- gaslight_provider 0.3.0-gameplay-dev
+	   |-- fabric-api 0.109.0+1.21.1
+	   |    |-- fabric-api-base 0.4.42+6573ed8c19
+	   |    |-- fabric-api-lookup-api-v1 1.6.70+b559734419
+	   |    |-- fabric-biome-api-v1 13.0.30+be1ed2d719
+	   |    |-- fabric-block-api-v1 1.0.22+0af3f5a719
+	   |    |-- fabric-block-view-api-v2 1.0.10+6573ed8c19
+	   |    |-- fabric-command-api-v1 1.2.49+f71b366f19
+	   |    |-- fabric-command-api-v2 2.2.28+6ced4dd919
+	   |    |-- fabric-commands-v0 0.2.66+df3654b319
+	   |    |-- fabric-content-registries-v0 8.0.18+b559734419
+	   |    |-- fabric-convention-tags-v1 2.1.2+7f945d5b19
+	   |    |-- fabric-convention-tags-v2 2.9.2+e60e56d419
+	   |    |-- fabric-crash-report-info-v1 0.2.29+0af3f5a719
+	   |    |-- fabric-data-attachment-api-v1 1.4.0+da19b51a19
+	   |    |-- fabric-data-generation-api-v1 20.2.23+16c4ae2519
+	   |    |-- fabric-dimensions-v1 4.0.0+6fc22b9919
+	   |    |-- fabric-entity-events-v1 1.7.0+2122d82819
+	   |    |-- fabric-events-interaction-v0 0.7.13+ba9dae0619
+	   |    |-- fabric-game-rule-api-v1 1.0.53+6ced4dd919
+	   |    |-- fabric-item-api-v1 11.1.1+d5debaed19
+	   |    |-- fabric-item-group-api-v1 4.1.6+6823f7cd19
+	   |    |-- fabric-lifecycle-events-v1 2.5.0+01d9a51c19
+	   |    |-- fabric-loot-api-v2 3.0.15+3f89f5a519
+	   |    |-- fabric-loot-api-v3 1.0.3+3f89f5a519
+	   |    |-- fabric-message-api-v1 6.0.13+6573ed8c19
+	   |    |-- fabric-networking-api-v1 4.3.0+c7469b2119
+	   |    |-- fabric-object-builder-api-v1 15.2.1+40875a9319
+	   |    |-- fabric-particles-v1 4.0.2+6573ed8c19
+	   |    |-- fabric-recipe-api-v1 5.0.13+6508971219
+	   |    |-- fabric-registry-sync-v0 5.1.3+60c3209b19
+	   |    |-- fabric-rendering-data-attachment-v1 0.3.48+73761d2e19
+	   |    |-- fabric-rendering-fluids-v1 3.1.6+1daea21519
+	   |    |-- fabric-resource-conditions-api-v1 4.3.0+8dc279b119
+	   |    |-- fabric-resource-loader-v0 1.3.1+5b5275af19
+	   |    |-- fabric-screen-handler-api-v1 1.3.87+b559734419
+	   |    |-- fabric-transfer-api-v1 5.4.2+95bead5f19
+	   |    \-- fabric-transitive-access-wideners-v1 6.1.0+1daea21519
+	   |-- immersive_portals 6.0.6
+	   |    |-- cloth-config 15.0.130
+	   |    |    \-- cloth-basic-math 0.6.1
+	   |    \-- dimlib 1.1.0+mc1.21.1
+	   |         \-- midnightlib 1.5.7
+	   \-- org_xerial_sqlite-jdbc 3.53.4.0
+	- java 25
+	- minecraft 1.21.1
+[19:34:12] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-edition/native-26.1.2/provider-adapters/fabric-1.21.1/run-distribution-server/libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[19:34:13] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-edition/native-26.1.2/provider-adapters/fabric-1.21.1/run-distribution-server/libraries/com/google/guava/guava/32.1.2-jre/guava-32.1.2-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[19:34:18] [main/INFO]: DimLib initializing
+[19:34:18] [main/INFO]: GASLIGHT initialized; private-world gameplay requires /gaslight begin
+[19:34:18] [main/INFO]: GASLIGHT_CODE_SOURCE file:/C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-edition/native-26.1.2/provider-adapters/fabric-1.21.1/run-distribution-server/mods/GASLIGHT-0.3.0-mc1.21.1.jar
+[19:34:18] [main/INFO]: Loading Immersive Portals config
+[19:34:18] [main/INFO]: iPortal Config Applied
+[19:34:18] [main/INFO]: Immersive Portals Mod Initializing
+[19:34:18] [main/INFO]: Immersive Portals Core version 6.0.6
+[19:34:18] [main/INFO]: iPortal is provided by jar-in-jar.
+The default value of 'nether portal mode', 'end portal mode' and 'enable mirror creation' in config will be respectively vanilla, vanilla and false.
+(The default value is only used when config file is not present of missing fields. This does not change existing config.)
+
+[19:34:18] [main/INFO]: Dimensional Threading is not present
+[19:34:18] [main/INFO]: Gravity API is not present
+[19:34:18] [main/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[19:34:18] [main/WARN]: Missing data pack fabric-gametest-api-v1
+[19:34:19] [main/INFO]: No existing world data, creating new world
+[19:34:19] [main/ERROR]: No key layers in MapLike[{}]
+[19:34:19] [main/INFO]: Loaded 1290 recipes
+[19:34:20] [main/INFO]: Loaded 1399 advancements
+[19:34:20] [main/INFO]: Applied 0 biome modifications to 0 of 64 new biomes in 1.125 ms
+[19:34:20] [Server thread/INFO]: Starting minecraft server version 1.21.1
+[19:34:20] [Server thread/INFO]: Loading properties
+[19:34:20] [Server thread/INFO]: Default game type: SURVIVAL
+[19:34:20] [Server thread/INFO]: Generating keypair
+[19:34:20] [Server thread/INFO]: Starting Minecraft server on 127.0.0.1:25588
+[19:34:20] [Server thread/INFO]: Using default channel type
+[19:34:20] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[19:34:20] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[19:34:20] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[19:34:20] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[19:34:20] [Server thread/INFO]: Preparing level "gaslight-distribution-disposable-001"
+[19:34:20] [Server thread/INFO]: The server has no dimension stack preset.
+[19:34:21] [Server thread/INFO]: Global portal storage initialized minecraft:overworld
+[19:34:21] [Server thread/INFO]: Bedrock Replacement minecraft:overworld null
+[19:34:21] [Server thread/INFO]: Global portal storage initialized minecraft:the_nether
+[19:34:21] [Server thread/INFO]: Bedrock Replacement minecraft:the_nether null
+[19:34:21] [Server thread/INFO]: Global portal storage initialized minecraft:the_end
+[19:34:21] [Server thread/INFO]: Bedrock Replacement minecraft:the_end null
+[19:34:21] [Server thread/INFO]: Global portal storage initialized gaslight_provider:unobserved
+[19:34:21] [Server thread/INFO]: Bedrock Replacement gaslight_provider:unobserved null
+[19:34:21] [Server thread/INFO]: Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+gaslight_provider:unobserved -> 2
+[19:34:21] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[19:34:21] [Worker-Main-2/INFO]: Preparing spawn area: 2%
+[19:34:21] [Worker-Main-15/INFO]: Preparing spawn area: 2%
+[19:34:21] [Server thread/INFO]: Time elapsed: 621 ms
+[19:34:21] [Server thread/INFO]: Done (1.260s)! For help, type "help"
+[19:34:21] [Server thread/INFO]: Starting remote control listener
+[19:34:21] [Server thread/INFO]: Thread RCON Listener started
+[19:34:21] [Server thread/INFO]: RCON running on 127.0.0.1:25589
+[19:34:21] [Server thread/INFO]: Processing custom portal generation
+[19:34:22] [Server thread/INFO]: iPortal mod info fetched
+[19:34:22] [Server thread/INFO]: Server performance level: good
+[19:38:32] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:38:32] [RCON Client /127.0.0.1 #2/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:41:09] [Netty Server IO #1/INFO]: Server received ImmPtl config packet. Mod version: 6.0.6 Player: GaslightA 9c3ebf69-1d6d-3f46-bed6-58472f20ac37
+[19:41:09] [Server thread/INFO]: GaslightA[/127.0.0.1:49179] logged in with entity id 1 at (-8.5, -60.0, -7.5)
+[19:41:09] [Server thread/INFO]: GaslightA joined the game
+[19:41:09] [Server thread/INFO]: Player login 8157 class_3222['GaslightA'/1, l='ServerWorld minecraft:overworld gaslight-distribution-disposable-001', x=-8.50, y=-60.00, z=-7.50]
+[19:41:09] [Server thread/ERROR]: Chunk loading failure ServerWorld minecraft:overworld gaslight-distribution-disposable-001 [-2, 0] {}
+[19:41:09] [Server thread/ERROR]: Chunk loading failure ServerWorld minecraft:overworld gaslight-distribution-disposable-001 [-2, -2] {}
+[19:41:09] [Server thread/ERROR]: Chunk loading failure ServerWorld minecraft:overworld gaslight-distribution-disposable-001 [-2, -1] {}
+[19:41:10] [Server thread/INFO]: GASLIGHT_CAMERA_RECEIVED 9c3ebf69-1d6d-3f46-bed6-58472f20ac37 frame=2,accepted=1,rejected=0,fresh=true,advisoryOnly=true
+[19:41:11] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:41:11] [Server thread/INFO]: [Rcon: Set GaslightA's game mode to Creative Mode]
+[19:41:11] [RCON Client /127.0.0.1 #3/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:41:11] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:41:11] [RCON Client /127.0.0.1 #4/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:41:14] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 3023ms or 60 ticks behind
+[19:41:14] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:41:14] [Server thread/INFO]: [Rcon: Teleported GaslightA to 8704.500000, 100.000000, 8192.500000]
+[19:41:14] [RCON Client /127.0.0.1 #5/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:41:17] [Server thread/INFO]: GASLIGHT_CAMERA_RECEIVED 9c3ebf69-1d6d-3f46-bed6-58472f20ac37 frame=351,accepted=1,rejected=10,fresh=true,advisoryOnly=true
+[19:42:38] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:42:38] [RCON Client /127.0.0.1 #6/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:43:04] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:43:04] [Server thread/INFO]: [Rcon: Teleported GaslightA to 8704.500000, 100.000000, 8192.500000]
+[19:43:04] [RCON Client /127.0.0.1 #7/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:43:04] [Server thread/WARN]: GaslightA moved too quickly! 512.0,23.0,0.0
+[19:43:04] [Server thread/WARN]: GaslightA moved too quickly! 512.0,23.0,0.0
+[19:43:04] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:43:04] [RCON Client /127.0.0.1 #8/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:43:06] [Server thread/INFO]: GASLIGHT_SCENE_PREPARING g=1 dependencyFootprint=961
+[19:43:11] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 2069ms or 41 ticks behind
+[19:43:17] [Server thread/INFO]: GASLIGHT_SCENE_OFFERED g=1 cells=49152 (8709.0, 128.0, 8192.5) -> (8448.0, 128.0, 16384.5) digest=ac9fcc0f7286930f95f5ac2c590c540ef366210cf172682a51926ca72046853a samples=[Block{minecraft:bedrock}, Block{minecraft:air}, Block{minecraft:air}]
+[19:43:20] [Server thread/ERROR]: GASLIGHT_GAMEPLAY_FAILED scene selection rejected; retained recovery intent
+[19:43:20] [Server thread/INFO]: GASLIGHT_TRAFFIC_END compressedSent=2122838,compressedReceived=135698
+[19:43:20] [Server thread/INFO]: GaslightA lost connection: GASLIGHT retained a failed publication intent: scene selection rejected; retained recovery intent
+[19:43:20] [Server thread/INFO]: GaslightA left the game
+[19:44:59] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:44:59] [RCON Client /127.0.0.1 #9/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:46:41] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (gaslight-distribution-disposable-001): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (unobserved): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[19:46:41] [Server thread/INFO]: [Rcon: Saved the game]
+[19:46:41] [RCON Client /127.0.0.1 #10/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:46:41] [RCON Listener #1/INFO]: Thread RCON Client /127.0.0.1 started
+[19:46:41] [Server thread/INFO]: [Rcon: Stopping the server]
+[19:46:41] [RCON Client /127.0.0.1 #11/INFO]: Thread RCON Client /127.0.0.1 shutting down
+[19:46:41] [Server thread/INFO]: Stopping server
+[19:46:41] [Server thread/INFO]: Saving players
+[19:46:41] [Server thread/INFO]: Saving worlds
+[19:46:41] [Server thread/INFO]: Saving chunks for level 'ServerWorld minecraft:overworld gaslight-distribution-disposable-001'/minecraft:overworld
+[19:46:41] [Server thread/INFO]: Saving chunks for level 'ServerWorld minecraft:the_nether gaslight-distribution-disposable-001'/minecraft:the_nether
+[19:46:41] [Server thread/INFO]: Saving chunks for level 'ServerWorld minecraft:the_end gaslight-distribution-disposable-001'/minecraft:the_end
+[19:46:41] [Server thread/INFO]: Saving chunks for level 'ServerWorld gaslight_provider:unobserved gaslight-distribution-disposable-001'/gaslight_provider:unobserved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (gaslight-distribution-disposable-001): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage (unobserved): All chunks are saved
+[19:46:41] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[19:46:41] [Server thread/INFO]: Thread RCON Listener stopped
