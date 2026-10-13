@@ -21,7 +21,8 @@ The fresh upstream command and final post-fix command logs are retained in
 [evidence](../evidence/engine-26.3-2026-10-13/).
 
 The dedicated 26.3 Fabric server initialized the engine, created a
-disposable world, saved, and shut down normally; the Gradle run exited 0.
+disposable world, saved, reopened that same disposable world, and shut down
+normally on both launches; both Gradle runs exited 0.
 This is server startup evidence only. The multiloader common module uses
 in-tree compile stubs for some optional Fabric/IP interfaces; the Fabric
 JAR itself includes the real Fabric API integration and did not package

@@ -69,11 +69,13 @@ python prepare_disposable_test.py 01
 ./gradlew --no-daemon --max-workers=2 runClientProof -PgaslightPackaged
 ```
 
-Use `gradlew.bat` on Windows. The server must use tested durable local Linux/ext4
-storage. Windows's directory-force failure is a real publication veto, so this is
-not currently a working Windows integrated-server/singleplayer edition. The tested
-mixed Windows/WSL profile used a loopback-only byte relay; commands and code are in
-the evidence tools. No firewall or security settings were changed by the agent.
+Use `gradlew.bat` on Windows. The older non-SQLite journal path still vetoes
+Windows publication after directory-force failure. The explicit disposable-
+world SQLite profile above has separate Windows process-halt evidence; it is
+not certification for ordinary worlds or automatic gameplay. The earlier
+mixed Windows/WSL proof used a loopback-only byte relay; its commands and
+code remain in the evidence tools. No firewall or security settings were
+changed by the agent.
 
 `-PgaslightPackaged` removes loose production classes from the run classpath and loads
 the actual named development JAR. Both logs print `GASLIGHT_CODE_SOURCE` for verification.
