@@ -1,0 +1,82 @@
+[
+  {
+    "name": "build-2.log",
+    "bytes": 3497,
+    "sha256": "bba9d78803fd6d0663e31d4ce2e71061d077cc200b37cf45bc5c6f6f1256c066"
+  },
+  {
+    "name": "build.log",
+    "bytes": 3993,
+    "sha256": "4a360fe9cfeaf5a657031a7d46a3a78d978a7e6b01ee0e9e094b7131bc56d256"
+  },
+  {
+    "name": "crossing-active-snapshot-off.log",
+    "bytes": 159342,
+    "sha256": "4e627748c56fe16b093842f9599b0fdc368f993f1d874dc89b1d45583258979a"
+  },
+  {
+    "name": "crossing-baseline-compare.log",
+    "bytes": 181996,
+    "sha256": "b4ee4af5733dbc566ebc0707ec59354c27f1e4277507dfd4887a9be50aed2b12"
+  },
+  {
+    "name": "crossing-capture-only.log",
+    "bytes": 161259,
+    "sha256": "4f50d949a6c1c8334560401557e83a80175917d958174c302b3588bea925923b"
+  },
+  {
+    "name": "crossing-mixins-inactive.log",
+    "bytes": 151582,
+    "sha256": "a0a12638cc9a96a04072b56656085f2d781802e3d2c61ea617f1b27694a44fde"
+  },
+  {
+    "name": "crossing-precise-failure-retry.log",
+    "bytes": 178642,
+    "sha256": "ed65d229332649fd1bcf73d80fc24acc06e43ec22b6c74bc1d8709f6db32fa3e"
+  },
+  {
+    "name": "crossing-precise-failure.log",
+    "bytes": 30527,
+    "sha256": "1a04c4a200261f82e1a3c97a880a1f9066ce4b3dc0fb565a674b633de70084dc"
+  },
+  {
+    "name": "crossing-snapshot-air-off.log",
+    "bytes": 28347,
+    "sha256": "1508985a1f44b7c5ef2dd6fe50e5b9f930510c4dcbc4ad5365a601eec7ec03b1"
+  },
+  {
+    "name": "crossing-sodium-after-baseline.log",
+    "bytes": 24807,
+    "sha256": "82bdefa62b67955a86d954812725a32230ff429737b6da8ad5ba841cec4e0eea"
+  },
+  {
+    "name": "crossing-sodium-c1-diagnostic.log",
+    "bytes": 21870,
+    "sha256": "2c7826fb1bcd0f1c79d8c8fed283c27be4d4a6d5a1420785409f76214e0dbdb6"
+  },
+  {
+    "name": "crossing-sodium-retry.log",
+    "bytes": 28529,
+    "sha256": "340480f191b740dcb7d19e0a12270071ec9395cbded0c66b1b4d50f38edb6752"
+  },
+  {
+    "name": "crossing-sodium.log",
+    "bytes": 21612,
+    "sha256": "0cf118e4824e8f561eb4909116efff4c401dd16a4843fb8fc42696cce7a633b1"
+  },
+  {
+    "name": "diagnostic-build.log",
+    "bytes": 2826,
+    "sha256": "c8f3312da109ff508087087ce23c0c575e61c15f7ffdac3a3a9276c628cdd662"
+  },
+  {
+    "name": "sodium-seam-clip-experiment.patch",
+    "bytes": 13368,
+    "sha256": "226a46eeca778eaeeb3f741a0aa92a9b1ce46f492c77c00d6f9d2508689e8129"
+  },
+  {
+    "name": "windows-application-errors.json",
+    "bytes": 4129,
+    "sha256": "a0b2830434edf7ce5c0db473f8d6e4ecb05eac7a1c13ea46691603de1ee237ee"
+  }
+]

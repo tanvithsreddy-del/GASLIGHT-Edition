@@ -42,8 +42,13 @@ fixture forgot to turn on `passthroughExtras`; the fixture now explicitly
 enables that switch only in its disposable run directory. The next run passed
 the registry, fragment arithmetic/binding, disjoint and minecart legs, then
 **failed** `RS-SEAM-CLIP`: the gold cell's section did not recompile within
-200 ticks (`recompilesScheduled=0`). This is a real outstanding visual
-failure; the full crossing suite is not green.
+200 ticks (`recompilesScheduled=0`). A subsequent source and log audit found
+the immediate reason: `SeamClipRenderer.active()` deliberately returns false
+under Sodium because its section mesher has no seam-exclusion hook. The log
+explicitly says `sodium present — seam clip self-gated OFF`. Fractional seam
+state can still be active, so this is a genuine unsupported renderer path,
+not evidence of a late or lost vanilla section-recompile signal. The full
+crossing suite is not green. See [the follow-up diagnosis](SODIUM_SEAM_DIAGNOSIS.md).
 
 For the user's vanilla portal requirement, this fork defaults to
 `preserveVanillaDimensionPortals=true`. It enforces vanilla Nether/End modes
@@ -88,7 +93,7 @@ It is **not a GASLIGHT gameplay release**; the full crossing suite still fails.
 The native crashes did not identify a reliable fault module. Their cause is
 still unknown. The successful Sodium run is valuable gameplay evidence but
 does not certify the vanilla-renderer path, eliminate intermittent crashes,
-or resolve the seam-mesh failure. Repeatable visual tests on another graphics
+or resolve the unsupported Sodium seam path. Repeatable visual tests on another graphics
 driver/host remain necessary before this engine can serve as a release base.
 The vanilla portal regression covers `entityPortals=true`, the shipped default.
 The legacy `entityPortals=false` block-era path still intentionally intercepts

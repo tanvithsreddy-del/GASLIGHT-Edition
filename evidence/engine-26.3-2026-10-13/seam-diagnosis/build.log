@@ -1,0 +1,74 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy UP-TO-DATE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :fabric
+Fabric Loom: 1.17.11
+
+> Task :common:createMinecraftArtifacts UP-TO-DATE
+> Task :common:compileIpStubsJava UP-TO-DATE
+> Task :common:processIpStubsResources NO-SOURCE
+> Task :common:ipStubsClasses UP-TO-DATE
+> Task :common:ipStubsJarJar NO-SOURCE
+> Task :common:ipStubsJar UP-TO-DATE
+> Task :common:compileFabricStubsJava UP-TO-DATE
+> Task :common:processFabricStubsResources NO-SOURCE
+> Task :common:fabricStubsClasses UP-TO-DATE
+> Task :fabric:processResources
+> Task :fabric:processIncludeJars UP-TO-DATE
+> Task :fabric:sourcesJar
+> Task :fabric:processTestResources NO-SOURCE
+> Task :fabric:validateAccessWidener UP-TO-DATE
+
+> Task :common:compileJava
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-public-26.3\common\src\main\java\com\warwa\seamlessportals\render\SeamClipRenderer.java:861: error: cannot find symbol
+                            .runWithRendererRepointed(e.getKey(), () -> target.setSectionDirty(
+                                                                              ^
+  symbol:   method setSectionDirty(int,int,int,boolean)
+  location: variable target of type LevelRenderer
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 error
+
+> Task :common:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-public-26.3/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':common:compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: Recompile with -Xlint:unchecked for details.
+  Note: Some input files use or override a deprecated API.
+  Note: Some input files use unchecked or unsafe operations.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\gaslight-public-26.3\common\src\main\java\com\warwa\seamlessportals\render\SeamClipRenderer.java:861: error: cannot find symbol
+                              .runWithRendererRepointed(e.getKey(), () -> target.setSectionDirty(
+                                                                                ^
+    symbol:   method setSectionDirty(int,int,int,boolean)
+    location: variable target of type LevelRenderer
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 33s
+17 actionable tasks: 3 executed, 14 up-to-date

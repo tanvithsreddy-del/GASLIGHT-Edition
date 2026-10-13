@@ -1,0 +1,248 @@
+diff --git a/common/src/main/java/com/warwa/seamlessportals/render/SeamClipRenderer.java b/common/src/main/java/com/warwa/seamlessportals/render/SeamClipRenderer.java
+index 68bf1a2..b5f0a23 100644
+--- a/common/src/main/java/com/warwa/seamlessportals/render/SeamClipRenderer.java
++++ b/common/src/main/java/com/warwa/seamlessportals/render/SeamClipRenderer.java
+@@ -15,6 +15,7 @@ import com.warwa.seamlessportals.passthrough.SeamMap;
+ import com.warwa.seamlessportals.passthrough.SeamOccupancy;
+ import com.warwa.seamlessportals.passthrough.SeamRegistry;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
++import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+ import net.minecraft.client.Minecraft;
+ import net.minecraft.client.multiplayer.ClientLevel;
+@@ -35,6 +36,7 @@ import net.minecraft.resources.ResourceKey;
+ import net.minecraft.world.level.Level;
+ import net.minecraft.world.level.block.RenderShape;
+ import net.minecraft.world.level.block.state.BlockState;
++import net.minecraft.world.level.material.FluidState;
+ import net.minecraft.world.phys.Vec3;
+ import org.jetbrains.annotations.Nullable;
+ import org.joml.Matrix3f;
+@@ -111,9 +113,8 @@ public final class SeamClipRenderer {
+     /**
+      * Whether the seam clip runs at all. OFF under the fix lever, the passthrough master lever,
+      * the block-era renderer (flag-OFF draws through a different pipeline and would exclude cells
+-     * it never dynamically draws), and under sodium — the compat layer has no meshing hook, so the
+-     * exclusion arm cannot apply there and the dynamic draw alone would double-draw
+-     * (design §2 "Sodium").
++     * it never dynamically draws). Sodium uses a separate immutable section-build snapshot;
++     * do not arm the dynamic draw if its renderer compatibility layer is unavailable.
+      */
+     public static boolean active() {
+         if (AperturePassthroughLever.DISABLE_SEAM_CLIP || AperturePassthroughLever.DISABLED) {
+@@ -122,11 +123,11 @@ public final class SeamClipRenderer {
+         if (!com.warwa.seamlessportals.config.SeamlessPortalsConfig.isEntityPortals()) {
+             return false;
+         }
+-        if (SodiumInterface.invoker.isSodiumPresent()) {
++        if (com.warwa.seamlessportals.compat.SodiumCompat.isSodiumLoaded()
++            && !SodiumInterface.invoker.isSodiumPresent()) {
+             if (!sodiumGateLogged) {
+                 sodiumGateLogged = true;
+-                LOGGER.info("[SEAM CLIP] sodium present — seam clip self-gated OFF"
+-                    + " (no meshing hook; see SEAM_CLIP_DESIGN.md §2)");
++                LOGGER.error("[SEAM CLIP] sodium compatibility inactive — seam clip unavailable");
+             }
+             return false;
+         }
+@@ -232,6 +233,21 @@ public final class SeamClipRenderer {
+         return out;
+     }
+ 
++    /** Captured on Sodium's prepare thread and handed to its section-build worker. */
++    public record SodiumSnapshot(LongOpenHashSet excluded, Long2ObjectMap<FluidState> fluids) {}
++
++    @Nullable
++    public static SodiumSnapshot captureSodiumSnapshot(ClientLevel level, long sectionNode) {
++        LongOpenHashSet excluded = computeRegionExclusions(level, sectionNode);
++        if (excluded == null) return null;
++        Long2ObjectMap<FluidState> fluids = new Long2ObjectOpenHashMap<>();
++        for (long packed : excluded) {
++            FluidState fluid = level.getFluidState(BlockPos.of(packed));
++            if (!fluid.isEmpty()) fluids.put(packed, fluid);
++        }
++        return new SodiumSnapshot(excluded, fluids);
++    }
++
+     // =============================================================================================
+     // Arm 2 — the dynamic draw
+     // =============================================================================================
+@@ -839,7 +855,19 @@ public final class SeamClipRenderer {
+             if (level != null && renderer != null) {
+                 RenderRegionCache cache = new RenderRegionCache();
+                 for (long node : e.getValue()) {
+-                    scheduleRecompile(level, renderer, node, cache);
++                    if (SodiumInterface.invoker.isSodiumPresent()) {
++                        net.minecraft.client.renderer.extract.LevelExtractor extractor =
++                            mc.level.dimension().equals(e.getKey()) ? mc.levelExtractor
++                                : ClientWorldLoader.WORLD_EXTRACTOR_MAP.get(e.getKey());
++                        if (extractor != null) {
++                            qouteall.imm_ptl.core.compat.sodium_compatibility.SodiumRendererRepoint
++                                .runWithRendererRepointed(e.getKey(), () -> extractor.setSectionDirty(
++                                    SectionPos.x(node), SectionPos.y(node), SectionPos.z(node)));
++                            recompilesScheduled++;
++                        }
++                    } else {
++                        scheduleRecompile(level, renderer, node, cache);
++                    }
+                 }
+             }
+             it.remove();
+diff --git a/common/src/main/java/com/warwa/seamlessportals/render/SodiumSeamClipSnapshotAccess.java b/common/src/main/java/com/warwa/seamlessportals/render/SodiumSeamClipSnapshotAccess.java
+new file mode 100644
+index 0000000..f5dcd6a
+--- /dev/null
++++ b/common/src/main/java/com/warwa/seamlessportals/render/SodiumSeamClipSnapshotAccess.java
+@@ -0,0 +1,9 @@
++package com.warwa.seamlessportals.render;
++
++import org.jetbrains.annotations.Nullable;
++
++/** Immutable seam-cell snapshot carried from Sodium's section capture to its worker. */
++public interface SodiumSeamClipSnapshotAccess {
++    @Nullable SeamClipRenderer.SodiumSnapshot seamlessportals$getSeamClipSnapshot();
++    void seamlessportals$setSeamClipSnapshot(@Nullable SeamClipRenderer.SodiumSnapshot snapshot);
++}
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumChunkRenderContext_SeamClip.java b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumChunkRenderContext_SeamClip.java
+new file mode 100644
+index 0000000..e13aee4
+--- /dev/null
++++ b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumChunkRenderContext_SeamClip.java
+@@ -0,0 +1,23 @@
++package qouteall.imm_ptl.core.compat.mixin.sodium;
++
++import com.warwa.seamlessportals.render.SeamClipRenderer;
++import com.warwa.seamlessportals.render.SodiumSeamClipSnapshotAccess;
++import net.caffeinemc.mods.sodium.client.world.cloned.ChunkRenderContext;
++import org.jetbrains.annotations.Nullable;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Unique;
++
++@Mixin(value = ChunkRenderContext.class, remap = false)
++public class MixinSodiumChunkRenderContext_SeamClip implements SodiumSeamClipSnapshotAccess {
++    @Unique @Nullable private SeamClipRenderer.SodiumSnapshot seamlessportals$seamClipSnapshot;
++
++    @Override
++    public SeamClipRenderer.SodiumSnapshot seamlessportals$getSeamClipSnapshot() {
++        return seamlessportals$seamClipSnapshot;
++    }
++
++    @Override
++    public void seamlessportals$setSeamClipSnapshot(SeamClipRenderer.SodiumSnapshot snapshot) {
++        seamlessportals$seamClipSnapshot = snapshot;
++    }
++}
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumLevelSlice_SeamClip.java b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumLevelSlice_SeamClip.java
+new file mode 100644
+index 0000000..8e250f0
+--- /dev/null
++++ b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumLevelSlice_SeamClip.java
+@@ -0,0 +1,67 @@
++package qouteall.imm_ptl.core.compat.mixin.sodium;
++
++import com.warwa.seamlessportals.render.SeamClipRenderer;
++import com.warwa.seamlessportals.render.SodiumSeamClipSnapshotAccess;
++import net.caffeinemc.mods.sodium.client.world.LevelSlice;
++import net.caffeinemc.mods.sodium.client.world.cloned.ChunkRenderContext;
++import net.caffeinemc.mods.sodium.client.world.cloned.ClonedChunkSectionCache;
++import net.minecraft.client.multiplayer.ClientLevel;
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.SectionPos;
++import net.minecraft.world.level.Level;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.level.block.state.BlockState;
++import net.minecraft.world.level.material.FluidState;
++import org.jetbrains.annotations.Nullable;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Unique;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
++
++@Mixin(value = LevelSlice.class, remap = false)
++public class MixinSodiumLevelSlice_SeamClip {
++    @Unique @Nullable private SeamClipRenderer.SodiumSnapshot seamlessportals$seamClipSnapshot;
++
++    @Inject(method = "prepare", at = @At("RETURN"), require = 1)
++    private static void seamlessportals$capture(Level level, SectionPos pos,
++        ClonedChunkSectionCache cache, CallbackInfoReturnable<ChunkRenderContext> cir) {
++        ChunkRenderContext context = cir.getReturnValue();
++        if (context != null && level instanceof ClientLevel client) {
++            ((SodiumSeamClipSnapshotAccess) context).seamlessportals$setSeamClipSnapshot(
++                SeamClipRenderer.captureSodiumSnapshot(client, pos.asLong()));
++        }
++    }
++
++    @Inject(method = "copyData", at = @At("RETURN"), require = 1)
++    private void seamlessportals$adopt(ChunkRenderContext context, CallbackInfo ci) {
++        seamlessportals$seamClipSnapshot =
++            ((SodiumSeamClipSnapshotAccess) context).seamlessportals$getSeamClipSnapshot();
++    }
++
++    @Inject(method = "reset", at = @At("RETURN"), require = 1)
++    private void seamlessportals$release(CallbackInfo ci) {
++        seamlessportals$seamClipSnapshot = null;
++    }
++
++    @Inject(method = "getBlockState(III)Lnet/minecraft/world/level/block/state/BlockState;",
++        at = @At("HEAD"), cancellable = true, require = 1)
++    private void seamlessportals$exclude(int x, int y, int z,
++        CallbackInfoReturnable<BlockState> cir) {
++        var snapshot = seamlessportals$seamClipSnapshot;
++        if (snapshot != null && snapshot.excluded().contains(BlockPos.asLong(x, y, z))) {
++            cir.setReturnValue(Blocks.AIR.defaultBlockState());
++        }
++    }
++
++    @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true, require = 1)
++    private void seamlessportals$preserveFluid(BlockPos pos,
++        CallbackInfoReturnable<FluidState> cir) {
++        var snapshot = seamlessportals$seamClipSnapshot;
++        if (snapshot != null) {
++            FluidState fluid = snapshot.fluids().get(pos.asLong());
++            if (fluid != null) cir.setReturnValue(fluid);
++        }
++    }
++}
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumRenderSection_SeamClip.java b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumRenderSection_SeamClip.java
+new file mode 100644
+index 0000000..cac5473
+--- /dev/null
++++ b/common/src/main/java/qouteall/imm_ptl/core/compat/mixin/sodium/MixinSodiumRenderSection_SeamClip.java
+@@ -0,0 +1,21 @@
++package qouteall.imm_ptl.core.compat.mixin.sodium;
++
++import com.warwa.seamlessportals.render.SeamClipRenderer;
++import net.caffeinemc.mods.sodium.client.render.chunk.RenderSection;
++import net.caffeinemc.mods.sodium.client.render.chunk.data.BuiltSectionInfo;
++import net.minecraft.core.SectionPos;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.Shadow;
++import org.spongepowered.asm.mixin.injection.At;
++import org.spongepowered.asm.mixin.injection.Inject;
++import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
++
++@Mixin(value = RenderSection.class, remap = false)
++public abstract class MixinSodiumRenderSection_SeamClip {
++    @Shadow public abstract SectionPos getPosition();
++
++    @Inject(method = "setInfo", at = @At("RETURN"), require = 1)
++    private void seamlessportals$noteMesh(BuiltSectionInfo info, CallbackInfoReturnable<Integer> cir) {
++        SeamClipRenderer.noteMeshReplaced(getPosition().asLong());
++    }
++}
+diff --git a/common/src/main/resources/seamlessportals-ip-compat.mixins.json b/common/src/main/resources/seamlessportals-ip-compat.mixins.json
+index 2988a59..21d7577 100644
+--- a/common/src/main/resources/seamlessportals-ip-compat.mixins.json
++++ b/common/src/main/resources/seamlessportals-ip-compat.mixins.json
+@@ -8,6 +8,9 @@
+     "sodium.IESodiumWorldRenderer",
+     "sodium.IESodiumCameraTimingControl",
+     "sodium.MixinSodiumRenderSectionManager",
++    "sodium.MixinSodiumChunkRenderContext_SeamClip",
++    "sodium.MixinSodiumLevelSlice_SeamClip",
++    "sodium.MixinSodiumRenderSection_SeamClip",
+     "sodium.MixinSodiumRenderRegion",
+     "sodium.MixinSodiumRenderRegionManager_PortalBatchClear",
+     "sodium.MixinSodiumFlawlessFrames",
