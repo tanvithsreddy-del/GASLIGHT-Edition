@@ -1,0 +1,30 @@
+{
+  "artifact": "work\\gaslight-public-26.3\\fabric\\build\\libs\\seamlessportals-fabric-1.0.0.jar",
+  "sha256": "4eb8d0f7a5e6abbe6e370562f5b443db716e1ee346df762570a46338eb4b4cdb",
+  "bytes": 4416397,
+  "entries": 1332,
+  "mod_id": "seamlessportals",
+  "mod_version": "1.0.0",
+  "minecraft_dependency": ">=26.3",
+  "entrypoints": {
+    "main": [
+      "com.warwa.seamlessportals.fabric.SeamlessPortalsModFabric"
+    ],
+    "client": [
+      "com.warwa.seamlessportals.fabric.SeamlessPortalsClientFabric"
+    ],
+    "fabric-client-gametest": [
+      "com.warwa.seamlessportals.fabric.gametest.TitleCardCapture",
+      "com.warwa.seamlessportals.fabric.gametest.CrossingSmoke"
+    ],
+    "modmenu": [
+      "com.warwa.seamlessportals.fabric.ModMenuIntegration"
+    ]
+  },
+  "has_portal_engine": true,
+  "has_particle_accessor": true,
+  "has_fabric_api_stub": false,
+  "nested_jars": [
+    "META-INF/jars/cloth-config-fabric-26.3.158.jar"
+  ]
+}

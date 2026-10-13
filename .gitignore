@@ -1,6 +1,7 @@
 .gradle/
 **/build/
 **/run/
+**/deps/
 **/saves/
 __pycache__/
 *.mca

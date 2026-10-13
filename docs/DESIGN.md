@@ -76,7 +76,7 @@ These requirements are a release checklist, not a completion score.
 - https://github.com/iPortalTeam/ImmersivePortalsMod (Apache-2.0; archived)
 - https://github.com/CaseBacon/ImmersivePortalsMod/tree/26.3 (commit c5a83c77cb493b4fbab2663a6d4f0de004895ea8)
 - https://github.com/Luke100000/ImmersiveGateways/tree/26.1.2 (commit 4b018a6be9e2ba2b1545af35195f833e799d0ac5)
-- https://github.com/fmpapierz/SeamlessPortals (linked source lacks the advertised engine)
+- https://github.com/fmpapierz/SeamlessPortals (26.3 branch contains the engine; exact commit and local limits in ENGINE_26_3_EVALUATION.md)
 - https://www.curseforge.com/minecraft/mc-mods/immersive-portal/files/8091136
 - https://github.com/UpperMoon0/ImmersivePortals (community NeoForge 1.21.1 profile)
 - https://github.com/EngineHub/WorldEdit (GPLv3; optional editing integration)
