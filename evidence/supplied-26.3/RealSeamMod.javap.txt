@@ -1,0 +1,1462 @@
+Compiled from "RealSeamMod.java"
+public final class dev.kondalabs.seam.RealSeamMod implements net.fabricmc.api.ModInitializer {
+  private static final java.lang.String TAG;
+
+  private static final int TTL;
+
+  private static final int RING_RADIUS_BLOCKS;
+
+  private static final double WINDOW_WIDTH;
+
+  private static final int RECENTER_AFTER;
+
+  private static final int MAX_LOCATION_PROBES;
+
+  private static final int NO_REPEAT_HISTORY;
+
+  private static final int MIN_TRAVEL_CHUNKS;
+
+  private static final int MAX_TRAVEL_CHUNKS;
+
+  private final java.util.ArrayDeque<java.lang.Long> recentLocations;
+
+  private final java.util.Map<java.util.UUID, dev.kondalabs.seam.RealSeamMod$Session> sessions;
+
+  public dev.kondalabs.seam.RealSeamMod();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: new           #7                  // class java/util/ArrayDeque
+         8: dup
+         9: invokespecial #9                  // Method java/util/ArrayDeque."<init>":()V
+        12: putfield      #10                 // Field recentLocations:Ljava/util/ArrayDeque;
+        15: aload_0
+        16: new           #16                 // class java/util/HashMap
+        19: dup
+        20: invokespecial #18                 // Method java/util/HashMap."<init>":()V
+        23: putfield      #19                 // Field sessions:Ljava/util/Map;
+        26: return
+
+  private static double snap(double);
+    Code:
+         0: dload_0
+         1: ldc2_w        #23                 // double 16.0d
+         4: ddiv
+         5: invokestatic  #25                 // Method java/lang/Math.floor:(D)D
+         8: ldc2_w        #23                 // double 16.0d
+        11: dmul
+        12: ldc2_w        #31                 // double 8.0d
+        15: dadd
+        16: dreturn
+
+  public void onInitialize();
+    Code:
+         0: getstatic     #33                 // Field net/fabricmc/fabric/api/command/v2/CommandRegistrationCallback.EVENT:Lnet/fabricmc/fabric/api/event/Event;
+         3: aload_0
+         4: invokedynamic #39,  0             // InvokeDynamic #0:register:(Ldev/kondalabs/seam/RealSeamMod;)Lnet/fabricmc/fabric/api/command/v2/CommandRegistrationCallback;
+         9: invokevirtual #43                 // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+        12: invokestatic  #48                 // Method com/warwa/seamlessportals/config/SeamlessPortalsConfig.get:()Lcom/warwa/seamlessportals/config/SeamlessPortalsConfig;
+        15: astore_1
+        16: aload_1
+        17: iconst_0
+        18: invokevirtual #54                 // Method com/warwa/seamlessportals/config/SeamlessPortalsConfig.setAutoRenderDistance:(Z)V
+        21: aload_1
+        22: iconst_4
+        23: invokevirtual #58                 // Method com/warwa/seamlessportals/config/SeamlessPortalsConfig.setPortalRenderDistance:(I)V
+        26: aload_1
+        27: iconst_0
+        28: invokevirtual #62                 // Method com/warwa/seamlessportals/config/SeamlessPortalsConfig.setSpeculativePrewarm:(Z)V
+        31: aload_1
+        32: iconst_0
+        33: invokevirtual #65                 // Method com/warwa/seamlessportals/config/SeamlessPortalsConfig.setUnboundedClientChunkStore:(Z)V
+        36: iconst_1
+        37: putstatic     #68                 // Field qouteall/imm_ptl/core/IPGlobal.maxPortalLayer:I
+        40: iconst_4
+        41: putstatic     #74                 // Field qouteall/imm_ptl/core/IPGlobal.indirectLoadingRadiusCap:I
+        44: iconst_4
+        45: putstatic     #77                 // Field qouteall/imm_ptl/core/IPGlobal.portalChainLoaderBudget:I
+        48: iconst_0
+        49: putstatic     #80                 // Field qouteall/imm_ptl/core/IPGlobal.deepPortalLoadingReach:Z
+        52: iconst_0
+        53: putstatic     #84                 // Field qouteall/imm_ptl/core/IPGlobal.correctCrossPortalEntityRendering:Z
+        56: iconst_0
+        57: putstatic     #87                 // Field qouteall/imm_ptl/core/IPGlobal.checkModInfoFromInternet:Z
+        60: iconst_1
+        61: putstatic     #90                 // Field qouteall/imm_ptl/core/IPGlobal.debugSkipPortalEntities:Z
+        64: iconst_1
+        65: putstatic     #93                 // Field qouteall/imm_ptl/core/IPGlobal.debugSkipSameDimEntities:Z
+        68: iconst_0
+        69: putstatic     #96                 // Field qouteall/imm_ptl/core/IPGlobal.renderYourselfInPortal:Z
+        72: getstatic     #99                 // Field net/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents.END_SERVER_TICK:Lnet/fabricmc/fabric/api/event/Event;
+        75: aload_0
+        76: invokedynamic #104,  0            // InvokeDynamic #1:onEndTick:(Ldev/kondalabs/seam/RealSeamMod;)Lnet/fabricmc/fabric/api/event/lifecycle/v1/ServerTickEvents$EndTick;
+        81: invokevirtual #43                 // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+        84: getstatic     #108                // Field net/fabricmc/fabric/api/event/lifecycle/v1/ServerLifecycleEvents.SERVER_STARTED:Lnet/fabricmc/fabric/api/event/Event;
+        87: aload_0
+        88: invokedynamic #113,  0            // InvokeDynamic #2:onServerStarted:(Ldev/kondalabs/seam/RealSeamMod;)Lnet/fabricmc/fabric/api/event/lifecycle/v1/ServerLifecycleEvents$ServerStarted;
+        93: invokevirtual #43                 // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+        96: getstatic     #117                // Field net/fabricmc/fabric/api/event/lifecycle/v1/ServerLifecycleEvents.SERVER_STOPPING:Lnet/fabricmc/fabric/api/event/Event;
+        99: aload_0
+       100: invokedynamic #120,  0            // InvokeDynamic #3:onServerStopping:(Ldev/kondalabs/seam/RealSeamMod;)Lnet/fabricmc/fabric/api/event/lifecycle/v1/ServerLifecycleEvents$ServerStopping;
+       105: invokevirtual #43                 // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+       108: return
+
+  private int create(net.minecraft.server.level.ServerPlayer, dev.kondalabs.seam.RealSeamMod$Kind);
+    Code:
+         0: aload_0
+         1: getfield      #19                 // Field sessions:Ljava/util/Map;
+         4: aload_1
+         5: invokevirtual #124                // Method net/minecraft/server/level/ServerPlayer.getUUID:()Ljava/util/UUID;
+         8: invokeinterface #130,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+        13: checkcast     #136                // class dev/kondalabs/seam/RealSeamMod$Session
+        16: astore_3
+        17: aload_3
+        18: ifnull        25
+        21: aload_3
+        22: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+        25: new           #136                // class dev/kondalabs/seam/RealSeamMod$Session
+        28: dup
+        29: aload_1
+        30: aload_2
+        31: invokespecial #142                // Method dev/kondalabs/seam/RealSeamMod$Session."<init>":(Lnet/minecraft/server/level/ServerPlayer;Ldev/kondalabs/seam/RealSeamMod$Kind;)V
+        34: astore        4
+        36: aload_0
+        37: aload_1
+        38: aload         4
+        40: invokevirtual #145                // Method chooseDestination:(Lnet/minecraft/server/level/ServerPlayer;Ldev/kondalabs/seam/RealSeamMod$Session;)Z
+        43: ifne          57
+        46: aload_1
+        47: ldc           #149                // String [GASLIGHT] No suitable destination could be prepared.
+        49: invokestatic  #151                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+        52: invokevirtual #157                // Method net/minecraft/server/level/ServerPlayer.sendSystemMessage:(Lnet/minecraft/network/chat/Component;)V
+        55: iconst_0
+        56: ireturn
+        57: aload_2
+        58: getstatic     #161                // Field dev/kondalabs/seam/RealSeamMod$Kind.CIRCLE:Ldev/kondalabs/seam/RealSeamMod$Kind;
+        61: if_acmpne     70
+        64: aload         4
+        66: dconst_0
+        67: putfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+        70: aload_2
+        71: getstatic     #171                // Field dev/kondalabs/seam/RealSeamMod$Kind.LINE:Ldev/kondalabs/seam/RealSeamMod$Kind;
+        74: if_acmpne     187
+        77: aload         4
+        79: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+        82: ifeq          94
+        85: aload         4
+        87: getfield      #177                // Field dev/kondalabs/seam/RealSeamMod$Session.coordinate:I
+        90: i2d
+        91: goto          99
+        94: aload         4
+        96: getfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+        99: dstore        5
+       101: aload         4
+       103: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+       106: ifeq          117
+       109: aload         4
+       111: getfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+       114: goto          123
+       117: aload         4
+       119: getfield      #177                // Field dev/kondalabs/seam/RealSeamMod$Session.coordinate:I
+       122: i2d
+       123: dstore        7
+       125: aload_0
+       126: aload         4
+       128: new           #180                // class net/minecraft/world/phys/Vec3
+       131: dup
+       132: dload         5
+       134: aload         4
+       136: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       139: invokestatic  #186                // Method yCenter:(Lnet/minecraft/server/level/ServerLevel;)D
+       142: dload         7
+       144: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       147: aload         4
+       149: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+       152: ifeq          168
+       155: new           #180                // class net/minecraft/world/phys/Vec3
+       158: dup
+       159: dconst_0
+       160: dconst_0
+       161: dconst_1
+       162: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       165: goto          178
+       168: new           #180                // class net/minecraft/world/phys/Vec3
+       171: dup
+       172: dconst_1
+       173: dconst_0
+       174: dconst_0
+       175: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       178: ldc2_w        #193                // double 512.0d
+       181: invokevirtual #195                // Method buildPair:(Ldev/kondalabs/seam/RealSeamMod$Session;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;D)V
+       184: goto          421
+       187: aload_1
+       188: invokevirtual #199                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       191: invokestatic  #25                 // Method java/lang/Math.floor:(D)D
+       194: d2i
+       195: istore        5
+       197: aload_1
+       198: invokevirtual #203                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       201: invokestatic  #25                 // Method java/lang/Math.floor:(D)D
+       204: d2i
+       205: istore        6
+       207: iconst_5
+       208: invokestatic  #206                // Method contour:(I)Ljava/util/List;
+       211: astore        7
+       213: aload         7
+       215: invokeinterface #210,  1          // InterfaceMethod java/util/List.size:()I
+       220: bipush        48
+       222: if_icmple     235
+       225: new           #216                // class java/lang/IllegalStateException
+       228: dup
+       229: ldc           #218                // String ring segment cap
+       231: invokespecial #220                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+       234: athrow
+       235: aload         7
+       237: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       242: astore        8
+       244: aload         8
+       246: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       251: ifeq          421
+       254: aload         8
+       256: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       261: checkcast     #237                // class dev/kondalabs/seam/RealSeamMod$Edge
+       264: astore        9
+       266: aload         9
+       268: getfield      #239                // Field dev/kondalabs/seam/RealSeamMod$Edge.constantX:Z
+       271: ifeq          286
+       274: iload         5
+       276: aload         9
+       278: getfield      #242                // Field dev/kondalabs/seam/RealSeamMod$Edge.planeCoordinate:I
+       281: iadd
+       282: i2d
+       283: goto          306
+       286: iload         5
+       288: i2d
+       289: aload         9
+       291: getfield      #245                // Field dev/kondalabs/seam/RealSeamMod$Edge.start:I
+       294: aload         9
+       296: getfield      #248                // Field dev/kondalabs/seam/RealSeamMod$Edge.end:I
+       299: iadd
+       300: i2d
+       301: ldc2_w        #251                // double 2.0d
+       304: ddiv
+       305: dadd
+       306: dstore        10
+       308: aload         9
+       310: getfield      #239                // Field dev/kondalabs/seam/RealSeamMod$Edge.constantX:Z
+       313: ifeq          339
+       316: iload         6
+       318: i2d
+       319: aload         9
+       321: getfield      #245                // Field dev/kondalabs/seam/RealSeamMod$Edge.start:I
+       324: aload         9
+       326: getfield      #248                // Field dev/kondalabs/seam/RealSeamMod$Edge.end:I
+       329: iadd
+       330: i2d
+       331: ldc2_w        #251                // double 2.0d
+       334: ddiv
+       335: dadd
+       336: goto          348
+       339: iload         6
+       341: aload         9
+       343: getfield      #242                // Field dev/kondalabs/seam/RealSeamMod$Edge.planeCoordinate:I
+       346: iadd
+       347: i2d
+       348: dstore        12
+       350: aload_0
+       351: aload         4
+       353: new           #180                // class net/minecraft/world/phys/Vec3
+       356: dup
+       357: dload         10
+       359: aload         4
+       361: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       364: invokestatic  #186                // Method yCenter:(Lnet/minecraft/server/level/ServerLevel;)D
+       367: dload         12
+       369: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       372: aload         9
+       374: getfield      #239                // Field dev/kondalabs/seam/RealSeamMod$Edge.constantX:Z
+       377: ifeq          393
+       380: new           #180                // class net/minecraft/world/phys/Vec3
+       383: dup
+       384: dconst_0
+       385: dconst_0
+       386: dconst_1
+       387: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       390: goto          403
+       393: new           #180                // class net/minecraft/world/phys/Vec3
+       396: dup
+       397: dconst_1
+       398: dconst_0
+       399: dconst_0
+       400: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       403: aload         9
+       405: getfield      #248                // Field dev/kondalabs/seam/RealSeamMod$Edge.end:I
+       408: aload         9
+       410: getfield      #245                // Field dev/kondalabs/seam/RealSeamMod$Edge.start:I
+       413: isub
+       414: i2d
+       415: invokevirtual #195                // Method buildPair:(Ldev/kondalabs/seam/RealSeamMod$Session;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;D)V
+       418: goto          244
+       421: aload         4
+       423: getfield      #253                // Field dev/kondalabs/seam/RealSeamMod$Session.pairs:Ljava/util/List;
+       426: invokeinterface #257,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+       431: ifeq          445
+       434: new           #216                // class java/lang/IllegalStateException
+       437: dup
+       438: ldc_w         #260                // String no portals created
+       441: invokespecial #220                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+       444: athrow
+       445: aload_0
+       446: getfield      #19                 // Field sessions:Ljava/util/Map;
+       449: aload         4
+       451: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+       454: aload         4
+       456: invokeinterface #266,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       461: pop
+       462: iconst_1
+       463: ireturn
+       464: astore        5
+       466: aload         4
+       468: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+       471: aload_1
+       472: aload         5
+       474: invokevirtual #272                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+       477: invokevirtual #276                // Method java/lang/Class.getSimpleName:()Ljava/lang/String;
+       480: aload         5
+       482: invokevirtual #282                // Method java/lang/RuntimeException.getMessage:()Ljava/lang/String;
+       485: invokestatic  #285                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       488: invokedynamic #291,  0            // InvokeDynamic #4:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+       493: invokestatic  #151                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+       496: invokevirtual #157                // Method net/minecraft/server/level/ServerPlayer.sendSystemMessage:(Lnet/minecraft/network/chat/Component;)V
+       499: iconst_0
+       500: ireturn
+      Exception table:
+         from    to  target type
+            70   463   464   Class java/lang/RuntimeException
+
+  private boolean chooseDestination(net.minecraft.server.level.ServerPlayer, dev.kondalabs.seam.RealSeamMod$Session);
+    Code:
+         0: invokestatic  #295                // Method java/util/concurrent/ThreadLocalRandom.current:()Ljava/util/concurrent/ThreadLocalRandom;
+         3: astore_3
+         4: aload_1
+         5: invokevirtual #199                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+         8: invokestatic  #25                 // Method java/lang/Math.floor:(D)D
+        11: d2i
+        12: istore        4
+        14: aload_1
+        15: invokevirtual #203                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+        18: invokestatic  #25                 // Method java/lang/Math.floor:(D)D
+        21: d2i
+        22: istore        5
+        24: aload_1
+        25: invokevirtual #301                // Method net/minecraft/server/level/ServerPlayer.blockPosition:()Lnet/minecraft/core/BlockPos;
+        28: invokevirtual #305                // Method net/minecraft/core/BlockPos.getY:()I
+        31: istore        6
+        33: aload_2
+        34: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        37: getstatic     #310                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+        40: iload         4
+        42: iload         5
+        44: invokevirtual #316                // Method net/minecraft/server/level/ServerLevel.getHeight:(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I
+        47: istore        7
+        49: aload_2
+        50: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        53: aload_1
+        54: invokevirtual #301                // Method net/minecraft/server/level/ServerPlayer.blockPosition:()Lnet/minecraft/core/BlockPos;
+        57: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        60: invokevirtual #326                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+        63: ifeq          90
+        66: aload_2
+        67: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        70: aload_1
+        71: invokevirtual #301                // Method net/minecraft/server/level/ServerPlayer.blockPosition:()Lnet/minecraft/core/BlockPos;
+        74: invokevirtual #331                // Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;
+        77: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        80: invokevirtual #326                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+        83: ifeq          90
+        86: iconst_1
+        87: goto          91
+        90: iconst_0
+        91: istore        8
+        93: ldc2_w        #336                // double Infinityd
+        96: dstore        9
+        98: iconst_0
+        99: istore        11
+       101: iconst_0
+       102: istore        12
+       104: lconst_0
+       105: lstore        13
+       107: iconst_0
+       108: istore        15
+       110: iload         15
+       112: iconst_2
+       113: if_icmpge     483
+       116: aload_3
+       117: ldc_w         #338                // int -500000
+       120: ldc_w         #339                // int 500001
+       123: invokevirtual #340                // Method java/util/concurrent/ThreadLocalRandom.nextInt:(II)I
+       126: istore        16
+       128: aload_3
+       129: ldc_w         #338                // int -500000
+       132: ldc_w         #339                // int 500001
+       135: invokevirtual #340                // Method java/util/concurrent/ThreadLocalRandom.nextInt:(II)I
+       138: istore        17
+       140: iload         16
+       142: invokestatic  #344                // Method java/lang/Math.abs:(I)I
+       145: iload         17
+       147: invokestatic  #344                // Method java/lang/Math.abs:(I)I
+       150: iadd
+       151: sipush        20000
+       154: if_icmpge     160
+       157: goto          477
+       160: iload         16
+       162: i2l
+       163: bipush        32
+       165: lshl
+       166: iload         17
+       168: i2l
+       169: ldc2_w        #348                // long 4294967295l
+       172: land
+       173: lxor
+       174: lstore        18
+       176: aload_0
+       177: getfield      #10                 // Field recentLocations:Ljava/util/ArrayDeque;
+       180: lload         18
+       182: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       185: invokevirtual #355                // Method java/util/ArrayDeque.contains:(Ljava/lang/Object;)Z
+       188: ifeq          194
+       191: goto          477
+       194: iload         16
+       196: bipush        16
+       198: imul
+       199: istore        20
+       201: iload         17
+       203: bipush        16
+       205: imul
+       206: istore        21
+       208: aload_1
+       209: invokevirtual #199                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       212: iload         20
+       214: i2d
+       215: dadd
+       216: dstore        22
+       218: aload_1
+       219: invokevirtual #203                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       222: iload         21
+       224: i2d
+       225: dadd
+       226: dstore        24
+       228: aload_2
+       229: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       232: new           #180                // class net/minecraft/world/phys/Vec3
+       235: dup
+       236: dload         22
+       238: aload_1
+       239: invokevirtual #359                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+       242: dload         24
+       244: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       247: invokestatic  #361                // Method validPoint:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;)Z
+       250: ifne          256
+       253: goto          477
+       256: iload         4
+       258: iload         20
+       260: iadd
+       261: istore        26
+       263: iload         5
+       265: iload         21
+       267: iadd
+       268: istore        27
+       270: aload_2
+       271: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       274: getstatic     #310                // Field net/minecraft/world/level/levelgen/Heightmap$Types.MOTION_BLOCKING_NO_LEAVES:Lnet/minecraft/world/level/levelgen/Heightmap$Types;
+       277: iload         26
+       279: iload         27
+       281: invokevirtual #316                // Method net/minecraft/server/level/ServerLevel.getHeight:(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I
+       284: istore        28
+       286: new           #306                // class net/minecraft/core/BlockPos
+       289: dup
+       290: iload         26
+       292: iload         6
+       294: iload         27
+       296: invokespecial #365                // Method net/minecraft/core/BlockPos."<init>":(III)V
+       299: astore        29
+       301: aload_2
+       302: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       305: aload         29
+       307: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       310: invokevirtual #326                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+       313: ifeq          338
+       316: aload_2
+       317: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       320: aload         29
+       322: invokevirtual #331                // Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;
+       325: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       328: invokevirtual #326                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+       331: ifeq          338
+       334: iconst_1
+       335: goto          339
+       338: iconst_0
+       339: istore        30
+       341: aload_2
+       342: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       345: aload         29
+       347: invokevirtual #368                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+       350: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       353: invokevirtual #371                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+       356: aload_2
+       357: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       360: aload_1
+       361: invokevirtual #301                // Method net/minecraft/server/level/ServerPlayer.blockPosition:()Lnet/minecraft/core/BlockPos;
+       364: invokevirtual #368                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+       367: invokevirtual #322                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       370: invokevirtual #371                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;
+       373: if_acmpne     380
+       376: iconst_1
+       377: goto          381
+       380: iconst_0
+       381: istore        31
+       383: iload         28
+       385: iload         7
+       387: isub
+       388: invokestatic  #344                // Method java/lang/Math.abs:(I)I
+       391: i2d
+       392: ldc2_w        #251                // double 2.0d
+       395: dmul
+       396: iload         8
+       398: iload         30
+       400: if_icmpeq     408
+       403: bipush        40
+       405: goto          409
+       408: iconst_0
+       409: i2d
+       410: dadd
+       411: iload         30
+       413: ifeq          420
+       416: iconst_0
+       417: goto          422
+       420: bipush        18
+       422: i2d
+       423: dadd
+       424: iload         31
+       426: ifeq          434
+       429: bipush        -12
+       431: goto          435
+       434: iconst_0
+       435: i2d
+       436: dadd
+       437: aload_3
+       438: dconst_0
+       439: ldc2_w        #251                // double 2.0d
+       442: invokevirtual #375                // Method java/util/concurrent/ThreadLocalRandom.nextDouble:(DD)D
+       445: dadd
+       446: dstore        32
+       448: dload         32
+       450: dload         9
+       452: dcmpg
+       453: ifge          472
+       456: dload         32
+       458: dstore        9
+       460: iload         20
+       462: istore        11
+       464: iload         21
+       466: istore        12
+       468: lload         18
+       470: lstore        13
+       472: goto          477
+       475: astore        26
+       477: iinc          15, 1
+       480: goto          110
+       483: dload         9
+       485: invokestatic  #379                // Method java/lang/Double.isFinite:(D)Z
+       488: ifne          493
+       491: iconst_0
+       492: ireturn
+       493: aload_2
+       494: iload         11
+       496: i2d
+       497: putfield      #383                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaX:D
+       500: aload_2
+       501: iload         12
+       503: i2d
+       504: putfield      #386                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaZ:D
+       507: aload_0
+       508: getfield      #10                 // Field recentLocations:Ljava/util/ArrayDeque;
+       511: lload         13
+       513: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       516: invokevirtual #389                // Method java/util/ArrayDeque.addLast:(Ljava/lang/Object;)V
+       519: aload_0
+       520: getfield      #10                 // Field recentLocations:Ljava/util/ArrayDeque;
+       523: invokevirtual #392                // Method java/util/ArrayDeque.size:()I
+       526: bipush        32
+       528: if_icmple     542
+       531: aload_0
+       532: getfield      #10                 // Field recentLocations:Ljava/util/ArrayDeque;
+       535: invokevirtual #393                // Method java/util/ArrayDeque.removeFirst:()Ljava/lang/Object;
+       538: pop
+       539: goto          519
+       542: iconst_1
+       543: ireturn
+      Exception table:
+         from    to  target type
+           256   472   475   Class java/lang/RuntimeException
+
+  private static double yCenter(net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: invokevirtual #396                // Method net/minecraft/server/level/ServerLevel.getMinY:()I
+         4: aload_0
+         5: invokevirtual #399                // Method net/minecraft/server/level/ServerLevel.getMaxY:()I
+         8: iadd
+         9: i2d
+        10: ldc2_w        #251                // double 2.0d
+        13: ddiv
+        14: dreturn
+
+  private static double ySpan(net.minecraft.server.level.ServerLevel);
+    Code:
+         0: aload_0
+         1: invokevirtual #399                // Method net/minecraft/server/level/ServerLevel.getMaxY:()I
+         4: aload_0
+         5: invokevirtual #396                // Method net/minecraft/server/level/ServerLevel.getMinY:()I
+         8: isub
+         9: i2d
+        10: dreturn
+
+  private static boolean validPoint(net.minecraft.server.level.ServerLevel, net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_1
+         1: getfield      #402                // Field net/minecraft/world/phys/Vec3.x:D
+         4: invokestatic  #379                // Method java/lang/Double.isFinite:(D)Z
+         7: ifeq          76
+        10: aload_1
+        11: getfield      #405                // Field net/minecraft/world/phys/Vec3.y:D
+        14: invokestatic  #379                // Method java/lang/Double.isFinite:(D)Z
+        17: ifeq          76
+        20: aload_1
+        21: getfield      #408                // Field net/minecraft/world/phys/Vec3.z:D
+        24: invokestatic  #379                // Method java/lang/Double.isFinite:(D)Z
+        27: ifeq          76
+        30: aload_1
+        31: getfield      #402                // Field net/minecraft/world/phys/Vec3.x:D
+        34: invokestatic  #411                // Method java/lang/Math.abs:(D)D
+        37: ldc2_w        #413                // double 2.999998E7d
+        40: dcmpg
+        41: ifgt          76
+        44: aload_1
+        45: getfield      #408                // Field net/minecraft/world/phys/Vec3.z:D
+        48: invokestatic  #411                // Method java/lang/Math.abs:(D)D
+        51: ldc2_w        #413                // double 2.999998E7d
+        54: dcmpg
+        55: ifgt          76
+        58: aload_0
+        59: invokevirtual #415                // Method net/minecraft/server/level/ServerLevel.getWorldBorder:()Lnet/minecraft/world/level/border/WorldBorder;
+        62: aload_1
+        63: invokestatic  #419                // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+        66: invokevirtual #423                // Method net/minecraft/world/level/border/WorldBorder.isWithinBounds:(Lnet/minecraft/core/BlockPos;)Z
+        69: ifeq          76
+        72: iconst_1
+        73: goto          77
+        76: iconst_0
+        77: ireturn
+
+  private void buildPair(dev.kondalabs.seam.RealSeamMod$Session, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, double);
+    Code:
+         0: aload_2
+         1: aload_1
+         2: getfield      #383                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaX:D
+         5: dconst_0
+         6: aload_1
+         7: getfield      #386                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaZ:D
+        10: invokevirtual #429                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+        13: astore        6
+        15: aload_1
+        16: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        19: aload_2
+        20: invokestatic  #361                // Method validPoint:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;)Z
+        23: ifeq          38
+        26: aload_1
+        27: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        30: aload         6
+        32: invokestatic  #361                // Method validPoint:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;)Z
+        35: ifne          49
+        38: new           #433                // class java/lang/IllegalArgumentException
+        41: dup
+        42: ldc_w         #435                // String portal outside border
+        45: invokespecial #437                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+        48: athrow
+        49: getstatic     #438                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.ENTITY_TYPE:Lnet/minecraft/world/entity/EntityType;
+        52: aload_1
+        53: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        56: getstatic     #444                // Field net/minecraft/world/entity/EntitySpawnReason.LOAD:Lnet/minecraft/world/entity/EntitySpawnReason;
+        59: invokevirtual #450                // Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/EntitySpawnReason;)Lnet/minecraft/world/entity/Entity;
+        62: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+        65: astore        7
+        67: aload         7
+        69: ifnonnull     83
+        72: new           #216                // class java/lang/IllegalStateException
+        75: dup
+        76: ldc_w         #456                // String provider portal entity unavailable
+        79: invokespecial #220                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+        82: athrow
+        83: aload         7
+        85: aload_2
+        86: invokevirtual #458                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setOriginPos:(Lnet/minecraft/world/phys/Vec3;)V
+        89: aload         7
+        91: aload_3
+        92: new           #180                // class net/minecraft/world/phys/Vec3
+        95: dup
+        96: dconst_0
+        97: dconst_1
+        98: dconst_0
+        99: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       102: dload         4
+       104: aload_1
+       105: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       108: invokestatic  #462                // Method ySpan:(Lnet/minecraft/server/level/ServerLevel;)D
+       111: invokevirtual #465                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setOrientationAndSize:(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;DD)V
+       114: aload         7
+       116: aload_1
+       117: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       120: invokevirtual #469                // Method net/minecraft/server/level/ServerLevel.dimension:()Lnet/minecraft/resources/ResourceKey;
+       123: invokevirtual #473                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setDestinationDimension:(Lnet/minecraft/resources/ResourceKey;)V
+       126: aload         7
+       128: aload         6
+       130: invokevirtual #477                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setDestination:(Lnet/minecraft/world/phys/Vec3;)V
+       133: aload         7
+       135: invokevirtual #480                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setPortalShapeToDefault:()V
+       138: aload         7
+       140: aload_1
+       141: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+       144: putfield      #483                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.specificPlayerId:Ljava/util/UUID;
+       147: aload         7
+       149: aload_1
+       150: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+       153: invokestatic  #285                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       156: invokedynamic #486,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       161: putfield      #489                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.portalTag:Ljava/lang/String;
+       164: aload         7
+       166: invokestatic  #493                // Method qouteall/imm_ptl/core/api/PortalAPI.createFlippedPortal:(Lqouteall/imm_ptl/core/portal/Portal;)Lqouteall/imm_ptl/core/portal/Portal;
+       169: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       172: astore        8
+       174: aload         7
+       176: invokestatic  #499                // Method qouteall/imm_ptl/core/api/PortalAPI.createReversePortal:(Lqouteall/imm_ptl/core/portal/Portal;)Lqouteall/imm_ptl/core/portal/Portal;
+       179: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       182: astore        9
+       184: aload         9
+       186: invokestatic  #493                // Method qouteall/imm_ptl/core/api/PortalAPI.createFlippedPortal:(Lqouteall/imm_ptl/core/portal/Portal;)Lqouteall/imm_ptl/core/portal/Portal;
+       189: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       192: astore        10
+       194: aload         8
+       196: aload         9
+       198: aload         10
+       200: invokestatic  #502                // InterfaceMethod java/util/List.of:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/List;
+       203: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       208: astore        11
+       210: aload         11
+       212: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       217: ifeq          261
+       220: aload         11
+       222: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       227: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       230: astore        12
+       232: aload         12
+       234: aload_1
+       235: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+       238: invokestatic  #285                // Method java/lang/String.valueOf:(Ljava/lang/Object;)Ljava/lang/String;
+       241: invokedynamic #486,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+       246: putfield      #489                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.portalTag:Ljava/lang/String;
+       249: aload         12
+       251: aload_1
+       252: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+       255: putfield      #483                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.specificPlayerId:Ljava/util/UUID;
+       258: goto          210
+       261: new           #506                // class dev/kondalabs/seam/RealSeamMod$QuadPair
+       264: dup
+       265: aload         7
+       267: aload         8
+       269: aload         9
+       271: aload         10
+       273: aload_1
+       274: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       277: invokespecial #508                // Method dev/kondalabs/seam/RealSeamMod$QuadPair."<init>":(Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;Lnet/minecraft/server/level/ServerLevel;)V
+       280: astore        11
+       282: aload_1
+       283: getfield      #253                // Field dev/kondalabs/seam/RealSeamMod$Session.pairs:Ljava/util/List;
+       286: aload         11
+       288: invokeinterface #511,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       293: pop
+       294: aload         11
+       296: invokevirtual #513                // Method dev/kondalabs/seam/RealSeamMod$QuadPair.all:()Ljava/util/List;
+       299: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       304: astore        12
+       306: aload         12
+       308: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       313: ifeq          359
+       316: aload         12
+       318: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       323: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       326: astore        13
+       328: aload         13
+       330: invokevirtual #517                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.isPortalValid:()Z
+       333: ifne          347
+       336: new           #216                // class java/lang/IllegalStateException
+       339: dup
+       340: ldc_w         #520                // String invalid provider portal
+       343: invokespecial #220                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+       346: athrow
+       347: aload_1
+       348: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       351: aload         13
+       353: invokestatic  #522                // Method qouteall/imm_ptl/core/api/PortalAPI.addGlobalPortal:(Lnet/minecraft/server/level/ServerLevel;Lqouteall/imm_ptl/core/portal/Portal;)V
+       356: goto          306
+       359: return
+
+  private static void retire(dev.kondalabs.seam.RealSeamMod$Session);
+    Code:
+         0: aload_0
+         1: getfield      #253                // Field dev/kondalabs/seam/RealSeamMod$Session.pairs:Ljava/util/List;
+         4: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+         9: astore_1
+        10: aload_1
+        11: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        16: ifeq          98
+        19: aload_1
+        20: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        25: checkcast     #506                // class dev/kondalabs/seam/RealSeamMod$QuadPair
+        28: astore_2
+        29: aload_2
+        30: invokevirtual #513                // Method dev/kondalabs/seam/RealSeamMod$QuadPair.all:()Ljava/util/List;
+        33: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        38: astore_3
+        39: aload_3
+        40: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        45: ifeq          95
+        48: aload_3
+        49: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        54: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+        57: astore        4
+        59: aload_2
+        60: getfield      #526                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.level:Lnet/minecraft/server/level/ServerLevel;
+        63: invokestatic  #527                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.get:(Lnet/minecraft/server/level/ServerLevel;)Lqouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage;
+        66: astore        5
+        68: aload         5
+        70: getfield      #532                // Field qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.data:Ljava/util/List;
+        73: aload         4
+        75: invokeinterface #535,  2          // InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z
+        80: ifeq          92
+        83: aload_2
+        84: getfield      #526                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.level:Lnet/minecraft/server/level/ServerLevel;
+        87: aload         4
+        89: invokestatic  #536                // Method qouteall/imm_ptl/core/api/PortalAPI.removeGlobalPortal:(Lnet/minecraft/server/level/ServerLevel;Lqouteall/imm_ptl/core/portal/Portal;)V
+        92: goto          39
+        95: goto          10
+        98: aload_0
+        99: getfield      #253                // Field dev/kondalabs/seam/RealSeamMod$Session.pairs:Ljava/util/List;
+       102: invokeinterface #539,  1          // InterfaceMethod java/util/List.clear:()V
+       107: return
+
+  private void tick(net.minecraft.server.MinecraftServer);
+    Code:
+         0: aload_0
+         1: getfield      #19                 // Field sessions:Ljava/util/Map;
+         4: invokeinterface #542,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+         9: invokeinterface #546,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+        14: astore_2
+        15: aload_2
+        16: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        21: ifeq          157
+        24: aload_2
+        25: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        30: checkcast     #549                // class java/util/Map$Entry
+        33: invokeinterface #551,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+        38: checkcast     #136                // class dev/kondalabs/seam/RealSeamMod$Session
+        41: astore_3
+        42: aload_1
+        43: invokevirtual #554                // Method net/minecraft/server/MinecraftServer.getPlayerList:()Lnet/minecraft/server/players/PlayerList;
+        46: aload_3
+        47: getfield      #262                // Field dev/kondalabs/seam/RealSeamMod$Session.owner:Ljava/util/UUID;
+        50: invokevirtual #560                // Method net/minecraft/server/players/PlayerList.getPlayer:(Ljava/util/UUID;)Lnet/minecraft/server/level/ServerPlayer;
+        53: astore        4
+        55: aload         4
+        57: ifnull        72
+        60: aload         4
+        62: invokevirtual #566                // Method net/minecraft/server/level/ServerPlayer.level:()Lnet/minecraft/server/level/ServerLevel;
+        65: aload_3
+        66: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+        69: if_acmpeq     85
+        72: aload_3
+        73: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+        76: aload_2
+        77: invokeinterface #569,  1          // InterfaceMethod java/util/Iterator.remove:()V
+        82: goto          15
+        85: aload_3
+        86: dup
+        87: getfield      #571                // Field dev/kondalabs/seam/RealSeamMod$Session.ticksLeft:I
+        90: iconst_1
+        91: isub
+        92: dup_x1
+        93: putfield      #571                // Field dev/kondalabs/seam/RealSeamMod$Session.ticksLeft:I
+        96: ifgt          112
+        99: aload_3
+       100: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+       103: aload_2
+       104: invokeinterface #569,  1          // InterfaceMethod java/util/Iterator.remove:()V
+       109: goto          15
+       112: aload_3
+       113: getfield      #574                // Field dev/kondalabs/seam/RealSeamMod$Session.kind:Ldev/kondalabs/seam/RealSeamMod$Kind;
+       116: getstatic     #171                // Field dev/kondalabs/seam/RealSeamMod$Kind.LINE:Ldev/kondalabs/seam/RealSeamMod$Kind;
+       119: if_acmpne     154
+       122: aload_3
+       123: aload         4
+       125: invokestatic  #577                // Method recenterWindow:(Ldev/kondalabs/seam/RealSeamMod$Session;Lnet/minecraft/server/level/ServerPlayer;)V
+       128: goto          154
+       131: astore        5
+       133: aload_3
+       134: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+       137: aload_2
+       138: invokeinterface #569,  1          // InterfaceMethod java/util/Iterator.remove:()V
+       143: aload         4
+       145: ldc_w         #581                // String [GASLIGHT] Seam repositioning failed; temporary seam removed.
+       148: invokestatic  #151                // InterfaceMethod net/minecraft/network/chat/Component.literal:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+       151: invokevirtual #157                // Method net/minecraft/server/level/ServerPlayer.sendSystemMessage:(Lnet/minecraft/network/chat/Component;)V
+       154: goto          15
+       157: return
+      Exception table:
+         from    to  target type
+           122   128   131   Class java/lang/RuntimeException
+
+  private static void recenterWindow(dev.kondalabs.seam.RealSeamMod$Session, net.minecraft.server.level.ServerPlayer);
+    Code:
+         0: aload_0
+         1: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+         4: ifeq          14
+         7: aload_1
+         8: invokevirtual #203                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+        11: goto          18
+        14: aload_1
+        15: invokevirtual #199                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+        18: dstore_2
+        19: dload_2
+        20: aload_0
+        21: getfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+        24: dsub
+        25: invokestatic  #411                // Method java/lang/Math.abs:(D)D
+        28: ldc2_w        #583                // double 64.0d
+        31: dcmpg
+        32: ifge          36
+        35: return
+        36: dload_2
+        37: invokestatic  #585                // Method snap:(D)D
+        40: dstore        4
+        42: dload         4
+        44: aload_0
+        45: getfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+        48: dsub
+        49: invokestatic  #411                // Method java/lang/Math.abs:(D)D
+        52: dconst_1
+        53: dcmpg
+        54: ifge          58
+        57: return
+        58: aload_0
+        59: dload         4
+        61: putfield      #167                // Field dev/kondalabs/seam/RealSeamMod$Session.tangentCenter:D
+        64: aload_0
+        65: getfield      #253                // Field dev/kondalabs/seam/RealSeamMod$Session.pairs:Ljava/util/List;
+        68: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        73: astore        6
+        75: aload         6
+        77: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        82: ifeq          292
+        85: aload         6
+        87: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        92: checkcast     #506                // class dev/kondalabs/seam/RealSeamMod$QuadPair
+        95: astore        7
+        97: aload_0
+        98: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+       101: ifeq          112
+       104: aload_0
+       105: getfield      #177                // Field dev/kondalabs/seam/RealSeamMod$Session.coordinate:I
+       108: i2d
+       109: goto          114
+       112: dload         4
+       114: dstore        8
+       116: aload_0
+       117: getfield      #174                // Field dev/kondalabs/seam/RealSeamMod$Session.isXPlane:Z
+       120: ifeq          128
+       123: dload         4
+       125: goto          133
+       128: aload_0
+       129: getfield      #177                // Field dev/kondalabs/seam/RealSeamMod$Session.coordinate:I
+       132: i2d
+       133: dstore        10
+       135: new           #180                // class net/minecraft/world/phys/Vec3
+       138: dup
+       139: dload         8
+       141: aload_0
+       142: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       145: invokestatic  #186                // Method yCenter:(Lnet/minecraft/server/level/ServerLevel;)D
+       148: dload         10
+       150: invokespecial #190                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       153: astore        12
+       155: aload         12
+       157: aload_0
+       158: getfield      #383                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaX:D
+       161: dconst_0
+       162: aload_0
+       163: getfield      #386                // Field dev/kondalabs/seam/RealSeamMod$Session.deltaZ:D
+       166: invokevirtual #429                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+       169: astore        13
+       171: aload         7
+       173: getfield      #588                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.ab:Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;
+       176: aload         7
+       178: getfield      #592                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.abFlipped:Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;
+       181: invokestatic  #595                // InterfaceMethod java/util/List.of:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/List;
+       184: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       189: astore        14
+       191: aload         14
+       193: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       198: ifeq          230
+       201: aload         14
+       203: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       208: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       211: astore        15
+       213: aload         15
+       215: aload         12
+       217: invokevirtual #458                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setOriginPos:(Lnet/minecraft/world/phys/Vec3;)V
+       220: aload         15
+       222: aload         13
+       224: invokevirtual #477                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setDestination:(Lnet/minecraft/world/phys/Vec3;)V
+       227: goto          191
+       230: aload         7
+       232: getfield      #598                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.ba:Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;
+       235: aload         7
+       237: getfield      #601                // Field dev/kondalabs/seam/RealSeamMod$QuadPair.baFlipped:Lqouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal;
+       240: invokestatic  #595                // InterfaceMethod java/util/List.of:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/List;
+       243: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       248: astore        14
+       250: aload         14
+       252: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       257: ifeq          289
+       260: aload         14
+       262: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       267: checkcast     #439                // class qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal
+       270: astore        15
+       272: aload         15
+       274: aload         13
+       276: invokevirtual #458                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setOriginPos:(Lnet/minecraft/world/phys/Vec3;)V
+       279: aload         15
+       281: aload         12
+       283: invokevirtual #477                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalTrackedPortal.setDestination:(Lnet/minecraft/world/phys/Vec3;)V
+       286: goto          250
+       289: goto          75
+       292: aload_0
+       293: getfield      #182                // Field dev/kondalabs/seam/RealSeamMod$Session.level:Lnet/minecraft/server/level/ServerLevel;
+       296: invokestatic  #527                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.get:(Lnet/minecraft/server/level/ServerLevel;)Lqouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage;
+       299: invokevirtual #604                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.onDataChanged:()V
+       302: return
+
+  static java.util.List<dev.kondalabs.seam.RealSeamMod$Edge> contour(int);
+    Code:
+         0: iload_0
+         1: iconst_3
+         2: if_icmplt     11
+         5: iload_0
+         6: bipush        10
+         8: if_icmple     22
+        11: new           #433                // class java/lang/IllegalArgumentException
+        14: dup
+        15: ldc_w         #607                // String radius
+        18: invokespecial #437                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+        21: athrow
+        22: new           #609                // class java/util/HashSet
+        25: dup
+        26: invokespecial #611                // Method java/util/HashSet."<init>":()V
+        29: astore_1
+        30: iload_0
+        31: ineg
+        32: istore_2
+        33: iload_2
+        34: iload_0
+        35: if_icmpgt     86
+        38: iload_0
+        39: ineg
+        40: istore_3
+        41: iload_3
+        42: iload_0
+        43: if_icmpgt     80
+        46: iload_2
+        47: iload_2
+        48: imul
+        49: iload_3
+        50: iload_3
+        51: imul
+        52: iadd
+        53: iload_0
+        54: iload_0
+        55: imul
+        56: if_icmpgt     74
+        59: aload_1
+        60: iload_2
+        61: iload_3
+        62: invokestatic  #612                // Method key:(II)J
+        65: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+        68: invokeinterface #616,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+        73: pop
+        74: iinc          3, 1
+        77: goto          41
+        80: iinc          2, 1
+        83: goto          33
+        86: new           #16                 // class java/util/HashMap
+        89: dup
+        90: invokespecial #18                 // Method java/util/HashMap."<init>":()V
+        93: astore_2
+        94: iload_0
+        95: ineg
+        96: istore_3
+        97: iload_3
+        98: iload_0
+        99: if_icmpgt     261
+       102: iload_0
+       103: ineg
+       104: istore        4
+       106: iload         4
+       108: iload_0
+       109: if_icmpgt     255
+       112: aload_1
+       113: iload_3
+       114: iload         4
+       116: invokestatic  #612                // Method key:(II)J
+       119: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       122: invokeinterface #617,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       127: ifne          133
+       130: goto          249
+       133: aload_1
+       134: iload_3
+       135: iconst_1
+       136: iadd
+       137: iload         4
+       139: invokestatic  #612                // Method key:(II)J
+       142: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       145: invokeinterface #617,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       150: ifne          163
+       153: aload_2
+       154: iconst_1
+       155: iload_3
+       156: iconst_1
+       157: iadd
+       158: iload         4
+       160: invokestatic  #618                // Method add:(Ljava/util/Map;ZII)V
+       163: aload_1
+       164: iload_3
+       165: iconst_1
+       166: isub
+       167: iload         4
+       169: invokestatic  #612                // Method key:(II)J
+       172: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       175: invokeinterface #617,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       180: ifne          191
+       183: aload_2
+       184: iconst_1
+       185: iload_3
+       186: iload         4
+       188: invokestatic  #618                // Method add:(Ljava/util/Map;ZII)V
+       191: aload_1
+       192: iload_3
+       193: iload         4
+       195: iconst_1
+       196: iadd
+       197: invokestatic  #612                // Method key:(II)J
+       200: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       203: invokeinterface #617,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       208: ifne          221
+       211: aload_2
+       212: iconst_0
+       213: iload         4
+       215: iconst_1
+       216: iadd
+       217: iload_3
+       218: invokestatic  #618                // Method add:(Ljava/util/Map;ZII)V
+       221: aload_1
+       222: iload_3
+       223: iload         4
+       225: iconst_1
+       226: isub
+       227: invokestatic  #612                // Method key:(II)J
+       230: invokestatic  #350                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       233: invokeinterface #617,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+       238: ifne          249
+       241: aload_2
+       242: iconst_0
+       243: iload         4
+       245: iload_3
+       246: invokestatic  #618                // Method add:(Ljava/util/Map;ZII)V
+       249: iinc          4, 1
+       252: goto          106
+       255: iinc          3, 1
+       258: goto          97
+       261: new           #621                // class java/util/ArrayList
+       264: dup
+       265: invokespecial #623                // Method java/util/ArrayList."<init>":()V
+       268: astore_3
+       269: aload_2
+       270: invokeinterface #542,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+       275: invokeinterface #546,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+       280: astore        4
+       282: aload         4
+       284: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       289: ifeq          499
+       292: aload         4
+       294: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       299: checkcast     #549                // class java/util/Map$Entry
+       302: astore        5
+       304: aload         5
+       306: invokeinterface #624,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+       311: checkcast     #286                // class java/lang/String
+       314: ldc_w         #627                // String :
+       317: invokevirtual #629                // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+       320: astore        6
+       322: aload         6
+       324: iconst_0
+       325: aaload
+       326: ldc_w         #633                // String X
+       329: invokevirtual #635                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+       332: istore        7
+       334: aload         6
+       336: iconst_1
+       337: aaload
+       338: invokestatic  #638                // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+       341: istore        8
+       343: aconst_null
+       344: astore        9
+       346: aconst_null
+       347: astore        10
+       349: aload         5
+       351: invokeinterface #551,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+       356: checkcast     #644                // class java/util/TreeSet
+       359: invokevirtual #646                // Method java/util/TreeSet.iterator:()Ljava/util/Iterator;
+       362: astore        11
+       364: aload         11
+       366: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       371: ifeq          461
+       374: aload         11
+       376: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       381: checkcast     #639                // class java/lang/Integer
+       384: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       387: istore        12
+       389: aload         9
+       391: ifnull        439
+       394: aload         10
+       396: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       399: iconst_1
+       400: iadd
+       401: iload         12
+       403: if_icmpeq     439
+       406: aload_3
+       407: new           #237                // class dev/kondalabs/seam/RealSeamMod$Edge
+       410: dup
+       411: iload         7
+       413: iload         8
+       415: aload         9
+       417: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       420: aload         10
+       422: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       425: iconst_1
+       426: iadd
+       427: invokespecial #650                // Method dev/kondalabs/seam/RealSeamMod$Edge."<init>":(ZIII)V
+       430: invokeinterface #511,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       435: pop
+       436: aconst_null
+       437: astore        9
+       439: aload         9
+       441: ifnonnull     451
+       444: iload         12
+       446: invokestatic  #653                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       449: astore        9
+       451: iload         12
+       453: invokestatic  #653                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       456: astore        10
+       458: goto          364
+       461: aload         9
+       463: ifnull        496
+       466: aload_3
+       467: new           #237                // class dev/kondalabs/seam/RealSeamMod$Edge
+       470: dup
+       471: iload         7
+       473: iload         8
+       475: aload         9
+       477: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       480: aload         10
+       482: invokevirtual #647                // Method java/lang/Integer.intValue:()I
+       485: iconst_1
+       486: iadd
+       487: invokespecial #650                // Method dev/kondalabs/seam/RealSeamMod$Edge."<init>":(ZIII)V
+       490: invokeinterface #511,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       495: pop
+       496: goto          282
+       499: aload_3
+       500: areturn
+
+  private static long key(int, int);
+    Code:
+         0: iload_0
+         1: i2l
+         2: bipush        32
+         4: lshl
+         5: iload_1
+         6: i2l
+         7: ldc2_w        #348                // long 4294967295l
+        10: land
+        11: lxor
+        12: lreturn
+
+  private static void add(java.util.Map<java.lang.String, java.util.TreeSet<java.lang.Integer>>, boolean, int, int);
+    Code:
+         0: aload_0
+         1: iload_1
+         2: ifeq          11
+         5: ldc_w         #656                // String X:
+         8: goto          14
+        11: ldc_w         #658                // String Z:
+        14: iload_2
+        15: invokedynamic #660,  0            // InvokeDynamic #6:makeConcatWithConstants:(Ljava/lang/String;I)Ljava/lang/String;
+        20: invokedynamic #663,  0            // InvokeDynamic #7:apply:()Ljava/util/function/Function;
+        25: invokeinterface #667,  3          // InterfaceMethod java/util/Map.computeIfAbsent:(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
+        30: checkcast     #644                // class java/util/TreeSet
+        33: iload_3
+        34: invokestatic  #653                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        37: invokevirtual #671                // Method java/util/TreeSet.add:(Ljava/lang/Object;)Z
+        40: pop
+        41: return
+
+  private void clearOrphans(net.minecraft.server.MinecraftServer);
+    Code:
+         0: aload_1
+         1: invokevirtual #672                // Method net/minecraft/server/MinecraftServer.getAllLevels:()Ljava/lang/Iterable;
+         4: invokeinterface #676,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+         9: astore_2
+        10: aload_2
+        11: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        16: ifeq          44
+        19: aload_2
+        20: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        25: checkcast     #317                // class net/minecraft/server/level/ServerLevel
+        28: astore_3
+        29: aload_3
+        30: invokestatic  #527                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.get:(Lnet/minecraft/server/level/ServerLevel;)Lqouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage;
+        33: invokedynamic #679,  0            // InvokeDynamic #8:test:()Ljava/util/function/Predicate;
+        38: invokevirtual #683                // Method qouteall/imm_ptl/core/portal/global_portals/GlobalPortalStorage.removePortals:(Ljava/util/function/Predicate;)V
+        41: goto          10
+        44: return
+
+  private static boolean lambda$clearOrphans$0(qouteall.imm_ptl.core.portal.Portal);
+    Code:
+         0: aload_0
+         1: getfield      #687                // Field qouteall/imm_ptl/core/portal/Portal.portalTag:Ljava/lang/String;
+         4: ifnull        24
+         7: aload_0
+         8: getfield      #687                // Field qouteall/imm_ptl/core/portal/Portal.portalTag:Ljava/lang/String;
+        11: ldc_w         #690                // String gaslight_temporary_seam_v1:
+        14: invokevirtual #692                // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+        17: ifeq          24
+        20: iconst_1
+        21: goto          25
+        24: iconst_0
+        25: ireturn
+
+  private static java.util.TreeSet lambda$add$0(java.lang.String);
+    Code:
+         0: new           #644                // class java/util/TreeSet
+         3: dup
+         4: invokespecial #696                // Method java/util/TreeSet."<init>":()V
+         7: areturn
+
+  private void lambda$onInitialize$5(net.minecraft.server.MinecraftServer);
+    Code:
+         0: aload_0
+         1: getfield      #19                 // Field sessions:Ljava/util/Map;
+         4: invokeinterface #697,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+         9: invokestatic  #701                // InterfaceMethod java/util/List.copyOf:(Ljava/util/Collection;)Ljava/util/List;
+        12: invokeinterface #223,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        17: astore_2
+        18: aload_2
+        19: invokeinterface #227,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        24: ifeq          44
+        27: aload_2
+        28: invokeinterface #233,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        33: checkcast     #136                // class dev/kondalabs/seam/RealSeamMod$Session
+        36: astore_3
+        37: aload_3
+        38: invokestatic  #138                // Method retire:(Ldev/kondalabs/seam/RealSeamMod$Session;)V
+        41: goto          18
+        44: aload_0
+        45: getfield      #19                 // Field sessions:Ljava/util/Map;
+        48: invokeinterface #705,  1          // InterfaceMethod java/util/Map.clear:()V
+        53: return
+
+  private void lambda$onInitialize$0(com.mojang.brigadier.CommandDispatcher, net.minecraft.commands.CommandBuildContext, net.minecraft.commands.Commands$CommandSelection);
+    Code:
+         0: aload_1
+         1: ldc_w         #706                // String pl
+         4: invokestatic  #708                // Method net/minecraft/commands/Commands.literal:(Ljava/lang/String;)Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;
+         7: invokedynamic #713,  0            // InvokeDynamic #9:test:()Ljava/util/function/Predicate;
+        12: invokevirtual #714                // Method com/mojang/brigadier/builder/LiteralArgumentBuilder.requires:(Ljava/util/function/Predicate;)Lcom/mojang/brigadier/builder/ArgumentBuilder;
+        15: checkcast     #715                // class com/mojang/brigadier/builder/LiteralArgumentBuilder
+        18: aload_0
+        19: invokedynamic #720,  0            // InvokeDynamic #10:run:(Ldev/kondalabs/seam/RealSeamMod;)Lcom/mojang/brigadier/Command;
+        24: invokevirtual #724                // Method com/mojang/brigadier/builder/LiteralArgumentBuilder.executes:(Lcom/mojang/brigadier/Command;)Lcom/mojang/brigadier/builder/ArgumentBuilder;
+        27: checkcast     #715                // class com/mojang/brigadier/builder/LiteralArgumentBuilder
+        30: invokevirtual #728                // Method com/mojang/brigadier/CommandDispatcher.register:(Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;)Lcom/mojang/brigadier/tree/LiteralCommandNode;
+        33: pop
+        34: aload_1
+        35: ldc_w         #733                // String pc
+        38: invokestatic  #708                // Method net/minecraft/commands/Commands.literal:(Ljava/lang/String;)Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;
+        41: invokedynamic #735,  0            // InvokeDynamic #11:test:()Ljava/util/function/Predicate;
+        46: invokevirtual #714                // Method com/mojang/brigadier/builder/LiteralArgumentBuilder.requires:(Ljava/util/function/Predicate;)Lcom/mojang/brigadier/builder/ArgumentBuilder;
+        49: checkcast     #715                // class com/mojang/brigadier/builder/LiteralArgumentBuilder
+        52: aload_0
+        53: invokedynamic #736,  0            // InvokeDynamic #12:run:(Ldev/kondalabs/seam/RealSeamMod;)Lcom/mojang/brigadier/Command;
+        58: invokevirtual #724                // Method com/mojang/brigadier/builder/LiteralArgumentBuilder.executes:(Lcom/mojang/brigadier/Command;)Lcom/mojang/brigadier/builder/ArgumentBuilder;
+        61: checkcast     #715                // class com/mojang/brigadier/builder/LiteralArgumentBuilder
+        64: invokevirtual #728                // Method com/mojang/brigadier/CommandDispatcher.register:(Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;)Lcom/mojang/brigadier/tree/LiteralCommandNode;
+        67: pop
+        68: return
+
+  private int lambda$onInitialize$4(com.mojang.brigadier.context.CommandContext) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #737                // Method com/mojang/brigadier/context/CommandContext.getSource:()Ljava/lang/Object;
+         5: checkcast     #742                // class net/minecraft/commands/CommandSourceStack
+         8: invokevirtual #744                // Method net/minecraft/commands/CommandSourceStack.getPlayerOrException:()Lnet/minecraft/server/level/ServerPlayer;
+        11: getstatic     #161                // Field dev/kondalabs/seam/RealSeamMod$Kind.CIRCLE:Ldev/kondalabs/seam/RealSeamMod$Kind;
+        14: invokevirtual #748                // Method create:(Lnet/minecraft/server/level/ServerPlayer;Ldev/kondalabs/seam/RealSeamMod$Kind;)I
+        17: ireturn
+
+  private static boolean lambda$onInitialize$3(net.minecraft.commands.CommandSourceStack);
+    Code:
+         0: aload_0
+         1: invokevirtual #751                // Method net/minecraft/commands/CommandSourceStack.permissions:()Lnet/minecraft/server/permissions/PermissionSet;
+         4: getstatic     #755                // Field net/minecraft/server/permissions/Permissions.COMMANDS_MODERATOR:Lnet/minecraft/server/permissions/Permission;
+         7: invokeinterface #761,  2          // InterfaceMethod net/minecraft/server/permissions/PermissionSet.hasPermission:(Lnet/minecraft/server/permissions/Permission;)Z
+        12: ireturn
+
+  private int lambda$onInitialize$2(com.mojang.brigadier.context.CommandContext) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #737                // Method com/mojang/brigadier/context/CommandContext.getSource:()Ljava/lang/Object;
+         5: checkcast     #742                // class net/minecraft/commands/CommandSourceStack
+         8: invokevirtual #744                // Method net/minecraft/commands/CommandSourceStack.getPlayerOrException:()Lnet/minecraft/server/level/ServerPlayer;
+        11: getstatic     #171                // Field dev/kondalabs/seam/RealSeamMod$Kind.LINE:Ldev/kondalabs/seam/RealSeamMod$Kind;
+        14: invokevirtual #748                // Method create:(Lnet/minecraft/server/level/ServerPlayer;Ldev/kondalabs/seam/RealSeamMod$Kind;)I
+        17: ireturn
+
+  private static boolean lambda$onInitialize$1(net.minecraft.commands.CommandSourceStack);
+    Code:
+         0: aload_0
+         1: invokevirtual #751                // Method net/minecraft/commands/CommandSourceStack.permissions:()Lnet/minecraft/server/permissions/PermissionSet;
+         4: getstatic     #755                // Field net/minecraft/server/permissions/Permissions.COMMANDS_MODERATOR:Lnet/minecraft/server/permissions/Permission;
+         7: invokeinterface #761,  2          // InterfaceMethod net/minecraft/server/permissions/PermissionSet.hasPermission:(Lnet/minecraft/server/permissions/Permission;)Z
+        12: ireturn
+}

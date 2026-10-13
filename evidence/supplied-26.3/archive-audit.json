@@ -1,0 +1,11 @@
+{
+  "input": "C:\\Users\\Tanvith\\Downloads\\GASLIGHT-26.3-Smoothing-v0.5.1.jar",
+  "size_bytes": 6956945,
+  "sha256": "fbd57d46d9514aa13f8601c1804d09124120d25c0261c36cbb07e4538a0651ca",
+  "zip_bad_member": null,
+  "class_count": 1147,
+  "gaslight_class_count": 11,
+  "java_source_count": 0,
+  "manifest": "META-INF/MANIFEST.MF",
+  "metadata": "fabric.mod.json"
+}

@@ -1,0 +1,7 @@
+GASLIGHT standalone 26.3, modified Immersive Portals-derived engine.
+Upstream: https://github.com/fmpapierz/SeamlessPortals
+Original: https://github.com/iPortalTeam/ImmersivePortalsMod
+Commit: 0de56eb0b76690c8584b538d28f6b0143cad45f7
+Changed: GASLIGHT command source, Fabric API nesting, display metadata.
+Upstream engine Apache-2.0. Fabric API Apache-2.0.
+Cloth Config license and all original notices remain in nested JAR.
