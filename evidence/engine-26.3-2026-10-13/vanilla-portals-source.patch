@@ -1,0 +1,721 @@
+diff --git a/README.md b/README.md
+index b11cae4..9f27196 100644
+--- a/README.md
++++ b/README.md
+@@ -8,24 +8,36 @@ It is **not** the complete GASLIGHT gameplay mod or a release artifact.
+ The custom GASLIGHT classes present in the supplied binary are not copied
+ into this source repository.
+ 
+-The local change pins Gradle 9.7.0 with its SHA-256, removes a machine-only
+-Azul JDK path while retaining Java 25, and applies the particle accessor
+-mixin in the explicit entity-portals-off configuration. That accessor fix
+-addresses a reproduced first-particle Java crash; the post-fix graphical
+-run is still blocked by a separate native access violation.
++The local changes pin Gradle 9.7.0 with its SHA-256, use Java 25 without a
++machine-only JDK path, and apply the particle accessor mixin in the explicit
++entity-portals-off configuration. GASLIGHT-facing defaults keep ordinary
++Nether and End portals: even an older `immersive_portals.json` requesting
++converted portals is guarded by `preserveVanillaDimensionPortals=true`.
++The first-launch Immersive Portals screen, creative-mode wiki chat tip, and
++automatic update announcement are removed. Compatibility and error warnings
++remain visible. The converted-portal crossing fixture opts out of the
++vanilla guard only in its disposable test run.
+ 
+ On Windows 11 with Eclipse Adoptium JDK 25.0.4.1, Minecraft 26.3, Fabric
+ Loader 0.19.5 and Fabric API 0.161.0+26.3:
+ 
+     .\gradlew.bat :common:test :fabric:build --no-daemon --max-workers=2
+     .\gradlew.bat :fabric:runServer --no-daemon --max-workers=2
+-    .\gradlew.bat :fabric:runCrossingGametest --no-daemon --max-workers=2
++    .\gradlew.bat :fabric:runVanillaPortalGametest -PsodiumRuntime=true --no-daemon --max-workers=2
++    .\gradlew.bat :fabric:runCrossingGametest -PsodiumRuntime=true --no-daemon --max-workers=2
+ 
+-The compile/test and disposable server startup/shutdown passed. The
+-graphical crossing GameTest failed with Windows native access violation
+-0xC0000005 before its crossing assertions. An explicit entity-portals-off
+-title-card GameTest also crashed. The full raw evidence and limitations
+-are in the [GASLIGHT evaluation](https://github.com/tanvithsreddy-del/GASLIGHT-Edition/blob/main/docs/ENGINE_26_3_EVALUATION.md).
++The compile/tests and disposable dedicated-server startup/reopen/shutdown
++passed. A real graphical client with Sodium passed the vanilla Nether and End
++formation and travel smoke, including an old config requesting portal
++conversion. The broader crossing suite reached multiple genuine gameplay
++legs but **failed** its seam-mesh recompilation assertion. Earlier vanilla
++renderer attempts also suffered a Windows native access violation. The full
++raw evidence and limits are in the [GASLIGHT evaluation](https://github.com/tanvithsreddy-del/GASLIGHT-Edition/blob/main/docs/ENGINE_26_3_EVALUATION.md).
++
++The [development JAR](artifacts/development/seamlessportals-fabric-26.3-vanilla-portals-dev.jar)
++is the genuinely built portal-engine fork (SHA-256
++`bf1fa5ca9982e5bd962ea81c3c02259c1e6ae124b5e4a084c6317dde09a01311`).
++It is not a GASLIGHT gameplay release; use disposable worlds only.
+ 
+ Fabric, NeoForge and opt-in Forge modules are present in the source.
+ Only the stated Fabric build/server profile was run here. Loader presence
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/IPGlobal.java b/common/src/main/java/qouteall/imm_ptl/core/IPGlobal.java
+index 79ba701..26f1180 100644
+--- a/common/src/main/java/qouteall/imm_ptl/core/IPGlobal.java
++++ b/common/src/main/java/qouteall/imm_ptl/core/IPGlobal.java
+@@ -1464,7 +1464,7 @@ public class IPGlobal {
+     
+     public static boolean checkModInfoFromInternet = true;
+     
+-    public static boolean enableUpdateNotification = true;
++    public static boolean enableUpdateNotification = false;
+     
+     public static boolean logClientPlayerCollidingPortalUpdate = false;
+     
+@@ -1504,7 +1504,7 @@ public class IPGlobal {
+         vanilla
+     }
+     
+-    public static NetherPortalMode netherPortalMode = NetherPortalMode.adaptive;
++    public static NetherPortalMode netherPortalMode = NetherPortalMode.vanilla;
+     
+-    public static EndPortalMode endPortalMode = EndPortalMode.normal;
++    public static EndPortalMode endPortalMode = EndPortalMode.vanilla;
+ }
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/compat/IPModInfoChecking.java b/common/src/main/java/qouteall/imm_ptl/core/compat/IPModInfoChecking.java
+index a91900b..26e1e7b 100644
+--- a/common/src/main/java/qouteall/imm_ptl/core/compat/IPModInfoChecking.java
++++ b/common/src/main/java/qouteall/imm_ptl/core/compat/IPModInfoChecking.java
+@@ -173,21 +173,6 @@ public class IPModInfoChecking {
+                 MyTaskList.oneShotTask(() -> {
+                     List<MutableComponent> texts = new ArrayList<>();
+ 
+-                    if (IPGlobal.enableUpdateNotification) {
+-                        if (O_O.shouldUpdateImmPtl(immPtlInfo.latestReleaseVersion)) {
+-                            MutableComponent text1 = Component.translatable(
+-                                "imm_ptl.new_version_available",
+-                                immPtlInfo.latestReleaseVersion
+-                            );
+-                            text1.append(McHelper.getLinkText(O_O.getModDownloadLink()));
+-
+-                            text1.append(Component.literal("  "));
+-                            text1.append(IPMcHelper.getDisableUpdateCheckText());
+-
+-                            texts.add(text1);
+-                        }
+-                    }
+-
+                     if (IPConfig.getConfig().shouldDisplayWarning("preview")) {
+                         if (immPtlInfo.previewVersions.contains(O_O.getImmPtlVersionStr())) {
+                             MutableComponent text1 = Component.translatable("imm_ptl.preview_warning")
+@@ -294,12 +279,6 @@ public class IPModInfoChecking {
+             }
+ 
+             ServerTaskList.of(server).addOneShotTask(() -> {
+-                if (IPGlobal.enableUpdateNotification) {
+-                    if (O_O.shouldUpdateImmPtl(immPtlInfo.latestReleaseVersion)) {
+-                        LOGGER.info("[Immersive Portals] A new version is available. It is recommended to update to " + immPtlInfo.latestReleaseVersion);
+-                    }
+-                }
+-
+                 for (ModIncompatInfo mod : immPtlInfo.severelyIncompatible) {
+                     if (mod != null && mod.isModLoadedWithinVersion()) {
+                         MutableComponent text1;
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/miscellaneous/IPortalInitialScreen.java b/common/src/main/java/qouteall/imm_ptl/core/miscellaneous/IPortalInitialScreen.java
+deleted file mode 100644
+index 1585012..0000000
+--- a/common/src/main/java/qouteall/imm_ptl/core/miscellaneous/IPortalInitialScreen.java
++++ /dev/null
+@@ -1,154 +0,0 @@
+-package qouteall.imm_ptl.core.miscellaneous;
+-
+-import net.minecraft.client.Minecraft;
+-import net.minecraft.client.gui.components.Button;
+-import net.minecraft.client.gui.components.ImageWidget;
+-import net.minecraft.client.gui.components.MultiLineTextWidget;
+-import net.minecraft.client.gui.components.StringWidget;
+-import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
+-import net.minecraft.client.gui.layouts.LinearLayout;
+-import net.minecraft.client.gui.screens.Screen;
+-import net.minecraft.network.chat.Component;
+-import net.minecraft.resources.Identifier;
+-import qouteall.imm_ptl.core.platform_specific.IPConfig;
+-
+-public class IPortalInitialScreen extends Screen {
+-    private static final int PAGE_NUM = 4;
+-    
+-    private final Runnable onClose;
+-    
+-    private final Button prevButton;
+-    private final StringWidget pageNumberWidget;
+-    private final Button iKnowButton;
+-    
+-    private final ImageWidget iconWidget;
+-    private final StringWidget titleWidget;
+-    
+-    private final MultiLineTextWidget contentWidget;
+-    
+-    private int currentPageIndex = 0;
+-    
+-    public IPortalInitialScreen(Runnable onClose) {
+-        super(Component.empty());
+-        this.onClose = onClose;
+-
+-        // 26.2: Screen.minecraft/Screen.font are now FINAL (net/minecraft/client/gui/screens/Screen.java:66,:71),
+-        // initialized by super(Component) → this(Minecraft.getInstance(), Minecraft.getInstance().font, title)
+-        // (Screen.java:84-86) — exactly the values IP assigned here, so the explicit writes are dropped
+-        // (ducks-api-misc.md S21 widget layer; Screen ctor arity fold).
+-
+-        prevButton = Button.builder(
+-            Component.translatable("iportal.initial_screen.prev"),
+-            button -> onPrevious()
+-        ).build();
+-        
+-        pageNumberWidget = new StringWidget(
+-            Component.empty(),
+-            font
+-        );
+-        
+-        iKnowButton = Button.builder(
+-            Component.translatable("iportal.initial_screen.i_know"),
+-            button -> onIKnow()
+-        ).build();
+-        
+-        iconWidget = ImageWidget.texture(
+-            30, 30,
+-            Identifier.fromNamespaceAndPath("immersive_portals", "icon.png"),
+-            30, 30
+-        );
+-
+-        // 26.2: StringWidget.alignCenter()/alignLeft()/alignRight() were REMOVED — the widget now renders
+-        // its text left-aligned within its bounds (StringWidget.visitLines uses x = getX(),
+-        // net/minecraft/client/gui/components/StringWidget.java:66; no alignment field remains). The
+-        // header/footer LinearLayout centering below provides the cell-level centering; the per-widget
+-        // text-align call is dropped (GONE API, cosmetic-only on this peripheral info screen).
+-        titleWidget = new StringWidget(
+-            Component.translatable("iportal.initial_screen.title"),
+-            font
+-        );
+-        
+-        contentWidget = new MultiLineTextWidget(
+-            Component.empty(),
+-            font
+-        );
+-    }
+-    
+-    private void onPrevious() {
+-        if (currentPageIndex > 0) {
+-            currentPageIndex--;
+-            updateUiStatus(currentPageIndex);
+-        }
+-    }
+-    
+-    private void onIKnow() {
+-        if (currentPageIndex == PAGE_NUM - 1) {
+-            IPConfig config = IPConfig.getConfig();
+-            config.initialScreenShown = true;
+-            config.saveConfigFile();
+-            
+-            onClose();
+-        }
+-        else {
+-            currentPageIndex++;
+-            updateUiStatus(currentPageIndex);
+-        }
+-    }
+-    
+-    private void updateUiStatus(int newPageIndex) {
+-        this.currentPageIndex = newPageIndex;
+-        
+-        prevButton.visible = newPageIndex > 0;
+-        
+-        pageNumberWidget.setMessage(
+-            Component.literal("%d / %d".formatted(newPageIndex + 1, PAGE_NUM))
+-        );
+-        
+-        contentWidget.setMessage(
+-            Component.translatable(
+-                "iportal.initial_screen.content." + newPageIndex
+-            )
+-        );
+-    }
+-    
+-    @Override
+-    public void onClose() {
+-        onClose.run();
+-    }
+-    
+-    @Override
+-    public void init() {
+-        contentWidget.setMaxWidth(this.width - 40);
+-        pageNumberWidget.setWidth(50);
+-        pageNumberWidget.setHeight(iKnowButton.getHeight());
+-        // 26.2: StringWidget.alignCenter() removed (see ctor note) — dropped, cosmetic-only.
+-        titleWidget.setHeight(iconWidget.getHeight());
+-        
+-        addRenderableWidget(prevButton);
+-        addRenderableWidget(pageNumberWidget);
+-        addRenderableWidget(iKnowButton);
+-        addRenderableWidget(iconWidget);
+-        addRenderableWidget(titleWidget);
+-        addRenderableWidget(contentWidget);
+-        
+-        HeaderAndFooterLayout layout = new HeaderAndFooterLayout(
+-            this, 60, 33
+-        );
+-        
+-        LinearLayout headerLayout = layout.addToHeader(LinearLayout.horizontal());
+-        headerLayout.addChild(iconWidget, headerLayout.defaultCellSetting().padding(5));
+-        headerLayout.addChild(titleWidget, headerLayout.defaultCellSetting().padding(5));
+-        
+-        LinearLayout contentLayout = layout.addToContents(LinearLayout.vertical());
+-        contentLayout.addChild(contentWidget, headerLayout.defaultCellSetting().padding(5));
+-        
+-        LinearLayout footerLayout = layout.addToFooter(LinearLayout.horizontal());
+-        footerLayout.addChild(prevButton, footerLayout.defaultCellSetting().padding(5));
+-        footerLayout.addChild(pageNumberWidget, footerLayout.defaultCellSetting().padding(5));
+-        footerLayout.addChild(iKnowButton, footerLayout.defaultCellSetting().padding(5));
+-        
+-        layout.arrangeElements();
+-        
+-        updateUiStatus(currentPageIndex);
+-    }
+-}
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/mixin/client/MixinGui.java b/common/src/main/java/qouteall/imm_ptl/core/mixin/client/MixinGui.java
+deleted file mode 100644
+index 7699ce3..0000000
+--- a/common/src/main/java/qouteall/imm_ptl/core/mixin/client/MixinGui.java
++++ /dev/null
+@@ -1,53 +0,0 @@
+-package qouteall.imm_ptl.core.mixin.client;
+-
+-import net.minecraft.client.gui.Gui;
+-import net.minecraft.client.gui.screens.Screen;
+-import org.spongepowered.asm.mixin.Mixin;
+-import org.spongepowered.asm.mixin.injection.At;
+-import org.spongepowered.asm.mixin.injection.Inject;
+-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+-import qouteall.imm_ptl.core.miscellaneous.IPortalInitialScreen;
+-import qouteall.imm_ptl.core.platform_specific.IPConfig;
+-
+-import java.util.List;
+-import java.util.function.Function;
+-
+-/**
+- * S12-B port disposition: NEEDS-RETARGET re-home of IP {@code MixinMinecraft}'s ⑦ handler
+- * (mixin-client.md §1) — <b>ENABLED at S13-C</b> (was DEFERRED at S12-B pending its dependency).
+- *
+- * <p>IP 1.21.3 added the one-time ImmPtl config-help splash ({@code IPortalInitialScreen}) to the game's
+- * initial-screen list at {@code Minecraft.addInitialScreens(List)} @RETURN (IP {@code MixinMinecraft.java:185-194}).
+- * On 26.2 the anchor MOVED to {@code Gui} — {@code private boolean addInitialScreens(
+- * List<Function<Runnable, Screen>> screens)} ({@code 26.2:Gui.java:381}), invoked from
+- * {@code Gui.buildInitialScreens} ({@code :362}) which builds a fresh list at {@code :363}, calls
+- * {@code addInitialScreens(screens)} at {@code :364}, then wraps every factory in
+- * {@code Lists.reverse(screens)} ({@code :373}). Appending at @RETURN of {@code addInitialScreens} therefore
+- * lands the splash into that same list before the wrap loop consumes it — behaviourally identical to IP.
+- *
+- * <p><b>26.2 signature deltas from IP.</b> (1) The method now returns {@code boolean} (onboarding-added flag),
+- * so the callback is {@code CallbackInfoReturnable<Boolean>} rather than IP's {@code CallbackInfo}. (2) The
+- * captured single argument is the {@code List<Function<Runnable, Screen>>} being populated — appended to
+- * exactly as IP appended to {@code Minecraft}'s. The {@code IPortalInitialScreen(Runnable)} ctor supplies the
+- * {@code Function<Runnable, Screen>} via {@code IPortalInitialScreen::new}. Append-if-not-shown gate
+- * ({@code !IPConfig.getConfig().initialScreenShown}) is verbatim IP.
+- *
+- * <p><b>Why it was deferred at S12-B, now landed:</b> the referenced screen
+- * {@code qouteall.imm_ptl.core.miscellaneous.IPortalInitialScreen} was outside the S12-B client-mixin slice;
+- * it landed in the S13 closure set (U11 {@code miscellaneous/}), so the forward-ref is resolved and the
+- * handler is re-enabled per zero-deviation. The config splash is non-load-bearing.
+- */
+-@Mixin(Gui.class)
+-public class MixinGui {
+-    // ⑦ IP MixinMinecraft.onAddInitialScreens, re-homed onto Gui.addInitialScreens (see class javadoc).
+-    @Inject(method = "addInitialScreens", at = @At("RETURN"))
+-    private void onAddInitialScreens(
+-        List<Function<Runnable, Screen>> output,
+-        CallbackInfoReturnable<Boolean> cir
+-    ) {
+-        IPConfig config = IPConfig.getConfig();
+-        if (!config.initialScreenShown) {
+-            output.add(IPortalInitialScreen::new);
+-        }
+-    }
+-}
+diff --git a/common/src/main/java/qouteall/imm_ptl/core/platform_specific/IPConfig.java b/common/src/main/java/qouteall/imm_ptl/core/platform_specific/IPConfig.java
+index 5db7478..cd1b307 100644
+--- a/common/src/main/java/qouteall/imm_ptl/core/platform_specific/IPConfig.java
++++ b/common/src/main/java/qouteall/imm_ptl/core/platform_specific/IPConfig.java
+@@ -206,7 +206,7 @@ public class IPConfig implements ConfigData {
+     @ConfigEntry.Gui.Excluded
+     public boolean checkModInfoFromInternet = true;
+     @ConfigEntry.Gui.Excluded
+-    public boolean enableUpdateNotification = true;
++    public boolean enableUpdateNotification = false;
+     @ConfigEntry.Gui.Excluded
+     public boolean sharedBlockMeshBufferOptimization = true;
+     @ConfigEntry.Gui.Excluded
+@@ -227,8 +227,6 @@ public class IPConfig implements ConfigData {
+     public int portalWandCursorAlignment = 2; // zero for no align
+     @ConfigEntry.Gui.Excluded
+     public boolean saveMemoryInBufferPack = false;
+-    @ConfigEntry.Gui.Excluded
+-    public boolean initialScreenShown = false;
+     
+     // common visible configs
+ 
+@@ -244,15 +242,17 @@ public class IPConfig implements ConfigData {
+     @ConfigEntry.Gui.Tooltip
+     public boolean passthroughExtras = false;
+ 
+-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+-    public IPGlobal.NetherPortalMode netherPortalMode =
+-        IPFeatureControl.enableVanillaBehaviorChangingByDefault() ?
+-            IPGlobal.NetherPortalMode.adaptive : IPGlobal.NetherPortalMode.vanilla;
++    @ConfigEntry.Gui.Excluded
++    public IPGlobal.NetherPortalMode netherPortalMode = IPGlobal.NetherPortalMode.vanilla;
+     
+-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+-    public IPGlobal.EndPortalMode endPortalMode =
+-        IPFeatureControl.enableVanillaBehaviorChangingByDefault() ?
+-            IPGlobal.EndPortalMode.normal : IPGlobal.EndPortalMode.vanilla;
++    @ConfigEntry.Gui.Excluded
++    public IPGlobal.EndPortalMode endPortalMode = IPGlobal.EndPortalMode.vanilla;
++
++    // Existing Immersive Portals configs may request converted Nether/End portals.
++    // Keep vanilla travel even when such an old config is loaded. The provider's
++    // disposable crossing fixture opts out explicitly to exercise its portal engine.
++    @ConfigEntry.Gui.Excluded
++    public boolean preserveVanillaDimensionPortals = true;
+     
+     public boolean enableMirrorCreation =
+         IPFeatureControl.enableVanillaBehaviorChangingByDefault();
+@@ -319,10 +319,10 @@ public class IPConfig implements ConfigData {
+         regularPortalLengthLimit = Mth.clamp(regularPortalLengthLimit, 3, 64);
+         scaleLimit = Mth.clamp(scaleLimit, 8, 128);
+         if (netherPortalMode == null) {
+-            netherPortalMode = IPGlobal.NetherPortalMode.adaptive;
++            netherPortalMode = IPGlobal.NetherPortalMode.vanilla;
+         }
+         if (endPortalMode == null) {
+-            endPortalMode = IPGlobal.EndPortalMode.normal;
++            endPortalMode = IPGlobal.EndPortalMode.vanilla;
+         }
+         if (crossPortalEntityClipMechanism == null) {
+             crossPortalEntityClipMechanism =
+@@ -396,8 +396,10 @@ public class IPConfig implements ConfigData {
+         IPGlobal.looseMovementCheck = looseMovementCheck;
+         IPGlobal.pureMirror = pureMirror;
+         IPGlobal.indirectLoadingRadiusCap = indirectLoadingRadiusCap;
+-        IPGlobal.netherPortalMode = netherPortalMode;
+-        IPGlobal.endPortalMode = endPortalMode;
++        IPGlobal.netherPortalMode = preserveVanillaDimensionPortals ?
++            IPGlobal.NetherPortalMode.vanilla : netherPortalMode;
++        IPGlobal.endPortalMode = preserveVanillaDimensionPortals ?
++            IPGlobal.EndPortalMode.vanilla : endPortalMode;
+         IPGlobal.reducedPortalRendering = reducedPortalRendering;
+         IPGlobal.offsetOcclusionQuery = visibilityPrediction;
+         IPGlobal.netherPortalOverlay = netherPortalOverlay;
+diff --git a/common/src/main/java/qouteall/imm_ptl/peripheral/IPOuterClientMisc.java b/common/src/main/java/qouteall/imm_ptl/peripheral/IPOuterClientMisc.java
+index 6366560..10cf7e1 100644
+--- a/common/src/main/java/qouteall/imm_ptl/peripheral/IPOuterClientMisc.java
++++ b/common/src/main/java/qouteall/imm_ptl/peripheral/IPOuterClientMisc.java
+@@ -5,16 +5,10 @@ import com.mojang.logging.LogUtils;
+ import net.fabricmc.api.EnvType;
+ import net.fabricmc.api.Environment;
+ import net.minecraft.client.Minecraft;
+-import net.minecraft.client.player.LocalPlayer;
+-import net.minecraft.network.chat.Component;
+-import net.minecraft.network.chat.MutableComponent;
+ import org.jetbrains.annotations.Nullable;
+ import org.slf4j.Logger;
+-import qouteall.imm_ptl.core.CHelper;
+ import qouteall.imm_ptl.core.IPGlobal;
+-import qouteall.imm_ptl.core.McHelper;
+ import qouteall.imm_ptl.core.platform_specific.IPConfig;
+-import qouteall.imm_ptl.core.portal.Portal;
+ import qouteall.imm_ptl.peripheral.dim_stack.DimStackInfo;
+ 
+ import java.io.File;
+@@ -25,11 +19,9 @@ import java.io.IOException;
+ /**
+  * S19-A 1:1 port of IP:peripheral/IPOuterClientMisc.java (held out at S16, landed with the
+  * wand-runtime bring-up — it is the first entry in IP's PeripheralModMain.initClient()).
+- * Outer per-install client state ({@code imm_ptl_state.json} in the game dir): one-time
+- * wiki-inform on first client portal spawn + the legacy dimension-stack-preset upgrade into
+- * IPConfig. No 26.2 adaptation needed — pure gson/file/chat code; every dependency
+- * (IPConfig.dimStackPreset, Portal.CLIENT_PORTAL_SPAWN_EVENT, CHelper.printChat,
+- * McHelper.getLinkText, IPGlobal.gson, DimStackInfo) is already ported.
++ * Outer per-install client state ({@code imm_ptl_state.json} in the game dir):
++ * legacy dimension-stack-preset upgrade into IPConfig. The first-portal wiki
++ * chat tip is intentionally absent from the GASLIGHT-facing engine.
+  */
+ @Environment(EnvType.CLIENT)
+ public class IPOuterClientMisc {
+@@ -105,28 +97,5 @@ public class IPOuterClientMisc {
+             }
+         }
+ 
+-        Portal.CLIENT_PORTAL_SPAWN_EVENT.register(p -> {
+-            LocalPlayer player = Minecraft.getInstance().player;
+-
+-            if (!outerConfig.wikiInformed) {
+-                if (player != null && player.isCreative()) {
+-                    outerConfig.wikiInformed = true;
+-                    writeToFile(outerConfig);
+-                    informWithURL(
+-                        "https://qouteall.fun/immptl/wiki/Portal-Customization",
+-                        Component.translatable("imm_ptl.inform_wiki")
+-                    );
+-                }
+-            }
+-
+-        });
+-    }
+-
+-    private static void informWithURL(String link, MutableComponent text) {
+-        CHelper.printChat(
+-            text.append(
+-                McHelper.getLinkText(link)
+-            )
+-        );
+     }
+ }
+diff --git a/common/src/main/resources/seamlessportals-ip-client.mixins.json b/common/src/main/resources/seamlessportals-ip-client.mixins.json
+index 985194f..3e5f6c0 100644
+--- a/common/src/main/resources/seamlessportals-ip-client.mixins.json
++++ b/common/src/main/resources/seamlessportals-ip-client.mixins.json
+@@ -10,7 +10,6 @@
+     "client.MixinClientLevel",
+     "client.MixinDebugScreenOverlay",
+     "client.MixinGlDebug",
+-    "client.MixinGui",
+     "client.MixinLivingEntity_C",
+     "client.MixinMinecraft",
+     "client.accessor.IEAtmosphericFogEnvironment",
+diff --git a/fabric/build.gradle b/fabric/build.gradle
+index 6d05a6a..548b9c3 100644
+--- a/fabric/build.gradle
++++ b/fabric/build.gradle
+@@ -927,6 +927,16 @@ loom {
+             //   .\gradlew.bat :fabric:runClientSodium -PirisRuntime=true -PdisableXcutFragFloor=true
+             if (project.findProperty('disableXcutFragFloor') == 'true') { vmArg('-Dseamlessportals.disableXcutFragFloor=true') }
+         }
++        // Isolated vanilla-dimension-portal regression. The run dir deliberately
++        // contains legacy converted-portal settings; the preservation gate wins.
++        vanillaPortalGametest {
++            client()
++            setConfigName('Vanilla Dimension Portal Smoke')
++            runDir('runs/gametest-vanilla')
++            property('fabric.client.gametest', 'true')
++            property('fabric.client.gametest.modid', project.mod_id)
++            property('seamlessportals.gametest.only', 'vanilla-portals')
++        }
+         // Automated title-card capture via the Fabric client-gametest API.
+         // Drives a real client: creates a world, builds + lights a portal,
+         // walks through, frames the nether->overworld portal view and
+@@ -1506,6 +1516,16 @@ tasks.matching { it.name == 'runClientGametest' }.configureEach {
+     }
+ }
+ 
++tasks.matching { it.name == 'runVanillaPortalGametest' }.configureEach {
++    doFirst {
++        def cfgDir = file('runs/gametest-vanilla/config')
++        cfgDir.mkdirs()
++        new File(cfgDir, 'seamlessportals.properties').text = 'entityPortals=true\n'
++        new File(cfgDir, 'immersive_portals.json').text =
++            '{\n  "netherPortalMode": "adaptive",\n  "endPortalMode": "normal"\n}\n'
++    }
++}
++
+ // Seed the entity-portal MASTER SWITCH into the crossing-smoke run dir before every
+ // launch. EntityPortalsFlag reads <configDir>/seamlessportals.properties ONCE at
+ // mixin-bootstrap (load-time, before any mod initializer), so the file must exist
+@@ -1517,11 +1537,11 @@ tasks.matching { it.name == 'runCrossingGametest' }.configureEach {
+         def cfgDir = file('runs/gametest-crossing/config')
+         cfgDir.mkdirs()
+         new File(cfgDir, 'seamlessportals.properties').text = 'entityPortals=true\n'
+-        // Suppress IP's one-time first-launch splash (IPortalInitialScreen,
+-        // MixinGui append gate !initialScreenShown) — the client-gametest
+-        // framework asserts a bare title screen between tests, and the splash
+-        // sits over it. Gson AutoConfig leaves absent fields at their defaults.
+-        new File(cfgDir, 'immersive_portals.json').text = '{\n  "initialScreenShown": true\n}\n'
++        // This suite exercises the provider's converted Nether portals and live
++        // seam bindings. Production retains vanilla dimension portals and leaves
++        // passthrough extras off; only this disposable fixture opts into both.
++        new File(cfgDir, 'immersive_portals.json').text =
++            '{\n  "passthroughExtras": true,\n  "preserveVanillaDimensionPortals": false,\n  "netherPortalMode": "adaptive",\n  "endPortalMode": "normal"\n}\n'
+     }
+ }
+ 
+diff --git a/fabric/src/main/java/com/warwa/seamlessportals/fabric/gametest/VanillaPortalSmoke.java b/fabric/src/main/java/com/warwa/seamlessportals/fabric/gametest/VanillaPortalSmoke.java
+new file mode 100644
+index 0000000..0e7d466
+--- /dev/null
++++ b/fabric/src/main/java/com/warwa/seamlessportals/fabric/gametest/VanillaPortalSmoke.java
+@@ -0,0 +1,162 @@
++package com.warwa.seamlessportals.fabric.gametest;
++
++import com.warwa.seamlessportals.SeamlessPortalsConstants;
++import net.fabricmc.fabric.api.client.gametest.v1.FabricClientGameTest;
++import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
++import net.fabricmc.fabric.api.client.gametest.v1.context.TestSingleplayerContext;
++import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
++import net.minecraft.commands.CommandSourceStack;
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.Direction;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.level.ServerLevel;
++import net.minecraft.world.InteractionHand;
++import net.minecraft.world.item.ItemStack;
++import net.minecraft.world.item.Items;
++import net.minecraft.world.item.context.UseOnContext;
++import net.minecraft.world.level.Level;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.level.block.EndPortalFrameBlock;
++import net.minecraft.world.phys.AABB;
++import net.minecraft.world.phys.BlockHitResult;
++import net.minecraft.world.phys.Vec3;
++import qouteall.imm_ptl.core.IPGlobal;
++import qouteall.imm_ptl.core.platform_specific.IPConfig;
++import qouteall.imm_ptl.core.portal.EndPortalEntity;
++import qouteall.imm_ptl.core.portal.nether_portal.NetherPortalEntity;
++
++import java.util.concurrent.atomic.AtomicReference;
++import java.util.function.Consumer;
++
++/** A real 26.3 client and disposable integrated server exercise vanilla portal formation. */
++public final class VanillaPortalSmoke implements FabricClientGameTest {
++    private static final String LOG = "[VANILLA PORTALS] ";
++
++    @Override
++    public void runTest(ClientGameTestContext context) {
++        if (!"vanilla-portals".equals(System.getProperty("seamlessportals.gametest.only"))) return;
++
++        try (TestSingleplayerContext ignored = context.worldBuilder()
++            .setUseConsistentSettings(true)
++            .adjustSettings(s -> {
++                s.setGameMode(WorldCreationUiState.SelectedGameMode.CREATIVE);
++                s.setName("vanilla-portal-smoke");
++            }).create()) {
++            context.waitTicks(40);
++            BlockPos feet = context.computeOnClient(mc -> mc.player.blockPosition());
++            BlockPos nether = feet.offset(8, 0, 4);
++            BlockPos end = feet.offset(20, 0, 4);
++
++            onServer(context, server -> {
++                if (!IPConfig.getConfig().preserveVanillaDimensionPortals
++                    || IPGlobal.netherPortalMode != IPGlobal.NetherPortalMode.vanilla
++                    || IPGlobal.endPortalMode != IPGlobal.EndPortalMode.vanilla) {
++                    throw new AssertionError(LOG + "legacy converted-portal config escaped the vanilla guard");
++                }
++                ServerLevel world = server.getLevel(Level.OVERWORLD);
++                if (world == null) throw new AssertionError(LOG + "missing overworld");
++
++                // Obsidian 4x5 frame, two-by-three interior; real fire placement
++                // must create six purple vanilla Nether-portal blocks.
++                for (int x = 0; x < 4; x++) for (int y = 0; y < 5; y++) {
++                    BlockPos p = nether.offset(x, y, 0);
++                    world.setBlockAndUpdate(p, (x == 0 || x == 3 || y == 0 || y == 4)
++                        ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.AIR.defaultBlockState());
++                }
++                world.setBlockAndUpdate(nether.offset(1, 1, 0), Blocks.FIRE.defaultBlockState());
++
++                // Vanilla eye insertion into the twelfth frame must form the
++                // nine ordinary End-portal blocks, never IP placeholders.
++                for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) {
++                    world.setBlockAndUpdate(end.offset(dx, 0, dz), Blocks.AIR.defaultBlockState());
++                }
++                for (int k = -1; k <= 1; k++) {
++                    frame(world, end.offset(k, 0, -2), Direction.SOUTH, k != 0);
++                    frame(world, end.offset(k, 0, 2), Direction.NORTH, true);
++                    frame(world, end.offset(-2, 0, k), Direction.EAST, true);
++                    frame(world, end.offset(2, 0, k), Direction.WEST, true);
++                }
++                var player = server.getPlayerList().getPlayers().getFirst();
++                player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.ENDER_EYE));
++                BlockPos last = end.offset(0, 0, -2);
++                Items.ENDER_EYE.useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
++                    new BlockHitResult(Vec3.atCenterOf(last), Direction.UP, last, false)));
++            });
++            context.waitTicks(20);
++
++            onServer(context, server -> {
++                ServerLevel world = server.getLevel(Level.OVERWORLD);
++                int netherBlocks = 0;
++                for (int x = 1; x <= 2; x++) for (int y = 1; y <= 3; y++) {
++                    if (world.getBlockState(nether.offset(x, y, 0)).is(Blocks.NETHER_PORTAL)) netherBlocks++;
++                }
++                int endBlocks = 0;
++                for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) {
++                    if (world.getBlockState(end.offset(dx, 0, dz)).is(Blocks.END_PORTAL)) endBlocks++;
++                }
++                AABB bounds = new AABB(nether.getX() - 2, nether.getY() - 2, nether.getZ() - 2,
++                    end.getX() + 4, end.getY() + 7, end.getZ() + 4);
++                int converted = world.getEntitiesOfClass(NetherPortalEntity.class, bounds, e -> true).size()
++                    + world.getEntitiesOfClass(EndPortalEntity.class, bounds, e -> true).size();
++                if (netherBlocks != 6 || endBlocks != 9 || converted != 0) {
++                    throw new AssertionError(LOG + "formation failed: netherBlocks=" + netherBlocks
++                        + " endBlocks=" + endBlocks + " convertedEntities=" + converted);
++                }
++                SeamlessPortalsConstants.LOGGER.info(LOG
++                    + "PASS: six vanilla Nether blocks, nine vanilla End blocks, zero converted portal entities");
++            });
++
++            teleport(context, nether.getX() + 1.5, nether.getY() + 1.0, nether.getZ() + 0.5);
++            context.waitFor(mc -> mc.player != null && mc.player.level().dimension().equals(Level.NETHER), 400);
++            SeamlessPortalsConstants.LOGGER.info(LOG + "PASS: vanilla Nether portal transported the player");
++
++            teleport(context, feet.getX() + 0.5, feet.getY() + 1.0, feet.getZ() + 0.5);
++            context.waitFor(mc -> mc.player != null && mc.player.level().dimension().equals(Level.OVERWORLD), 120);
++            // A dimension change gives entities a 300-tick vanilla portal
++            // cooldown. Wait away from both portals; standing inside one would
++            // reset that cooldown on every tick.
++            context.waitTicks(320);
++            onServer(context, server -> {
++                int cooldown = server.getPlayerList().getPlayers().getFirst().getPortalCooldown();
++                if (cooldown != 0) throw new AssertionError(LOG + "cooldown did not expire: " + cooldown);
++            });
++            teleport(context, end.getX() + 0.5, end.getY() + 0.1, end.getZ() + 0.5);
++            context.waitFor(mc -> mc.player != null && mc.player.level().dimension().equals(Level.END), 400);
++            SeamlessPortalsConstants.LOGGER.info(LOG + "PASS: vanilla End portal transported the player");
++        }
++    }
++
++    private static void teleport(ClientGameTestContext context, double x, double y, double z) {
++        onServer(context, server -> {
++            CommandSourceStack source = server.createCommandSourceStack().withSuppressedOutput();
++            String command = "execute as @a in minecraft:overworld run tp @s " + x + " " + y + " " + z;
++            server.getCommands().performPrefixedCommand(source, command);
++        });
++    }
++
++    private static void frame(ServerLevel world, BlockPos pos, Direction facing, boolean eye) {
++        world.setBlockAndUpdate(pos, Blocks.END_PORTAL_FRAME.defaultBlockState()
++            .setValue(EndPortalFrameBlock.FACING, facing)
++            .setValue(EndPortalFrameBlock.HAS_EYE, eye));
++    }
++
++    private static void onServer(ClientGameTestContext context, Consumer<MinecraftServer> action) {
++        AtomicReference<Throwable> error = new AtomicReference<>();
++        AtomicReference<Boolean> done = new AtomicReference<>(false);
++        context.runOnClient(mc -> {
++            MinecraftServer server = mc.getSingleplayerServer();
++            if (server == null) {
++                error.set(new AssertionError(LOG + "missing integrated server"));
++                done.set(true);
++                return;
++            }
++            server.execute(() -> {
++                try { action.accept(server); }
++                catch (Throwable t) { error.set(t); }
++                finally { done.set(true); }
++            });
++        });
++        context.waitFor(mc -> done.get(), 100);
++        if (error.get() != null) throw new AssertionError(LOG + "server action failed", error.get());
++    }
++}
+diff --git a/fabric/src/main/resources/fabric.mod.json b/fabric/src/main/resources/fabric.mod.json
+index 580d1b7..bf24e5e 100644
+--- a/fabric/src/main/resources/fabric.mod.json
++++ b/fabric/src/main/resources/fabric.mod.json
+@@ -19,7 +19,8 @@
+     ],
+     "fabric-client-gametest": [
+       "com.warwa.seamlessportals.fabric.gametest.TitleCardCapture",
+-      "com.warwa.seamlessportals.fabric.gametest.CrossingSmoke"
++      "com.warwa.seamlessportals.fabric.gametest.CrossingSmoke",
++      "com.warwa.seamlessportals.fabric.gametest.VanillaPortalSmoke"
+     ],
+     "modmenu": [
+       "com.warwa.seamlessportals.fabric.ModMenuIntegration"

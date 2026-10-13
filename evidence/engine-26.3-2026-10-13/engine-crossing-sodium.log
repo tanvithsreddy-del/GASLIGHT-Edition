@@ -1,0 +1,2300 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy UP-TO-DATE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :fabric
+Fabric Loom: 1.17.11
+
+> Task :fabric:processResources UP-TO-DATE
+> Task :fabric:generateLog4jConfig UP-TO-DATE
+> Task :fabric:generateDLIConfig UP-TO-DATE
+> Task :fabric:configureLaunch UP-TO-DATE
+> Task :common:createMinecraftArtifacts UP-TO-DATE
+> Task :fabric:downloadAssets UP-TO-DATE
+> Task :common:compileFabricStubsJava UP-TO-DATE
+> Task :fabric:configureClientLaunch UP-TO-DATE
+> Task :common:compileIpStubsJava UP-TO-DATE
+> Task :common:processFabricStubsResources NO-SOURCE
+> Task :common:fabricStubsClasses UP-TO-DATE
+> Task :common:processIpStubsResources NO-SOURCE
+> Task :common:ipStubsClasses UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :common:ipStubsJarJar NO-SOURCE
+> Task :common:ipStubsJar UP-TO-DATE
+> Task :fabric:compileJava UP-TO-DATE
+> Task :fabric:classes UP-TO-DATE
+
+> Task :fabric:runCrossingGametest
+CompileCommand: dontinline qouteall/imm_ptl/core/render/ViewAreaRenderer.renderPortalArea bool dontinline = true
+[15:00:20] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 26.3 with Fabric Loader 0.19.5
+[15:00:20] [main/INFO] (FabricLoader/Mappings) Mappings not present!
+[15:00:20] [main/INFO] (FabricLoader) Loading 57 mods:
+	- cloth-basic-math 0.6.1
+	- cloth-config 26.3.158
+	- fabric-advancement-api-v1 1.0.0+38c7a2d55d
+	- fabric-api 0.161.0+26.3
+	- fabric-api-base 2.0.6+fcdff87fa3
+	- fabric-api-lookup-api-v1 2.0.24+3434d6d95d
+	- fabric-biome-api-v1 20.0.9+74ed1ea55d
+	- fabric-block-api-v1 3.1.0+0ae6f9115d
+	- fabric-block-getter-api-v2 2.0.9+3434d6d95d
+	- fabric-client-gametest-api-v1 6.0.7+4be74c3f5d
+	- fabric-command-api-v2 3.1.2+fcdff87f5d
+	- fabric-content-registries-v0 15.0.4+74ed1ea55d
+	- fabric-convention-tags-v2 4.10.3+6b5b47fd5d
+	- fabric-crash-report-info-v1 1.0.7+fcdff87f5d
+	- fabric-creative-tab-api-v1 5.0.21+fcdff87f5d
+	- fabric-data-attachment-api-v1 2.2.30+3434d6d95d
+	- fabric-data-generation-api-v1 27.2.4+427eab975d
+	- fabric-debug-api-v1 1.0.4+3434d6d95d
+	- fabric-dimensions-v1 5.1.19+47f74c985d
+	- fabric-entity-events-v1 6.0.4+3434d6d95d
+	- fabric-events-interaction-v0 5.3.6+3434d6d95d
+	- fabric-game-rule-api-v1 4.0.10+3434d6d95d
+	- fabric-gametest-api-v1 4.0.32+3434d6d95d
+	- fabric-item-api-v1 14.7.0+cf6bc2db5d
+	- fabric-key-mapping-api-v1 2.0.8+3434d6d95d
+	- fabric-lifecycle-events-v1 4.1.9+ffef5f675d
+	- fabric-loot-api-v3 4.0.8+4068fd645d
+	- fabric-menu-api-v1 2.0.27+ed66f0a35d
+	- fabric-message-api-v1 7.0.10+3434d6d95d
+	- fabric-model-loading-api-v1 8.0.35+fcdff87f5d
+	- fabric-networking-api-v1 6.3.8+fcdff87f5d
+	- fabric-object-builder-api-v1 24.1.9+3434d6d95d
+	- fabric-particles-v1 5.0.24+3434d6d95d
+	- fabric-permission-api-v1 1.0.8+fcdff87f5d
+	- fabric-recipe-api-v1 10.0.8+fcdff87f5d
+	- fabric-registry-sync-v0 8.0.1+fcdff87f5d
+	- fabric-renderer-api-v1 17.0.15+79385d0b5d
+	- fabric-renderer-indigo 9.1.23+b9d63e335d
+	- fabric-rendering-fluids-v1 6.0.6+3434d6d95d
+	- fabric-rendering-v1 27.0.14+901a437c5d
+	- fabric-resource-conditions-api-v1 6.1.5+3434d6d95d
+	- fabric-resource-loader-v0 3.3.26+4fc5413f5d
+	- fabric-resource-loader-v1 3.0.4+fcdff87fa3
+	- fabric-screen-api-v1 5.2.4+48607d035d
+	- fabric-serialization-api-v1 2.0.7+74ed1ea55d
+	- fabric-sound-api-v1 2.0.7+3434d6d95d
+	- fabric-tag-api-v1 2.1.10+fcdff87f5d
+	- fabric-transfer-api-v1 8.0.25+fcdff87f5d
+	- fabric-transitive-access-wideners-v1 8.1.16+52268a0e5d
+	- fabricloader 0.19.5
+	- java 25
+	- minecraft 26.3
+	- mixinextras 0.5.5
+	- modmenu 21.0.0-beta.1
+	   \-- placeholder-api 3.2.0+26.3
+	- seamlessportals 1.0.0
+	- sodium 0.9.2+mc26.3
+[15:00:20] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Tanvith/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/5f66cc9f59b8efaa942155a3d5a30599bf6640dd/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[15:00:20] [main/INFO] (Sodium) Loaded configuration file for Sodium: 37 options available, 0 override(s) found
+[SEAMLESS COMPAT] Skipping mixin com.warwa.seamlessportals.mixin.client.LevelRendererCullTerrainMixin (incompatible with Sodium)
+[SEAMLESS EXCLUSIVITY] Skipping block-era mixin com.warwa.seamlessportals.mixin.client.ClientPacketListenerLocalPlayerFallbackMixin (superseded by the IP set while entityPortals is ON)
+[15:00:21] [main/INFO] (Sodium-GraphicsAdapterProbe) Searching for graphics cards...
+[15:00:21] [main/INFO] (Sodium-GraphicsAdapterProbe) Found graphics adapter: AdapterInfo{vendor=AMD, description='AMD Radeon(TM)  860M Graphics', adapterType=0x0000232B, openglIcdFilePath='C:\WINDOWS\System32\DriverStore\FileRepository\u0420974.inf_amd64_a0e42cda7ce98c09\B420649\atig6pxx.dll', openglIcdVersion=32.0.22024.3004}
+[15:00:21] [main/WARN] (Sodium-Workarounds) Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [AMD_GAME_OPTIMIZATION_BROKEN]
+[15:00:21] [main/WARN] (Sodium-Workarounds) This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
+[15:00:21] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[15:00:22] [Datafixer Bootstrap #0/INFO] (Minecraft) 307 Datafixer optimizations took 280 milliseconds
+[15:00:23] [main/ERROR] (HkeyPerformanceDataUtil) Unable to locate English counter names in registry Perflib 009. Counters may need to be rebuilt: 
+
+com.sun.jna.platform.win32.Win32Exception: The parameter is incorrect.
+	at knot//com.sun.jna.platform.win32.Advapi32Util.registryGetStringArray(Advapi32Util.java:921)
+	at knot//com.sun.jna.platform.win32.Advapi32Util.registryGetStringArray(Advapi32Util.java:898)
+	at knot//oshi.driver.windows.registry.HkeyPerformanceDataUtil.mapCounterIndicesFromRegistry(HkeyPerformanceDataUtil.java:274)
+	at knot//oshi.driver.windows.registry.HkeyPerformanceDataUtil.<clinit>(HkeyPerformanceDataUtil.java:51)
+	at knot//oshi.driver.windows.registry.ProcessPerformanceData.buildProcessMapFromRegistry(ProcessPerformanceData.java:45)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.queryProcessMapFromRegistry(WindowsOperatingSystem.java:328)
+	at knot//oshi.util.Memoizer$1.get(Memoizer.java:65)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.processMapToList(WindowsOperatingSystem.java:298)
+	at knot//oshi.software.os.windows.WindowsOperatingSystem.getProcess(WindowsOperatingSystem.java:292)
+	at knot//oshi.software.os.OperatingSystem.getCurrentProcess(OperatingSystem.java:246)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[15:00:23] [main/WARN] (PerfCounterQuery) Unable to locate English counter names in registry Perflib 009. Assuming English counters. Error 0x80070057. See https://support.microsoft.com/en-us/help/300956/how-to-manually-rebuild-performance-counter-library-values
+[15:00:23] [main/WARN] (Minecraft) Failed to get system info for Process Loads
+
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getUserTime()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$0(SystemReport.java:190)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:189)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[15:00:23] [main/WARN] (Minecraft) Failed to get system info for Process Virtual Size (MiB)
+
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getVirtualSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$1(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:202)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[15:00:23] [main/WARN] (Minecraft) Failed to get system info for Process Resident Size (MiB)
+
+java.lang.NullPointerException: Cannot invoke "oshi.software.os.OSProcess.getResidentSetSize()" because "process" is null
+	at knot//net.minecraft.SystemReport.lambda$putProcessDetails$2(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.setDetail(SystemReport.java:96)
+	at knot//net.minecraft.SystemReport.putProcessDetails(SystemReport.java:203)
+	at knot//net.minecraft.SystemReport.lambda$putSoftware$0(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.putSoftware(SystemReport.java:116)
+	at knot//net.minecraft.SystemReport.lambda$new$7(SystemReport.java:68)
+	at knot//net.minecraft.SystemReport.ignoreErrors(SystemReport.java:121)
+	at knot//net.minecraft.SystemReport.<init>(SystemReport.java:68)
+	at knot//net.minecraft.CrashReport.<init>(CrashReport.java:35)
+	at knot//net.minecraft.CrashReport.preload(CrashReport.java:252)
+	at knot//net.minecraft.client.main.Main.main(Main.java:172)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+[15:00:27] [Render thread/INFO] (Minecraft) Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[15:00:27] [Render thread/INFO] (Minecraft) Setting user: Player703
+[15:00:27] [Render thread/INFO] (seamlessportals) Seamless Portals initializing (Fabric)
+[15:00:27] [Render thread/INFO] (seamlessportals) Registering Seamless Portals network payloads
+[15:00:27] [Render thread/INFO] (seamlessportals) Fabric network payloads registered
+[15:00:27] [Render thread/INFO] (iPortal) Loading Immersive Portals config
+[15:00:28] [Render thread/INFO] (iPortal) crossPortalEntityClipMechanism = SUBMIT_ORDER_UNIFORM
+[15:00:28] [Render thread/INFO] (iPortal) iPortal Config Applied
+[15:00:28] [Render thread/INFO] (iPortal) Immersive Portals Mod Initializing
+[15:00:28] [Render thread/INFO] (ImmPtlNetworkConfig) Immersive Portals Core version 1.0.0
+[15:00:28] [Render thread/INFO] (AperturePassthroughInit) [RS-SEAM-REGISTRY] aperture passthrough initialised (disabled=false)
+[15:00:28] [Render thread/INFO] (seamlessportals) Seamless Portals: entity-portal engine initialized (server/common)
+[15:00:28] [Render thread/INFO] (seamlessportals) Seamless Portals client initializing (Fabric)
+[15:00:28] [Render thread/INFO] (seamlessportals) Sodium is present
+[15:00:28] [Render thread/INFO] (seamlessportals) Iris is not present
+[15:00:28] [Render thread/INFO] (seamlessportals) Seamless Portals: entity-portal engine initialized (client); flag-ON render dispatch registered (AFTER_TRANSLUCENT_TERRAIN)
+[15:00:28] [Render thread/INFO] (Indigo) [Indigo] Different rendering plugin detected; not applying Indigo.
+[15:00:28] [Render thread/INFO] (Mod Menu/Update Checker) Checking mod updates...
+[15:00:29] [Render thread/ERROR] (Minecraft) Illegal option value 0 for Anisotropic Filtering
+[15:00:29] [Render thread/INFO] (Sodium) Setting exclusive fullscreen to true by default, as the user is using a language that likely does not need an IME.
+[15:00:29] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.4.3-snapshot
+[15:00:29] [Render thread/WARN] (Minecraft) Detected unexpected shutdown during last game startup: resetting fullscreen mode
+[15:00:29] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App name: Minecraft
+[15:00:29] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App version: 26.3
+[15:00:29] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: App ID: com.mojang.minecraft
+[15:00:29] [Render thread/INFO] (Minecraft) SDL [SYSTEM]: SDL revision: SDL-3.4.14-62f10da
+[15:00:29] [Render thread/WARN] (Minecraft) Detected unexpected shutdown during last game startup: forcing preferred graphics API to OpenGL
+[15:00:29] [Download-3/INFO] (Mod Menu/Update Checker) Update available for 'fabric-api@0.161.0+26.3', (-> 0.162.0+26.3)
+[15:00:29] [Download-3/INFO] (Mod Menu/Update Checker) Update available for 'cloth-config@26.3.158', (-> 26.3.159+fabric)
+[15:00:29] [Download-3/INFO] (Mod Menu/Update Checker) Update available for 'modmenu@21.0.0-beta.1', (-> 21.0.0)
+[15:00:29] [Render thread/INFO] (seamlessportals) [SEAMLESS STENCIL] Requested 8 stencil bits from SDL
+[15:00:29] [Render thread/INFO] (Sodium-AmdWorkarounds) Modifying process environment to apply workarounds for the AMD graphics driver...
+[15:00:29] [Render thread/INFO] (seamlessportals) [SEAMLESS STENCIL] Requested 8 stencil bits from SDL
+[15:00:29] [Render thread/INFO] (Sodium-AmdWorkarounds) Modifying process environment to apply workarounds for the AMD graphics driver...
+[15:00:29] [Render thread/INFO] (Minecraft) Using graphics backend OpenGL, using drivers: 3.3.0 Core Profile Context 25.20.24.03.251024
+[15:00:29] [Render thread/INFO] (Minecraft) Using graphics device: AMD Radeon(TM)  860M Graphics (ATI Technologies Inc.)
+[15:00:29] [Render thread/INFO] (Minecraft) Using graphics device extensions: GL_ARB_multi_draw_indirect, GL_ARB_buffer_storage, GL_ARB_shader_draw_parameters, GL_ARB_base_instance, GL_KHR_debug, GL_ARB_draw_indirect, GL_ARB_clip_control, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+[15:00:29] [Render thread/INFO] (seamlessportals) [SEAMLESS STENCIL] Requested 8 stencil bits from SDL
+[15:00:29] [Render thread/INFO] (Sodium-AmdWorkarounds) Modifying process environment to apply workarounds for the AMD graphics driver...
+[15:00:29] [Render thread/INFO] (Minecraft) Created window using SDL video driver: windows
+[15:00:29] [Render thread/INFO] (seamlessportals) [SEAMLESS STENCIL] Changed depth format: DEPTH32F -> DEPTH24_STENCIL8
+[15:00:30] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/gui
+[15:00:30] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:30] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, vanilla, cloth-config, fabric-advancement-api-v1, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-getter-api-v2, fabric-client-gametest-api-v1, fabric-command-api-v2, fabric-content-registries-v0, fabric-convention-tags-v2, fabric-crash-report-info-v1, fabric-creative-tab-api-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-debug-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-game-rule-api-v1, fabric-gametest-api-v1, fabric-item-api-v1, fabric-key-mapping-api-v1, fabric-lifecycle-events-v1, fabric-loot-api-v3, fabric-menu-api-v1, fabric-message-api-v1, fabric-model-loading-api-v1, fabric-networking-api-v1, fabric-object-builder-api-v1, fabric-particles-v1, fabric-permission-api-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-rendering-fluids-v1, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-resource-loader-v1, fabric-screen-api-v1, fabric-serialization-api-v1, fabric-sound-api-v1, fabric-tag-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, modmenu, placeholder-api, seamlessportals, sodium
+[15:00:30] [Worker-Main-5/INFO] (Minecraft) Found unifont_pua-17.0.01.hex, loading
+[15:00:30] [Worker-Main-6/INFO] (Minecraft) Found unifont_all_no_pua-17.0.01.hex, loading
+[15:00:30] [Worker-Main-14/INFO] (Minecraft) Found unifont_jp_patch-17.0.01.hex, loading
+[15:00:30] [Download-3/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
+[15:00:30] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:30] [Render thread/INFO] (seamlessportals) [SEAMLESS COMPAT] Sodium detected — vanilla-pipeline hooks will defer to Sodium's chunk renderer
+[15:00:30] [Render thread/INFO] (Sodium-GlSurface) Thread[#3,Render thread,5,main]
+[15:00:30] [Render thread/INFO] (Sodium-GlSurface) OpenGL Vendor: ATI Technologies Inc.
+[15:00:30] [Render thread/INFO] (Sodium-GlSurface) OpenGL Renderer: AMD Radeon(TM)  860M Graphics
+[15:00:30] [Render thread/INFO] (Sodium-GlSurface) OpenGL Version: 3.3.0 Core Profile Context 25.20.24.03.251024
+[15:00:30] [Render thread/INFO] (Minecraft) [ImmPtl] MixinExtra is working!
+[15:00:30] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+layout(location = 3) in ivec2 _vert_input_03;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    _interface_variable_02 = _vert_input_01;
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/world_border
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_crumbling
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 3) in ivec2 _vert_input_03;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    _interface_variable_02 = _vert_input_01;
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/animate_sprite (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/animate_sprite (no match)
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_beacon_beam
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_beacon_beam
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/glint
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+uniform sampler2D _uniform_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_04, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:31] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_leash
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/gui
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/world_border
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_water_mask
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/stars
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/world_border
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_crumbling
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_outline
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/debug_point
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+uniform sampler2D _uniform_00_05;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_05, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/world_border
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/debug_point
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_end_portal
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_entity_shadow
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_crumbling
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_outline
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_entity_shadow
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+uniform sampler2D _uniform_00_05;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_05, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+uniform sampler2D _uniform_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_04, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+uniform sampler2D _uniform_00_05;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_05, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 3) in ivec2 _vert_input_03;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    _interface_variable_02 = _vert_input_01;
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:32] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+uniform sampler2D _uniform_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_04, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/gui
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_beacon_beam
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_end_portal
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_beacon_beam
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_beacon_beam
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/panorama
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/debug_point
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/gui
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_tex_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/position_color
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/block
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_entity_shadow
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_water_mask
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_entity_shadow
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/particle
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+layout(location = 3) in ivec2 _vert_input_03;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    _interface_variable_02 = _vert_input_01;
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_crumbling
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/sky
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/text
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lightning
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/clouds
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/debug_point
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/entity
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/rendertype_lines
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+uniform sampler2D _uniform_00_05;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_05, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+uniform sampler2D _uniform_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_04, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    mat4 ProjMat;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_03;
+
+uniform sampler2D _uniform_00_04;
+
+layout(location = 0) in vec3 _vert_input_00;
+layout(location = 4) in ivec3 _vert_input_04;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+layout(location = 5) in float _vert_input_05;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_vert_input_04 - _uniform_instance_00_00.CameraBlockPos)) + _uniform_instance_00_00.CameraOffset;
+    gl_Position = (_uniform_instance_00_01.ProjMat * _uniform_instance_00_02.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_02.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_04, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _vert_input_05, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/terrain
+[15:00:33] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] TRANSFORMED terrain source:
+#version 330
+
+layout(std140) uniform _uniform_00_00
+{
+    ivec3 ChunkPosition;
+    float ChunkVisibility;
+} _uniform_instance_00_00;
+
+layout(std140) uniform _uniform_00_01
+{
+    ivec3 CameraBlockPos;
+    float GlintAlpha;
+    vec3 CameraOffset;
+    float GameTime;
+    vec2 ScreenSize;
+    int MenuBlurRadius;
+    int UseRgss;
+} _uniform_instance_00_01;
+
+layout(std140) uniform _uniform_00_02
+{
+    mat4 ProjMat;
+} _uniform_instance_00_02;
+
+layout(std140) uniform _uniform_00_03
+{
+    mat4 ModelViewMat;
+    ivec2 TextureSize;
+} _uniform_instance_00_03;
+
+layout(std140) uniform _uniform_00_04
+{
+    vec4 FogColor;
+    float FogEnvironmentalStart;
+    float FogEnvironmentalEnd;
+    float FogRenderDistanceStart;
+    float FogRenderDistanceEnd;
+    float FogSkyEnd;
+    float FogCloudsEnd;
+} _uniform_instance_00_04;
+
+uniform sampler2D _uniform_00_05;
+
+layout(location = 0) in vec3 _vert_input_00;
+out float _interface_variable_00;
+out float _interface_variable_01;
+out vec4 _interface_variable_02;
+layout(location = 1) in vec4 _vert_input_01;
+layout(location = 3) in ivec2 _vert_input_03;
+out vec2 _interface_variable_03;
+layout(location = 2) in vec2 _vert_input_02;
+out float _interface_variable_04;
+
+float fog_spherical_distance(vec3 pos)
+{
+    return length(pos);
+}
+
+float fog_cylindrical_distance(vec3 pos)
+{
+    float distXZ = length(pos.xz);
+    float distY = abs(pos.y);
+    return max(distXZ, distY);
+}
+
+vec4 sample_lightmap(sampler2D lightMap, ivec2 uv)
+{
+    return textureLod(lightMap, clamp((vec2(uv) / vec2(256.0)) + vec2(0.03125), vec2(0.03125), vec2(0.96875)), 0.0);
+}
+
+out float gl_ClipDistance[1];
+uniform vec4 seamlessportals_ClipPlane;
+void main()
+{
+    vec3 pos = (_vert_input_00 + vec3(_uniform_instance_00_00.ChunkPosition - _uniform_instance_00_01.CameraBlockPos)) + _uniform_instance_00_01.CameraOffset;
+    gl_Position = (_uniform_instance_00_02.ProjMat * _uniform_instance_00_03.ModelViewMat) * vec4(pos, 1.0);
+    {
+        // SEAMLESSPORTALS_CLIP_INJECTED
+        vec4 sp_viewPos = _uniform_instance_00_03.ModelViewMat * vec4(pos, 1.0);
+        gl_ClipDistance[0] = dot(sp_viewPos.xyz, seamlessportals_ClipPlane.xyz) + seamlessportals_ClipPlane.w;
+    }
+
+    vec3 param = pos;
+    _interface_variable_00 = fog_spherical_distance(param);
+    vec3 param_1 = pos;
+    _interface_variable_01 = fog_cylindrical_distance(param_1);
+    ivec2 param_2 = _vert_input_03;
+    _interface_variable_02 = _vert_input_01 * sample_lightmap(_uniform_00_05, param_2);
+    _interface_variable_03 = _vert_input_02;
+    float dist = length(pos);
+    _interface_variable_04 = mix(1.0, _uniform_instance_00_00.ChunkVisibility, clamp((dist - 16.0) / 16.0, 0.0, 1.0));
+}
+
+
+[15:00:34] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Speakers (Senary Audio)
+[15:00:34] [Render thread/INFO] (Minecraft) Sound engine started
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/celestials.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 128x128x0 minecraft:textures/atlas/decorated_pot.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/shield_patterns.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/banner_patterns.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 2048x2048x4 minecraft:textures/atlas/blocks.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/items.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 1024x1024x0 minecraft:textures/atlas/gui.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 128x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/chest.png-atlas
+[15:00:34] [Render thread/INFO] (Minecraft) Created: 512x512x0 minecraft:textures/atlas/shulker_boxes.png-atlas
+[15:00:34] [Download-3/INFO] (Minecraft) Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: FabricMC
+[15:00:35] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=32.7ms/76
+[15:00:36] [Test thread/INFO] (seamlessportals) [TITLE CARD] skipped (selected test: crossing)
+[15:00:36] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] starting; entityPortals flag = true
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:36] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:37] [Worker-Main-9/INFO] (Minecraft) Loaded 1866 advancements
+[15:00:37] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.GenericMessageScreen@24e02245
+[15:00:37] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[15:00:37] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 67 new biomes in 1.411 ms
+[15:00:37] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 26.3
+[15:00:37] [Server thread/INFO] (Minecraft) Generating keypair
+[15:00:37] [Server thread/INFO] (Minecraft) Selecting global world spawn...
+[15:00:38] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[15:00:38] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:overworld
+[15:00:38] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[15:00:38] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_nether
+[15:00:38] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[15:00:38] [Server thread/INFO] (GlobalPortalStorage) Global portal storage initialized minecraft:the_end
+[15:00:38] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[15:00:38] [Server thread/INFO] (Minecraft) Loading 0 persistent chunks...
+[15:00:38] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[15:00:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld seamless-crossing-smoke'/minecraft:overworld
+[15:00:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether seamless-crossing-smoke'/minecraft:the_nether
+[15:00:38] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end seamless-crossing-smoke'/minecraft:the_end
+[15:00:38] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[15:00:38] [Server thread/INFO] (CustomPortalGenManager) [S16 gen-state] forms registered: 8; datapack entries: 0 (+0 legacy); manager buckets: useItem=0 throwItem=0 conv=0
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (ImmPtlNetworkConfig) Client login init
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Netty Local IO #1/INFO] (ImmPtlNetworkConfig) Client received ImmPtl config packet. Server mod version: 1.0.0
+[15:00:38] [Netty Local IO #2/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 1.0.0 Player: Player703 6ecd1629-dee4-373d-9457-481bd36b0826
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Server thread/INFO] (Minecraft) Loading 48 chunks for player spawn...
+[15:00:38] [Server thread/INFO] (Minecraft) Preparing spawn area: 16%
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Server thread/INFO] (Minecraft) Preparing spawn area: 35%
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:38] [Server thread/INFO] (Minecraft) Time elapsed: 1097 ms
+[15:00:38] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Server thread/INFO] (Minecraft) Player703[local:E:38dd970f] logged in with entity id 1 at (0.5, -60.0, 0.5)
+[15:00:39] [Server thread/INFO] (Minecraft) System chat: Player703 joined the game
+[15:00:39] [Server thread/INFO] (iPortal) Player login 0 ServerPlayer['Player703'/1, l='ServerWorld minecraft:overworld seamless-crossing-smoke', x=0.50, y=-60.00, z=0.50]
+[15:00:39] [Server thread/INFO] (iPortal) Server performance level: medium
+[15:00:39] [Server thread/INFO] (Minecraft) Changing view distance to 6, from 10
+[15:00:39] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: null screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:overworld seamless-crossing-smoke [-2, 1]
+[15:00:39] [Render thread/INFO] (Minecraft) Client world updated but not counted as cleanup
+[15:00:39] [Render thread/INFO] (ChunkBuilder) Started 10 worker threads
+[15:00:39] [Render thread/INFO] (MiscNetworking) Client received dim id sync packet
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[15:00:39] [Render thread/INFO] (MiscNetworking) Client accepted dimension type mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=ResourceKey[minecraft:dimension_type / minecraft:overworld], ResourceKey[minecraft:dimension / minecraft:the_nether]=ResourceKey[minecraft:dimension_type / minecraft:the_nether], ResourceKey[minecraft:dimension / minecraft:the_end]=ResourceKey[minecraft:dimension_type / minecraft:the_end]}
+[15:00:39] [Render thread/INFO] (MiscNetworking) Client accepted dimension sea level mapping {ResourceKey[minecraft:dimension / minecraft:overworld]=-63, ResourceKey[minecraft:dimension / minecraft:the_nether]=32, ResourceKey[minecraft:dimension / minecraft:the_end]=0}
+[15:00:39] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:overworld 0.5 -60.0 0.5
+[15:00:39] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (Minecraft) [System] [CHAT] [Seamless Portals] Sodium support is EXPERIMENTAL — portal clipping is newly enabled; please report any terrain artifacts near portals.
+[15:00:39] [Render thread/INFO] (ChunkBuilder) Stopping worker threads
+[15:00:39] [Render thread/INFO] (ChunkBuilder) Started 10 worker threads
+[15:00:39] [Render thread/WARN] (Minecraft) Requested post effect does not exist: minecraft:end_of_frame
+[15:00:39] [Render thread/INFO] (SeamClipRenderer) [SEAM CLIP] sodium present — seam clip self-gated OFF (no meshing hook; see SEAM_CLIP_DESIGN.md §2)
+[15:00:39] [Render thread/INFO] (iPortal) [S14.21] stencil-clear main FBO resolved: 3 (color=com.mojang.renderpearl.backend.opengl.GlTextureView@28a9f4b5, depth=com.mojang.renderpearl.backend.opengl.GlTextureView@1883e585)
+[15:00:39] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 2 reached during a single frame. New capacity will be 4.
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 4 reached during a single frame. New capacity will be 8.
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (Minecraft) Resizing Dynamic Transforms UBO, capacity limit of 8 reached during a single frame. New capacity will be 16.
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (SodiumClipShaderPatch) [imm_ptl C2-2] sodium terrain shader clip-patched: sodium:blocks/block_layer_opaque
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:39] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: net.minecraft.client.gui.screens.LevelLoadingScreen@4ae00f79
+[15:00:40] [Render thread/INFO] (fabric-client-gametest-api-v1) World loading finished: ClientWorld minecraft:overworld screen: null
+[15:00:40] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=18.2ms/145
+[15:00:44] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] staging around (0,-60,0)
+[15:00:45] [Render thread/WARN] (IrisDestPrevCamera) [Seamless Portals] IS5-MB THE WRITE SEAM NEVER FIRED in 300 active frames. The feature reports itself ACTIVE but its @Inject on GlStateManager._glBindBuffer did not resolve (require = 0 makes that silent). Nothing has been corrected — treat this run as VOID for IS5-MB.
+[15:00:45] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=22.7ms/253
+[15:00:47] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] portals spawned: A (0.5, -58.5, -5.5) -> overworld (100.5, 250.0, -5.5); B (4.5, -58.5, -5.5) -> nether (0.5, 129.5, 0.5)
+[15:00:47] [Render thread/INFO] (Minecraft) [System] [CHAT] [Immersive Portals] Check the wiki about how to customize portals https://qouteall.fun/immptl/wiki/Portal-Customization
+[15:00:47] [Render thread/INFO] (ChunkBuilder) Started 10 worker threads
+[15:00:47] [Render thread/INFO] (ClientWorldLoader) Client World Created minecraft:the_nether
+[15:00:47] [Server thread/INFO] (seamlessportals) [SEAMLESS FIRE] allow fire tick at 5, 30, 5 in minecraft:the_nether (watcher Player703 through portal at (4.5, -58.5, -5.5))
+[15:00:47] [Server thread/INFO] (seamlessportals) [SEAMLESS FIRE] allow fire tick at 5, 30, 5 in minecraft:the_nether (watcher Player703 through portal at (4.5, -58.5, -5.5))
+[15:00:47] [Server thread/INFO] (seamlessportals) [SEAMLESS FIRE] allow fire tick at -7, 29, 19 in minecraft:the_nether (watcher Player703 through portal at (4.5, -58.5, -5.5))
+[15:00:47] [Server thread/INFO] (seamlessportals) [SEAMLESS FIRE] allow fire tick at -7, 29, 19 in minecraft:the_nether (watcher Player703 through portal at (4.5, -58.5, -5.5))
+[15:00:47] [Server thread/INFO] (seamlessportals) [SEAMLESS FIRE] allow fire tick at -10, 28, 17 in minecraft:the_nether (watcher Player703 through portal at (4.5, -58.5, -5.5))
+[15:00:47] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:the_nether seamless-crossing-smoke [-2, 0]
+[15:00:47] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:the_nether seamless-crossing-smoke [-2, -2]
+[15:00:47] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:the_nether seamless-crossing-smoke [-2, -1]
+[15:00:48] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] item ef876b81-2a90-4314-92a6-f1de71226d0d thrown at (0.5, -58.8, -3.5)
+[15:00:48] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader patched: minecraft:core/item
+[15:00:48] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 1 PASS — same-dim item arrived at (100.5, 250.0, -5.5)
+[15:00:48] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] item 6e2930aa-1e00-4081-b19f-d309ec3df96c thrown at (4.5, -58.8, -3.5)
+[15:00:48] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 2 PASS — cross-dim item recreated in nether at (0.5, 129.5, 0.5)
+[15:00:49] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 3: cow hurt (lastDamageSource=player) + shoved at (4.5, -60.0, -3.5)
+[15:00:49] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 3: recreated cow at (0.6124584366843142, 128.0, 0.1173805104154832) in minecraft:the_nether; lastDamageSource raw=DamageSource (player) getter=DamageSource (player)
+[15:00:49] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 3 PASS — transient hurt state carried across the recreate
+[15:00:49] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 7: far-dest same-dim portal C spawned (dest 1400,250,1400 — ~81 chunks from destA)
+[15:00:49] [Render thread/INFO] (seamlessportals) [SEAMLESS] Portal render types created (stencil-only + stencil-depth + no-depth-color + depth-clear + fbo-composite + composite-blit[ALWAYS] + screen-depth-clear)
+[15:00:49] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:49] [Render thread/INFO] (seamlessportals) [SEAMLESS SLICE] shader skipped: minecraft:core/screenquad (no match)
+[15:00:49] [Render thread/INFO] (iPortal) Created lightmap texture for minecraft:the_nether
+[15:00:49] [Render thread/INFO] (ChunkBuilder) Stopping worker threads
+[15:00:49] [Render thread/INFO] (ChunkBuilder) Started 10 worker threads
+[15:00:49] [Render thread/INFO] (ForceMainThreadRebuild) Forcing main thread rebuild in current frame
+[15:00:50] [Render thread/INFO] (SodiumClipShaderPatch) [imm_ptl C2-2] sodium terrain shader clip-patched: sodium:blocks/block_layer_opaque
+[15:00:50] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=22.9ms/280
+[15:00:50] [Render thread/INFO] (RunConfigReport) 
+[Seamless Portals] IS5-RC === RUN CONFIG (once-only, trigger: watchdog: 600 consecutive IN-WORLD frames with NO portal dest render — if this run was supposed to measure a portal window, IT MEASURED NOTHING) ===
+[Seamless Portals] IS5-RC [1/3] JVM PROPERTIES ACTUALLY PRESENT (seamlessportals.*) — this is the GROUND TRUTH for "did the -P row land":
+    seamlessportals.gametest.only = crossing
+[Seamless Portals] IS5-RC [2/3] DERIVED FEATURE STATE (reflected from IPGlobal — exhaustive by construction, cannot drift):
+  -- lever constants --
+    APERTURE_PLANE_CLIP_DISABLED_LEVER = false
+    BLOOM_MASK_PROBE = false
+    BLOOM_MASK_SEAM_CLAMP_DISABLED_LEVER = false
+    BOB_SYNC_PROBE = false
+    COMPAT_SAMEDIM_ENTITIES_DISABLED_LEVER = false
+    COMPOSITE_CENSUS_PASSES = composite4
+    COMPOSITE_CENSUS_PROBE = false
+    CROSS_VIEW_FULL_PIPELINE_DISABLED_LEVER = false
+    CROSS_VIEW_RECURSION_DISABLED_LEVER = false
+    CROSS_VIEW_REVERSE_WINDOW_DISABLED_LEVER = false
+    CROSS_VIEW_SUPPRESS_UNDER_PACK_LEVER = false
+    DEEP_RECURSION_WARN_AT = 8
+    DESPAWN_PROBE = false
+    DEST_CHUNK_PREP_FLAVOUR_DISABLED_LEVER = false
+    DEST_PREV_CAMERA_PROBE = false
+    HAND_BRACKET_LEGACY_LEQUAL_LEVER = false
+    HAND_DEPTH_FUNC_FIX_DISABLED_LEVER = true
+    HAND_DRAW_DUMP = false
+    HAND_IN_LEVEL_PROBE = false
+    HAND_LOCATOR = false
+    HAND_SEAM_DEPTH_BRACKET_DISABLED_LEVER = false
+    HAND_STAGE_DIFF_PROBE = false
+    HAND_SUBMIT_TAP = false
+    HEAL_RETARGET_DISABLED_LEVER = false
+    IRIS_BLOOM_MASK_DISABLED_LEVER = false
+    IRIS_BOB_SYNC_DISABLED_LEVER = false
+    IRIS_DEST_PREV_CAMERA_DISABLED_LEVER = false
+    IRIS_DEST_PREV_MAX_DELTA = 4.0
+    IRIS_DEST_PREV_NO_MATRICES = false
+    IRIS_DEST_PREV_PASSES = composite4
+    IRIS_DEST_TAA_CLEAR_DISABLED_LEVER = false
+    IRIS_MAX_LAYER_PINNED_BY_LEVER = false
+    IRIS_PER_FRAME_REFRESH_DISABLED_LEVER = false
+    IRIS_PORTAL_RECURSION_DISABLED_LEVER = false
+    IRIS_RECURSION_DEPTH_CEILING = 128
+    IRIS_TEMPORAL_GUARD_DISABLED_LEVER = false
+    NESTED_SHADOW_COMPOSITE_DISABLED_LEVER = false
+    NESTED_SHADOW_COMPOSITE_PROBE = false
+    PORTAL_BATCH_ISOLATION_DISABLED_LEVER = false
+    PREV_UNIFORM_HEAL_DISABLED_LEVER = false
+    SEAM_CLIP_RELAX_DISABLED_LEVER = false
+    SEAM_CONTENT_PROBE = false
+    SHADERPACK_VIEWS_JVM_LEVER = false
+    SHADOW_SCOPE_CLIP_FIX_DISABLED_LEVER = false
+    SHADOW_SCOPE_ISOLATION_DISABLED_LEVER = false
+    SODIUM_ARENA_BATCH_CLEAR_DISABLED_LEVER = false
+    SODIUM_OUTER_REPREPARE_DISABLED_LEVER = false
+    SODIUM_SCOPED_LIST_CLEAR_DISABLED_LEVER = false
+    SOURCE_PARTICLE_CULL_DISABLED_LEVER = false
+    STAMP_DEPTH_TEST_DISABLED_LEVER = false
+    STAMP_DEPTH_WRITE_DISABLED_LEVER = false
+    STAMP_EXEC_PROBE = false
+    STAMP_FLOOR_LEGACY_LEQUAL_LEVER = false
+    STAMP_HAND_DEPTH_CAP_DISABLED_LEVER = false
+    STAMP_LEQUAL_LEVER = false
+    TICKET_DESPAWN_SUPPRESS_DISABLED_LEVER = false
+    TP_XDIM_CENSUS_GL_LEVER = false
+    TP_XDIM_CENSUS_LEVER = false
+    XCUT_FRAG_FLOOR_DISABLED_LEVER = false
+    activeLoading = true
+    allowClientEntityPosInterpolation = true
+    alwaysOverrideTerrainSetup = false
+    boxPortalSpecialIteration = true
+    cacheGlBuffer = true
+    checkModInfoFromInternet = true
+    chunkPacketDebug = false
+    chunkUnloadDelayGenerations = 4
+    clientPortalLoadDebug = false
+    cloudOptimization = true
+    compatSameDimEntities = true
+    compatSameDimEntityFillCount = 0
+    correctCrossPortalEntityRendering = true
+    crossPortalCollision = true
+    crossPortalEntityClipMechanism = SUBMIT_ORDER_UNIFORM
+    crossViewFullPipelineCount = 0
+    cullSectionsBehind = true
+    debugAllowDestExtractGizmos = false
+    debugAllowDestParticleExtract = false
+    debugApertureNoColorWrite = false
+    debugApertureNoDepthWrite = false
+    debugApertureNoStencilWrite = false
+    debugBloomMaskBlackout = false
+    debugDisableFog = false
+    debugDrawTerminalPortalAsBlack = false
+    debugDyePortalFill = false
+    debugDyeViewAreaMesh = false
+    debugFrameBoundaryProbe = false
+    debugGlStateAssert = false
+    debugNoApertureDepthClamp = false
+    debugNoStampDepthClamp = false
+    debugRenderPortalShapeMesh = false
+    debugSkipApertureIncr = false
+    debugSkipCompileDrain = false
+    debugSkipDepthClear = false
+    debugSkipDepthRestore = false
+    debugSkipDestExtract = false
+    debugSkipDestFogInstall = false
+    debugSkipDestLightmap = false
+    debugSkipExtractBerdPrepare = false
+    debugSkipExtractBlockEntities = false
+    debugSkipExtractBorder = false
+    debugSkipExtractEntities = false
+    debugSkipExtractErdPrepare = false
+    debugSkipExtractOnly = false
+    debugSkipExtractSky = false
+    debugSkipExtractWeather = false
+    debugSkipGlobalsUbo = false
+    debugSkipPortalEntities = false
+    debugSkipPortalSky = false
+    debugSkipPortalTerrain = false
+    debugSkipProjectionInstall = false
+    debugSkipSameDimEntities = false
+    debugSkipSogFeed = false
+    debugSkipStencilClamp = false
+    debugStampSolid = false
+    debugTintBloomMask = false
+    debugTintStamp = false
+    deepPortalLoadingReach = true
+    disableTeleportation = false
+    doCheckGlError = false
+    easeCommandStickPermission = false
+    easeCreativePermission = true
+    enableClientPerformanceAdjustment = true
+    enableClippingMechanism = true
+    enableCrossPortalSound = true
+    enableCrossPortalView = true
+    enableDatapackPortalGen = true
+    enableDepthClampForPortalRendering = true
+    enableMirrorCreation = true
+    enableNetherPortalEffect = true
+    enableServerCollision = true
+    enableServerPerformanceAdjustment = true
+    enableSharedBlockMeshBuffers = true
+    enableUpdateNotification = true
+    enableWarning = true
+    endPortalMode = normal
+    entityTrackDebug = false
+    entityUntrackDebug = false
+    experimentalShaderpackPortalViews = true
+    indirectLoadingRadiusCap = 8
+    irisBloomApertureMask = true
+    irisBloomMaskCount = 0
+    irisBloomMaskMissCount = 0
+    irisBobSync = true
+    irisBobSyncApplyCount = 0
+    irisDestPrevCamera = true
+    irisDestPrevNeutralizeCount = 0
+    irisDestPrevUnmatchedCount = 0
+    irisDestPrevWriteCount = 0
+    irisDestTaaClear = true
+    irisDestTaaClearCount = 0
+    irisMaxDestRenders = 30
+    irisMaxPortalLayer = 5
+    irisPerFrameRefresh = false
+    irisRecursionLagGuard = false
+    irisTemporalGuard = true
+    irisTemporalGuardCopyCount = 0
+    lagAttackProof = false
+    lightVanillaNetherPortalWhenCrouching = true
+    logClientPlayerCollidingPortalUpdate = false
+    looseMovementCheck = false
+    maxNormalPortalRadius = 32
+    maxPortalLayer = 5
+    moveDebugTextToTop = false
+    nestedShadowCompositeNoopHits = 0
+    nestedShadowCompositeSuppress = true
+    nestedShadowCompositeSuppressCount = 0
+    netherPortalFindingRadius = 128
+    netherPortalMode = adaptive
+    netherPortalOverlay = false
+    offsetOcclusionQuery = true
+    portalBatchIsolation = true
+    portalBatchIsolationRedirectCount = 608
+    portalChainLoaderBudget = 64
+    portalChunkRetentionMode = off
+    portalChunkRetentionRadiusChunks = 0
+    portalChunkRetentionSeconds = 30
+    portalRenderLimit = 200
+    portalWindowRenderDistance = 0
+    prevUniformHeal = true
+    prevUniformHealCount = 0
+    pureMirror = false
+    reducedPortalRendering = false
+    renderMode = normal
+    renderYourselfInPortal = true
+    saveMemoryInBufferPack = false
+    scaleLimit = 30
+    shadowScopeClipArmedUploadCount = 0
+    shadowScopeClipFix = true
+    shadowScopeClipSuppressedCount = 0
+    shadowScopeIsolation = true
+    sodiumArenaLayerBatchesClearedCount = 0
+    sodiumArenaLayerBatchesLeftStaleCount = 0
+    sodiumOtherScopeLayerBatchesSparedCount = 0
+    sodiumOtherScopeLayerBatchesWipedCount = 0
+    sodiumOuterReprepareCount = 70
+    sourceParticleCull = true
+    sourceParticleCullCount = 0
+    teleportationDebugEnabled = false
+    tickOnlyIfChunkLoaded = true
+    ticketDespawnSuppress = true
+    ticketDespawnSuppressCount = 0
+    useSecondaryEntityVertexConsumer = true
+    viewBobbingReduce = true
+  -- feature decisions (what the render path ACTUALLY did) --
+    isCompatSameDimEntitiesActive() = ACTIVE
+    isHealRetargetActive() = ACTIVE
+    isIrisBloomApertureMaskActive() = ACTIVE
+    isIrisBobSyncActive() = ACTIVE
+    isIrisDestPrevCameraActive() = ACTIVE
+    isIrisDestTaaClearActive() = ACTIVE
+    isIrisPerFrameRefreshActive() = INACTIVE
+    isIrisTemporalGuardActive() = ACTIVE
+    isNestedShadowCompositeSuppressActive() = ACTIVE
+    isPortalBatchIsolationActive() = ACTIVE
+    isPrevUniformHealActive() = ACTIVE
+    isShaderpackPortalViewsActive(false) = INACTIVE ; isShaderpackPortalViewsActive(true) = ACTIVE
+    isShaderpackPortalViewsArmed() = ACTIVE
+    isShadowScopeClipFixActive() = ACTIVE
+    isShadowScopeIsolationActive() = ACTIVE
+    isSourceParticleCullActive() = ACTIVE
+    isTicketDespawnSuppressActive() = ACTIVE
+[Seamless Portals] IS5-RC [3/3] ENVIRONMENT:
+    iris present = no
+    sodium present = yes
+    iris version = <n/a>
+    iris current pack = <n/a>
+    iris shaders enabled = false
+    GL_VENDOR   = ATI Technologies Inc.
+    GL_RENDERER = AMD Radeon(TM)  860M Graphics
+    GL_VERSION  = 3.3.0 Core Profile Context 25.20.24.03.251024
+    core-version flags (DO NOT GATE ON THESE): OpenGL42=false OpenGL43=false OpenGL45=false
+    ARB extensions (GATE ON THESE): GL_ARB_direct_state_access=true GL_ARB_get_texture_sub_image=true GL_ARB_compute_shader=true GL_ARB_shader_image_load_store=true
+[Seamless Portals] IS5-RC === END RUN CONFIG ===
+[15:00:55] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=29.0ms/300
+[15:00:57] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 7 PASS — both far-dest same-dim portals rendered 150 ticks, client coherent
+[15:00:57] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 4: pearl thrown at (4.5, -58.8, -3.5) (owner Player703)
+[15:00:58] [Server thread/INFO] (iPortal) Doing cross-dimensional ender pearl teleportation (R13a seamless route)
+[15:00:58] [Server thread/INFO] (Minecraft) System chat: Player703 has made the advancement [We Need to Go Deeper]
+[15:00:58] [Render thread/INFO] (Minecraft) [System] [CHAT] Player703 has made the advancement [We Need to Go Deeper]
+[15:00:58] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet in another dimension. Packet: minecraft:the_nether 0.5 128.07062404943252 -3.4847210947676777. Player: minecraft:overworld 0.5 -60.0 0.5
+[15:00:58] [Render thread/INFO] (ClientTeleportationManager) client player force teleported minecraft:the_nether (0.5, 128.07062404943252, -3.4847210947676777)
+[15:00:58] [Render thread/INFO] (ClientWorldLoader) [S14 crossing cutover] extract driver promoted minecraft:overworld -> minecraft:the_nether (warm) dispNull=false sogNull=false viewAreaNull=false ldChunks=121
+[15:00:58] [Render thread/INFO] (iPortal) Client Changed Dimension from minecraft:overworld to minecraft:the_nether time: 357 age: 357
+[15:00:58] [Render thread/INFO] (Minecraft) [ImmPtl] Client accepted position packet minecraft:the_nether 0.5 128.07062404943252 -3.4847210947676777
+[15:00:58] [Server thread/INFO] (Minecraft) [ImmPtl] Ignoring player move packet. Player: ServerPlayer['Player703'/1, l='ServerWorld minecraft:the_nether seamless-crossing-smoke', x=0.50, y=128.07, z=-3.48] Packet: minecraft:overworld 0.5 -60.0 0.5
+[15:00:58] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[15:00:58] [Render thread/INFO] (Minecraft) Loaded 29 advancements
+[15:00:59] [Render thread/INFO] (ImmPtlFlashProbe) ==== TELEPORT-FLASH CAPTURE (96-frame ring; markers inline; schema: probeFog/probeSky = attributeProbe lastValue->newValue, lag shows as a->b converging over ~1 tick) ====
+f=1169 ms=15.35 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.99 sde=2:1:0:0:0
+f=1170 ms=16.59 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.93 sde=2:1:0:0:0
+f=1171 ms=17.48 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.67 sde=2:1:0:0:0
+f=1172 ms=15.55 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.63 sde=2:1:0:0:0
+f=1173 ms=16.47 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.67 sde=2:1:0:0:0
+f=1174 ms=18.61 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.73 sde=2:1:0:0:0
+f=1175 ms=15.30 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.79 sde=2:1:0:0:0
+f=1176 ms=16.73 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=3 dpMs=0.68 sde=2:1:0:0:0
+f=1177 ms=18.72 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1178 ms=13.93 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1179 ms=17.00 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.26 sde=2:1:0:0:0
+f=1180 ms=18.00 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.25 sde=2:1:0:0:0
+f=1181 ms=16.34 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1182 ms=15.53 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1183 ms=17.50 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.22 sde=2:1:0:0:0
+f=1184 ms=15.95 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.24 sde=2:1:0:0:0
+f=1185 ms=16.23 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1186 ms=18.05 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.22 sde=2:1:0:0:0
+f=1187 ms=16.29 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1188 ms=15.90 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1189 ms=17.91 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.33 sde=2:1:0:0:0
+f=1190 ms=16.31 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1191 ms=16.43 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.48 sde=2:1:0:0:0
+f=1192 ms=17.77 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.25 sde=2:1:0:0:0
+f=1193 ms=15.51 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.31 sde=2:1:0:0:0
+f=1194 ms=16.03 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1195 ms=19.10 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.24 sde=2:1:0:0:0
+f=1196 ms=14.07 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.24 sde=2:1:0:0:0
+f=1197 ms=16.68 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1198 ms=20.10 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=1.92 sde=2:1:0:0:0
+f=1199 ms=13.68 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.41 sde=2:1:0:0:0
+f=1200 ms=16.07 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.30 sde=2:1:0:0:0
+f=1201 ms=18.70 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.31 sde=2:1:0:0:0
+f=1202 ms=16.12 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.43 sde=2:1:0:0:0
+f=1203 ms=15.73 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.39 sde=2:1:0:0:0
+f=1204 ms=17.95 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1205 ms=15.61 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.30 sde=2:1:0:0:0
+f=1206 ms=16.18 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.27 sde=2:1:0:0:0
+f=1207 ms=18.26 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.35 sde=2:1:0:0:0
+f=1208 ms=15.66 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.31 sde=2:1:0:0:0
+f=1209 ms=16.21 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.30 sde=2:1:0:0:0
+f=1210 ms=18.04 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.32 sde=2:1:0:0:0
+f=1211 ms=15.72 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1212 ms=15.92 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.29 sde=2:1:0:0:0
+f=1213 ms=18.03 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.26 sde=2:1:0:0:0
+f=1214 ms=15.54 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.30 sde=2:1:0:0:0
+f=1215 ms=16.63 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.33 sde=2:1:0:0:0
+f=1216 ms=18.29 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.28 sde=2:1:0:0:0
+f=1217 ms=15.57 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.30 sde=2:1:0:0:0
+f=1218 ms=16.26 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.50 sde=2:1:0:0:0
+f=1219 ms=17.75 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.25 sde=2:1:0:0:0
+f=1220 ms=16.22 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.61 sde=2:1:0:0:0
+f=1221 ms=19.52 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.58 sde=2:1:0:0:0
+f=1222 ms=15.73 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.45 sde=2:1:0:0:0
+f=1223 ms=14.77 dim=overworld camY=-58.4 fogType=NONE fogCol=0.694,0.807,1.000 fogDist=[env 0..1024 rd 86..96 sky 96 cloud 2048] skybox=OVERWORLD skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=ccffffff skyRenNull=false skyReset=false skyDraws=2(+4p) skyTgt=5fcd1ac9 probeFog=ffc0d8ff probeSky=ff78a7ff rainMult=0.000 ovr=0 applyF=0 visSec=0 compQ=0 dp=2 dpMs=0.74 sde=2:1:0:0:0
+[PROMOTE overworld -> the_nether (warm)]
+f=1224 ms=36.83 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0 pMs=0.51
+f=1225 ms=12.84 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1226 ms=21.05 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1227 ms=9.09 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1228 ms=4.03 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1229 ms=15.57 dim=the_nether camY=129.7 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1230 ms=16.50 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1231 ms=18.75 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1232 ms=14.99 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1233 ms=16.08 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1234 ms=19.27 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1235 ms=14.71 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1236 ms=15.87 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1237 ms=18.45 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1238 ms=15.52 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1239 ms=15.87 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1240 ms=18.49 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1241 ms=15.77 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1242 ms=16.04 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1243 ms=17.73 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1244 ms=16.03 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1245 ms=16.16 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1246 ms=17.78 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1247 ms=16.89 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1248 ms=15.19 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1249 ms=18.13 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1250 ms=16.08 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1251 ms=16.16 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1252 ms=18.21 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1253 ms=15.36 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1254 ms=16.21 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1255 ms=17.22 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1256 ms=15.29 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1257 ms=17.32 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1258 ms=18.35 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1259 ms=14.64 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1260 ms=16.80 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1261 ms=18.54 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1262 ms=14.95 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+f=1263 ms=16.91 dim=the_nether camY=129.6 fogType=NONE fogCol=0.158,0.025,0.025 fogDist=[env 10..96 rd 86..96 sky 96 cloud 2048] skybox=NONE skyCol=ff78a7ff sunriseCol=ffe533 starB=0.00 darkDisc=false cloudCol=0 skyRenNull=false skyReset=false skyDraws=0 probeFog=ff330808 probeSky=ff000000 rainMult=0.000 ovr=8 applyF=0 visSec=0 compQ=0
+==== END FLASH CAPTURE ====
+[15:00:59] [Server thread/INFO] (iPortal) Server performance level: good
+[15:00:59] [Render thread/INFO] (ImmPtlRenderChainProbe) dim=minecraft:the_nether visSec=0 rendered=33 ldChunks=146 sogLoaded=65 applyF=0 needsF=false extOK=true renOK=true lvlOK=true lrsOK=true dispNull=false tracker@64dc7479 ext@2f6cb765 ren@33451e99
+[15:01:00] [Test thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 4 PASS — pearl owner teleported seamlessly, client coherent in the nether, yaw 137.5 preserved (relatives intact)
+[15:01:00] [Render thread/INFO] (ImmPtlRenderChainProbe) dim=minecraft:the_nether visSec=0 rendered=39 ldChunks=169 sogLoaded=88 applyF=0 needsF=false extOK=true renOK=true lvlOK=true lrsOK=true dispNull=false tracker@64dc7479 ext@2f6cb765 ren@33451e99
+[15:01:00] [seamless-perf-timers/INFO] (seamlessportals) [SEAMLESS TIMERS] last 5s (total ms / calls):  endSecondaryFrames=23.8ms/301
+[15:01:01] [Server thread/INFO] (iPortal) Portal Generation Attempted minecraft:overworld -200 -59 -200
+[15:01:01] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 6a: OW negative-coords ignition fired=true
+[15:01:01] [Server thread/INFO] (NetherPortalMatcher) Generated Portal On Ground
+[15:01:01] [Render thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 6a (negative-coords OW->nether) PASS — generated portal dest (-24.0, 83.5, -20.5) within [-45.0,-5.0]x[-45.0,-5.0]
+[15:01:01] [Render thread/INFO] (ImmPtlRenderChainProbe) dim=minecraft:the_nether visSec=0 rendered=40 ldChunks=169 sogLoaded=88 applyF=0 needsF=false extOK=true renOK=true lvlOK=true lrsOK=true dispNull=false tracker@64dc7479 ext@2f6cb765 ren@33451e99
+[15:01:01] [Server thread/INFO] (iPortal) Portal Generation Attempted minecraft:the_nether -40 129 -40
+[15:01:01] [Server thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 6b: nether-side ignition fired=true
+[15:01:01] [Server thread/INFO] (NetherPortalMatcher) Generated Portal On Ground
+[15:01:01] [Render thread/INFO] (seamlessportals) [CROSSING SMOKE] leg 6b (nether-side ignition ->OW, 8:1) PASS — generated portal dest (-311.0, -57.5, -318.5) within [-480.0,-160.0]x[-480.0,-160.0]
+[15:01:01] [Render thread/INFO] (ForceMainThreadRebuild) Forcing main thread rebuild in current frame
+[15:01:01] [Server thread/INFO] (Minecraft) Player703 lost connection: Disconnected
+[15:01:01] [Server thread/INFO] (Minecraft) System chat: Player703 left the game
+[15:01:01] [Server thread/WARN] (Minecraft) Trying to save removed ender pearl, skipping
+[15:01:01] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[15:01:01] [Server thread/INFO] (Minecraft) Stopping server
+[15:01:01] [Server thread/INFO] (Minecraft) Saving players
+[15:01:01] [Server thread/INFO] (Minecraft) Saving worlds
+[15:01:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld seamless-crossing-smoke'/minecraft:overworld
+[15:01:03] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether seamless-crossing-smoke'/minecraft:the_nether
+[15:01:03] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end seamless-crossing-smoke'/minecraft:the_end
+[15:01:04] [Render thread/INFO] (Minecraft) Client cleanup
+[15:01:04] [Render thread/INFO] (Minecraft) Client exit world
+[15:01:04] [Render thread/INFO] (ChunkBuilder) Stopping worker threads
+[15:01:04] [Render thread/INFO] (ChunkBuilder) Stopping worker threads
+[15:01:04] [Test thread/ERROR] (fabric-client-gametest-api-v1) Client gametests failed with an exception
+
+java.lang.AssertionError: [CROSSING SMOKE] RS-A step-1 SEAM MAP GATE FAILED: registry hot-path gate missed section for bound cell BlockPos{x=-311, y=-59, z=-319} (portal 20) — setBlockState would skip it entirely
+	at knot//com.warwa.seamlessportals.fabric.gametest.CrossingSmoke.rsSeamMapGate(CrossingSmoke.java:1405)
+	at knot//com.warwa.seamlessportals.fabric.gametest.CrossingSmoke.runTest(CrossingSmoke.java:646)
+	at knot//net.fabricmc.fabric.impl.client.gametest.FabricClientGameTestRunner.lambda$start$0(FabricClientGameTestRunner.java:54)
+	at knot//net.fabricmc.fabric.impl.client.gametest.threading.ThreadingImpl.lambda$runTestThread$0(ThreadingImpl.java:139)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+[15:01:04] [Render thread/ERROR] (FabricLoader) Minecraft has crashed!
+
+net.fabricmc.loader.impl.FormattedException: java.lang.AssertionError: [CROSSING SMOKE] RS-A step-1 SEAM MAP GATE FAILED: registry hot-path gate missed section for bound cell BlockPos{x=-311, y=-59, z=-319} (portal 20) — setBlockState would skip it entirely
+	at net.fabricmc.loader.impl.FormattedException.ofLocalized(FormattedException.java:63)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:519)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+Caused by: java.lang.AssertionError: [CROSSING SMOKE] RS-A step-1 SEAM MAP GATE FAILED: registry hot-path gate missed section for bound cell BlockPos{x=-311, y=-59, z=-319} (portal 20) — setBlockState would skip it entirely
+	at knot//com.warwa.seamlessportals.fabric.gametest.CrossingSmoke.rsSeamMapGate(CrossingSmoke.java:1405)
+	at knot//com.warwa.seamlessportals.fabric.gametest.CrossingSmoke.runTest(CrossingSmoke.java:646)
+	at knot//net.fabricmc.fabric.impl.client.gametest.FabricClientGameTestRunner.lambda$start$0(FabricClientGameTestRunner.java:54)
+	at knot//net.fabricmc.fabric.impl.client.gametest.threading.ThreadingImpl.lambda$runTestThread$0(ThreadingImpl.java:139)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+
+> Task :fabric:runCrossingGametest FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/gaslight-public-26.3/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+19 actionable tasks: 1 executed, 18 up-to-date
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':fabric:runCrossingGametest' (registered by plugin 'fabric-loom').
+> Process 'command 'C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot\bin\java.exe'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 54s

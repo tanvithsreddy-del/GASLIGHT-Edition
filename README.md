@@ -19,7 +19,7 @@ in a valuable world.
 | --- | --- |
 | 1.21.1 Fabric | Fixed-link development preview, genuine client/server evidence |
 | 26.1.2 Fabric | Genuine data/acquisition build; no seamless gameplay |
-| 26.3 Fabric | Portal engine source compiles; this machine's graphical test currently crashes |
+| 26.3 Fabric | Genuine vanilla Nether/End portal client test passes with Sodium; full crossing/render suite fails |
 | NeoForge, Forge, Quilt, vanilla client, Bedrock | No GASLIGHT gameplay artifact verified |
 
 Start with the [current evidence report](docs/RECOVERY_PREVIEW_REPORT.md), the
