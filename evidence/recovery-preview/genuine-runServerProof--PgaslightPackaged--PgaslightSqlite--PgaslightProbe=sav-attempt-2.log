@@ -1,0 +1,43 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\provider-adapters\\fabric-1.21.1\\gradlew.bat", "--no-daemon", "--max-workers=2", "--console=plain", "runServerProof", "-PgaslightPackaged", "-PgaslightSqlite", "-PgaslightProbe=saved-only"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1
+UTC: 2026-10-13T03:16:33.062578+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateLog4jConfig UP-TO-DATE
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :generateDLIConfig UP-TO-DATE
+> Task :configureLaunch UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jar UP-TO-DATE
+
+> Task :freezeRuntimeJar
+GASLIGHT_IMMUTABLE_JAR 9c9f45cdd64319c84c12185db087006a010f9c9c80fdb2b34c57343872e72fe4 C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\run-artifacts\9c9f45cdd64319c84c12185db087006a010f9c9c80fdb2b34c57343872e72fe4\gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-dev.jar
+
+> Task :runServerProof FAILED
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\build.gradle' line: 78
+
+* What went wrong:
+Execution failed for task ':runServerProof' (registered by plugin 'fabric-loom').
+> The value for task ':runServerProof' property 'internalClasspath' is final and cannot be changed any further.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 14s
+8 actionable tasks: 2 executed, 6 up-to-date
+
+EXIT_CODE: 1
+ELAPSED_SECONDS: 15.875

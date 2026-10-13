@@ -1,0 +1,74 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\provider-adapters\\fabric-1.21.1\\gradlew.bat", "--no-daemon", "--max-workers=2", "--console=plain", "clean", "build", "writeTestClasspath"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1
+UTC: 2026-10-13T02:53:53.718090+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+
+> Task :compileJava
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+        if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                          ^
+  both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+        if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                                                  ^
+  both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+        if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                                                                    ^
+  both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:11: error: reference to Math is ambiguous
+        for(float f:matrix)if(!Float.isFinite(f)||Math.abs(f)>10000)throw new IllegalArgumentException("non-finite/unbounded clip matrix");
+                                                  ^
+  both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:12: error: reference to Math is ambiguous
+        if(Math.abs(new Matrix4f().set(matrix).determinant())<1e-9)throw new IllegalArgumentException("degenerate clip matrix");
+           ^
+  both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+5 errors
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/handoff/GASLIGHT_CODEX_HANDOFF/ACTIVE_PROJECT/provider-adapters/fabric-1.21.1/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+          if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                            ^
+    both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+          if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                                                    ^
+    both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:9: error: reference to Math is ambiguous
+          if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
+                                                                                                                      ^
+    both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:11: error: reference to Math is ambiguous
+          for(float f:matrix)if(!Float.isFinite(f)||Math.abs(f)>10000)throw new IllegalArgumentException("non-finite/unbounded clip matrix");
+                                                    ^
+    both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FrameClip.java:12: error: reference to Math is ambiguous
+          if(Math.abs(new Matrix4f().set(matrix).determinant())<1e-9)throw new IllegalArgumentException("degenerate clip matrix");
+             ^
+    both class org.joml.Math in org.joml and class java.lang.Math in java.lang match
+  5 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 11s
+2 actionable tasks: 2 executed
+
+EXIT_CODE: 1
+ELAPSED_SECONDS: 12.391

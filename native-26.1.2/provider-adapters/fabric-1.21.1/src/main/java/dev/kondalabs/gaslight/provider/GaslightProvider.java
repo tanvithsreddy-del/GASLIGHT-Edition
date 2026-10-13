@@ -16,14 +16,17 @@ public final class GaslightProvider implements ModInitializer {
     @Override public void onInitialize(){
         LOG.info("GASLIGHT provider adapter initialized; automatic replacement disabled");
         LOG.info("GASLIGHT_CODE_SOURCE {}",GaslightProvider.class.getProtectionDomain().getCodeSource().getLocation());
+        EphemeralPortal.initialize();
         FixedPortalCommands.register();
+        CameraTelemetry.initialize();
         ServerLifecycleEvents.SERVER_STARTING.register(s->SERVICES.put(s,new FixedPortalAdapter(s)));
         ServerEntityEvents.ENTITY_LOAD.register((entity,world)->{
             if(entity instanceof Portal portal && FixedPortalAdapter.owned(portal)){
                 var service=SERVICES.get(world.getServer());
-                if(service==null||!service.permits(portal)) { portal.setTeleportable(false);portal.setIsVisible(false);portal.discard(); }
+                if(service==null||!service.permits(portal)) { portal.setTeleportable(false);portal.setIsVisible(false);portal.discard();LOG.info("GASLIGHT_STALE_PORTAL_REJECTED {} {}",portal.getUUID(),portal.portalTag); }
             }
         });
+        ServerLifecycleEvents.SERVER_STARTED.register(s->{var service=SERVICES.get(s);if(service!=null)service.recoverGuardedOwnership();});
         ServerTickEvents.END_SERVER_TICK.register(s->{var service=SERVICES.get(s);if(service!=null)service.tick();});
         ServerLifecycleEvents.SERVER_STOPPING.register(s->{var service=SERVICES.get(s);if(service!=null)service.shutdown();});
         ServerLifecycleEvents.SERVER_STOPPED.register(SERVICES::remove);

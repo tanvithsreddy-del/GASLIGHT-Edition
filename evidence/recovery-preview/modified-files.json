@@ -1,0 +1,127 @@
+{
+  "files": [
+    {
+      "file": "build.gradle",
+      "added": 25,
+      "removed": 5,
+      "production": false
+    },
+    {
+      "file": "gradle.properties",
+      "added": 1,
+      "removed": 1,
+      "production": false
+    },
+    {
+      "file": "logs/latest.log",
+      "added": 0,
+      "removed": 0,
+      "production": false
+    },
+    {
+      "file": "README.md",
+      "added": 43,
+      "removed": 1,
+      "production": false
+    },
+    {
+      "file": "src/integration/java/dev/kondalabs/gaslight/probe/ClientProbe.java",
+      "added": 6,
+      "removed": 0,
+      "production": false
+    },
+    {
+      "file": "src/integration/java/dev/kondalabs/gaslight/probe/ServerProbe.java",
+      "added": 27,
+      "removed": 1,
+      "production": false
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/CameraObserver.java",
+      "added": 34,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/CameraTelemetry.java",
+      "added": 58,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/EphemeralPortal.java",
+      "added": 18,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java",
+      "added": 58,
+      "removed": 7,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java",
+      "added": 14,
+      "removed": 9,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/FrameClip.java",
+      "added": 23,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java",
+      "added": 4,
+      "removed": 1,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/SavedDestinationPreparation.java",
+      "added": 98,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/java/dev/kondalabs/gaslight/provider/SqliteIntentStore.java",
+      "added": 141,
+      "removed": 0,
+      "production": true
+    },
+    {
+      "file": "src/main/resources/fabric.mod.json",
+      "added": 3,
+      "removed": 3,
+      "production": false
+    },
+    {
+      "file": "src/test/java/dev/kondalabs/gaslight/provider/CameraFenceTest.java",
+      "added": 46,
+      "removed": 0,
+      "production": false
+    },
+    {
+      "file": "src/test/java/dev/kondalabs/gaslight/provider/SqliteCrashProbe.java",
+      "added": 23,
+      "removed": 0,
+      "production": false
+    },
+    {
+      "file": "src/test/java/dev/kondalabs/gaslight/provider/SqliteIntentStoreTest.java",
+      "added": 83,
+      "removed": 0,
+      "production": false
+    },
+    {
+      "file": "THIRD_PARTY_NOTICES.md",
+      "added": 8,
+      "removed": 0,
+      "production": false
+    }
+  ],
+  "production_added": 448,
+  "production_removed": 17,
+  "production_changed": 465
+}

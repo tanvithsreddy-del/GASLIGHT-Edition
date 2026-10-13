@@ -27,6 +27,16 @@ public final class ServerProbe implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(server->{
             var w=server.overworld();var a=GaslightProvider.service(server);
             check(a!=null,"GASLIGHT initialized");
+            if(System.getProperty("gaslight.probe.mode","live").equals("guarded-recovery")){
+                output("PRE_GUARDED_RECOVERY "+a.status());return;
+            }
+            if(System.getProperty("gaslight.probe.mode","live").equals("saved-only")){
+                check(a.status().state().equals("IDLE")&&a.status().intents()==0,"guarded restart clean");
+                check(w.getChunkSource().getChunkNow(64,64)==null,"genuine saved target initially unloaded");
+                server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"gaslight-fixed acquire 0.5 82.5 0.5 1024.5 82.5 1024.5");
+                check(a.status().state().equals("PREPARING"),"genuine production saved-acquisition command accepted");
+                output("SAVED_UNLOADED_BEGIN "+a.status()+" "+a.preparationStatus());return;
+            }
             if(System.getProperty("gaslight.probe.mode","live").equals("recovery")){
                 check(a.status().state().equals("QUARANTINED")&&a.status().intents()==1,"restart retains outstanding intent");
                 check(a.status().portals()==0&&a.status().ownedLoaders()==0,"restart cannot republish or own leases");
@@ -75,7 +85,7 @@ public final class ServerProbe implements ModInitializer {
                 if(command.startsWith("snapshot")){
                     int full=0;for(int x=62;x<=66;x++)for(int z=62;z<=66;z++)if(w.getChunkSource().getChunkNow(x,z)!=null)full++;
                     var remote=w.getChunkSource().getChunkNow(64,63);var placed=w.getChunkSource().getChunkNow(64,63);
-                    output(command+" "+a.status()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position().toString()).toList());
+                    output(command+" "+a.status()+" preparation="+a.preparationStatus()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position()+" camera="+CameraTelemetry.status(server,p.getUUID())).toList());
                 }
                 else if(command.startsWith("pose")){String[] v=command.split(" ");for(var player:server.getPlayerList().getPlayers())player.teleportTo(w,Double.parseDouble(v[1]),Double.parseDouble(v[2]),Double.parseDouble(v[3]),Float.parseFloat(v[4]),Float.parseFloat(v[5]));output(command+" RESET_FIXTURE_POSE");}
                 else if(command.startsWith("dimension")){for(var player:server.getPlayerList().getPlayers())player.teleportTo(server.getLevel(net.minecraft.world.level.Level.NETHER),0,90,0,0,0);output(command+" REAL_DIMENSION_CHANGE");}
@@ -84,6 +94,22 @@ public final class ServerProbe implements ModInitializer {
                 else if(command.startsWith("reprepare")){
                     var next=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(1024.5,82.5,1024.5),4,4);
                     check(a.prepare(next),"repeat acquisition");check(!a.retire(previous),"old generation cannot retire successor");previous=a.token();output(command+" "+a.status());
+                }
+                else if(command.startsWith("acquire")){
+                    double target=command.contains("missing")?4000000.5:1024.5;
+                    var next=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(target,82.5,target),4,4);
+                    check(a.acquireSaved(next),"saved acquisition admitted");check(!a.acquireSaved(next),"simultaneous request rejected by single-portal ownership");
+                    output(command+" "+a.status()+" "+a.preparationStatus());
+                }
+                else if(command.startsWith("cancel")){
+                    if(a.preparationOwner()==null){output(command+" ALREADY_DRAINED "+a.status());return;}
+                    check(!a.cancelPreparation(UUID.randomUUID()),"stale preparation cancellation rejected");
+                    check(a.cancelPreparation(a.preparationOwner()),"current acquisition cancelled");output(command+" "+a.status());
+                }
+                else if(command.startsWith("persist-active")){
+                    check(a.status().state().equals("ACTIVE"),"active publication before crash");
+                    check(server.saveEverything(false,true,true),"real world save before interruption");
+                    output(command+" REAL_MINECRAFT_SAVE_WITH_OUTSTANDING_INTENT "+a.status());
                 }
                 else if(command.startsWith("stop")){output("STOP "+a.status());server.halt(false);}
                 else throw new IllegalArgumentException(command);

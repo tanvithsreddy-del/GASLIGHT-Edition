@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.kondalabs.gaslight.provider.CameraFenceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-13T04:23:35.134Z" hostname="LAPTOP-8R8SGLUM" time="1.137">
+  <properties/>
+  <testcase name="wholeBoxAndGrazingGeometry()" classname="dev.kondalabs.gaslight.provider.CameraFenceTest" time="0.117"/>
+  <testcase name="sessionGenerationDimensionSequenceAndDistance()" classname="dev.kondalabs.gaslight.provider.CameraFenceTest" time="0.143"/>
+  <testcase name="observationFloodCannotBecomeAuthority()" classname="dev.kondalabs.gaslight.provider.CameraFenceTest" time="0.007"/>
+  <testcase name="immutableAndInvalidMatrices()" classname="dev.kondalabs.gaslight.provider.CameraFenceTest" time="0.003"/>
+  <testcase name="realPacketCodecRejectsTruncationAndInvalidMatrix()" classname="dev.kondalabs.gaslight.provider.CameraFenceTest" time="0.838"/>
+  <system-out><![CDATA[CAMERA_OBSERVATION_PAYLOAD_BYTES=141
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

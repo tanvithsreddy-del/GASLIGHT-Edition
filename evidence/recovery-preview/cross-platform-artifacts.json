@@ -1,0 +1,26 @@
+[
+  {
+    "file": "build/libs/gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-sources.jar",
+    "windows": "fcac2f1c1fc87db6d75d5e371ec7e3baf296df69aa6228493829b997e1bbe8cb",
+    "linux": "fcac2f1c1fc87db6d75d5e371ec7e3baf296df69aa6228493829b997e1bbe8cb",
+    "match": true
+  },
+  {
+    "file": "build/libs/gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview.jar",
+    "windows": "eb5058096c26d417ead2a2248df69e3dad2d288810f0f30f0efb0265cd51e888",
+    "linux": "e2b40d85c7d1a20d076dac599c2fbd63c30edfc569b0eb5c1a112fc505755645",
+    "match": false
+  },
+  {
+    "file": "build/devlibs/gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-dev.jar",
+    "windows": "3b2f88f459fd05210bba1832b9f5d4a32b5af52f05276b1cfac21a5f3689da35",
+    "linux": "3b2f88f459fd05210bba1832b9f5d4a32b5af52f05276b1cfac21a5f3689da35",
+    "match": true
+  },
+  {
+    "file": "build/devlibs/gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-sources.jar",
+    "windows": "5e72096769db5b64578299ed821c0eb227d74ddf7f624ef2eae5cf9a74cd7f77",
+    "linux": "dc6d7ac946bf24d37e56b68c99565d38992e793aecddf17943c1ab194ee4d8ab",
+    "match": false
+  }
+]

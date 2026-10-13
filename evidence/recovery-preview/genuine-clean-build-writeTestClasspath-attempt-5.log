@@ -1,0 +1,38 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\provider-adapters\\fabric-1.21.1\\gradlew.bat", "--no-daemon", "--max-workers=2", "--console=plain", "clean", "build", "writeTestClasspath"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1
+UTC: 2026-10-13T03:30:34.543029+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :clean
+
+> Task :compileJava FAILED
+C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalCommands.java:28: error: ')' or ',' expected
+            .then(Commands.argument("tz",DoubleArgumentType.doubleArg(-29000000,29000000)).executes(c->create(c,saved)))))));
+                                                                                                                            ^
+1 error
+
+[Incubating] Problems report is available at: file:///C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/handoff/GASLIGHT_CODEX_HANDOFF/ACTIVE_PROJECT/provider-adapters/fabric-1.21.1/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+> Compilation failed; see the compiler output below.
+  C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\src\main\java\dev\kondalabs\gaslight\provider\FixedPortalCommands.java:28: error: ')' or ',' expected
+              .then(Commands.argument("tz",DoubleArgumentType.doubleArg(-29000000,29000000)).executes(c->create(c,saved)))))));
+                                                                                                                              ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 10s
+2 actionable tasks: 2 executed
+
+EXIT_CODE: 1
+ELAPSED_SECONDS: 11.469

@@ -18,6 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import qouteall.imm_ptl.core.api.PortalAPI;
 import qouteall.imm_ptl.core.chunk_loading.ChunkLoader;
 import qouteall.imm_ptl.core.portal.Portal;
+import qouteall.imm_ptl.core.portal.PortalManipulation;
 import qouteall.imm_ptl.core.IPGlobal;
 
 /** Phase A fixed link only. Creation and retirement require no connected observers.
@@ -29,13 +30,15 @@ public final class FixedPortalAdapter {
     public record Token(UUID owner,long generation){}
     public record Status(String state,String reason,int portals,int ownedLoaders,int ownedChunks,int intents,long generation){}
     private final MinecraftServer server;
-    private final Phase3RecoveryJournal.FileStore journal;
+    private final Phase3RecoveryJournal.Store journal;
     private final Set<UUID> authorized=new HashSet<>();
     private final List<Portal> portals=new ArrayList<>();
     private final List<ChunkLoader> loaders=new ArrayList<>();
     private String state="DISABLED",reason="disposable marker absent";
     private Token token;private long generation;private boolean hadViewer;
     private Spec spec;
+    private SavedDestinationPreparation preparation;
+    private Spec preparingSpec;
     private final int previousRadius,previousLayers,previousRenderLimit;
 
     FixedPortalAdapter(MinecraftServer server){
@@ -45,7 +48,12 @@ public final class FixedPortalAdapter {
         boolean permitted=false;
         try { Path marker=root.resolve(".gaslight-phase-a-disposable");permitted=Files.isRegularFile(marker,LinkOption.NOFOLLOW_LINKS)&&Files.size(marker)<=128&&Files.readString(marker).trim().equals(MARKER); }
         catch(IOException|RuntimeException ignored) { /* Absent or unreadable authorization keeps all effects disabled. */ }
-        journal=permitted?new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin")):null;
+        // New recovery profile never migrates or ignores legacy unresolved evidence.
+        if(permitted&&Boolean.getBoolean("gaslight.sqlite")&&Files.exists(root.resolve("data/gaslight-phase-a"))) {
+            journal=null;state="QUARANTINED";reason="legacy journal directory retained; SQLite migration refused";
+        } else journal=!permitted?null:Boolean.getBoolean("gaslight.sqlite")?
+            new SqliteIntentStore(root.resolve("data/gaslight-recovery/intents.sqlite")):
+            new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin"));
         if(journal!=null){ state=journal.blockedOnOpen()?"QUARANTINED":"IDLE";reason=journal.diagnostic();IPGlobal.indirectLoadingRadiusCap=2;IPGlobal.maxPortalLayer=2;IPGlobal.portalRenderLimit=8; }
     }
     public static boolean owned(Portal p){return p.portalTag!=null&&p.portalTag.startsWith(TAG);}
@@ -54,6 +62,28 @@ public final class FixedPortalAdapter {
     private boolean refuse(String why){reason=why;GaslightProvider.LOG.info("GASLIGHT_FIXED_REFUSED {}",why);return false;}
     public Status status(){thread();return new Status(state,reason,portals.size(),loaders.size(),loaders.stream().mapToInt(ChunkLoader::getChunkNum).sum(),journal==null?0:journal.outstanding(),generation);}
     public Token token(){thread();return token;}
+    public boolean acquireSaved(Spec requested){
+        thread();
+        if(journal==null||journal.blockedOnOpen()||preparation!=null||!state.equals("IDLE")||!server.getPlayerList().getPlayers().isEmpty())return refuse("saved acquisition requires clean observer-free idle service");
+        try{preparation=new SavedDestinationPreparation(server,requested);preparingSpec=requested;state="PREPARING";reason="saved-only bounded acquisition";return true;}
+        catch(RuntimeException bad){return refuse(bad.toString());}
+    }
+    public String preparationStatus(){thread();return preparation==null?"none":preparation.stats().toString();}
+    public boolean cancelPreparation(UUID owner){
+        thread();if(preparation==null||!preparation.owner.equals(owner))return refuse("stale preparation cancellation");
+        preparation.close();preparation=null;preparingSpec=null;state="IDLE";reason="preparation cancelled; no publication";return true;
+    }
+    public UUID preparationOwner(){thread();return preparation==null?null:preparation.owner;}
+    void recoverGuardedOwnership(){
+        thread();
+        // ENTITY_LOAD permanently rejects every portal outside this session's
+        // authorized set. Persisted stale entities can never regain authority.
+        if(journal instanceof SqliteIntentStore store&&preparation==null&&authorized.isEmpty()&&portals.isEmpty()&&loaders.isEmpty()&&server.getPlayerList().getPlayers().isEmpty()){
+            if(store.reconcileWithLoadVeto()){state="IDLE";reason=store.diagnostic();}
+            else {state="QUARANTINED";reason=store.diagnostic();}
+            GaslightProvider.LOG.info("GASLIGHT_GUARDED_RECOVERY {}",status());
+        }
+    }
     public boolean prepare(Spec s){
         thread();
         if(journal==null||journal.blockedOnOpen()||!state.equals("IDLE"))return refuse("disabled, outstanding recovery or active generation");
@@ -70,13 +100,14 @@ public final class FixedPortalAdapter {
             if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
             state="STAGING";
             addLoader(s.source,s.origin);addLoader(s.target,s.destination);
-            Portal forward=Portal.ENTITY_TYPE.create(s.source);
+            Portal forward=EphemeralPortal.TYPE.create(s.source);
             if(forward==null)throw new IllegalStateException("provider entity creation failed");
             forward.setOriginPos(s.origin);forward.setOrientationAndSize(new Vec3(1,0,0),new Vec3(0,1,0),s.width,s.height);
             forward.setDestinationDimension(s.target.dimension());forward.setDestination(s.destination);
             forward.setScaleTransformation(1);forward.setRotation(null);
-            var reverse=PortalAPI.createReversePortal(forward);
-            for(Portal p:List.of(forward,PortalAPI.createFlippedPortal(forward),reverse,PortalAPI.createFlippedPortal(reverse))){
+            var reverse=PortalManipulation.createReversePortal(forward,EphemeralPortal.TYPE);
+            for(Portal p:List.of(forward,PortalManipulation.createFlippedPortal(forward,EphemeralPortal.TYPE),reverse,PortalManipulation.createFlippedPortal(reverse,EphemeralPortal.TYPE))){
+                if(p.shouldBeSaved()||p.getType()!=EphemeralPortal.TYPE)throw new IllegalStateException("ephemeral ownership contract");
                 p.portalTag=TAG+token.owner+":"+token.generation;
                 authorized.add(p.getUUID());portals.add(p);
                 if(!((ServerLevel)p.level()).addFreshEntity(p))throw new IllegalStateException("provider spawn refused");
@@ -124,12 +155,32 @@ public final class FixedPortalAdapter {
         if(!server.getPlayerList().getPlayers().isEmpty())return refuse("retirement requires no observers");
         for(Portal p:portals)if(!p.level().getEntities(p,p.getBoundingBox().inflate(1),e->!(e instanceof Portal)).isEmpty())return refuse("crossing occupancy");
         rollback();
+        if(journal instanceof SqliteIntentStore){
+            if(!authorized.isEmpty()||!portals.isEmpty()||!loaders.isEmpty()||!journal.settle(token.owner,token.generation)){
+                state="QUARANTINED";return refuse("guarded retirement failed: "+journal.diagnostic());
+            }
+            state="IDLE";reason=journal.diagnostic();spec=null;hadViewer=false;
+            GaslightProvider.LOG.info("GASLIGHT_FIXED_RETIRED {}",status());return true;
+        }
         // Vanilla save completion is not an authenticated durable entity-removal receipt.
         // Keep the intent until Phase C supplies crash reconciliation; never silently settle it.
         if(!server.saveEverything(false,true,true)){state="QUARANTINED";return refuse("retirement save failure; unresolved intent retained");}
         state="RETIRED_PENDING_RECOVERY";reason="closed; durable intent retained for crash reconciliation";spec=null;hadViewer=false;
         GaslightProvider.LOG.info("GASLIGHT_FIXED_RETIRED {}",status());return true;
     }
-    void tick(){thread();if(state.equals("ACTIVE")){if(!server.getPlayerList().getPlayers().isEmpty())hadViewer=true;else if(hadViewer)retire(token);}}
-    void shutdown(){thread();if(state.equals("ACTIVE")&&!retire(token)){rollback();state="QUARANTINED";reason="shutdown retains unresolved intent";}if(journal!=null){IPGlobal.indirectLoadingRadiusCap=previousRadius;IPGlobal.maxPortalLayer=previousLayers;IPGlobal.portalRenderLimit=previousRenderLimit;}}
+    void tick(){thread();
+        if(preparation!=null){
+            if(!server.getPlayerList().getPlayers().isEmpty()){cancelPreparation(preparation.owner);return;}
+            preparation.tick();
+            if(preparation.state()==SavedDestinationPreparation.State.READY){
+                GaslightProvider.LOG.info("GASLIGHT_SAVED_READY {}",preparation.stats());
+                var work=preparation;var requested=preparingSpec;preparation=null;preparingSpec=null;state="IDLE";
+                try{prepare(requested);}finally{work.close();}
+            }else if(preparation.state()==SavedDestinationPreparation.State.FAILED){
+                reason=preparation.stats().toString();GaslightProvider.LOG.warn("GASLIGHT_SAVED_FAILED {}",reason);preparation.close();preparation=null;preparingSpec=null;state="IDLE";
+            }
+        }
+        if(state.equals("ACTIVE")){if(!server.getPlayerList().getPlayers().isEmpty())hadViewer=true;else if(hadViewer)retire(token);}
+    }
+    void shutdown(){thread();if(preparation!=null)cancelPreparation(preparation.owner);if(state.equals("ACTIVE")&&!retire(token)){rollback();state="QUARANTINED";reason="shutdown retains unresolved intent";}if(journal!=null){IPGlobal.indirectLoadingRadiusCap=previousRadius;IPGlobal.maxPortalLayer=previousLayers;IPGlobal.portalRenderLimit=previousRenderLimit;}if(journal instanceof SqliteIntentStore store)store.close();}
 }

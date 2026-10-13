@@ -12,6 +12,8 @@ dependencies {
     modImplementation files('deps/midnightlib-1.5.7-fabric.jar')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
+    implementation 'org.xerial:sqlite-jdbc:3.53.4.0'
+    include 'org.xerial:sqlite-jdbc:3.53.4.0'
 }
 java { toolchain { languageVersion = JavaLanguageVersion.of(25) }; withSourcesJar() }
 sourceSets.main.java {
@@ -43,7 +45,7 @@ loom {
         gaslight_phase_a_probe { sourceSet sourceSets.integration }
     }
     runs {
-        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+System.getProperty('gaslight.probe.mode','live') }
+        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','--enable-native-access=ALL-UNNAMED','-Dgaslight.sqlite='+project.hasProperty('gaslightSqlite'),'-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+(project.findProperty('gaslightProbe')?:System.getProperty('gaslight.probe.mode','live')) }
         clientProof { client(); source sourceSets.integration; runDir 'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true'; programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
     }
 }
@@ -51,13 +53,31 @@ tasks.named('check') { dependsOn tasks.named('integrationClasses') }
 
 // This option tests the actual named development JAR, without loose production classes.
 if(project.hasProperty('gaslightPackaged')) {
+    def frozen=tasks.register('freezeRuntimeJar') {
+        dependsOn tasks.named('jar')
+        doLast {
+            def source=tasks.named('jar').get().archiveFile.get().asFile
+            def bytes=source.bytes
+            def hash=java.security.MessageDigest.getInstance('SHA-256').digest(bytes).encodeHex().toString()
+            def target=layout.projectDirectory.file('run-artifacts/'+hash+'/'+source.name).asFile
+            target.parentFile.mkdirs()
+            if(target.exists()) {
+                if(!java.util.Arrays.equals(bytes,target.bytes))throw new GradleException('Immutable runtime JAR hash collision/corruption')
+            } else java.nio.file.Files.write(target.toPath(),bytes,java.nio.file.StandardOpenOption.CREATE_NEW)
+            ext.snapshot=target
+            println 'GASLIGHT_IMMUTABLE_JAR '+hash+' '+target.absolutePath
+        }
+    }
     ['runServerProof','runClientProof'].each { name ->
         tasks.named(name,JavaExec).configure {
-            dependsOn tasks.named('jar')
+            dependsOn frozen
             def loose=sourceSets.main.output.files
-            classpath=files(classpath.files.findAll { !loose.contains(it) },tasks.named('jar').get().archiveFile)
-            systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
-            systemProperty 'fabric.addMods',tasks.named('jar').get().archiveFile.get().asFile.absolutePath
+            classpath=files(classpath.files.findAll { !loose.contains(it) },frozen.map { it.ext.snapshot })
+            doFirst {
+                def snapshot=frozen.get().ext.snapshot
+                systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
+                systemProperty 'fabric.addMods',snapshot.absolutePath
+            }
         }
     }
 }

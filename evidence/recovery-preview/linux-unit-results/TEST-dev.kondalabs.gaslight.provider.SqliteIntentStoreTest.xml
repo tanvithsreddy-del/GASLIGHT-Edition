@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-13T04:23:36.402Z" hostname="LAPTOP-8R8SGLUM" time="3.044">
+  <properties/>
+  <testcase name="partialFileIsPreserved()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.123"/>
+  <testcase name="malformedHistoryCannotRecover()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.1"/>
+  <testcase name="nonstandardDatabasePageSizeCannotEvadeDiskBudget()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.019"/>
+  <testcase name="actualProcessHaltsPreserveIntentsAndRollbackPartialUpdates()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="1.482"/>
+  <testcase name="concurrentWritersHaveOneWinner()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.095"/>
+  <testcase name="staleWriterAndStaleRetirementFailClosed()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.083"/>
+  <testcase name="genuineWindowsDurabilityAndRepeatedCycles()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="1.039"/>
+  <testcase name="dirtyRestartRequiresExplicitGuardedRecovery()" classname="dev.kondalabs.gaslight.provider.SqliteIntentStoreTest" time="0.095"/>
+  <system-out><![CDATA[REAL_SQLITE_PROCESS_HALT begin exit=71 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+DURABLE_BEGIN_ACKNOWLEDGED
+
+REAL_SQLITE_PROCESS_HALT settle exit=72 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+DURABLE_TOMBSTONE_ACKNOWLEDGED
+
+REAL_SQLITE_PROCESS_HALT midwrite exit=73 SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+INTERRUPTED_UNCOMMITTED_PAYLOAD_UPDATE
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,35 @@
+[
+  {
+    "file": "TEST-dev.kondalabs.gaslight.provider.CameraFenceTest.xml",
+    "name": "dev.kondalabs.gaslight.provider.CameraFenceTest",
+    "tests": "5",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-13T04:16:52.177Z",
+    "hostname": "LAPTOP-8R8SGLUM",
+    "time": "1.044"
+  },
+  {
+    "file": "TEST-dev.kondalabs.gaslight.provider.RecoveryAndFootprintTest.xml",
+    "name": "dev.kondalabs.gaslight.provider.RecoveryAndFootprintTest",
+    "tests": "3",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-13T04:16:53.227Z",
+    "hostname": "LAPTOP-8R8SGLUM",
+    "time": "0.101"
+  },
+  {
+    "file": "TEST-dev.kondalabs.gaslight.provider.SqliteIntentStoreTest.xml",
+    "name": "dev.kondalabs.gaslight.provider.SqliteIntentStoreTest",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-10-13T04:16:53.330Z",
+    "hostname": "LAPTOP-8R8SGLUM",
+    "time": "6.055"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "build.gradle": "219b586b9ececbb9e435a8a898408a98f7ab3af11b48e3bebc91b7d31adb007d",
+  "gradle.properties": "013b2c5a8fdb27ca4b2c8004250f33bd6a8895303f6a6e68107a7f85cd3a9250",
+  "gradlew": "a5a5c199ba02189ae8c46a334223371a20599d9c298ef65e7540ede4a3f72d59",
+  "gradlew.bat": "d539676c48b596afda64c963ec8f7ee56c7b3fe7e3b81d1dbe2d1a1e3dd9e9f8",
+  "LICENSE": "52a551167db41ba88240e05557dce8d50bc273514fff6b71aba6403ce81c24d1",
+  "prepare_disposable_test.py": "aea82a7be74701bd8b4aff5cbe21a23e9638677a22415ac4564ec8e47f42ba1a",
+  "provider.lock.json": "016fd850958ada29a0f1d0fcab7cdc381202ab51d02146378be44003c438f1ca",
+  "README.md": "9acf23c1e70658e253c32869abb518b95de75255eb0b5194306a1f2c905d3c59",
+  "settings.gradle": "756d2abe0932b4dd793d3409a94c4d12aea1634ee90c16118ae01216fefbb451",
+  "setup_deps.py": "299236ab71188ad5791b32a5a7bf78862a5f3908dbdfa78a22163d3f511a6af0",
+  "THIRD_PARTY_NOTICES.md": "3d440ce3d365eab4c956d8eb32cf990204db0e5de8be5589de5a93abb0eeba4a",
+  "gradle\\wrapper\\gradle-wrapper.jar": "7a9ce74cff467ca1bf60a4fcd9f05185acceda4d0f382434d393e17864262c5d",
+  "gradle\\wrapper\\gradle-wrapper.properties": "da66a5ffe08e2edfed40553bb83548943a0b522603a833852bce317699e6fa9c",
+  "src\\integration\\resources\\fabric.mod.json": "2ddfad07be083f78e73e184b5a2fdb51a5bc96c13f9220c0d81db2ea8289cfea",
+  "src\\integration\\java\\dev\\kondalabs\\gaslight\\probe\\ClientProbe.java": "a674307b00b5138d77698decc8c1ce60aaec0ed9b970ad145394dbe98a01a524",
+  "src\\integration\\java\\dev\\kondalabs\\gaslight\\probe\\ServerProbe.java": "03f4d7825ad762815e3b1402409c210149fee1e6ef9ece1fc964ecc401954aff",
+  "src\\main\\resources\\fabric.mod.json": "fed68b7008aabd45816e79cc3d5b0f41d11c9dddc265d970018c6b1ad544904f",
+  "src\\main\\java\\dev\\kondalabs\\gaslight\\provider\\FixedPortalAdapter.java": "1893779c7b05c667f437d155c509011efd20ce7eb25e6e9678a2f74b2ca21d39",
+  "src\\main\\java\\dev\\kondalabs\\gaslight\\provider\\FixedPortalCommands.java": "05e7ebdc0794ecc3696c8bc39cc25f4ddd480cbb215bcbbed25475ae90855afc",
+  "src\\main\\java\\dev\\kondalabs\\gaslight\\provider\\GaslightProvider.java": "e5aa296c713ee639d4386e161775f6b35619cffc141799df0384208420f0c18a",
+  "src\\test\\java\\dev\\kondalabs\\gaslight\\provider\\RecoveryAndFootprintTest.java": "d7368099505aafd2dee6adf77d771431272fc05007567049bc6f8e6a46585946"
+}

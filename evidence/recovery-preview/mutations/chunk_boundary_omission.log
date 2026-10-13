@@ -1,0 +1,10 @@
+COMMAND: C:\Program Files\Git\bin\bash.exe run_offline_checks.sh
+SUITE: dev.kondalabs.gaslight.Phase4ValidationTests
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-4uizvera\project\build\journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-4uizvera\project\build\journal-test-temp"
+Exception in thread "main" java.lang.AssertionError: PHASE4: touching an exact chunk face includes both sides n=-10 got=[Chunk[x=-10, z=-1], Chunk[x=-10, z=0], Chunk[x=-10, z=1], Chunk[x=-10, z=2]] assertion=847623
+	at dev.kondalabs.gaslight.Phase4ValidationTests.yes(Phase4ValidationTests.java:13)
+	at dev.kondalabs.gaslight.Phase4ValidationTests.chunkCoverage(Phase4ValidationTests.java:47)
+	at dev.kondalabs.gaslight.Phase4ValidationTests.main(Phase4ValidationTests.java:292)
+
+EXIT_CODE: 1

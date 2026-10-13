@@ -18,3 +18,11 @@ development copies to a normal modpack; the provider already embeds them.
 
 Minecraft, Fabric Loader, Fabric API, Gradle and JDK dependencies remain their respective
 authors' work. No Minecraft game binary or assets are redistributed in this package.
+# Recovery preview additions
+
+SQLite JDBC 3.53.4.0 (https://github.com/xerial/sqlite-jdbc) is an unmodified dependency,
+included in the remapped mod JAR. Preserve its Apache-2.0/BSD-2-Clause notices and
+bundled third-party notices. SQLite's own source is public domain. No WorldEdit,
+Chunky, JTS, OcclusionCulling or Weeping Angels source/assets are incorporated here.
+JOML 1.10.5 is supplied by Minecraft and used through its public API.
+

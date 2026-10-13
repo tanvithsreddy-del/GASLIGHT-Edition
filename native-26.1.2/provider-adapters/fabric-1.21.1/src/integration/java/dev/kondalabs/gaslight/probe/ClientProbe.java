@@ -44,6 +44,12 @@ public final class ClientProbe implements ClientModInitializer {
                 if(remaining<1||remaining>100){release(mc);throw new IllegalArgumentException("bounded input duration");}pending=cmd;
             }else if(cmd.startsWith("look")){String[] parts=cmd.split(" ");mc.player.setYRot(Float.parseFloat(parts[1]));mc.player.setXRot(Float.parseFloat(parts[2]));output(cmd+" DONE");}
             else if(cmd.startsWith("resume")){mc.options.pauseOnLostFocus=false;mc.setScreen(null);output(cmd+" DONE");}
+            else if(cmd.startsWith("perspective")){mc.options.setCameraType(mc.options.getCameraType().cycle());output(cmd+" "+mc.options.getCameraType());}
+            else if(cmd.startsWith("camera")){
+                var frame=dev.kondalabs.gaslight.provider.CameraObserver.latest();
+                if(frame==null)throw new IllegalStateException("actual rendered camera unavailable");
+                output(cmd+" camera="+frame.x()+","+frame.y()+","+frame.z()+" perspective="+mc.options.getCameraType()+" portalExcluded="+frame.excludes(-1.5,80.5,.4,2.5,84.5,.6));
+            }
             else if(cmd.startsWith("disconnect")){release(mc);mc.level.disconnect();mc.disconnect();mc.setScreen(new TitleScreen());output(cmd+" DONE initialized="+ClientWorldLoader.getIsInitialized());}
             else if(cmd.startsWith("connect")){var data=new ServerData("Phase A disposable","127.0.0.1:25588",ServerData.Type.OTHER);ConnectScreen.startConnecting(new TitleScreen(),mc,ServerAddress.parseString(data.ip),data,false,null);output(cmd+" REQUESTED");}
             else if(cmd.startsWith("quit")){output("QUIT");mc.stop();}

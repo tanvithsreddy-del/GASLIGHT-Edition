@@ -1,8 +1,8 @@
 {
   "schemaVersion":1,"id":"gaslight_provider","version":"${version}",
-  "name":"GASLIGHT Provider Adapter — Phase A",
-  "description":"Opt-in fixed portal integration. Automatic world replacement remains disabled.",
+  "name":"GASLIGHT — Recovery Preview",
+  "description":"Experimental fixed portals, saved-chunk acquisition and durable recovery. Automatic look-away replacement is not enabled.",
   "authors":["Konda Labs"],"license":"MIT","environment":"*",
-  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"]},
+  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"],"client":["dev.kondalabs.gaslight.provider.CameraObserver"]},
   "depends":{"fabricloader":">=0.19.5","minecraft":"=1.21.1","java":">=25","fabric-api":"*","immersive_portals":"=6.0.6"}
 }

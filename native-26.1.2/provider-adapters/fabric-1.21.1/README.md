@@ -1,4 +1,46 @@
-# GASLIGHT fixed-portal development prototype
+# GASLIGHT recovery and saved-destination development preview
+
+**Current version: 0.2.0-recovery-preview. Automatic look-away changes remain
+unimplemented. This is not the complete GASLIGHT experience.**
+
+The new explicit recovery profile uses `-Dgaslight.sqlite=true` (or
+`-PgaslightSqlite` for the proof server task). It is restricted to the same exact
+disposable-world marker. It refuses any legacy `data/gaslight-phase-a` directory;
+it does not migrate, ignore or delete unresolved legacy journals.
+
+SQLite performs native platform-specific FULL synchronization with a persistent
+rollback journal. The database is capped at 4096 pages of 4096 bytes; retained
+history is capped at 4096 records. Errors veto publication. These guarantees depend
+on the storage stack honoring SQLite's flush operations; process-halt tests are
+not hardware power-cut certification. Intent records are retained as RETIRED or
+RECOVERED tombstones. All new portal entities are nonpersistent GASLIGHT types;
+the permanent load veto also rejects stale owned entities.
+
+Operator console operations remain observer-free and marker-gated:
+
+```
+gaslight-fixed create x y z tx ty tz
+gaslight-fixed acquire x y z tx ty tz
+gaslight-fixed cancel-acquisition
+gaslight-fixed retire
+gaslight-fixed status
+```
+
+`acquire` loads saved chunks only. It checks the real native loading dependencies
+before taking tickets, admits at most two pending operations, 50 target chunks and
+98 dependency chunks, and times out after 30 seconds. It never grants new terrain
+generation. Final structure, protection, occupancy and journal checks still apply.
+
+Actual rendered-camera capture includes the effective camera/projection and sends
+bounded, session/generation/dimension-fenced telemetry. It is **advisory only** and
+does not enable the original authoritative-camera or atomic-publication gates.
+
+`-PgaslightPackaged` now freezes each runtime JAR under a SHA-256 directory before
+launch. Rebuilding cannot overwrite an artifact being read by a running game.
+The older Phase A evidence and limitations below describe the prior checkpoint;
+Windows durability and repeated observer-free retirement have new evidence in the
+recovery-preview report. Full-height natural seams and automatic publication remain
+absent.
 
 **Minecraft 1.21.1, Fabric, Java 25. Full GASLIGHT remains NO-GO.** This module is
 separate from the preserved native 26.1.2 data/acquisition experiment. It does not

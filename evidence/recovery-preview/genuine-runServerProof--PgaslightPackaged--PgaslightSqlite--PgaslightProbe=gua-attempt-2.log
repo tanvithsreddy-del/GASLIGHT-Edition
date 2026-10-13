@@ -1,0 +1,156 @@
+COMMAND: ["C:\\Users\\Tanvith\\Documents\\Codex\\2026-10-12\\you-are-taking-over-gaslight-minecraft\\work\\handoff\\GASLIGHT_CODEX_HANDOFF\\ACTIVE_PROJECT\\provider-adapters\\fabric-1.21.1\\gradlew.bat", "--no-daemon", "--max-workers=2", "--console=plain", "runServerProof", "-PgaslightPackaged", "-PgaslightSqlite", "-PgaslightProbe=guarded-recovery"]
+CWD: C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1
+UTC: 2026-10-13T04:17:51.236175+00:00
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.7.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.18.4
+
+> Task :generateLog4jConfig UP-TO-DATE
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :generateDLIConfig UP-TO-DATE
+> Task :configureLaunch UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jar
+
+> Task :freezeRuntimeJar
+GASLIGHT_IMMUTABLE_JAR 3b2f88f459fd05210bba1832b9f5d4a32b5af52f05276b1cfac21a5f3689da35 C:\Users\Tanvith\Documents\Codex\2026-10-12\you-are-taking-over-gaslight-minecraft\work\handoff\GASLIGHT_CODEX_HANDOFF\ACTIVE_PROJECT\provider-adapters\fabric-1.21.1\run-artifacts\3b2f88f459fd05210bba1832b9f5d4a32b5af52f05276b1cfac21a5f3689da35\gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-dev.jar
+
+> Task :runServerProof
+[09:48:07] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.19.5
+[09:48:08] [main/INFO] (FabricLoader) Loading 48 mods:
+	- cloth-config 15.0.130
+	- dimlib 1.1.0+mc1.21.1
+	- fabric-api 0.109.0+1.21.1
+	- fabric-api-base 0.4.42+6573ed8c19
+	- fabric-api-lookup-api-v1 1.6.70+b559734419
+	- fabric-biome-api-v1 13.0.30+be1ed2d719
+	- fabric-block-api-v1 1.0.22+0af3f5a719
+	- fabric-block-view-api-v2 1.0.10+6573ed8c19
+	- fabric-command-api-v1 1.2.49+f71b366f19
+	- fabric-command-api-v2 2.2.28+6ced4dd919
+	- fabric-commands-v0 0.2.66+df3654b319
+	- fabric-content-registries-v0 8.0.18+b559734419
+	- fabric-convention-tags-v1 2.1.2+7f945d5b19
+	- fabric-convention-tags-v2 2.9.2+e60e56d419
+	- fabric-crash-report-info-v1 0.2.29+0af3f5a719
+	- fabric-data-attachment-api-v1 1.4.0+da19b51a19
+	- fabric-data-generation-api-v1 20.2.23+16c4ae2519
+	- fabric-dimensions-v1 4.0.0+6fc22b9919
+	- fabric-entity-events-v1 1.7.0+2122d82819
+	- fabric-events-interaction-v0 0.7.13+ba9dae0619
+	- fabric-game-rule-api-v1 1.0.53+6ced4dd919
+	- fabric-gametest-api-v1 2.0.5+6fc22b9919
+	- fabric-item-api-v1 11.1.1+d5debaed19
+	- fabric-item-group-api-v1 4.1.6+6823f7cd19
+	- fabric-lifecycle-events-v1 2.5.0+01d9a51c19
+	- fabric-loot-api-v2 3.0.15+3f89f5a519
+	- fabric-loot-api-v3 1.0.3+3f89f5a519
+	- fabric-message-api-v1 6.0.13+6573ed8c19
+	- fabric-networking-api-v1 4.3.0+c7469b2119
+	- fabric-object-builder-api-v1 15.2.1+40875a9319
+	- fabric-particles-v1 4.0.2+6573ed8c19
+	- fabric-recipe-api-v1 5.0.13+6508971219
+	- fabric-registry-sync-v0 5.1.3+60c3209b19
+	- fabric-rendering-data-attachment-v1 0.3.48+73761d2e19
+	- fabric-rendering-fluids-v1 3.1.6+1daea21519
+	- fabric-resource-conditions-api-v1 4.3.0+8dc279b119
+	- fabric-resource-loader-v0 1.3.1+5b5275af19
+	- fabric-screen-handler-api-v1 1.3.87+b559734419
+	- fabric-transfer-api-v1 5.4.2+95bead5f19
+	- fabric-transitive-access-wideners-v1 6.1.0+1daea21519
+	- fabricloader 0.19.5
+	- gaslight_phase_a_probe 1
+	- gaslight_provider 0.2.0-recovery-preview
+	- immersive_portals 6.0.6
+	- java 25
+	- midnightlib 1.5.7
+	- minecraft 1.21.1
+	- mixinextras 0.5.5
+[09:48:08] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Tanvith/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/5f66cc9f59b8efaa942155a3d5a30599bf6640dd/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[09:48:08] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[09:48:09] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/C:/Users/Tanvith/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/32.1.2-jre/5e64ec7e056456bef3a4bc4c6fdaef71e8ab6318/guava-32.1.2-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[09:48:21] [main/INFO] (iPortal) Loading Immersive Portals config
+[09:48:21] [main/INFO] (iPortal) iPortal Config Applied
+[09:48:21] [main/INFO] (iPortal) Immersive Portals Mod Initializing
+[09:48:21] [main/INFO] (ImmPtlNetworkConfig) Immersive Portals Core version 6.0.6
+[09:48:21] [main/INFO] (iPortal) Dimensional Threading is not present
+[09:48:21] [main/INFO] (iPortal) Gravity API is not present
+[09:48:22] [main/INFO] (DimLibEntry) DimLib initializing
+[09:48:22] [main/INFO] (gaslight-provider) GASLIGHT provider adapter initialized; automatic replacement disabled
+[09:48:22] [main/INFO] (gaslight-provider) GASLIGHT_CODE_SOURCE file:/C:/Users/Tanvith/Documents/Codex/2026-10-12/you-are-taking-over-gaslight-minecraft/work/handoff/GASLIGHT_CODEX_HANDOFF/ACTIVE_PROJECT/provider-adapters/fabric-1.21.1/run-artifacts/3b2f88f459fd05210bba1832b9f5d4a32b5af52f05276b1cfac21a5f3689da35/gaslight-provider-fabric-1.21.1-0.2.0-recovery-preview-dev.jar
+[09:48:22] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[09:48:25] [main/INFO] (Minecraft) Loaded 1290 recipes
+[09:48:25] [main/INFO] (Minecraft) Loaded 1399 advancements
+[09:48:26] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 2.780 ms
+[09:48:26] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.1
+[09:48:26] [Server thread/INFO] (Minecraft) Loading properties
+[09:48:26] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[09:48:26] [Server thread/INFO] (Minecraft) Generating keypair
+[09:48:26] [Server thread/INFO] (Minecraft) Starting Minecraft server on 127.0.0.1:25588
+[09:48:26] [Server thread/INFO] (Minecraft) Using default channel type
+[09:48:26] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[09:48:26] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
+[09:48:26] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[09:48:26] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
+[09:48:26] [Server thread/INFO] (Minecraft) Preparing level "phase-a-disposable-72"
+[09:48:27] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:overworld null
+[09:48:27] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_nether null
+[09:48:27] [Server thread/INFO] (DimStackManagement) Bedrock Replacement minecraft:the_end null
+[09:48:27] [Server thread/INFO] (DimensionIntId) Server dimension integer id mapping:
+minecraft:the_nether -> -1
+minecraft:overworld -> 0
+minecraft:the_end -> 1
+[09:48:27] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[09:48:27] [Worker-Main-7/INFO] (Minecraft) Preparing spawn area: 0%
+[09:48:27] [Server thread/INFO] (Minecraft) Time elapsed: 409 ms
+[09:48:27] [Server thread/INFO] (Minecraft) Done (0.796s)! For help, type "help"
+[09:48:27] [Server thread/INFO] (CustomPortalGenManager) Processing custom portal generation
+[09:48:27] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER PRE_GUARDED_RECOVERY Status[state=IDLE, reason=clean, portals=0, ownedLoaders=0, ownedChunks=0, intents=0, generation=0]
+[09:48:27] [Server thread/INFO] (gaslight-provider) GASLIGHT_GUARDED_RECOVERY Status[state=IDLE, reason=clean, portals=0, ownedLoaders=0, ownedChunks=0, intents=0, generation=0]
+[09:48:28] [Server thread/INFO] (IPModInfoChecking) iPortal mod info fetched
+[09:48:28] [Server thread/INFO] (iPortal) Server performance level: medium
+[09:48:48] [Server thread/INFO] (iPortal) Server performance level: good
+[09:49:51] [Server thread/INFO] (gaslight-provider) GASLIGHT_FIXED_REFUSED saved acquisition requires clean observer-free idle service
+[09:49:51] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER acquire-cancel-loading-72 Status[state=PREPARING, reason=saved acquisition requires clean observer-free idle service, portals=0, ownedLoaders=0, ownedChunks=0, intents=0, generation=0] Stats[state=SCANNING, checked=0, footprint=98, tickets=0, pending=0, elapsedMs=5.9754, reason=checking persisted native dependency statuses]
+[09:49:54] [Server thread/INFO] (gaslight-provider) GASLIGHT_SAVED_READY Stats[state=READY, checked=98, footprint=98, tickets=50, pending=0, elapsedMs=3227.0536, reason=all target chunks FULL; safety audit still required]
+[09:49:54] [Server thread/INFO] (gaslight-provider) GASLIGHT_FIXED_READY Status[state=ACTIVE, reason=fixed rigid link ready; automatic replacement disabled, portals=4, ownedLoaders=2, ownedChunks=50, intents=1, generation=1]
+[09:50:09] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-cancel-load-0 Status[state=ACTIVE, reason=fixed rigid link ready; automatic replacement disabled, portals=4, ownedLoaders=2, ownedChunks=50, intents=1, generation=1] preparation=none remoteFull=25 providerTickets=50 averageTickMs=0.935016 heapUsed=278014416 remote=Block{minecraft:diamond_block} placed=Block{minecraft:air} players=[]
+[09:54:03] [Netty Server IO #1/INFO] (ImmPtlNetworkConfig) Server received ImmPtl config packet. Mod version: 6.0.6 Player: GaslightA 9c3ebf69-1d6d-3f46-bed6-58472f20ac37
+[09:54:03] [Server thread/INFO] (Minecraft) GaslightA[/127.0.0.1:65501] logged in with entity id 5 at (1024.5, 81.0, 1022.3000000119209)
+[09:54:03] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER JOIN GaslightA
+[09:54:03] [Server thread/INFO] (Minecraft) GaslightA joined the game
+[09:54:03] [Server thread/INFO] (iPortal) Player login 57915 ServerPlayer['GaslightA'/5, l='ServerWorld minecraft:overworld phase-a-disposable-72', x=0.50, y=81.00, z=3.50]
+[09:54:03] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:overworld phase-a-disposable-72 [-3, -2] {}
+[09:54:03] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:overworld phase-a-disposable-72 [-3, 0] {}
+[09:54:03] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:overworld phase-a-disposable-72 [-3, -3] {}
+[09:54:03] [Server thread/ERROR] (ImmPtlChunkTickets) Chunk loading failure ServerWorld minecraft:overworld phase-a-disposable-72 [-3, -1] {}
+[09:54:04] [Server thread/INFO] (gaslight-provider) GASLIGHT_CAMERA_RECEIVED 9c3ebf69-1d6d-3f46-bed6-58472f20ac37 frame=2,accepted=1,rejected=0,fresh=true,advisoryOnly=true
+[09:54:59] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER snapshot-package-72 Status[state=ACTIVE, reason=fixed rigid link ready; automatic replacement disabled, portals=4, ownedLoaders=2, ownedChunks=50, intents=1, generation=1] preparation=none remoteFull=25 providerTickets=106 averageTickMs=2.253255 heapUsed=357669984 remote=Block{minecraft:diamond_block} placed=Block{minecraft:air} players=[(0.5, 81.0, 3.5) camera=frame=3217,accepted=270,rejected=0,fresh=true,advisoryOnly=true]
+[09:54:59] [Server thread/INFO] (Minecraft) GaslightA lost connection: Disconnected
+[09:54:59] [Server thread/INFO] (Minecraft) GaslightA left the game
+[09:55:00] [Server thread/INFO] (gaslight-provider) GASLIGHT_FIXED_RETIRED Status[state=IDLE, reason=retired intent retained as tombstone, portals=0, ownedLoaders=0, ownedChunks=0, intents=0, generation=1]
+[09:55:00] [Server thread/INFO] (Minecraft) [STDOUT]: GASLIGHT_A_SERVER STOP Status[state=IDLE, reason=retired intent retained as tombstone, portals=0, ownedLoaders=0, ownedChunks=0, intents=0, generation=1]
+[09:55:00] [Server thread/INFO] (Minecraft) Stopping server
+[09:55:00] [Server thread/INFO] (Minecraft) Saving players
+[09:55:00] [Server thread/INFO] (Minecraft) Saving worlds
+[09:55:00] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:overworld phase-a-disposable-72'/minecraft:overworld
+[09:55:00] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_nether phase-a-disposable-72'/minecraft:the_nether
+[09:55:00] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerWorld minecraft:the_end phase-a-disposable-72'/minecraft:the_end
+[09:55:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (phase-a-disposable-72): All chunks are saved
+[09:55:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[09:55:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[09:55:00] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+
+BUILD SUCCESSFUL in 7m 9s
+8 actionable tasks: 3 executed, 5 up-to-date
+
+EXIT_CODE: 0
+ELAPSED_SECONDS: 430.421

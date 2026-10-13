@@ -1,0 +1,11 @@
+COMMAND: C:\Program Files\Git\bin\bash.exe run_offline_checks.sh
+SUITE: dev.kondalabs.gaslight.Phase4FinalSafetyTests
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-2tvmyogb\project\build\journal-test-temp"
+Picked up JAVA_TOOL_OPTIONS:  -Djava.io.tmpdir="C:\Users\Tanvith\AppData\Local\Temp\gaslight-phase4-mutant-2tvmyogb\project\build\journal-test-temp"
+Exception in thread "main" java.lang.AssertionError: nonfinite segment X veto #1
+	at dev.kondalabs.gaslight.Phase4FinalSafetyTests.yes(Phase4FinalSafetyTests.java:13)
+	at dev.kondalabs.gaslight.Phase4FinalSafetyTests.rejects(Phase4FinalSafetyTests.java:17)
+	at dev.kondalabs.gaslight.Phase4FinalSafetyTests.invalidGeometry(Phase4FinalSafetyTests.java:22)
+	at dev.kondalabs.gaslight.Phase4FinalSafetyTests.main(Phase4FinalSafetyTests.java:108)
+
+EXIT_CODE: 1

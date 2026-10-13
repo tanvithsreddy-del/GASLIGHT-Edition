@@ -1,0 +1,938 @@
+--- a/build.gradle
++++ b/build.gradle
+@@ -12,6 +12,8 @@
+     modImplementation files('deps/midnightlib-1.5.7-fabric.jar')
+     testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.13.4'
++    implementation 'org.xerial:sqlite-jdbc:3.53.4.0'
++    include 'org.xerial:sqlite-jdbc:3.53.4.0'
+ }
+ java { toolchain { languageVersion = JavaLanguageVersion.of(25) }; withSourcesJar() }
+ sourceSets.main.java {
+@@ -43,7 +45,7 @@
+         gaslight_phase_a_probe { sourceSet sourceSets.integration }
+     }
+     runs {
+-        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+System.getProperty('gaslight.probe.mode','live') }
++        serverProof { server(); source sourceSets.integration; runDir 'run-server'; vmArgs '-Xmx768m','-Xms256m','--enable-native-access=ALL-UNNAMED','-Dgaslight.sqlite='+project.hasProperty('gaslightSqlite'),'-Dgaslight.phaseA.probe=true', '-Dgaslight.probe.mode='+(project.findProperty('gaslightProbe')?:System.getProperty('gaslight.probe.mode','live')) }
+         clientProof { client(); source sourceSets.integration; runDir 'run-client'; vmArgs '-Xmx1536m','-Dgaslight.phaseA.probe=true'; programArgs '--username','GaslightA','--quickPlayMultiplayer','127.0.0.1:25588' }
+     }
+ }
+@@ -51,13 +53,31 @@
+ 
+ // This option tests the actual named development JAR, without loose production classes.
+ if(project.hasProperty('gaslightPackaged')) {
++    def frozen=tasks.register('freezeRuntimeJar') {
++        dependsOn tasks.named('jar')
++        doLast {
++            def source=tasks.named('jar').get().archiveFile.get().asFile
++            def bytes=source.bytes
++            def hash=java.security.MessageDigest.getInstance('SHA-256').digest(bytes).encodeHex().toString()
++            def target=layout.projectDirectory.file('run-artifacts/'+hash+'/'+source.name).asFile
++            target.parentFile.mkdirs()
++            if(target.exists()) {
++                if(!java.util.Arrays.equals(bytes,target.bytes))throw new GradleException('Immutable runtime JAR hash collision/corruption')
++            } else java.nio.file.Files.write(target.toPath(),bytes,java.nio.file.StandardOpenOption.CREATE_NEW)
++            ext.snapshot=target
++            println 'GASLIGHT_IMMUTABLE_JAR '+hash+' '+target.absolutePath
++        }
++    }
+     ['runServerProof','runClientProof'].each { name ->
+         tasks.named(name,JavaExec).configure {
+-            dependsOn tasks.named('jar')
++            dependsOn frozen
+             def loose=sourceSets.main.output.files
+-            classpath=files(classpath.files.findAll { !loose.contains(it) },tasks.named('jar').get().archiveFile)
+-            systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
+-            systemProperty 'fabric.addMods',tasks.named('jar').get().archiveFile.get().asFile.absolutePath
++            classpath=files(classpath.files.findAll { !loose.contains(it) },frozen.map { it.ext.snapshot })
++            doFirst {
++                def snapshot=frozen.get().ext.snapshot
++                systemProperty 'fabric.classPathGroups',sourceSets.integration.output.files.collect { it.absolutePath }.join(File.pathSeparator)
++                systemProperty 'fabric.addMods',snapshot.absolutePath
++            }
+         }
+     }
+ }
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -1,4 +1,4 @@
+ org.gradle.jvmargs=-Xmx1G
+ org.gradle.parallel=false
+ org.gradle.configuration-cache=false
+-version=0.1.0-phase-a
++version=0.2.0-recovery-preview
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,46 @@
+-# GASLIGHT fixed-portal development prototype
++# GASLIGHT recovery and saved-destination development preview
++
++**Current version: 0.2.0-recovery-preview. Automatic look-away changes remain
++unimplemented. This is not the complete GASLIGHT experience.**
++
++The new explicit recovery profile uses `-Dgaslight.sqlite=true` (or
++`-PgaslightSqlite` for the proof server task). It is restricted to the same exact
++disposable-world marker. It refuses any legacy `data/gaslight-phase-a` directory;
++it does not migrate, ignore or delete unresolved legacy journals.
++
++SQLite performs native platform-specific FULL synchronization with a persistent
++rollback journal. The database is capped at 4096 pages of 4096 bytes; retained
++history is capped at 4096 records. Errors veto publication. These guarantees depend
++on the storage stack honoring SQLite's flush operations; process-halt tests are
++not hardware power-cut certification. Intent records are retained as RETIRED or
++RECOVERED tombstones. All new portal entities are nonpersistent GASLIGHT types;
++the permanent load veto also rejects stale owned entities.
++
++Operator console operations remain observer-free and marker-gated:
++
++```
++gaslight-fixed create x y z tx ty tz
++gaslight-fixed acquire x y z tx ty tz
++gaslight-fixed cancel-acquisition
++gaslight-fixed retire
++gaslight-fixed status
++```
++
++`acquire` loads saved chunks only. It checks the real native loading dependencies
++before taking tickets, admits at most two pending operations, 50 target chunks and
++98 dependency chunks, and times out after 30 seconds. It never grants new terrain
++generation. Final structure, protection, occupancy and journal checks still apply.
++
++Actual rendered-camera capture includes the effective camera/projection and sends
++bounded, session/generation/dimension-fenced telemetry. It is **advisory only** and
++does not enable the original authoritative-camera or atomic-publication gates.
++
++`-PgaslightPackaged` now freezes each runtime JAR under a SHA-256 directory before
++launch. Rebuilding cannot overwrite an artifact being read by a running game.
++The older Phase A evidence and limitations below describe the prior checkpoint;
++Windows durability and repeated observer-free retirement have new evidence in the
++recovery-preview report. Full-height natural seams and automatic publication remain
++absent.
+ 
+ **Minecraft 1.21.1, Fabric, Java 25. Full GASLIGHT remains NO-GO.** This module is
+ separate from the preserved native 26.1.2 data/acquisition experiment. It does not
+--- a/src/integration/java/dev/kondalabs/gaslight/probe/ClientProbe.java
++++ b/src/integration/java/dev/kondalabs/gaslight/probe/ClientProbe.java
+@@ -44,6 +44,12 @@
+                 if(remaining<1||remaining>100){release(mc);throw new IllegalArgumentException("bounded input duration");}pending=cmd;
+             }else if(cmd.startsWith("look")){String[] parts=cmd.split(" ");mc.player.setYRot(Float.parseFloat(parts[1]));mc.player.setXRot(Float.parseFloat(parts[2]));output(cmd+" DONE");}
+             else if(cmd.startsWith("resume")){mc.options.pauseOnLostFocus=false;mc.setScreen(null);output(cmd+" DONE");}
++            else if(cmd.startsWith("perspective")){mc.options.setCameraType(mc.options.getCameraType().cycle());output(cmd+" "+mc.options.getCameraType());}
++            else if(cmd.startsWith("camera")){
++                var frame=dev.kondalabs.gaslight.provider.CameraObserver.latest();
++                if(frame==null)throw new IllegalStateException("actual rendered camera unavailable");
++                output(cmd+" camera="+frame.x()+","+frame.y()+","+frame.z()+" perspective="+mc.options.getCameraType()+" portalExcluded="+frame.excludes(-1.5,80.5,.4,2.5,84.5,.6));
++            }
+             else if(cmd.startsWith("disconnect")){release(mc);mc.level.disconnect();mc.disconnect();mc.setScreen(new TitleScreen());output(cmd+" DONE initialized="+ClientWorldLoader.getIsInitialized());}
+             else if(cmd.startsWith("connect")){var data=new ServerData("Phase A disposable","127.0.0.1:25588",ServerData.Type.OTHER);ConnectScreen.startConnecting(new TitleScreen(),mc,ServerAddress.parseString(data.ip),data,false,null);output(cmd+" REQUESTED");}
+             else if(cmd.startsWith("quit")){output("QUIT");mc.stop();}
+--- a/src/integration/java/dev/kondalabs/gaslight/probe/ServerProbe.java
++++ b/src/integration/java/dev/kondalabs/gaslight/probe/ServerProbe.java
+@@ -27,6 +27,16 @@
+         ServerLifecycleEvents.SERVER_STARTED.register(server->{
+             var w=server.overworld();var a=GaslightProvider.service(server);
+             check(a!=null,"GASLIGHT initialized");
++            if(System.getProperty("gaslight.probe.mode","live").equals("guarded-recovery")){
++                output("PRE_GUARDED_RECOVERY "+a.status());return;
++            }
++            if(System.getProperty("gaslight.probe.mode","live").equals("saved-only")){
++                check(a.status().state().equals("IDLE")&&a.status().intents()==0,"guarded restart clean");
++                check(w.getChunkSource().getChunkNow(64,64)==null,"genuine saved target initially unloaded");
++                server.getCommands().performPrefixedCommand(server.createCommandSourceStack(),"gaslight-fixed acquire 0.5 82.5 0.5 1024.5 82.5 1024.5");
++                check(a.status().state().equals("PREPARING"),"genuine production saved-acquisition command accepted");
++                output("SAVED_UNLOADED_BEGIN "+a.status()+" "+a.preparationStatus());return;
++            }
+             if(System.getProperty("gaslight.probe.mode","live").equals("recovery")){
+                 check(a.status().state().equals("QUARANTINED")&&a.status().intents()==1,"restart retains outstanding intent");
+                 check(a.status().portals()==0&&a.status().ownedLoaders()==0,"restart cannot republish or own leases");
+@@ -75,7 +85,7 @@
+                 if(command.startsWith("snapshot")){
+                     int full=0;for(int x=62;x<=66;x++)for(int z=62;z<=66;z++)if(w.getChunkSource().getChunkNow(x,z)!=null)full++;
+                     var remote=w.getChunkSource().getChunkNow(64,63);var placed=w.getChunkSource().getChunkNow(64,63);
+-                    output(command+" "+a.status()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position().toString()).toList());
++                    output(command+" "+a.status()+" preparation="+a.preparationStatus()+" remoteFull="+full+" providerTickets="+ImmPtlChunkTickets.get(w).getLoadedChunkNum()+" averageTickMs="+(server.getAverageTickTimeNanos()/1000000.0)+" heapUsed="+(Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())+" remote="+(remote==null?"UNAVAILABLE":remote.getBlockState(new BlockPos(1024,82,1021)))+" placed="+(placed==null?"UNAVAILABLE":placed.getBlockState(new BlockPos(1024,82,1022)))+" players="+server.getPlayerList().getPlayers().stream().map(p->p.position()+" camera="+CameraTelemetry.status(server,p.getUUID())).toList());
+                 }
+                 else if(command.startsWith("pose")){String[] v=command.split(" ");for(var player:server.getPlayerList().getPlayers())player.teleportTo(w,Double.parseDouble(v[1]),Double.parseDouble(v[2]),Double.parseDouble(v[3]),Float.parseFloat(v[4]),Float.parseFloat(v[5]));output(command+" RESET_FIXTURE_POSE");}
+                 else if(command.startsWith("dimension")){for(var player:server.getPlayerList().getPlayers())player.teleportTo(server.getLevel(net.minecraft.world.level.Level.NETHER),0,90,0,0,0);output(command+" REAL_DIMENSION_CHANGE");}
+@@ -85,6 +95,22 @@
+                     var next=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(1024.5,82.5,1024.5),4,4);
+                     check(a.prepare(next),"repeat acquisition");check(!a.retire(previous),"old generation cannot retire successor");previous=a.token();output(command+" "+a.status());
+                 }
++                else if(command.startsWith("acquire")){
++                    double target=command.contains("missing")?4000000.5:1024.5;
++                    var next=new FixedPortalAdapter.Spec(w,new Vec3(.5,82.5,.5),w,new Vec3(target,82.5,target),4,4);
++                    check(a.acquireSaved(next),"saved acquisition admitted");check(!a.acquireSaved(next),"simultaneous request rejected by single-portal ownership");
++                    output(command+" "+a.status()+" "+a.preparationStatus());
++                }
++                else if(command.startsWith("cancel")){
++                    if(a.preparationOwner()==null){output(command+" ALREADY_DRAINED "+a.status());return;}
++                    check(!a.cancelPreparation(UUID.randomUUID()),"stale preparation cancellation rejected");
++                    check(a.cancelPreparation(a.preparationOwner()),"current acquisition cancelled");output(command+" "+a.status());
++                }
++                else if(command.startsWith("persist-active")){
++                    check(a.status().state().equals("ACTIVE"),"active publication before crash");
++                    check(server.saveEverything(false,true,true),"real world save before interruption");
++                    output(command+" REAL_MINECRAFT_SAVE_WITH_OUTSTANDING_INTENT "+a.status());
++                }
+                 else if(command.startsWith("stop")){output("STOP "+a.status());server.halt(false);}
+                 else throw new IllegalArgumentException(command);
+             }catch(Throwable e){e.printStackTrace();output("FAIL "+e);server.halt(false);}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/CameraObserver.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/CameraObserver.java
+@@ -0,0 +1,34 @@
++package dev.kondalabs.gaslight.provider;
++import net.fabricmc.api.ClientModInitializer;
++import net.fabricmc.fabric.api.client.networking.v1.*;
++import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
++import qouteall.imm_ptl.core.render.context_management.PortalRendering;
++import org.joml.Matrix4f;
++
++/** Captures every top-level rendered camera, including F5. Telemetry is rate
++ * limited to five packets/sec. It does not silently enable the publication gate. */
++public final class CameraObserver implements ClientModInitializer {
++    private static CameraTelemetry.Challenge challenge;
++    private static long frame,lastSent;
++    private static FrameClip latest;
++    private static boolean reportedFailure;
++    public static FrameClip latest(){return latest;}
++    @Override public void onInitializeClient(){
++        net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry.register(EphemeralPortal.TYPE,qouteall.imm_ptl.core.render.PortalEntityRenderer::new);
++        ClientPlayNetworking.registerGlobalReceiver(CameraTelemetry.Challenge.TYPE,(p,c)->{challenge=p;lastSent=0;});
++        ClientPlayConnectionEvents.DISCONNECT.register((h,c)->{challenge=null;latest=null;frame=0;});
++        WorldRenderEvents.AFTER_SETUP.register(context->{
++            if(PortalRendering.isRendering())return;
++            frame++;
++            try{
++                var position=context.camera().getPosition();float[] matrix=new float[16];
++                new Matrix4f(context.projectionMatrix()).mul(context.positionMatrix()).get(matrix);
++                latest=new FrameClip(position.x,position.y,position.z,matrix);
++                long now=System.nanoTime();
++                if(challenge!=null&&now-lastSent>=200_000_000L&&ClientPlayNetworking.canSend(CameraTelemetry.Observation.TYPE)){
++                    ClientPlayNetworking.send(new CameraTelemetry.Observation(challenge.session(),challenge.generation(),frame,context.world().dimension().location().toString(),latest,true));lastSent=now;
++                }
++            }catch(RuntimeException unsupported){latest=null;if(!reportedFailure){reportedFailure=true;GaslightProvider.LOG.warn("GASLIGHT_CAMERA_UNAVAILABLE",unsupported);}}
++        });
++    }
++}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/CameraTelemetry.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/CameraTelemetry.java
+@@ -0,0 +1,58 @@
++package dev.kondalabs.gaslight.provider;
++import java.util.*;
++import net.fabricmc.fabric.api.networking.v1.*;
++import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
++import net.minecraft.network.RegistryFriendlyByteBuf;
++import net.minecraft.network.codec.StreamCodec;
++import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
++import net.minecraft.resources.ResourceLocation;
++
++/** Connection-authenticated, session/generation/dimension-fenced camera telemetry.
++ * ADVISORY ONLY: receiving a prior frame never authorizes physical publication. */
++public final class CameraTelemetry {
++    public record Challenge(UUID session,long generation) implements CustomPacketPayload {
++        public static final Type<Challenge> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gaslight_provider","camera_challenge"));
++        public static final StreamCodec<RegistryFriendlyByteBuf,Challenge> CODEC=StreamCodec.of((b,p)->{b.writeUUID(p.session);b.writeLong(p.generation);},b->new Challenge(b.readUUID(),b.readLong()));
++        public Type<Challenge> type(){return TYPE;}
++    }
++    public record Observation(UUID session,long generation,long frame,String dimension,FrameClip clip,boolean supported) implements CustomPacketPayload {
++        public static final Type<Observation> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gaslight_provider","camera_observation"));
++        public static final StreamCodec<RegistryFriendlyByteBuf,Observation> CODEC=StreamCodec.of((b,p)->{
++            b.writeUUID(p.session);b.writeLong(p.generation);b.writeLong(p.frame);b.writeUtf(p.dimension,128);b.writeDouble(p.clip.x());b.writeDouble(p.clip.y());b.writeDouble(p.clip.z());for(float f:p.clip.matrix())b.writeFloat(f);b.writeBoolean(p.supported);
++        },b->{UUID s=b.readUUID();long g=b.readLong(),f=b.readLong();String d=b.readUtf(128);double x=b.readDouble(),y=b.readDouble(),z=b.readDouble();float[] m=new float[16];for(int i=0;i<16;i++)m[i]=b.readFloat();return new Observation(s,g,f,d,new FrameClip(x,y,z,m),b.readBoolean());});
++        public Type<Observation> type(){return TYPE;}
++    }
++    static final class Session {
++        final UUID nonce=UUID.randomUUID();final long generation;final String dimension;
++        long sequence=-1,lastReceived,window;int packets,accepted,rejected;Observation latest;
++        Session(long generation,String dimension){this.generation=generation;this.dimension=dimension;}
++        boolean accept(Observation p,double playerX,double playerY,double playerZ,long now){
++            if(now-window>1_000_000_000L){window=now;packets=0;}
++            double distance=Math.pow(p.clip.x()-playerX,2)+Math.pow(p.clip.y()-playerY,2)+Math.pow(p.clip.z()-playerZ,2);
++            if(++packets>12||!nonce.equals(p.session)||generation!=p.generation||!dimension.equals(p.dimension)||p.frame<=sequence||!p.supported||distance>100){rejected++;latest=null;return false;}
++            sequence=p.frame;lastReceived=now;latest=p;accepted++;return true;
++        }
++        String status(long now){return "frame="+sequence+",accepted="+accepted+",rejected="+rejected+",fresh="+(latest!=null&&now-lastReceived<300_000_000L)+",advisoryOnly=true";}
++    }
++    private static final Map<net.minecraft.server.MinecraftServer,Map<UUID,Session>> servers=new IdentityHashMap<>();
++    private static Map<UUID,Session> sessions(net.minecraft.server.MinecraftServer server){return servers.computeIfAbsent(server,ignored->new HashMap<>());}
++    public static String status(net.minecraft.server.MinecraftServer server,UUID player){Session s=sessions(server).get(player);return s==null?"no camera session":s.status(System.nanoTime());}
++    static void initialize(){
++        PayloadTypeRegistry.playS2C().register(Challenge.TYPE,Challenge.CODEC);PayloadTypeRegistry.playC2S().register(Observation.TYPE,Observation.CODEC);
++        ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->sessions(server).remove(handler.player.getUUID()));
++        ServerTickEvents.END_SERVER_TICK.register(server->{
++            for(var player:server.getPlayerList().getPlayers()){
++                var service=GaslightProvider.service(server);if(service==null)continue;
++                long generation=service.status().generation();String dimension=player.level().dimension().location().toString();
++                Session s=sessions(server).get(player.getUUID());
++                if((s==null||s.generation!=generation||!s.dimension.equals(dimension))&&ServerPlayNetworking.canSend(player,Challenge.TYPE)){
++                    s=new Session(generation,dimension);sessions(server).put(player.getUUID(),s);ServerPlayNetworking.send(player,new Challenge(s.nonce,generation));
++                }
++            }
++        });
++        ServerPlayNetworking.registerGlobalReceiver(Observation.TYPE,(packet,context)->{
++            var player=context.player();Session s=sessions(context.server()).get(player.getUUID());if(s!=null&&s.accept(packet,player.getX(),player.getEyeY(),player.getZ(),System.nanoTime())&&s.accepted==1)GaslightProvider.LOG.info("GASLIGHT_CAMERA_RECEIVED {} {}",player.getUUID(),s.status(System.nanoTime()));
++        });
++        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(servers::remove);
++    }
++}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/EphemeralPortal.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/EphemeralPortal.java
+@@ -0,0 +1,18 @@
++package dev.kondalabs.gaslight.provider;
++import net.minecraft.core.Registry;
++import net.minecraft.core.registries.BuiltInRegistries;
++import net.minecraft.resources.ResourceLocation;
++import net.minecraft.world.entity.*;
++import net.minecraft.world.level.Level;
++import qouteall.imm_ptl.core.portal.Portal;
++
++/** GASLIGHT owns the entity type. It is never serialized into world entity files.
++ * Removing this mod cannot turn its entities into ordinary provider portals. */
++public final class EphemeralPortal extends Portal {
++    public static final EntityType<EphemeralPortal> TYPE=Registry.register(BuiltInRegistries.ENTITY_TYPE,
++        ResourceLocation.fromNamespaceAndPath("gaslight_provider","ephemeral_portal"),
++        EntityType.Builder.<EphemeralPortal>of(EphemeralPortal::new,MobCategory.MISC).sized(0,0).fireImmune().noSave().noSummon().clientTrackingRange(6).updateInterval(20).build("gaslight_provider:ephemeral_portal"));
++    public EphemeralPortal(EntityType<?> type,Level world){super(type,world);}
++    public static void initialize(){}
++    @Override public boolean shouldBeSaved(){return false;}
++}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalAdapter.java
+@@ -18,6 +18,7 @@
+ import qouteall.imm_ptl.core.api.PortalAPI;
+ import qouteall.imm_ptl.core.chunk_loading.ChunkLoader;
+ import qouteall.imm_ptl.core.portal.Portal;
++import qouteall.imm_ptl.core.portal.PortalManipulation;
+ import qouteall.imm_ptl.core.IPGlobal;
+ 
+ /** Phase A fixed link only. Creation and retirement require no connected observers.
+@@ -29,13 +30,15 @@
+     public record Token(UUID owner,long generation){}
+     public record Status(String state,String reason,int portals,int ownedLoaders,int ownedChunks,int intents,long generation){}
+     private final MinecraftServer server;
+-    private final Phase3RecoveryJournal.FileStore journal;
++    private final Phase3RecoveryJournal.Store journal;
+     private final Set<UUID> authorized=new HashSet<>();
+     private final List<Portal> portals=new ArrayList<>();
+     private final List<ChunkLoader> loaders=new ArrayList<>();
+     private String state="DISABLED",reason="disposable marker absent";
+     private Token token;private long generation;private boolean hadViewer;
+     private Spec spec;
++    private SavedDestinationPreparation preparation;
++    private Spec preparingSpec;
+     private final int previousRadius,previousLayers,previousRenderLimit;
+ 
+     FixedPortalAdapter(MinecraftServer server){
+@@ -45,7 +48,12 @@
+         boolean permitted=false;
+         try { Path marker=root.resolve(".gaslight-phase-a-disposable");permitted=Files.isRegularFile(marker,LinkOption.NOFOLLOW_LINKS)&&Files.size(marker)<=128&&Files.readString(marker).trim().equals(MARKER); }
+         catch(IOException|RuntimeException ignored) { /* Absent or unreadable authorization keeps all effects disabled. */ }
+-        journal=permitted?new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin")):null;
++        // New recovery profile never migrates or ignores legacy unresolved evidence.
++        if(permitted&&Boolean.getBoolean("gaslight.sqlite")&&Files.exists(root.resolve("data/gaslight-phase-a"))) {
++            journal=null;state="QUARANTINED";reason="legacy journal directory retained; SQLite migration refused";
++        } else journal=!permitted?null:Boolean.getBoolean("gaslight.sqlite")?
++            new SqliteIntentStore(root.resolve("data/gaslight-recovery/intents.sqlite")):
++            new Phase3RecoveryJournal.FileStore(root.resolve("data/gaslight-phase-a/intents.bin"));
+         if(journal!=null){ state=journal.blockedOnOpen()?"QUARANTINED":"IDLE";reason=journal.diagnostic();IPGlobal.indirectLoadingRadiusCap=2;IPGlobal.maxPortalLayer=2;IPGlobal.portalRenderLimit=8; }
+     }
+     public static boolean owned(Portal p){return p.portalTag!=null&&p.portalTag.startsWith(TAG);}
+@@ -54,6 +62,28 @@
+     private boolean refuse(String why){reason=why;GaslightProvider.LOG.info("GASLIGHT_FIXED_REFUSED {}",why);return false;}
+     public Status status(){thread();return new Status(state,reason,portals.size(),loaders.size(),loaders.stream().mapToInt(ChunkLoader::getChunkNum).sum(),journal==null?0:journal.outstanding(),generation);}
+     public Token token(){thread();return token;}
++    public boolean acquireSaved(Spec requested){
++        thread();
++        if(journal==null||journal.blockedOnOpen()||preparation!=null||!state.equals("IDLE")||!server.getPlayerList().getPlayers().isEmpty())return refuse("saved acquisition requires clean observer-free idle service");
++        try{preparation=new SavedDestinationPreparation(server,requested);preparingSpec=requested;state="PREPARING";reason="saved-only bounded acquisition";return true;}
++        catch(RuntimeException bad){return refuse(bad.toString());}
++    }
++    public String preparationStatus(){thread();return preparation==null?"none":preparation.stats().toString();}
++    public boolean cancelPreparation(UUID owner){
++        thread();if(preparation==null||!preparation.owner.equals(owner))return refuse("stale preparation cancellation");
++        preparation.close();preparation=null;preparingSpec=null;state="IDLE";reason="preparation cancelled; no publication";return true;
++    }
++    public UUID preparationOwner(){thread();return preparation==null?null:preparation.owner;}
++    void recoverGuardedOwnership(){
++        thread();
++        // ENTITY_LOAD permanently rejects every portal outside this session's
++        // authorized set. Persisted stale entities can never regain authority.
++        if(journal instanceof SqliteIntentStore store&&preparation==null&&authorized.isEmpty()&&portals.isEmpty()&&loaders.isEmpty()&&server.getPlayerList().getPlayers().isEmpty()){
++            if(store.reconcileWithLoadVeto()){state="IDLE";reason=store.diagnostic();}
++            else {state="QUARANTINED";reason=store.diagnostic();}
++            GaslightProvider.LOG.info("GASLIGHT_GUARDED_RECOVERY {}",status());
++        }
++    }
+     public boolean prepare(Spec s){
+         thread();
+         if(journal==null||journal.blockedOnOpen()||!state.equals("IDLE"))return refuse("disabled, outstanding recovery or active generation");
+@@ -70,13 +100,14 @@
+             if(!journal.begin(List.of(new Passage(a,b,token.owner,token.generation)))){state="QUARANTINED";return refuse("durable intent refused: "+journal.diagnostic());}
+             state="STAGING";
+             addLoader(s.source,s.origin);addLoader(s.target,s.destination);
+-            Portal forward=Portal.ENTITY_TYPE.create(s.source);
++            Portal forward=EphemeralPortal.TYPE.create(s.source);
+             if(forward==null)throw new IllegalStateException("provider entity creation failed");
+             forward.setOriginPos(s.origin);forward.setOrientationAndSize(new Vec3(1,0,0),new Vec3(0,1,0),s.width,s.height);
+             forward.setDestinationDimension(s.target.dimension());forward.setDestination(s.destination);
+             forward.setScaleTransformation(1);forward.setRotation(null);
+-            var reverse=PortalAPI.createReversePortal(forward);
+-            for(Portal p:List.of(forward,PortalAPI.createFlippedPortal(forward),reverse,PortalAPI.createFlippedPortal(reverse))){
++            var reverse=PortalManipulation.createReversePortal(forward,EphemeralPortal.TYPE);
++            for(Portal p:List.of(forward,PortalManipulation.createFlippedPortal(forward,EphemeralPortal.TYPE),reverse,PortalManipulation.createFlippedPortal(reverse,EphemeralPortal.TYPE))){
++                if(p.shouldBeSaved()||p.getType()!=EphemeralPortal.TYPE)throw new IllegalStateException("ephemeral ownership contract");
+                 p.portalTag=TAG+token.owner+":"+token.generation;
+                 authorized.add(p.getUUID());portals.add(p);
+                 if(!((ServerLevel)p.level()).addFreshEntity(p))throw new IllegalStateException("provider spawn refused");
+@@ -124,12 +155,32 @@
+         if(!server.getPlayerList().getPlayers().isEmpty())return refuse("retirement requires no observers");
+         for(Portal p:portals)if(!p.level().getEntities(p,p.getBoundingBox().inflate(1),e->!(e instanceof Portal)).isEmpty())return refuse("crossing occupancy");
+         rollback();
++        if(journal instanceof SqliteIntentStore){
++            if(!authorized.isEmpty()||!portals.isEmpty()||!loaders.isEmpty()||!journal.settle(token.owner,token.generation)){
++                state="QUARANTINED";return refuse("guarded retirement failed: "+journal.diagnostic());
++            }
++            state="IDLE";reason=journal.diagnostic();spec=null;hadViewer=false;
++            GaslightProvider.LOG.info("GASLIGHT_FIXED_RETIRED {}",status());return true;
++        }
+         // Vanilla save completion is not an authenticated durable entity-removal receipt.
+         // Keep the intent until Phase C supplies crash reconciliation; never silently settle it.
+         if(!server.saveEverything(false,true,true)){state="QUARANTINED";return refuse("retirement save failure; unresolved intent retained");}
+         state="RETIRED_PENDING_RECOVERY";reason="closed; durable intent retained for crash reconciliation";spec=null;hadViewer=false;
+         GaslightProvider.LOG.info("GASLIGHT_FIXED_RETIRED {}",status());return true;
+     }
+-    void tick(){thread();if(state.equals("ACTIVE")){if(!server.getPlayerList().getPlayers().isEmpty())hadViewer=true;else if(hadViewer)retire(token);}}
+-    void shutdown(){thread();if(state.equals("ACTIVE")&&!retire(token)){rollback();state="QUARANTINED";reason="shutdown retains unresolved intent";}if(journal!=null){IPGlobal.indirectLoadingRadiusCap=previousRadius;IPGlobal.maxPortalLayer=previousLayers;IPGlobal.portalRenderLimit=previousRenderLimit;}}
++    void tick(){thread();
++        if(preparation!=null){
++            if(!server.getPlayerList().getPlayers().isEmpty()){cancelPreparation(preparation.owner);return;}
++            preparation.tick();
++            if(preparation.state()==SavedDestinationPreparation.State.READY){
++                GaslightProvider.LOG.info("GASLIGHT_SAVED_READY {}",preparation.stats());
++                var work=preparation;var requested=preparingSpec;preparation=null;preparingSpec=null;state="IDLE";
++                try{prepare(requested);}finally{work.close();}
++            }else if(preparation.state()==SavedDestinationPreparation.State.FAILED){
++                reason=preparation.stats().toString();GaslightProvider.LOG.warn("GASLIGHT_SAVED_FAILED {}",reason);preparation.close();preparation=null;preparingSpec=null;state="IDLE";
++            }
++        }
++        if(state.equals("ACTIVE")){if(!server.getPlayerList().getPlayers().isEmpty())hadViewer=true;else if(hadViewer)retire(token);}
++    }
++    void shutdown(){thread();if(preparation!=null)cancelPreparation(preparation.owner);if(state.equals("ACTIVE")&&!retire(token)){rollback();state="QUARANTINED";reason="shutdown retains unresolved intent";}if(journal!=null){IPGlobal.indirectLoadingRadiusCap=previousRadius;IPGlobal.maxPortalLayer=previousLayers;IPGlobal.portalRenderLimit=previousRenderLimit;}if(journal instanceof SqliteIntentStore store)store.close();}
+ }
+--- a/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/FixedPortalCommands.java
+@@ -15,18 +15,23 @@
+             Commands.literal("gaslight-fixed").requires(s->s.hasPermission(4))
+                 .then(Commands.literal("status").executes(c->{var a=GaslightProvider.service(c.getSource().getServer());c.getSource().sendSuccess(()->Component.literal(a.status().toString()),false);return 1;}))
+                 .then(Commands.literal("retire").executes(c->{var a=GaslightProvider.service(c.getSource().getServer());boolean ok=a.retire(a.token());c.getSource().sendSuccess(()->Component.literal(a.status().toString()),false);return ok?1:0;}))
+-                .then(Commands.literal("create")
+-                    .then(Commands.argument("x",DoubleArgumentType.doubleArg(-29000000,29000000))
+-                    .then(Commands.argument("y",DoubleArgumentType.doubleArg(-2048,2048))
+-                    .then(Commands.argument("z",DoubleArgumentType.doubleArg(-29000000,29000000))
+-                    .then(Commands.argument("tx",DoubleArgumentType.doubleArg(-29000000,29000000))
+-                    .then(Commands.argument("ty",DoubleArgumentType.doubleArg(-2048,2048))
+-                    .then(Commands.argument("tz",DoubleArgumentType.doubleArg(-29000000,29000000)).executes(FixedPortalCommands::create))))))))));
++                .then(coordinates("create",false)).then(coordinates("acquire",true))
++                .then(Commands.literal("cancel-acquisition").executes(c->{var a=GaslightProvider.service(c.getSource().getServer());return a.cancelPreparation(a.preparationOwner())?1:0;}))));
+     }
+-    private static int create(CommandContext<CommandSourceStack> c){
++    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> coordinates(String name,boolean saved){
++        return Commands.literal(name)
++            .then(Commands.argument("x",DoubleArgumentType.doubleArg(-29000000,29000000))
++            .then(Commands.argument("y",DoubleArgumentType.doubleArg(-2048,2048))
++            .then(Commands.argument("z",DoubleArgumentType.doubleArg(-29000000,29000000))
++            .then(Commands.argument("tx",DoubleArgumentType.doubleArg(-29000000,29000000))
++            .then(Commands.argument("ty",DoubleArgumentType.doubleArg(-2048,2048))
++            .then(Commands.argument("tz",DoubleArgumentType.doubleArg(-29000000,29000000)).executes(c->create(c,saved))))))));
++    }
++    private static int create(CommandContext<CommandSourceStack> c,boolean saved){
+         var source=c.getSource();var a=GaslightProvider.service(source.getServer());
+         var origin=new Vec3(value(c,"x"),value(c,"y"),value(c,"z"));var target=new Vec3(value(c,"tx"),value(c,"ty"),value(c,"tz"));
+-        boolean ok=a.prepare(new FixedPortalAdapter.Spec(source.getLevel(),origin,source.getLevel(),target,4,4));
++        var spec=new FixedPortalAdapter.Spec(source.getLevel(),origin,source.getLevel(),target,4,4);
++        boolean ok=saved?a.acquireSaved(spec):a.prepare(spec);
+         source.sendSuccess(()->Component.literal(a.status().toString()),false);return ok?1:0;
+     }
+     private static double value(CommandContext<CommandSourceStack> c,String name){return DoubleArgumentType.getDouble(c,name);}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/FrameClip.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/FrameClip.java
+@@ -0,0 +1,23 @@
++package dev.kondalabs.gaslight.provider;
++import org.joml.Matrix4f;
++import org.joml.FrustumIntersection;
++
++/** Immutable camera-relative clip transform. Conservative whole-box rejection;
++ * this alone is not a publication fence or proof about other rendered views. */
++public final class FrameClip {
++    private final double x,y,z;private final float[] matrix;
++    public FrameClip(double x,double y,double z,float[] matrix){
++        if(!Double.isFinite(x)||!Double.isFinite(y)||!Double.isFinite(z)||Math.abs(x)>30_000_000||Math.abs(y)>4096||Math.abs(z)>30_000_000||matrix==null||matrix.length!=16)throw new IllegalArgumentException("camera/clip bounds");
++        this.x=x;this.y=y;this.z=z;this.matrix=matrix.clone();
++        for(float f:matrix)if(!Float.isFinite(f)||Math.abs(f)>10000)throw new IllegalArgumentException("non-finite/unbounded clip matrix");
++        if(Math.abs(new Matrix4f().set(matrix).determinant())<1e-9)throw new IllegalArgumentException("degenerate clip matrix");
++    }
++    public double x(){return x;}public double y(){return y;}public double z(){return z;}
++    public float[] matrix(){return matrix.clone();}
++    public boolean excludes(double minX,double minY,double minZ,double maxX,double maxY,double maxZ){
++        if(!Double.isFinite(minX)||!Double.isFinite(minY)||!Double.isFinite(minZ)||!Double.isFinite(maxX)||!Double.isFinite(maxY)||!Double.isFinite(maxZ)||minX>maxX||minY>maxY||minZ>maxZ)throw new IllegalArgumentException("invalid affected box");
++        // Expand before conversion to floats; never certify a grazing box hidden.
++        double margin=.25;
++        return !new FrustumIntersection(new Matrix4f().set(matrix)).testAab((float)(minX-x-margin),(float)(minY-y-margin),(float)(minZ-z-margin),(float)(maxX-x+margin),(float)(maxY-y+margin),(float)(maxZ-z+margin));
++    }
++}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/GaslightProvider.java
+@@ -16,14 +16,17 @@
+     @Override public void onInitialize(){
+         LOG.info("GASLIGHT provider adapter initialized; automatic replacement disabled");
+         LOG.info("GASLIGHT_CODE_SOURCE {}",GaslightProvider.class.getProtectionDomain().getCodeSource().getLocation());
++        EphemeralPortal.initialize();
+         FixedPortalCommands.register();
++        CameraTelemetry.initialize();
+         ServerLifecycleEvents.SERVER_STARTING.register(s->SERVICES.put(s,new FixedPortalAdapter(s)));
+         ServerEntityEvents.ENTITY_LOAD.register((entity,world)->{
+             if(entity instanceof Portal portal && FixedPortalAdapter.owned(portal)){
+                 var service=SERVICES.get(world.getServer());
+-                if(service==null||!service.permits(portal)) { portal.setTeleportable(false);portal.setIsVisible(false);portal.discard(); }
++                if(service==null||!service.permits(portal)) { portal.setTeleportable(false);portal.setIsVisible(false);portal.discard();LOG.info("GASLIGHT_STALE_PORTAL_REJECTED {} {}",portal.getUUID(),portal.portalTag); }
+             }
+         });
++        ServerLifecycleEvents.SERVER_STARTED.register(s->{var service=SERVICES.get(s);if(service!=null)service.recoverGuardedOwnership();});
+         ServerTickEvents.END_SERVER_TICK.register(s->{var service=SERVICES.get(s);if(service!=null)service.tick();});
+         ServerLifecycleEvents.SERVER_STOPPING.register(s->{var service=SERVICES.get(s);if(service!=null)service.shutdown();});
+         ServerLifecycleEvents.SERVER_STOPPED.register(SERVICES::remove);
+--- a/src/main/java/dev/kondalabs/gaslight/provider/SavedDestinationPreparation.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/SavedDestinationPreparation.java
+@@ -0,0 +1,98 @@
++package dev.kondalabs.gaslight.provider;
++
++import java.util.*;
++import java.util.concurrent.CompletableFuture;
++import net.minecraft.nbt.*;
++import net.minecraft.nbt.visitors.*;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.level.*;
++import net.minecraft.world.level.ChunkPos;
++import net.minecraft.world.level.chunk.*;
++import net.minecraft.world.level.chunk.status.*;
++
++/** Saved-data-only acquisition. No ticket is issued until every native loading
++ * dependency has sufficient persisted status. Never interprets absence as air.
++ * Futures are observed on the server thread; cancellation releases only our tickets. */
++final class SavedDestinationPreparation implements AutoCloseable {
++    enum State {SCANNING,LOADING,READY,FAILED,CANCELLED}
++    record Key(ServerLevel world,int x,int z){}
++    record Stats(State state,int checked,int footprint,int tickets,int pending,double elapsedMs,String reason){}
++    private static final TicketType<UUID> TICKET=TicketType.create("gaslight_saved_prepare",Comparator.comparing(UUID::toString));
++    private final MinecraftServer server;
++    final UUID owner=UUID.randomUUID();
++    private final long start=System.nanoTime(),deadline=start+30_000_000_000L;
++    private final LinkedHashMap<Key,ChunkStatus> required=new LinkedHashMap<>();
++    private final List<Key> targets=new ArrayList<>();
++    private final Map<Key,CompletableFuture<Boolean>> scans=new LinkedHashMap<>();
++    private final Map<Key,CompletableFuture<ChunkResult<ChunkAccess>>> loads=new LinkedHashMap<>();
++    private final Set<Key> tickets=new LinkedHashSet<>(),loaded=new HashSet<>();
++    private int cursor,checked,loadCursor;
++    private State state=State.SCANNING;private String reason="checking persisted native dependency statuses";
++    SavedDestinationPreparation(MinecraftServer server,FixedPortalAdapter.Spec spec){
++        this.server=server;
++        int halo=ChunkPyramid.LOADING_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies().getRadius();
++        if(halo<0||halo>3)throw new IllegalArgumentException("unsupported native loading footprint");
++        for(var side:List.of(Map.entry(spec.source(),spec.origin()),Map.entry(spec.target(),spec.destination()))){
++            if(side.getKey().getServer()!=server||!Double.isFinite(side.getValue().x)||!Double.isFinite(side.getValue().z)||Math.abs(side.getValue().x)>29_000_000||Math.abs(side.getValue().z)>29_000_000)throw new IllegalArgumentException("world/coordinate fence");
++            int cx=Math.floorDiv((int)Math.floor(side.getValue().x),16),cz=Math.floorDiv((int)Math.floor(side.getValue().z),16);
++            for(int x=cx-2;x<=cx+2;x++)for(int z=cz-2;z<=cz+2;z++){
++                Key target=new Key(side.getKey(),x,z);if(!targets.contains(target))targets.add(target);
++                var dependencies=ChunkPyramid.LOADING_PYRAMID.getStepTo(ChunkStatus.FULL).accumulatedDependencies();
++                for(int dx=-halo;dx<=halo;dx++)for(int dz=-halo;dz<=halo;dz++){
++                    var key=new Key(side.getKey(),x+dx,z+dz);int distance=Math.max(Math.abs(dx),Math.abs(dz));
++                    ChunkStatus status=dependencies.get(distance);
++                    required.merge(key,status,(a,b)->a.isOrAfter(b)?a:b);
++                }
++            }
++        }
++        if(targets.size()>50||required.size()>98)throw new IllegalArgumentException("native acquisition footprint budget");
++    }
++    private void thread(){if(!server.isSameThread())throw new IllegalStateException("server thread required");}
++    Stats stats(){thread();return new Stats(state,checked,required.size(),tickets.size(),scans.size()+loads.size(),(System.nanoTime()-start)/1e6,reason);}
++    State state(){return state;}
++    void tick(){
++        thread();if(state==State.FAILED||state==State.CANCELLED||state==State.READY)return;
++        if(System.nanoTime()>deadline){fail("preparation deadline");return;}
++        try{
++            if(state==State.SCANNING){
++                for(var it=scans.entrySet().iterator();it.hasNext();){var e=it.next();if(e.getValue().isDone()){
++                    if(!e.getValue().join()){fail("saved destination or dependency unavailable: "+e.getKey());return;}
++                    checked++;it.remove();
++                }}
++                var keys=new ArrayList<>(required.keySet());
++                while(scans.size()<2&&cursor<keys.size()){
++                    Key key=keys.get(cursor++);ChunkStatus minimum=required.get(key);
++                    var resident=key.world.getChunkSource().getChunkNow(key.x,key.z);
++                    if(resident!=null&&resident.getPersistedStatus().isOrAfter(minimum)){checked++;continue;}
++                    CollectFields collector=new CollectFields(new FieldSelector(StringTag.TYPE,"Status"));
++                    scans.put(key,key.world.getChunkSource().chunkScanner().scanChunk(new ChunkPos(key.x,key.z),collector).thenApply(ignored->{
++                        if(!(collector.getResult() instanceof CompoundTag tag)||!tag.contains("Status",Tag.TAG_STRING))return false;
++                        ChunkStatus actual=ChunkStatus.byName(tag.getString("Status"));return actual!=null&&actual.isOrAfter(minimum);
++                    }));
++                }
++                if(checked==required.size()){state=State.LOADING;reason="saved dependencies certified; bounded ticket acquisition";}
++            }
++            if(state==State.LOADING){
++                for(var it=loads.entrySet().iterator();it.hasNext();){var e=it.next();if(!e.getValue().isDone())continue;
++                    var result=e.getValue().join();it.remove();
++                    if(result.isSuccess()&&result.orElse(null) instanceof LevelChunk)loaded.add(e.getKey());
++                    // A false-create request may precede the distance-manager update.
++                    // Keep the owned ticket, retry later, and retain the original deadline.
++                }
++                while(loads.size()<2&&loadCursor<targets.size()){
++                    Key key=targets.get(loadCursor++);
++                    if(loaded.contains(key))continue;
++                    if(tickets.add(key))key.world.getChunkSource().addRegionTicket(TICKET,new ChunkPos(key.x,key.z),0,owner);
++                    loads.put(key,key.world.getChunkSource().getChunkFuture(key.x,key.z,ChunkStatus.FULL,false));
++                }
++                if(loadCursor==targets.size()&&loads.isEmpty()){
++                    if(loaded.size()==targets.size()){state=State.READY;reason="all target chunks FULL; safety audit still required";}
++                    else loadCursor=0;
++                }
++            }
++        }catch(RuntimeException failure){fail("native acquisition failure: "+failure);}
++    }
++    private void fail(String why){reason=why;state=State.FAILED;release();}
++    private void release(){for(Key key:tickets)key.world.getChunkSource().removeRegionTicket(TICKET,new ChunkPos(key.x,key.z),0,owner);tickets.clear();scans.clear();loads.clear();}
++    @Override public void close(){thread();if(state!=State.FAILED){state=State.CANCELLED;reason="released";}release();}
++}
+--- a/src/main/java/dev/kondalabs/gaslight/provider/SqliteIntentStore.java
++++ b/src/main/java/dev/kondalabs/gaslight/provider/SqliteIntentStore.java
+@@ -0,0 +1,141 @@
++package dev.kondalabs.gaslight.provider;
++
++import dev.kondalabs.gaslight.NativePortal.*;
++import dev.kondalabs.gaslight.Phase3RecoveryJournal;
++import java.io.*;
++import java.nio.file.*;
++import java.security.MessageDigest;
++import java.sql.*;
++import java.util.*;
++
++/** Durable intent history; never deletes unresolved records. SQLite's native VFS
++ * performs platform-specific FULL synchronization. This is not a transaction over
++ * Minecraft saves. Recovery relies on the permanent owned-entity load veto. */
++final class SqliteIntentStore implements Phase3RecoveryJournal.Store, AutoCloseable {
++    private static final int MAX_BLOB=65536, MAX_RECORDS=4096;
++    private Connection connection;
++    private long revision;
++    private boolean blocked, failed;
++    private int outstanding=-1;
++    private String reason="clean";
++    SqliteIntentStore(Path file) {
++        try {
++            file=file.toAbsolutePath().normalize();
++            for(Path p=file;p!=null;p=p.getParent())
++                if(Files.exists(p,LinkOption.NOFOLLOW_LINKS)&&Files.isSymbolicLink(p))throw new IOException("symlink in ledger path");
++            Files.createDirectories(file.getParent());
++            if(Files.exists(file)&&(!Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS)||Files.size(file)>20*1024*1024L))throw new IOException("invalid ledger file");
++            Class.forName("org.sqlite.JDBC");
++            connection=DriverManager.getConnection("jdbc:sqlite:"+file);
++            sql("PRAGMA busy_timeout=1500");sql("PRAGMA trusted_schema=OFF");
++            if(!scalar("PRAGMA journal_mode=PERSIST").equalsIgnoreCase("persist"))throw new IOException("persistent rollback journal unavailable");
++            sql("PRAGMA synchronous=FULL");sql("PRAGMA max_page_count=4096");
++            sql("PRAGMA cache_size=-2048");
++            if(!scalar("PRAGMA page_size").equals("4096")||!scalar("PRAGMA max_page_count").equals("4096"))throw new IOException("ledger disk page budget");
++            if(!scalar("PRAGMA synchronous").equals("2")||!scalar("PRAGMA quick_check").equals("ok"))throw new IOException("durability/integrity check failed");
++            String version=scalar("PRAGMA user_version");
++            if(!version.equals("0")&&!version.equals("1"))throw new IOException("unsupported ledger schema");
++            sql("CREATE TABLE IF NOT EXISTS metadata (singleton INTEGER PRIMARY KEY CHECK(singleton=1), revision INTEGER NOT NULL)");
++            sql("INSERT OR IGNORE INTO metadata VALUES(1,0)");
++            sql("CREATE TABLE IF NOT EXISTS intents (owner TEXT NOT NULL, generation INTEGER NOT NULL CHECK(generation>0), state TEXT NOT NULL CHECK(state IN ('OPEN','RETIRED','RECOVERED')), payload BLOB NOT NULL, digest TEXT NOT NULL, PRIMARY KEY(owner,generation))");
++            sql("PRAGMA user_version=1");
++            revision=Long.parseLong(scalar("SELECT revision FROM metadata WHERE singleton=1"));
++            if(revision<0||revision>100000)throw new IOException("invalid ledger revision");
++            validateHistory();
++            outstanding=Integer.parseInt(scalar("SELECT count(*) FROM intents WHERE state='OPEN'"));
++            blocked=outstanding!=0;
++            if(blocked)reason="unresolved durable intents; owned-entity reconciliation required";
++        }catch(Exception e){fail(e);}
++    }
++    private void sql(String command)throws SQLException {try(var s=connection.createStatement()){s.execute(command);}}
++    private String scalar(String command)throws SQLException {try(var s=connection.createStatement();var r=s.executeQuery(command)){if(!r.next())throw new SQLException("missing scalar");return r.getString(1);}}
++    private void validateHistory()throws Exception {
++        if(Integer.parseInt(scalar("SELECT count(*) FROM intents"))>MAX_RECORDS)throw new IOException("ledger history budget");
++        try(var s=connection.createStatement();var r=s.executeQuery("SELECT owner,generation,state,length(payload),payload,digest FROM intents")){
++            while(r.next()){
++                if(r.getInt(4)<1||r.getInt(4)>MAX_BLOB)throw new IOException("payload size");
++                byte[] payload=r.getBytes(5);
++                if(!digest(payload).equals(r.getString(6)))throw new IOException("payload checksum mismatch");
++                var bundle=decode(payload);
++                if(!bundle.getFirst().owner().toString().equals(r.getString(1))||bundle.getFirst().generation()!=r.getLong(2))throw new IOException("intent identity mismatch");
++            }
++        }
++    }
++    private static String digest(byte[] bytes)throws Exception{return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes));}
++    private static byte[] encode(List<Passage> bundle)throws IOException {
++        if(bundle==null||bundle.isEmpty()||bundle.size()>128)throw new IOException("bundle count");
++        Passage first=Objects.requireNonNull(bundle.getFirst());
++        if(first.generation()<1)throw new IOException("generation");
++        var bytes=new ByteArrayOutputStream();
++        try(var out=new DataOutputStream(bytes)){
++            out.writeInt(0x474C5349);out.writeInt(bundle.size());
++            out.writeLong(first.owner().getMostSignificantBits());out.writeLong(first.owner().getLeastSignificantBits());out.writeLong(first.generation());
++            for(Passage p:bundle){
++                if(p==null||!p.owner().equals(first.owner())||p.generation()!=first.generation())throw new IOException("mixed bundle fence");
++                for(Surface surface:List.of(p.entrance(),p.exit())){
++                    for(double d:new double[]{surface.centre().x(),surface.centre().y(),surface.centre().z(),surface.tangent().x(),surface.tangent().y(),surface.tangent().z(),surface.width(),surface.height()}){
++                        if(!Double.isFinite(d))throw new IOException("non-finite surface");out.writeDouble(d);
++                    }
++                }
++            }
++        }
++        if(bytes.size()>MAX_BLOB)throw new IOException("payload budget");return bytes.toByteArray();
++    }
++    private static List<Passage> decode(byte[] bytes)throws IOException {
++        try(var in=new DataInputStream(new ByteArrayInputStream(bytes))){
++            if(in.readInt()!=0x474C5349)throw new IOException("payload magic");
++            int count=in.readInt();if(count<1||count>128)throw new IOException("payload count");
++            UUID owner=new UUID(in.readLong(),in.readLong());long generation=in.readLong();var result=new ArrayList<Passage>();
++            for(int i=0;i<count;i++){
++                var surfaces=new ArrayList<Surface>();
++                for(int j=0;j<2;j++)surfaces.add(new Surface(new V(in.readDouble(),in.readDouble(),in.readDouble()),new V(in.readDouble(),in.readDouble(),in.readDouble()),in.readDouble(),in.readDouble()));
++                result.add(new Passage(surfaces.get(0),surfaces.get(1),owner,generation));
++            }
++            if(in.available()!=0||generation<1)throw new IOException("payload trailing bytes/generation");return List.copyOf(result);
++        }catch(RuntimeException bad){throw new IOException("invalid intent geometry",bad);}
++    }
++    private void transaction()throws SQLException {
++        sql("BEGIN IMMEDIATE");
++        try(var update=connection.prepareStatement("UPDATE metadata SET revision=revision+1 WHERE singleton=1 AND revision=?")){
++            update.setLong(1,revision);if(update.executeUpdate()!=1)throw new SQLException("stale journal writer");
++        }
++    }
++    private void commit()throws SQLException {sql("COMMIT");revision++;}
++    private void fail(Exception e){
++        failed=true;blocked=true;outstanding=-1;reason=e.getClass().getSimpleName()+": "+e.getMessage();
++        if(connection!=null)try{sql("ROLLBACK");}catch(SQLException ignored){}
++    }
++    @Override public synchronized boolean begin(List<Passage> bundle){
++        if(blocked||failed)return false;
++        try{
++            byte[] payload=encode(bundle);Passage p=bundle.getFirst();transaction();
++            if(Integer.parseInt(scalar("SELECT count(*) FROM intents"))>=MAX_RECORDS||!scalar("SELECT count(*) FROM intents WHERE state='OPEN'").equals("0"))throw new SQLException("intent/history budget");
++            try(var insert=connection.prepareStatement("INSERT INTO intents VALUES(?,?,'OPEN',?,?)")){
++                insert.setString(1,p.owner().toString());insert.setLong(2,p.generation());insert.setBytes(3,payload);insert.setString(4,digest(payload));insert.executeUpdate();
++            }
++            commit();outstanding=1;reason="durable intent acknowledged";return true;
++        }catch(Exception e){fail(e);return false;}
++    }
++    @Override public synchronized boolean settle(UUID owner,long generation){
++        if(failed||blocked||outstanding!=1)return false;
++        try{
++            transaction();
++            try(var update=connection.prepareStatement("UPDATE intents SET state='RETIRED' WHERE owner=? AND generation=? AND state='OPEN'")){
++                update.setString(1,owner.toString());update.setLong(2,generation);if(update.executeUpdate()!=1)throw new SQLException("stale retirement");
++            }
++            commit();outstanding=0;reason="retired intent retained as tombstone";return true;
++        }catch(Exception e){fail(e);return false;}
++    }
++    /** Called only after the adapter's permanent load veto is installed, all owned
++     * runtime entities/loaders are absent, and there are no connected observers.
++     * Old saved entities stay unauthorized on every subsequent chunk load. */
++    synchronized boolean reconcileWithLoadVeto(){
++        if(failed)return false;if(!blocked)return true;
++        try{transaction();validateHistory();sql("UPDATE intents SET state='RECOVERED' WHERE state='OPEN'");commit();outstanding=0;blocked=false;reason="recovered under permanent owned-entity load veto; evidence retained";return true;}
++        catch(Exception e){fail(e);return false;}
++    }
++    @Override public synchronized boolean blockedOnOpen(){return blocked||failed;}
++    @Override public synchronized int outstanding(){return outstanding;}
++    @Override public synchronized String diagnostic(){return reason;}
++    @Override public synchronized void close(){if(connection!=null)try{connection.close();connection=null;}catch(SQLException e){fail(e);}}
++}
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -1,8 +1,8 @@
+ {
+   "schemaVersion":1,"id":"gaslight_provider","version":"${version}",
+-  "name":"GASLIGHT Provider Adapter — Phase A",
+-  "description":"Opt-in fixed portal integration. Automatic world replacement remains disabled.",
++  "name":"GASLIGHT — Recovery Preview",
++  "description":"Experimental fixed portals, saved-chunk acquisition and durable recovery. Automatic look-away replacement is not enabled.",
+   "authors":["Konda Labs"],"license":"MIT","environment":"*",
+-  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"]},
++  "entrypoints":{"main":["dev.kondalabs.gaslight.provider.GaslightProvider"],"client":["dev.kondalabs.gaslight.provider.CameraObserver"]},
+   "depends":{"fabricloader":">=0.19.5","minecraft":"=1.21.1","java":">=25","fabric-api":"*","immersive_portals":"=6.0.6"}
+ }
+--- a/src/test/java/dev/kondalabs/gaslight/provider/CameraFenceTest.java
++++ b/src/test/java/dev/kondalabs/gaslight/provider/CameraFenceTest.java
+@@ -0,0 +1,46 @@
++package dev.kondalabs.gaslight.provider;
++import java.util.*;
++import org.joml.Matrix4f;
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++final class CameraFenceTest {
++    private FrameClip clip(){return new FrameClip(0,0,0,new Matrix4f().perspective((float)Math.toRadians(90),1,.05f,128).get(new float[16]));}
++    @Test void wholeBoxAndGrazingGeometry(){
++        var c=clip();assertFalse(c.excludes(-1,-1,-10,1,1,-8));assertTrue(c.excludes(-1,-1,8,1,1,10));
++        assertFalse(c.excludes(-100,-100,-10,100,100,10));assertFalse(c.excludes(7.9,-1,-10,10,1,-8));
++        assertThrows(IllegalArgumentException.class,()->c.excludes(1,0,0,-1,1,1));
++    }
++    @Test void immutableAndInvalidMatrices(){
++        float[] m=new Matrix4f().perspective(1,1,.05f,128).get(new float[16]);var c=new FrameClip(0,0,0,m);m[0]=Float.NaN;assertTrue(Float.isFinite(c.matrix()[0]));
++        assertThrows(IllegalArgumentException.class,()->new FrameClip(0,0,0,m));assertThrows(IllegalArgumentException.class,()->new FrameClip(0,0,0,new float[16]));
++    }
++    @Test void sessionGenerationDimensionSequenceAndDistance(){
++        var s=new CameraTelemetry.Session(4,"minecraft:overworld");long now=1_000_000_001;
++        assertTrue(s.accept(new CameraTelemetry.Observation(s.nonce,4,1,s.dimension,clip(),true),0,0,0,now));
++        assertFalse(s.accept(new CameraTelemetry.Observation(s.nonce,4,1,s.dimension,clip(),true),0,0,0,now+1));
++        assertFalse(s.accept(new CameraTelemetry.Observation(UUID.randomUUID(),4,2,s.dimension,clip(),true),0,0,0,now+2));
++        assertFalse(s.accept(new CameraTelemetry.Observation(s.nonce,3,2,s.dimension,clip(),true),0,0,0,now+3));
++        assertFalse(s.accept(new CameraTelemetry.Observation(s.nonce,4,2,"minecraft:the_nether",clip(),true),0,0,0,now+4));
++        assertFalse(s.accept(new CameraTelemetry.Observation(s.nonce,4,2,s.dimension,clip(),true),100,0,0,now+5));
++        assertFalse(s.accept(new CameraTelemetry.Observation(s.nonce,4,2,s.dimension,clip(),false),0,0,0,now+6));
++    }
++    @Test void observationFloodCannotBecomeAuthority(){
++        var s=new CameraTelemetry.Session(1,"minecraft:overworld");int count=0;
++        for(int i=0;i<100;i++)if(s.accept(new CameraTelemetry.Observation(s.nonce,1,i,s.dimension,clip(),true),0,0,0,2_000_000_000L))count++;
++        assertEquals(12,count);assertNull(s.latest);
++    }
++    @Test void realPacketCodecRejectsTruncationAndInvalidMatrix(){
++        var packet=new CameraTelemetry.Observation(UUID.randomUUID(),7,13,"minecraft:overworld",clip(),true);
++        var buffer=new net.minecraft.network.RegistryFriendlyByteBuf(io.netty.buffer.Unpooled.buffer(),net.minecraft.core.RegistryAccess.EMPTY);
++        try{
++            CameraTelemetry.Observation.CODEC.encode(buffer,packet);int size=buffer.readableBytes();System.out.println("CAMERA_OBSERVATION_PAYLOAD_BYTES="+size);
++            var decoded=CameraTelemetry.Observation.CODEC.decode(buffer);assertEquals(packet.session(),decoded.session());assertEquals(13,decoded.frame());assertArrayEquals(packet.clip().matrix(),decoded.clip().matrix());
++            buffer.clear();CameraTelemetry.Observation.CODEC.encode(buffer,packet);buffer.writerIndex(size-1);
++            assertThrows(IndexOutOfBoundsException.class,()->CameraTelemetry.Observation.CODEC.decode(buffer));
++            buffer.clear();CameraTelemetry.Observation.CODEC.encode(buffer,packet);
++            // Final 64-byte matrix is followed by one boolean. Poison its first value.
++            buffer.setFloat(size-65,Float.NaN);
++            assertThrows(IllegalArgumentException.class,()->CameraTelemetry.Observation.CODEC.decode(buffer));
++        }finally{buffer.release();}
++    }
++}
+--- a/src/test/java/dev/kondalabs/gaslight/provider/SqliteCrashProbe.java
++++ b/src/test/java/dev/kondalabs/gaslight/provider/SqliteCrashProbe.java
+@@ -0,0 +1,23 @@
++package dev.kondalabs.gaslight.provider;
++import java.nio.file.*;
++import java.sql.*;
++import java.util.*;
++/** Separate real process, deliberately halted without graceful connection close. */
++public final class SqliteCrashProbe {
++    public static void main(String[] args)throws Exception{
++        Path path=Path.of(args[1]);String mode=args[0];
++        try(var store=new SqliteIntentStore(path)){
++            if(!store.begin(List.of(SqliteIntentStoreTest.intent(1))))throw new AssertionError(store.diagnostic());
++            if(mode.equals("begin")){System.out.println("DURABLE_BEGIN_ACKNOWLEDGED");System.out.flush();Runtime.getRuntime().halt(71);}
++            if(mode.equals("settle")){
++                if(!store.settle(SqliteIntentStoreTest.intent(1).owner(),1))throw new AssertionError(store.diagnostic());
++                System.out.println("DURABLE_TOMBSTONE_ACKNOWLEDGED");System.out.flush();Runtime.getRuntime().halt(72);
++            }
++        }
++        try(var c=DriverManager.getConnection("jdbc:sqlite:"+path);var s=c.createStatement()){
++            s.execute("PRAGMA journal_mode=PERSIST");s.execute("PRAGMA synchronous=FULL");s.execute("BEGIN IMMEDIATE");
++            s.executeUpdate("UPDATE intents SET payload=x'00'");
++            System.out.println("INTERRUPTED_UNCOMMITTED_PAYLOAD_UPDATE");System.out.flush();Runtime.getRuntime().halt(73);
++        }
++    }
++}
+--- a/src/test/java/dev/kondalabs/gaslight/provider/SqliteIntentStoreTest.java
++++ b/src/test/java/dev/kondalabs/gaslight/provider/SqliteIntentStoreTest.java
+@@ -0,0 +1,83 @@
++package dev.kondalabs.gaslight.provider;
++import dev.kondalabs.gaslight.NativePortal.*;
++import java.nio.file.*;
++import java.sql.*;
++import java.util.*;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.io.TempDir;
++import static org.junit.jupiter.api.Assertions.*;
++
++final class SqliteIntentStoreTest {
++    @TempDir Path dir;
++    static Passage intent(long g){return new Passage(new Surface(new V(.5,82.5,.5),new V(1,0,0),4,4),new Surface(new V(1024.5,82.5,1024.5),new V(1,0,0),4,4),new UUID(7,9),g);}
++    @Test void genuineWindowsDurabilityAndRepeatedCycles()throws Exception{
++        Path p=dir.resolve("intents.sqlite");
++        try(var s=new SqliteIntentStore(p)){
++            assertFalse(s.blockedOnOpen(),s.diagnostic());
++            for(int i=1;i<=40;i++){assertTrue(s.begin(List.of(intent(i))),s.diagnostic());assertEquals(1,s.outstanding());assertTrue(s.settle(intent(i).owner(),i),s.diagnostic());assertEquals(0,s.outstanding());}
++        }
++        try(var s=new SqliteIntentStore(p)){assertFalse(s.blockedOnOpen(),s.diagnostic());}
++        try(var c=DriverManager.getConnection("jdbc:sqlite:"+p);var q=c.createStatement();var rows=q.executeQuery("SELECT count(*) FROM intents WHERE state='RETIRED'")){assertTrue(rows.next());assertEquals(40,rows.getInt(1),"retirement retains every historical record");}
++    }
++    @Test void dirtyRestartRequiresExplicitGuardedRecovery(){
++        Path p=dir.resolve("dirty.sqlite");
++        try(var s=new SqliteIntentStore(p)){assertTrue(s.begin(List.of(intent(1))),s.diagnostic());}
++        try(var s=new SqliteIntentStore(p)){
++            assertTrue(s.blockedOnOpen());assertEquals(1,s.outstanding());assertFalse(s.begin(List.of(intent(2))));assertFalse(s.settle(intent(1).owner(),1));
++            assertTrue(s.reconcileWithLoadVeto(),s.diagnostic());assertFalse(s.blockedOnOpen());assertTrue(s.begin(List.of(intent(2))),s.diagnostic());
++        }
++    }
++    @Test void staleWriterAndStaleRetirementFailClosed(){
++        Path p=dir.resolve("cas.sqlite");
++        try(var first=new SqliteIntentStore(p);var stale=new SqliteIntentStore(p)){
++            assertTrue(first.begin(List.of(intent(1))),first.diagnostic());assertFalse(stale.begin(List.of(intent(2))));assertTrue(stale.blockedOnOpen());
++            assertFalse(first.settle(intent(1).owner(),2));assertTrue(first.blockedOnOpen());
++        }
++        try(var s=new SqliteIntentStore(p)){assertTrue(s.blockedOnOpen());assertEquals(1,s.outstanding());}
++    }
++    @Test void malformedHistoryCannotRecover()throws Exception{
++        Path p=dir.resolve("corrupt.sqlite");try(var s=new SqliteIntentStore(p)){assertTrue(s.begin(List.of(intent(1))),s.diagnostic());}
++        try(var c=DriverManager.getConnection("jdbc:sqlite:"+p);var q=c.createStatement()){q.executeUpdate("UPDATE intents SET payload=x'00'");}
++        try(var s=new SqliteIntentStore(p)){assertTrue(s.blockedOnOpen());assertFalse(s.reconcileWithLoadVeto());assertFalse(s.begin(List.of(intent(2))));}
++    }
++    @Test void partialFileIsPreserved()throws Exception{
++        Path p=dir.resolve("partial.sqlite");byte[] bytes="SQLite format 3\0broken".getBytes();Files.write(p,bytes);
++        try(var s=new SqliteIntentStore(p)){assertTrue(s.blockedOnOpen());assertFalse(s.reconcileWithLoadVeto());}
++        assertArrayEquals(bytes,Files.readAllBytes(p));
++    }
++    @Test void concurrentWritersHaveOneWinner()throws Exception{
++        Path p=dir.resolve("concurrent.sqlite");
++        try(var a=new SqliteIntentStore(p);var b=new SqliteIntentStore(p)){
++            var gate=new java.util.concurrent.CountDownLatch(1);
++            var executor=java.util.concurrent.Executors.newFixedThreadPool(2);
++            try{
++                var x=executor.submit(()->{gate.await();return a.begin(List.of(intent(1)));});
++                var y=executor.submit(()->{gate.await();return b.begin(List.of(intent(2)));});
++                gate.countDown();assertNotEquals(x.get(),y.get());
++            }finally{executor.shutdownNow();}
++        }
++        try(var s=new SqliteIntentStore(p)){assertEquals(1,s.outstanding());assertTrue(s.blockedOnOpen());}
++    }
++    @Test void actualProcessHaltsPreserveIntentsAndRollbackPartialUpdates()throws Exception{
++        var paths=new LinkedHashSet<String>();
++        for(Class<?> c:List.of(SqliteCrashProbe.class,SqliteIntentStore.class,org.sqlite.JDBC.class,org.slf4j.LoggerFactory.class))paths.add(Path.of(c.getProtectionDomain().getCodeSource().getLocation().toURI()).toString());
++        String classpath=String.join(java.io.File.pathSeparator,paths);
++        for(String mode:List.of("begin","settle","midwrite")){
++            Path file=dir.resolve(mode+".sqlite");
++            var process=new ProcessBuilder(Path.of(System.getProperty("java.home"),"bin",System.getProperty("os.name").startsWith("Windows")?"java.exe":"java").toString(),"--enable-native-access=ALL-UNNAMED","-cp",classpath,SqliteCrashProbe.class.getName(),mode,file.toString()).redirectErrorStream(true).start();
++            assertTrue(process.waitFor(20,java.util.concurrent.TimeUnit.SECONDS),"bounded child interruption test");
++            String output=new String(process.getInputStream().readAllBytes());System.out.println("REAL_SQLITE_PROCESS_HALT "+mode+" exit="+process.exitValue()+" "+output);
++            assertEquals(mode.equals("begin")?71:mode.equals("settle")?72:73,process.exitValue(),output);
++            try(var reopened=new SqliteIntentStore(file)){
++                if(mode.equals("settle")){assertFalse(reopened.blockedOnOpen(),reopened.diagnostic());assertEquals(0,reopened.outstanding());}
++                else{assertTrue(reopened.blockedOnOpen(),reopened.diagnostic());assertEquals(1,reopened.outstanding());assertTrue(reopened.reconcileWithLoadVeto(),reopened.diagnostic());}
++            }
++        }
++    }
++    @Test void nonstandardDatabasePageSizeCannotEvadeDiskBudget()throws Exception{
++        Path p=dir.resolve("oversized-pages.sqlite");
++        try(var c=DriverManager.getConnection("jdbc:sqlite:"+p);var s=c.createStatement()){s.execute("PRAGMA page_size=65536");s.execute("CREATE TABLE foreign_data(value TEXT)");}
++        try(var store=new SqliteIntentStore(p)){assertTrue(store.blockedOnOpen());assertTrue(store.diagnostic().contains("page budget"));assertFalse(store.begin(List.of(intent(1))));}
++        assertTrue(Files.exists(p));
++    }
++}
+--- a/THIRD_PARTY_NOTICES.md
++++ b/THIRD_PARTY_NOTICES.md
+@@ -18,3 +18,11 @@
+ 
+ Minecraft, Fabric Loader, Fabric API, Gradle and JDK dependencies remain their respective
+ authors' work. No Minecraft game binary or assets are redistributed in this package.
++# Recovery preview additions
++
++SQLite JDBC 3.53.4.0 (https://github.com/xerial/sqlite-jdbc) is an unmodified dependency,
++included in the remapped mod JAR. Preserve its Apache-2.0/BSD-2-Clause notices and
++bundled third-party notices. SQLite's own source is public domain. No WorldEdit,
++Chunky, JTS, OcclusionCulling or Weeping Angels source/assets are incorporated here.
++JOML 1.10.5 is supplied by Minecraft and used through its public API.
++

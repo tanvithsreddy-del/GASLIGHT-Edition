@@ -1,3 +1,7 @@
+# Current recovery preview checkpoint - 2026-10-13
+
+The full automatic GASLIGHT effect remains NO-GO. The tested recovery preview adds Windows-native SQLite durability, retained recovery history, nonpersistent owned portals, saved-but-unloaded preparation and actual camera telemetry. See [the current report](RECOVERY_PREVIEW_REPORT.md). Older checkpoint text below is historical.
+
 # GASLIGHT checkpoint: Java first
 Current unattended delivery: the Fabric 1.21.1 fixed-link adapter has genuine packaged-JAR graphical/server evidence. Full GASLIGHT remains NO-GO; automatic publication, crash reconciliation, arbitrary destination preparation and loader ports remain unfinished. See [the current report](PHASE_A_REPORT.md). Older native/provider checkpoint details below remain historical evidence.
 
