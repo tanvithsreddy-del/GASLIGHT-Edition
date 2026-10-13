@@ -7,6 +7,9 @@ named in the supplied GASLIGHT-26.3-Smoothing-v0.5.1 JAR's notice. The
 user-supplied JAR contains additional GASLIGHT classes but no matching Java
 source. Their bytecode is evidence, not an automatically publishable source
 license or proof of the requested look-away behavior.
+The [public 26.3 source snapshot](https://github.com/tanvithsreddy-del/GASLIGHT-Portal-Engine-26.3)
+records its upstream base and the small build/accessor changes. It excludes
+disposable saves and the supplied binary's custom classes.
 
 The source has Fabric, NeoForge, and opt-in Forge modules. They require
 independent builds and game tests. On this Windows host, JDK 25.0.4.1

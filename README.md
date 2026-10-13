@@ -27,8 +27,9 @@ Start with the [current evidence report](docs/RECOVERY_PREVIEW_REPORT.md), the
 [mathematical specification](docs/MATH.md). [Design and release gates](docs/DESIGN.md)
 identify what remains. Raw commands, logs, screenshots, source diffs and
 artifact hashes are under [evidence](evidence/). The 26.3 source evaluation is
-[here](docs/ENGINE_26_3_EVALUATION.md); its independently attributed engine
-source is linked there when published.
+[here](docs/ENGINE_26_3_EVALUATION.md). The separately attributed
+[26.3 engine source experiment](https://github.com/tanvithsreddy-del/GASLIGHT-Portal-Engine-26.3)
+contains its complete source and pinned build.
 
 The core GASLIGHT code in this repository is MIT licensed. Third-party
 dependencies keep their own licenses; see
